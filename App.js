@@ -16,11 +16,11 @@ import {ExecuteQuery} from './storage';
 
 import TableData from './component/TableData';
 import {Table, Row, Rows, TableWrapper} from 'react-native-table-component';
-import { getLargestWidths } from './component/utils';
-
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import {getLargestWidths} from './component/utils';
 
 const App = () => {
-  const [value, onChangeText] = React.useState('');
+  const [value, onChangeText] = React.useState('select * from employees');
 
   const [dbHeader, setDbHeader] = useState([]); // headers from db
   const [dbData, setDbData] = useState([]); // main rows with value
@@ -37,7 +37,6 @@ const App = () => {
       const res = await ExecuteQuery(value);
 
       const header = Object.keys(res.rows.item(0)).reverse();
-      
 
       const len = res.rows.length;
       const resultArr = [];
@@ -46,8 +45,9 @@ const App = () => {
         let row = res.rows.item(i);
         resultArr.push(Object.values(row).reverse());
       }
-      tableWidths.current = await getLargestWidths(resultArr);
-      console.log(tableWidths);
+      // pass the header and result arr to get the largest widths of their respective column
+      tableWidths.current = await getLargestWidths([header, ...resultArr]);
+      // console.log(tableWidths);
 
       // console.log(resultArr);
       setDbData(resultArr);
@@ -65,7 +65,11 @@ const App = () => {
         <View style={styles.scrollView}>
           <View>
             <TextInput
-              style={{borderColor: 'gray', borderWidth: 1, fontFamily: "monospace"}}
+              style={{
+                borderColor: 'gray',
+                borderWidth: 1,
+                fontFamily: 'monospace',
+              }}
               onChangeText={(text) => onChangeText(text)}
               multiline
               value={value}
@@ -78,28 +82,30 @@ const App = () => {
           <Button title="Clear" onPress={() => onChangeText('')} />
           <Text>Output</Text>
           <View style={styles.outPutContainer}>
-            <ScrollView
-              horizontal={true}
-              bounces={false}
-            >
+            <ScrollView horizontal={true} bounces={false}>
               <View>
                 <ScrollView bounces={false}>
-                  <Table  borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                  <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
                     <Row
                       data={dbHeader}
                       style={styles.head}
                       textStyle={styles.headerText}
-                      widthArr= {tableWidths.current}
+                      widthArr={tableWidths.current}
                     />
-                    <Rows data={dbData} widthArr= {tableWidths.current} textStyle={styles.rowTxt} />
+                    <Rows
+                      data={dbData}
+                      widthArr={tableWidths.current}
+                      textStyle={styles.rowTxt}
+                    />
                   </Table>
                 </ScrollView>
               </View>
-
             </ScrollView>
           </View>
           <View style={styles.runBtn}>
-            <Button title="Run" onPress={runQuery} />
+            <Pressable>
+              <Icon name="play-arrow" size={25}/>
+            </Pressable>
           </View>
         </View>
       </SafeAreaView>
@@ -117,7 +123,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     right: 10,
-    width: '100%',
   },
 
   outPutContainer: {
