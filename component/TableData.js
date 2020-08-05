@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     width: 420,
     // flexGrow: 0,
     // flex: 1
+    // flexDirection: "row"
   },
   rowStyle: {
     flexDirection: 'row',

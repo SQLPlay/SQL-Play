@@ -75,19 +75,20 @@ const App = () => {
             <ScrollView
               horizontal={true}
               contentContainerStyle={{flexGrow: 1}}>
-              {/* <View>
+              <View>
                 <ScrollView>
-                  <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                  <Table  borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
                     <Row
                       data={dbHeader}
                       style={styles.head}
                       textStyle={styles.headerText}
+                      widthArr= {[100, 100, 180, 200,]}
                     />
-                    <Rows data={dbData} textStyle={styles.rowTxt} />
+                    <Rows data={dbData} widthArr= {[100, 100, 180, 100,]} textStyle={styles.rowTxt} />
                   </Table>
                 </ScrollView>
-              </View> */}
-              <TableData/>
+              </View>
+
             </ScrollView>
           </View>
           <View style={styles.runBtn}>
