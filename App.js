@@ -10,26 +10,43 @@ import {
   Pressable,
   Button,
   Alert,
+  ToastAndroid,
 } from 'react-native';
 import {ExecuteQuery} from './storage';
 
+import TableData from './component/TableData';
+import {Table, Row, Rows, TableWrapper} from 'react-native-table-component';
+
+
 const App = () => {
   const [value, onChangeText] = React.useState('');
-  const [dbOutput, setDbOutput] = useState('');
+
+  const [dbHeader, setDbHeader] = useState([]); // headers from db
+  const [dbData, setDbData] = useState([]); // main rows with value
 
   const runQuery = async () => {
+    ToastAndroid.showWithGravity(
+      'All Your Base Are Belong To Us',
+      ToastAndroid.SHORT,
+      ToastAndroid.CENTER,
+    );
+
     try {
       const res = await ExecuteQuery(value);
 
-      const resultArr = [];
-      const tablesVals = [];
+      const header = Object.keys(res.rows.item(0)).reverse();
+      // console.log(header);
+      setDbHeader(header);
+
       const len = res.rows.length;
+      const resultArr = [];
+
       for (let i = 0; i < len; i++) {
         let row = res.rows.item(i);
-        resultArr.push(Object.values(row).reverse().join(" | "))
+        resultArr.push(Object.values(row).reverse());
       }
-      console.log(resultArr.join("\n"));
-      setDbOutput(resultArr.join("\n"))
+      console.log(resultArr);
+      setDbData(resultArr);
     } catch (error) {
       Alert.alert('Error in DB', error.message);
     }
@@ -46,6 +63,7 @@ const App = () => {
               onChangeText={(text) => onChangeText(text)}
               multiline
               value={value}
+              autoCorrect={false}
               numberOfLines={4}
               placeholder="Type your SQL query"
             />
@@ -53,9 +71,25 @@ const App = () => {
 
           <Button title="Clear" onPress={() => onChangeText('')} />
           <Text>Output</Text>
-          <ScrollView style={styles.outPut}>
-            <Text>{dbOutput}</Text>
-          </ScrollView>
+          <View style={styles.outPutContainer}>
+            <ScrollView
+              horizontal={true}
+              contentContainerStyle={{flexGrow: 1}}>
+              {/* <View>
+                <ScrollView>
+                  <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+                    <Row
+                      data={dbHeader}
+                      style={styles.head}
+                      textStyle={styles.headerText}
+                    />
+                    <Rows data={dbData} textStyle={styles.rowTxt} />
+                  </Table>
+                </ScrollView>
+              </View> */}
+              <TableData/>
+            </ScrollView>
+          </View>
           <View style={styles.runBtn}>
             <Button title="Run" onPress={runQuery} />
           </View>
@@ -77,11 +111,26 @@ const styles = StyleSheet.create({
     right: 10,
     width: '100%',
   },
-  outPut: {
-    borderWidth: 1,
+
+  outPutContainer: {
+    flex: 1,
     padding: 5,
-    marginBottom: 50
-  }
+    backgroundColor: '#fff',
+    marginBottom: 50,
+  },
+
+  head: {
+    height: 40,
+    backgroundColor: '#f1f8ff',
+  },
+  headerText: {
+    margin: 6,
+    // textAlign: 'center',
+    textTransform: 'capitalize',
+  },
+  rowTxt: {
+    margin: 6,
+  },
 });
 
 export default App;

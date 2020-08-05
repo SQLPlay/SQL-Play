@@ -1,6 +1,6 @@
 import SQLite from 'react-native-sqlite-storage';
 
-const db = SQLite.openDatabase('main.db', '1.0', '', 1);
+const db = SQLite.openDatabase({ name: 'prepop.db', createFromLocation : 1});
 
 //query execution function with promise
 export const ExecuteQuery = (sql, params = []) => {
