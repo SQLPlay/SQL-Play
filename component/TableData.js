@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 
 function Cell({data}) {
   return (
@@ -12,7 +12,7 @@ function Cell({data}) {
 function Row({column}) {
   return (
     <View style={styles.rowStyle}>
-      {column.map((data) => (
+      {column.map(data => (
         <Cell data={data} />
       ))}
     </View>
@@ -32,7 +32,7 @@ export default function TableData() {
   ];
   return (
     <View style={styles.gridContainer}>
-      {data.map((column) => (
+      {data.map(column => (
         <Row column={column} />
       ))}
     </View>
@@ -41,9 +41,7 @@ export default function TableData() {
 
 const styles = StyleSheet.create({
   gridContainer: {
-    width: 420,
-    // flexGrow: 0,
-    // flex: 1
+    flex: 1,
   },
   rowStyle: {
     flexDirection: 'row',
@@ -51,8 +49,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   cellStyle: {
-    flex: 1,
     padding: 10,
     borderWidth: 1,
+    width: '50%',
   },
 });
