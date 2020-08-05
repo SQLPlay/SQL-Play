@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-nested-scroll-view": "^9.0.0",
     "react-native-sqlite-storage": "^5.0.0",
     "react-native-table-component": "^1.2.1"
   },
