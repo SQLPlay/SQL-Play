@@ -12,24 +12,35 @@ import {
   Alert,
 } from 'react-native';
 import {ExecuteQuery} from './storage';
+import {Table, Row, Rows} from 'react-native-table-component';
 
 const App = () => {
   const [value, onChangeText] = React.useState('');
-  const [dbOutput, setDbOutput] = useState('');
+
+  const [dbHeader, setDbHeader] = useState(['price', 'name']); // headers from db
+  const [dbData, setDbData] = useState([
+    ['sundae', 10],
+    ['stray suck', 69],
+  ]); // main rows with value
 
   const runQuery = async () => {
     try {
       const res = await ExecuteQuery(value);
 
-      const resultArr = [];
       const tablesVals = [];
+      const header = Object.keys(res.rows.item(0)).reverse();
+      console.log(header);
+      setDbHeader(header);
+
       const len = res.rows.length;
+      const resultArr = [];
+
       for (let i = 0; i < len; i++) {
         let row = res.rows.item(i);
-        resultArr.push(Object.values(row).reverse().join(" | "))
+        resultArr.push(Object.values(row).reverse());
       }
-      console.log(resultArr.join("\n"));
-      setDbOutput(resultArr.join("\n"))
+      console.log(resultArr);
+      setDbData(resultArr);
     } catch (error) {
       Alert.alert('Error in DB', error.message);
     }
@@ -53,8 +64,11 @@ const App = () => {
 
           <Button title="Clear" onPress={() => onChangeText('')} />
           <Text>Output</Text>
-          <ScrollView style={styles.outPut}>
-            <Text>{dbOutput}</Text>
+          <ScrollView style={styles.outPutContainer}>
+            <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
+              <Row data={dbHeader} style={styles.head} textStyle={styles.text}/>
+              <Rows data={dbData} textStyle={styles.text}/>
+            </Table>
           </ScrollView>
           <View style={styles.runBtn}>
             <Button title="Run" onPress={runQuery} />
@@ -77,11 +91,23 @@ const styles = StyleSheet.create({
     right: 10,
     width: '100%',
   },
-  outPut: {
-    borderWidth: 1,
+
+  outPutContainer: {
+    flex: 1,
     padding: 5,
-    marginBottom: 50
-  }
+    backgroundColor: '#fff',
+    marginBottom: 50,
+  },
+
+  head: {
+    height: 40,
+    backgroundColor: '#f1f8ff',
+  },
+  text: {
+    margin: 6,
+    textAlign: "center",
+    textTransform: "capitalize"
+  },
 });
 
 export default App;
