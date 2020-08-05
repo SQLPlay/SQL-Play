@@ -15,6 +15,7 @@
     "react-native-nested-scroll-view": "^9.0.0",
     "react-native-sqlite-storage": "^5.0.0",
     "react-native-table-component": "^1.2.1",
+    "react-native-text-size": "^4.0.0-rc.1",
     "react-native-vector-icons": "^7.0.0"
   },
   "devDependencies": {

@@ -46,7 +46,8 @@ const App = () => {
         let row = res.rows.item(i);
         resultArr.push(Object.values(row).reverse());
       }
-      tableWidths.current = getLargestWidths(resultArr);
+      tableWidths.current = await getLargestWidths(resultArr);
+      console.log(tableWidths);
 
       // console.log(resultArr);
       setDbData(resultArr);
@@ -79,9 +80,10 @@ const App = () => {
           <View style={styles.outPutContainer}>
             <ScrollView
               horizontal={true}
-              contentContainerStyle={{flexGrow: 1}}>
+              bounces={false}
+            >
               <View>
-                <ScrollView>
+                <ScrollView bounces={false}>
                   <Table  borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
                     <Row
                       data={dbHeader}
