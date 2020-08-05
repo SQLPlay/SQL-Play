@@ -14,7 +14,8 @@
     "react-native": "0.63.2",
     "react-native-nested-scroll-view": "^9.0.0",
     "react-native-sqlite-storage": "^5.0.0",
-    "react-native-table-component": "^1.2.1"
+    "react-native-table-component": "^1.2.1",
+    "react-native-vector-icons": "^7.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

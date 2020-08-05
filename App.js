@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,6 +16,7 @@ import {ExecuteQuery} from './storage';
 
 import TableData from './component/TableData';
 import {Table, Row, Rows, TableWrapper} from 'react-native-table-component';
+import { getLargestWidths } from './component/utils';
 
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
 
   const [dbHeader, setDbHeader] = useState([]); // headers from db
   const [dbData, setDbData] = useState([]); // main rows with value
+  const tableWidths = useRef([]);
 
   const runQuery = async () => {
     ToastAndroid.showWithGravity(
@@ -35,8 +37,7 @@ const App = () => {
       const res = await ExecuteQuery(value);
 
       const header = Object.keys(res.rows.item(0)).reverse();
-      // console.log(header);
-      setDbHeader(header);
+      
 
       const len = res.rows.length;
       const resultArr = [];
@@ -45,8 +46,12 @@ const App = () => {
         let row = res.rows.item(i);
         resultArr.push(Object.values(row).reverse());
       }
-      console.log(resultArr);
+      tableWidths.current = getLargestWidths(resultArr);
+
+      // console.log(resultArr);
       setDbData(resultArr);
+      // console.log(header);
+      setDbHeader(header);
     } catch (error) {
       Alert.alert('Error in DB', error.message);
     }
@@ -59,7 +64,7 @@ const App = () => {
         <View style={styles.scrollView}>
           <View>
             <TextInput
-              style={{borderColor: 'gray', borderWidth: 1}}
+              style={{borderColor: 'gray', borderWidth: 1, fontFamily: "monospace"}}
               onChangeText={(text) => onChangeText(text)}
               multiline
               value={value}
@@ -82,9 +87,9 @@ const App = () => {
                       data={dbHeader}
                       style={styles.head}
                       textStyle={styles.headerText}
-                      widthArr= {[100, 100, 180, 200,]}
+                      widthArr= {tableWidths.current}
                     />
-                    <Rows data={dbData} widthArr= {[100, 100, 180, 100,]} textStyle={styles.rowTxt} />
+                    <Rows data={dbData} widthArr= {tableWidths.current} textStyle={styles.rowTxt} />
                   </Table>
                 </ScrollView>
               </View>
