@@ -33,11 +33,11 @@ export default function TableData({header, rows, tableWidths}) {
 const styles = StyleSheet.create({
   tableBorder: {
     borderWidth: 2,
-    borderColor: '#c8e1ff',
+    borderColor: '#fdd835',
   },
   head: {
     height: 40,
-    backgroundColor: '#f1f8ff',
+    backgroundColor: '#fff176',
   },
   headerText: {
     margin: 6,
@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
   },
   rowTxt: {
     margin: 6,
+    // color: "#fff"
+
   },
   outPutContainer: {
     flex: 1,

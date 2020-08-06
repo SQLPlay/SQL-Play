@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     fontFamily: 'monospace',
     marginBottom: 10,
     marginTop: 10,
+    // color: "#fff"
   },
   inputHeader: {
     fontSize: 16,

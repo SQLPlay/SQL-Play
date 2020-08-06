@@ -36,7 +36,7 @@ const App = () => {
   const runQuery = async () => {
     try {
       // execute the query
-      const res = await ExecuteQuery(value);
+      const res = await ExecuteQuery(inputValue);
 
       const len = res.rows.length;
 
@@ -69,7 +69,7 @@ const App = () => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" backgroundColor="transparent" />
+      <StatusBar barStyle="dark-content" backgroundColor="#c8b900" />
       <SafeAreaView>
         <View style={styles.outerContainer}>
           <AppBar />

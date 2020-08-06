@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   appBar: {
     width: '100%',
     height: 45,
-    backgroundColor: 'gold',
+    backgroundColor: '#ffea00',
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -22,5 +22,6 @@ const styles = StyleSheet.create({
   appBarTxt: {
     textAlign: 'center',
     fontSize: 22,
+    color: "#2f3542",
   },
 });
