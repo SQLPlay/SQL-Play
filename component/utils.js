@@ -12,17 +12,17 @@ export const getLargestWidths = async (arr) => {
     // user the reduce on each item and find the largest element and return its length
     return item.reduce((acc, cur) => {
       if (acc === null || cur === null) {
-       return "NULL"
+       return acc
       }
-      return acc.toString().length > cur.toString().length ? acc.toString() : cur.toString();
-    });
+      return acc.toString().length >= cur.toString().length ? acc.toString() : cur.toString();
+    }, "");
   });
 
   console.log("largest values", largestValues);
   const widths = await Promise.all(
     largestValues.map(async (item) => {
-      const val = await rnTextSize.measure({text: item, width: 200});
-      return val.width + 30;
+      const val = await rnTextSize.measure({text: item, width: 220});
+      return val.width + 18;
     }),
   );
 

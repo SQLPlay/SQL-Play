@@ -16,7 +16,7 @@ import {ExecuteQuery} from './storage';
 
 import TableData from './component/TableData';
 import {Table, Row, Rows, TableWrapper} from 'react-native-table-component';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {getLargestWidths} from './component/utils';
 
 const App = () => {
@@ -27,13 +27,12 @@ const App = () => {
   const tableWidths = useRef([]);
 
   const runQuery = async () => {
-    ToastAndroid.showWithGravity(
-      'All Your Base Are Belong To Us',
-      ToastAndroid.SHORT,
-      ToastAndroid.CENTER,
-    );
-
     try {
+      ToastAndroid.showWithGravity(
+        'Executing Query',
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+      );
       const res = await ExecuteQuery(value);
 
       const header = Object.keys(res.rows.item(0)).reverse();
@@ -102,11 +101,13 @@ const App = () => {
               </View>
             </ScrollView>
           </View>
-          <View style={styles.runBtn}>
-            <Pressable>
-              <Icon name="play-arrow" size={25}/>
-            </Pressable>
-          </View>
+
+          <Pressable
+            onPress={runQuery}
+            android_ripple={true}
+            style={styles.runBtn}>
+            <Icon name="play-circle-filled" size={50} color="#2ecc71" />
+          </Pressable>
         </View>
       </SafeAreaView>
     </>
