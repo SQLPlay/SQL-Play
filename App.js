@@ -27,6 +27,7 @@ import Table from './component/Table';
 import RunButton from './component/RunButton';
 import InputContainer from './component/InputContainer';
 import Admob from './component/AdMob';
+import UpdateChecker from './component/UpdateChecker';
 
 const {height, width} = Dimensions.get('window');
 
@@ -75,10 +76,9 @@ const App = () => {
     }
   };
 
-
-
   return (
     <>
+      <Admob />
       <StatusBar barStyle="dark-content" backgroundColor="#c8b900" />
       <SafeAreaView>
         <View style={styles.outerContainer}>
@@ -90,7 +90,8 @@ const App = () => {
             />
             <Table {...tableData} tableWidths={tableWidths} />
           </View>
-          <Admob />
+          <UpdateChecker />
+
           <RunButton runQuery={runQuery} />
         </View>
       </SafeAreaView>
