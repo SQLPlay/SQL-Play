@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Dimensions,
+  BackHandler,
 } from 'react-native';
 
 import {ExecuteQuery} from './storage';
@@ -25,6 +26,7 @@ import AppBar from './component/AppBar';
 import Table from './component/Table';
 import RunButton from './component/RunButton';
 import InputContainer from './component/InputContainer';
+import Admob from './component/AdMob';
 
 const {height, width} = Dimensions.get('window');
 
@@ -34,6 +36,12 @@ const App = () => {
   const [inputValue, setInputValue] = useState('select * from employees');
 
   const runQuery = async () => {
+    ToastAndroid.showWithGravity(
+      'Executing Query',
+      ToastAndroid.SHORT,
+      ToastAndroid.BOTTOM,
+    );
+
     try {
       // execute the query
       const res = await ExecuteQuery(inputValue);
@@ -45,7 +53,7 @@ const App = () => {
         ToastAndroid.showWithGravity(
           'Query Executed',
           ToastAndroid.SHORT,
-          ToastAndroid.BOTTOM,
+          ToastAndroid.CENTER,
         );
         return;
       }
@@ -67,6 +75,8 @@ const App = () => {
     }
   };
 
+
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="#c8b900" />
@@ -80,6 +90,7 @@ const App = () => {
             />
             <Table {...tableData} tableWidths={tableWidths} />
           </View>
+          <Admob />
           <RunButton runQuery={runQuery} />
         </View>
       </SafeAreaView>
