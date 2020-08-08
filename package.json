@@ -2,6 +2,8 @@
   "name": "SQL_PlayGround",
   "version": "1.0.2",
   "private": true,
+  "description": "A simple and beautiful SQL playground",
+  "whatsNew": "UI updates and improvement",
   "scripts": {
     "postversion": "react-native-version",
     "android": "react-native run-android",
