@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, Text, View, Alert, Linking} from 'react-native';
-import pkginfo from '../package.json';
+import pkginfo from '../../package.json';
 
 const appInfoURL =
   'https://github.com/ShivamJoker/SQL-Playground/raw/master/package.json';

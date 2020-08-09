@@ -17,18 +17,17 @@ import {
   BackHandler,
 } from 'react-native';
 
-import {ExecuteQuery} from './storage';
+import {ExecuteQuery} from '../utils/storage';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {getLargestWidths} from './component/utils';
-import AppBar from './component/AppBar';
-import Table from './component/Table';
-import RunButton from './component/RunButton';
-import InputContainer from './component/InputContainer';
-import Admob from './component/AdMob';
-import UpdateChecker from './component/UpdateChecker';
-
+import {getLargestWidths} from '../utils/utils';
+import AppBar from './AppBar';
+import Table from './Table';
+import RunButton from './RunButton';
+import InputContainer from './InputContainer';
+import Admob from './AdMob';
+import UpdateChecker from './UpdateChecker';
 
 const {height, width} = Dimensions.get('window');
 
