@@ -90,7 +90,6 @@ const App = () => {
             />
             <Table {...tableData} tableWidths={tableWidths} />
           </View>
-          <UpdateChecker />
 
           <RunButton runQuery={runQuery} />
         </View>
