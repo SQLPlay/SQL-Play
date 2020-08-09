@@ -9,6 +9,7 @@ import {
   FlatList,
   SafeAreaView,
   TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -17,18 +18,20 @@ import commandsList from '../data/commands.json';
 
 const ListItem = ({title, description}) => {
   return (
-    <TouchableHighlight>
+    <TouchableOpacity onPress={()=> null}>
       <View style={styles.item}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
       </View>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 };
 
 export default function SearchBox() {
   const refRBSheet = useRef();
   const [flatlistVisiblity, setFlatlistVisiblity] = useState(false);
+  const [listData, setListData] = useState(commandsList);
+  const [textInput, setTextInput] = useState('');
 
   const openTabSheet = () => {
     refRBSheet.current.open();
@@ -41,6 +44,24 @@ export default function SearchBox() {
     setTimeout(() => {
       setFlatlistVisiblity(false);
     }, 350);
+  };
+
+  const onInputChange = (value) => {
+    setTextInput(value);
+
+    const filterData = () => {
+      return commandsList.filter((item) => {
+        const val = value.toLowerCase();
+        // console.log(item);
+        const keywords = `${item.title}  ${item.tag}  ${item.description}`;
+        const index = keywords.toLowerCase().indexOf(val);
+
+        return index !== -1;
+      });
+    };
+
+    // console.log(filterData(), value);
+    setListData(filterData());
   };
 
   const renderItem = ({item}) => <ListItem {...item} />;
@@ -71,7 +92,8 @@ export default function SearchBox() {
 
             <TextInput
               style={styles.searchInput}
-              // value=""
+              value={textInput}
+              onChangeText={onInputChange}
               placeholder="Search Query"
             />
             <Icon name="close" size={24} />
@@ -79,7 +101,7 @@ export default function SearchBox() {
           <SafeAreaView style={{marginBottom: 65, marginTop: 10}}>
             {flatlistVisiblity ? (
               <FlatList
-                data={commandsList}
+                data={listData}
                 renderItem={renderItem}
                 initialNumToRender={2}
                 keyExtractor={(item) => item.id}

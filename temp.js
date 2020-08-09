@@ -320,9 +320,17 @@ function createUUID() {
   return uuid;
 }
 
-const output = [];
-data.forEach((e) => {
-  output.push({...e, id: createUUID()});
-});
+// const output = [];
+// data.forEach((e) => {
+//   output.push({...e, id: createUUID()});
+// });
 
-console.log(JSON.stringify(output));
+// console.log(JSON.stringify(output));
+
+const filterData = () => {
+  return data.filter((item) => {
+    return item.title.indexOf("Define a new view") !== -1 || item.description.indexOf("Define a new view") !== -1;
+  });
+};
+
+console.log(filterData())
