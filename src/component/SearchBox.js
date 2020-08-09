@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {
   View,
   Button,
@@ -6,26 +6,54 @@ import {
   Text,
   ScrollView,
   TextInput,
+  FlatList,
+  SafeAreaView,
+  TouchableHighlight,
 } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const listItem = ()=>{
-  
-}
+import commandsList from '../data/commands.json';
+
+const ListItem = ({title, description}) => {
+  return (
+    <TouchableHighlight>
+      <View style={styles.item}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.description}>{description}</Text>
+      </View>
+    </TouchableHighlight>
+  );
+};
 
 export default function SearchBox() {
   const refRBSheet = useRef();
+  const [flatlistVisiblity, setFlatlistVisiblity] = useState(false);
 
+  const openTabSheet = () => {
+    refRBSheet.current.open();
+    setTimeout(() => {
+      setFlatlistVisiblity(true);
+    }, 350);
+  };
+
+  const onTabSheetClose = () => {
+    setTimeout(() => {
+      setFlatlistVisiblity(false);
+    }, 350);
+  };
+
+  const renderItem = ({item}) => <ListItem {...item} />;
 
   return (
     <>
-      <Icon name="search" size={24} onPress={() => refRBSheet.current.open()} />
+      <Icon name="search" size={24} onPress={openTabSheet} />
       <RBSheet
         ref={refRBSheet}
         animationType="fade"
         closeOnDragDown={true}
         closeOnPressMask={true}
+        onClose={onTabSheetClose}
         height={350}
         customStyles={
           {
@@ -48,9 +76,16 @@ export default function SearchBox() {
             />
             <Icon name="close" size={24} />
           </View>
-          <ScrollView>
-
-          </ScrollView>
+          <SafeAreaView style={{marginBottom: 65, marginTop: 10}}>
+            {flatlistVisiblity ? (
+              <FlatList
+                data={commandsList}
+                renderItem={renderItem}
+                initialNumToRender={2}
+                keyExtractor={(item) => item.id}
+              />
+            ) : null}
+          </SafeAreaView>
         </View>
       </RBSheet>
     </>
@@ -60,7 +95,19 @@ export default function SearchBox() {
 const styles = StyleSheet.create({
   container: {
     padding: 5,
-    height: "100%"
+    height: '100%',
+  },
+  item: {
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 10,
+    marginVertical: 2,
+  },
+  title: {
+    fontSize: 18,
+  },
+  description: {
+    fontSize: 16,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -72,7 +119,6 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 5,
     height: 42,
-
   },
   searchInput: {
     height: 42,
