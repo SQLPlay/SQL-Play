@@ -10,10 +10,13 @@ import {
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+const listItem = ()=>{
+  
+}
+
 export default function SearchBox() {
   const refRBSheet = useRef();
 
-  const openSheet = () => {};
 
   return (
     <>
@@ -34,7 +37,7 @@ export default function SearchBox() {
             //   }
           }
         }>
-        <ScrollView contentContainerStyle={styles.container}>
+        <View style={styles.container}>
           <View style={styles.inputContainer}>
             <Icon name="search" color="gray" size={24} />
 
@@ -45,7 +48,10 @@ export default function SearchBox() {
             />
             <Icon name="close" size={24} />
           </View>
-        </ScrollView>
+          <ScrollView>
+
+          </ScrollView>
+        </View>
       </RBSheet>
     </>
   );
@@ -54,17 +60,19 @@ export default function SearchBox() {
 const styles = StyleSheet.create({
   container: {
     padding: 5,
+    height: "100%"
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     borderColor: 'gray',
-    flex: 1,
     borderWidth: 1,
     borderRadius: 5,
     paddingLeft: 5,
     paddingRight: 5,
+    height: 42,
+
   },
   searchInput: {
     height: 42,
