@@ -29,6 +29,7 @@ import InputContainer from './component/InputContainer';
 import Admob from './component/AdMob';
 import UpdateChecker from './component/UpdateChecker';
 
+
 const {height, width} = Dimensions.get('window');
 
 const App = () => {

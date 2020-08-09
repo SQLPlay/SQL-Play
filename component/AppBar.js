@@ -1,11 +1,12 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import SearchBox from './SearchBox';
 
 export default function AppBar() {
   return (
     <View style={styles.appBar}>
-      {/* <Icon name="menu" size={24} /> */}
       <Text style={styles.appBarTxt}>SQL Playground</Text>
+      <SearchBox/>
     </View>
   );
 }
@@ -22,6 +23,6 @@ const styles = StyleSheet.create({
   appBarTxt: {
     textAlign: 'center',
     fontSize: 22,
-    color: "#2f3542",
+    color: '#2f3542',
   },
 });
