@@ -15,10 +15,11 @@ import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import commandsList from '../data/commands.json';
+import {debounce} from '../utils/utils';
 
 const ListItem = ({title, description}) => {
   return (
-    <TouchableOpacity onPress={()=> null}>
+    <TouchableOpacity onPress={() => null}>
       <View style={styles.item}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.description}>{description}</Text>
@@ -49,6 +50,8 @@ export default function SearchBox() {
   const onInputChange = (value) => {
     setTextInput(value);
 
+    console.log(value);
+
     const filterData = () => {
       return commandsList.filter((item) => {
         const val = value.toLowerCase();
@@ -60,8 +63,9 @@ export default function SearchBox() {
       });
     };
 
+    const filteredArr = filterData();
     // console.log(filterData(), value);
-    setListData(filterData());
+    debounce(setListData(filteredArr));
   };
 
   const renderItem = ({item}) => <ListItem {...item} />;

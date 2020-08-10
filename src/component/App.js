@@ -34,7 +34,7 @@ const {height, width} = Dimensions.get('window');
 const App = () => {
   const [tableData, setTableData] = useState({header: [], rows: []}); // header rows with value
   const tableWidths = useRef([]);
-  const [inputValue, setInputValue] = useState('select * from employees');
+  const [inputValue, setInputValue] = useState('SELECT * FROM \nemployees');
 
   const runQuery = async () => {
     ToastAndroid.showWithGravity(
