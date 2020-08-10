@@ -5,20 +5,36 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import rnTextSize from 'react-native-text-size';
 
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import {vs} from 'react-syntax-highlighter/styles/hljs';
 
+
+const {height, width} = Dimensions.get('window');
+
 export default function InputContainer({inputValue, setInputValue}) {
+  const onInputChange = async (value) => {
+    setInputValue(value);
+    const txtWidth = await rnTextSize.measure({text: value});
+    const calcWidth = txtWidth.width + 130;
+
+    if (calcWidth > width) {
+      console.log(calcWidth, width);
+      setInputValue(value + '\n');
+    } 
+  };
+
   const codeString = `SELECT firstName FROM  employees`;
   return (
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
       <TextInput
         style={styles.input}
-        onChangeText={(text) => setInputValue(text)}
+        onChangeText={onInputChange}
         multiline
         textAlignVertical="top"
         value={inputValue}
@@ -54,7 +70,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     opacity: 1,
-    color: "transparent"
+    color: 'transparent',
   },
   inputHeader: {
     fontSize: 16,

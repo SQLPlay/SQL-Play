@@ -17,9 +17,9 @@ import {
   BackHandler,
 } from 'react-native';
 
-import {ExecuteQuery} from '../utils/storage';
-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+import {ExecuteQuery} from '../utils/storage';
 
 import {getLargestWidths} from '../utils/utils';
 import AppBar from './AppBar';
@@ -35,6 +35,8 @@ const App = () => {
   const [tableData, setTableData] = useState({header: [], rows: []}); // header rows with value
   const tableWidths = useRef([]);
   const [inputValue, setInputValue] = useState('SELECT * FROM \nemployees');
+
+
 
   const runQuery = async () => {
     ToastAndroid.showWithGravity(
