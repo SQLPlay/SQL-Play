@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     opacity: 1,
+    height: 120
     // color: "transparent"
   },
   inputHeader: {
