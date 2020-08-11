@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useRef, useEffect, useState, useCallback} from 'react';
 import {
   View,
   Button,
@@ -10,27 +10,30 @@ import {
   SafeAreaView,
   TouchableHighlight,
   TouchableOpacity,
+  Platform,
+  UIManager,
+  LayoutAnimation,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import SyntaxHighlighter from 'react-native-syntax-highlighter';
+import {tomorrow} from 'react-syntax-highlighter/styles/hljs';
+
 import commandsList from '../data/commands.json';
 import {debounce} from '../utils/utils';
 
-const ListItem = ({title, description}) => {
-  return (
-    <TouchableOpacity onPress={() => null}>
-      <View style={styles.item}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
+if (Platform.OS === 'android') {
+  if (UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+}
 
 export default function SearchBox() {
   const refRBSheet = useRef();
   const [flatlistVisiblity, setFlatlistVisiblity] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(null);
   const [listData, setListData] = useState(commandsList);
   const [textInput, setTextInput] = useState('');
 
@@ -68,7 +71,45 @@ export default function SearchBox() {
     debounce(setListData(filteredArr));
   };
 
-  const renderItem = ({item}) => <ListItem {...item} />;
+  const onItemPress = (index) => {
+    setCurrentIndex(index === currentIndex ? null : index);
+    LayoutAnimation.configureNext(
+      LayoutAnimation.create(
+        150,
+        LayoutAnimation.Types.easeInEaseOut,
+        LayoutAnimation.Properties.opacity,
+      ),
+    );
+  };
+
+  const ListItem = ({title, description, index}) => {
+    return (
+      <TouchableWithoutFeedback onPress={() => onItemPress(index)}>
+        <View style={styles.item}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.description}>{description}</Text>
+          <View style={styles.codeSyntaxContainer}>
+            {index === currentIndex && (
+              <SyntaxHighlighter
+                fontSize={14}
+                language="sql"
+                wrapLines={true}
+                style={tomorrow}
+                wrapLines={true}
+                highlighter="hljs">
+                {listData[index].syntax}
+              </SyntaxHighlighter>
+            )}
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  };
+
+  const renderItem = useCallback(
+    ({item, index}) => <ListItem {...item} index={index} />,
+    [currentIndex],
+  );
 
   return (
     <>
@@ -79,7 +120,7 @@ export default function SearchBox() {
         closeOnDragDown={true}
         closeOnPressMask={true}
         onClose={onTabSheetClose}
-        height={350}
+        height={380}
         customStyles={
           {
             // wrapper: {
@@ -102,12 +143,15 @@ export default function SearchBox() {
             />
             <Icon name="close" size={24} />
           </View>
-          <SafeAreaView style={{marginBottom: 65, marginTop: 10}}>
+          <SafeAreaView style={{marginBottom: 65, marginTop: 10, flexGrow: 1}}>
             {flatlistVisiblity ? (
               <FlatList
                 data={listData}
+                bounces={false}
+                maxToRenderPerBatch={3}
                 renderItem={renderItem}
                 initialNumToRender={2}
+                windowSize={5}
                 keyExtractor={(item) => item.id}
               />
             ) : null}
@@ -153,5 +197,8 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     fontSize: 16,
     // textAlign: 'center',
+  },
+  codeSyntaxContainer: {
+    marginTop: 10,
   },
 });
