@@ -27,9 +27,8 @@ if (Platform.OS === 'android') {
   }
 }
 
-const ListItem = ({title, description, syntax, index, listData}) => {
+const ListItem = ({title, description, syntax, index, setInputValue}) => {
   const [currentIndex, setCurrentIndex] = useState(null);
-
   const onItemPress = (index) => {
     setCurrentIndex(index === currentIndex ? null : index);
     LayoutAnimation.configureNext(
@@ -51,7 +50,7 @@ const ListItem = ({title, description, syntax, index, listData}) => {
         <Text style={styles.description}>{description}</Text>
         <TouchableHighlight
           style={styles.codeSyntaxContainer}
-          onPress={() => console.log(syntax)}>
+          onPress={() => setInputValue(syntax)}>
           <View>
             {index === currentIndex && (
               <SyntaxHighlighter
@@ -71,14 +70,15 @@ const ListItem = ({title, description, syntax, index, listData}) => {
   );
 };
 
-export default function CommandList({listData}) {
+export default function CommandList({listData, setInputValue}) {
+  console.log("from command list", setInputValue)
   return (
     <FlatList
       data={listData}
       bounces={false}
       maxToRenderPerBatch={3}
       renderItem={({item, index}) => (
-        <ListItem {...item} index={index} listData={listData} />
+        <ListItem {...item} index={index} listData={listData} setInputValue={setInputValue}/>
       )}
       initialNumToRender={2}
       windowSize={5}

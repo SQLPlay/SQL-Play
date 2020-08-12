@@ -22,7 +22,7 @@ import commandsList from '../data/commands.json';
 import {debounce} from '../utils/utils';
 import CommandList from './CommandList';
 
-export default function SearchBox() {
+export default function SearchBox({setInputValue}) {
   const refRBSheet = useRef();
   const [flatlistVisiblity, setFlatlistVisiblity] = useState(false);
   const [listData, setListData] = useState(commandsList);
@@ -85,7 +85,9 @@ export default function SearchBox() {
             <Icon name="close" size={24} />
           </View>
           <SafeAreaView style={{marginBottom: 65, marginTop: 10, flexGrow: 1}}>
-            {flatlistVisiblity && <CommandList listData={listData} />}
+            {flatlistVisiblity && (
+              <CommandList listData={listData} setInputValue={setInputValue} />
+            )}
           </SafeAreaView>
         </View>
       </RBSheet>

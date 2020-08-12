@@ -2,11 +2,11 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import SearchBox from './SearchBox';
 
-export default function AppBar() {
+export default function AppBar({setInputValue}) {
   return (
     <View style={styles.appBar}>
       <Text style={styles.appBarTxt}>SQL Playground</Text>
-      <SearchBox/>
+      <SearchBox setInputValue={setInputValue}/>
     </View>
   );
 }

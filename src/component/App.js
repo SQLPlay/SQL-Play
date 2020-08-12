@@ -84,7 +84,7 @@ const App = () => {
       <StatusBar barStyle="dark-content" backgroundColor="#c8b900" />
       <SafeAreaView>
         <View style={styles.outerContainer}>
-          <AppBar />
+          <AppBar setInputValue={setInputValue}/>
           <View style={styles.innercontainer}>
             <InputContainer
               inputValue={inputValue}
