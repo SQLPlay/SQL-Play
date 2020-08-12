@@ -86,7 +86,7 @@ export default function SearchBox({setInputValue}) {
           </View>
           <SafeAreaView style={{marginBottom: 65, marginTop: 10, flexGrow: 1}}>
             {flatlistVisiblity && (
-              <CommandList listData={listData} setInputValue={setInputValue} />
+              <CommandList listData={listData} setInputValue={setInputValue} refRBSheet={refRBSheet}/>
             )}
           </SafeAreaView>
         </View>

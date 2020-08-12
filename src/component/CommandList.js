@@ -27,7 +27,8 @@ if (Platform.OS === 'android') {
   }
 }
 
-const ListItem = ({title, description, syntax, index, setInputValue}) => {
+const ListItem = (props) => {
+  const {title, description, syntax, index, setInputValue, refRBSheet} = props;
   const [currentIndex, setCurrentIndex] = useState(null);
   const onItemPress = (index) => {
     setCurrentIndex(index === currentIndex ? null : index);
@@ -38,6 +39,11 @@ const ListItem = ({title, description, syntax, index, setInputValue}) => {
         LayoutAnimation.Properties.opacity,
       ),
     );
+  };
+
+  const onSyntaxPress = (syntax) => {
+    setInputValue(syntax);
+    refRBSheet.current.close();
   };
   return (
     <TouchableWithoutFeedback onPress={() => onItemPress(index)}>
@@ -50,7 +56,7 @@ const ListItem = ({title, description, syntax, index, setInputValue}) => {
         <Text style={styles.description}>{description}</Text>
         <TouchableHighlight
           style={styles.codeSyntaxContainer}
-          onPress={() => setInputValue(syntax)}>
+          onPress={() => onSyntaxPress(syntax)}>
           <View>
             {index === currentIndex && (
               <SyntaxHighlighter
@@ -70,15 +76,21 @@ const ListItem = ({title, description, syntax, index, setInputValue}) => {
   );
 };
 
-export default function CommandList({listData, setInputValue}) {
-  console.log("from command list", setInputValue)
+export default function CommandList({listData, setInputValue, refRBSheet}) {
+  console.log('from command list', setInputValue);
   return (
     <FlatList
       data={listData}
       bounces={false}
       maxToRenderPerBatch={3}
       renderItem={({item, index}) => (
-        <ListItem {...item} index={index} listData={listData} setInputValue={setInputValue}/>
+        <ListItem
+          {...item}
+          index={index}
+          listData={listData}
+          setInputValue={setInputValue}
+          refRBSheet={refRBSheet}
+        />
       )}
       initialNumToRender={2}
       windowSize={5}
