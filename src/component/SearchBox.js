@@ -22,8 +22,6 @@ import commandsList from '../data/commands.json';
 import {debounce} from '../utils/utils';
 import CommandList from './CommandList';
 
-
-
 export default function SearchBox() {
   const refRBSheet = useRef();
   const [flatlistVisiblity, setFlatlistVisiblity] = useState(false);
@@ -64,8 +62,6 @@ export default function SearchBox() {
     debounce(setListData(filteredArr));
   };
 
-
-
   return (
     <>
       <Icon name="search" size={24} onPress={openTabSheet} />
@@ -89,7 +85,7 @@ export default function SearchBox() {
             <Icon name="close" size={24} />
           </View>
           <SafeAreaView style={{marginBottom: 65, marginTop: 10, flexGrow: 1}}>
-            {flatlistVisiblity && <CommandList listData={listData}/>}
+            {flatlistVisiblity && <CommandList listData={listData} />}
           </SafeAreaView>
         </View>
       </RBSheet>

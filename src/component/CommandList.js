@@ -27,7 +27,7 @@ if (Platform.OS === 'android') {
   }
 }
 
-const ListItem = ({title, description, index, listData}) => {
+const ListItem = ({title, description, syntax, index, listData}) => {
   const [currentIndex, setCurrentIndex] = useState(null);
 
   const onItemPress = (index) => {
@@ -45,27 +45,27 @@ const ListItem = ({title, description, index, listData}) => {
       <View style={styles.item}>
         <View styles={styles.header}>
           <Text style={styles.title}>{title}</Text>
-          <Icon
-            name="arrow-drop-down"
-            size={26}
-            onPress={() => onItemPress(index)}
-          />
+          <Icon name="arrow-drop-down" size={36} style={styles.dropDownIcon} />
         </View>
 
         <Text style={styles.description}>{description}</Text>
-        <View style={styles.codeSyntaxContainer}>
-          {index === currentIndex && (
-            <SyntaxHighlighter
-              fontSize={14}
-              language="sql"
-              wrapLines={true}
-              style={tomorrow}
-              wrapLines={true}
-              highlighter="hljs">
-              {listData[index].syntax}
-            </SyntaxHighlighter>
-          )}
-        </View>
+        <TouchableHighlight
+          style={styles.codeSyntaxContainer}
+          onPress={() => console.log(syntax)}>
+          <View>
+            {index === currentIndex && (
+              <SyntaxHighlighter
+                fontSize={14}
+                language="sql"
+                wrapLines={true}
+                // style={tomorrow}
+                wrapLines={true}
+                highlighter="hljs">
+                {syntax}
+              </SyntaxHighlighter>
+            )}
+          </View>
+        </TouchableHighlight>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -99,12 +99,15 @@ const styles = StyleSheet.create({
     marginVertical: 2,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: "space-between"
+    position: 'relative',
+  },
+  dropDownIcon: {
+    position: 'absolute',
+    right: 5,
+    top: -5,
   },
   title: {
     fontSize: 18,
-    borderWidth: 1,
   },
   description: {
     fontSize: 16,
