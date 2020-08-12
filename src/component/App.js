@@ -34,7 +34,7 @@ const {height, width} = Dimensions.get('window');
 const App = () => {
   const [tableData, setTableData] = useState({header: [], rows: []}); // header rows with value
   const tableWidths = useRef([]);
-  const [inputValue, setInputValue] = useState('SELECT * FROM \nemployees');
+  const [inputValue, setInputValue] = useState('SELECT * FROM employees');
 
 
 
@@ -80,7 +80,7 @@ const App = () => {
 
   return (
     <>
-      <Admob />
+      {/* <Admob /> */}
       <StatusBar barStyle="dark-content" backgroundColor="#c8b900" />
       <SafeAreaView>
         <View style={styles.outerContainer}>
