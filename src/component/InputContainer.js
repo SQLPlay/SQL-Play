@@ -10,8 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import rnTextSize from 'react-native-text-size';
 
-// import SyntaxHighlighter from 'react-native-syntax-highlighter';
-// import {vs} from 'react-syntax-highlighter/styles/hljs';
+
 
 
 const {height, width} = Dimensions.get('window');
