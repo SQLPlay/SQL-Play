@@ -5,23 +5,20 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import rnTextSize from 'react-native-text-size';
 
-
-
-
-const {height, width} = Dimensions.get('window');
+// import SyntaxHighlighter from 'react-native-syntax-highlighter';
+// import {vs} from 'react-syntax-highlighter/styles/hljs';
 
 export default function InputContainer({inputValue, setInputValue}) {
+
   return (
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
       <TextInput
         style={styles.input}
-        onChangeText={onInputChange}
+        onChangeText={(text) => setInputValue(text)}
         multiline
         textAlignVertical="top"
         value={inputValue}
