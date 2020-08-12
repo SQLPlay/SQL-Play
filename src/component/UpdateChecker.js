@@ -10,7 +10,7 @@ const fetchAppDetails = async () => {
   const res = await fetch(appInfoURL);
   const body = await res.json();
   const info = {version: body.version, whatsNew: body.whatsNew};
-  console.log(info);
+  // console.log(info);
   return info;
 };
 

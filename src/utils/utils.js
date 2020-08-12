@@ -4,7 +4,7 @@ export const getLargestWidths = async (arr) => {
   // first remap array with indexed
   const remappedArr = arr[0].map((_, idx) => arr.map((row) => row[idx]));
 
-  console.log('remapped', remappedArr);
+  // console.log('remapped', remappedArr);
   //now find the highest length in the remapped array
   const largestValues = remappedArr.map((item) => {
     // console.log('map ', item);
@@ -20,7 +20,7 @@ export const getLargestWidths = async (arr) => {
     }, '');
   });
 
-  console.log('largest values', largestValues);
+  // console.log('largest values', largestValues);
   const widths = await Promise.all(
     largestValues.map(async (item) => {
       const val = await rnTextSize.measure({text: item, width: 220});
@@ -28,18 +28,28 @@ export const getLargestWidths = async (arr) => {
     }),
   );
 
-  console.log(widths);
+  // console.log(widths);
 
   return widths;
 };
 
 export const debounce = (callback, delay = 250) => {
-  let timeoutId
+  let timeoutId;
   return (...args) => {
-    clearTimeout(timeoutId)
+    clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {
-      timeoutId = null
-      callback(...args)
-    }, delay)
+      timeoutId = null;
+      callback(...args);
+    }, delay);
+  };
+};
+
+// returns 75/50 true false
+export const shouldShowAd = () => {
+  const rand = Math.floor(Math.random() * 4);
+  if (rand > 1) {
+    return true;
+  } else {
+    return false;
   }
-}
+};

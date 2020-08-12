@@ -18,25 +18,24 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import {AdMobInterstitial} from 'react-native-admob';
 import {ExecuteQuery} from '../utils/storage';
 
-import {getLargestWidths} from '../utils/utils';
+import {getLargestWidths, shouldShowAd} from '../utils/utils';
 import AppBar from './AppBar';
 import Table from './Table';
 import RunButton from './RunButton';
 import InputContainer from './InputContainer';
-import Admob from './AdMob';
 import UpdateChecker from './UpdateChecker';
 
-const {height, width} = Dimensions.get('window');
+//set app id and load ad
+AdMobInterstitial.setAdUnitID('ca-app-pub-3940256099942544/1033173712');
+AdMobInterstitial.requestAd();
 
 const App = () => {
   const [tableData, setTableData] = useState({header: [], rows: []}); // header rows with value
   const tableWidths = useRef([]);
   const [inputValue, setInputValue] = useState('SELECT * FROM employees');
-
-
 
   const runQuery = async () => {
     ToastAndroid.showWithGravity(
@@ -49,10 +48,21 @@ const App = () => {
       // execute the query
       const res = await ExecuteQuery(inputValue);
 
+      AdMobInterstitial.isReady((isReady) => {
+        if (isReady) {
+          //if true only show ad
+          if (shouldShowAd()) {
+            AdMobInterstitial.showAd();
+          }
+        } else {
+          AdMobInterstitial.requestAd().then(() => AdMobInterstitial.showAd());
+        }
+      });
+
       const len = res.rows.length;
 
       if (len < 1) {
-        console.log('nothing found');
+        // console.log('nothing found');
         ToastAndroid.showWithGravity(
           'Query Executed',
           ToastAndroid.SHORT,
@@ -80,11 +90,10 @@ const App = () => {
 
   return (
     <>
-      {/* <Admob /> */}
       <StatusBar barStyle="dark-content" backgroundColor="#c8b900" />
       <SafeAreaView>
         <View style={styles.outerContainer}>
-          <AppBar setInputValue={setInputValue}/>
+          <AppBar setInputValue={setInputValue} />
           <View style={styles.innercontainer}>
             <InputContainer
               inputValue={inputValue}

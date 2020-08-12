@@ -77,7 +77,6 @@ const ListItem = (props) => {
 };
 
 export default function CommandList({listData, setInputValue, refRBSheet}) {
-  console.log('from command list', setInputValue);
   return (
     <FlatList
       data={listData}
