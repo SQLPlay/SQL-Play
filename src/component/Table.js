@@ -50,8 +50,8 @@ const styles = StyleSheet.create({
   },
   outPutContainer: {
     flex: 1,
-    marginBottom: 50,
-    height: '100%',
+    marginBottom: 235,
+    marginTop: 10,
     width: '100%',
   },
 });

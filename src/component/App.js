@@ -45,9 +45,7 @@ const App = () => {
     );
 
     try {
-      // execute the query
-      const res = await ExecuteQuery(inputValue);
-
+      //show ad
       AdMobInterstitial.isReady((isReady) => {
         if (isReady) {
           //if true only show ad
@@ -58,6 +56,10 @@ const App = () => {
           AdMobInterstitial.requestAd().then(() => AdMobInterstitial.showAd());
         }
       });
+
+
+      // execute the query
+      const res = await ExecuteQuery(inputValue);
 
       const len = res.rows.length;
 
