@@ -15,6 +15,7 @@ import {
   ActivityIndicator,
   Dimensions,
   BackHandler,
+  Modal,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -30,20 +31,21 @@ import UpdateChecker from './UpdateChecker';
 
 //set app id and load ad
 AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
-AdMobInterstitial.requestAd();
+AdMobInterstitial.isReady((isReady) => {
+  if (!isReady) {
+    AdMobInterstitial.requestAd();
+  }
+});
 
 const App = () => {
   const [tableData, setTableData] = useState({header: [], rows: []}); // header rows with value
   const tableWidths = useRef([]);
   const [inputValue, setInputValue] = useState('SELECT * FROM employees');
+  const [loaderVisibility, setLoaderVisibility] = useState(false);
 
   const runQuery = async () => {
-    ToastAndroid.showWithGravity(
-      'Executing Query',
-      ToastAndroid.SHORT,
-      ToastAndroid.BOTTOM,
-    );
-
+    setLoaderVisibility(true);
+ 
     try {
       // execute the query
       const res = await ExecuteQuery(inputValue);
@@ -62,16 +64,6 @@ const App = () => {
 
       const len = res.rows.length;
 
-      if (len < 1) {
-        // console.log('nothing found');
-        ToastAndroid.showWithGravity(
-          'Query Executed',
-          ToastAndroid.SHORT,
-          ToastAndroid.CENTER,
-        );
-        return;
-      }
-
       const header = Object.keys(res.rows.item(0)).reverse();
       const rowsArr = [];
 
@@ -82,9 +74,12 @@ const App = () => {
       // pass the header and result arr to get the largest widths of their respective column
       tableWidths.current = await getLargestWidths([header, ...rowsArr]);
       // console.log(tableWidths);
+      setLoaderVisibility(false);
+
 
       setTableData({header: header, rows: rowsArr});
     } catch (error) {
+      setLoaderVisibility(false);
       Alert.alert('Error in DB', error.message);
     }
   };
@@ -93,6 +88,11 @@ const App = () => {
     <>
       <StatusBar barStyle="dark-content" backgroundColor="#c8b900" />
       <SafeAreaView>
+        <Modal visible={loaderVisibility} transparent={true}>
+          <View style={styles.modalStyle}>
+            <ActivityIndicator size={50} color="gold" />
+          </View>
+        </Modal>
         <View style={styles.outerContainer}>
           <AppBar setInputValue={setInputValue} />
           <View style={styles.innercontainer}>
@@ -118,6 +118,12 @@ const styles = StyleSheet.create({
   },
   innercontainer: {
     padding: 5,
+  },
+  modalStyle: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#000000a1',
   },
 });
 
