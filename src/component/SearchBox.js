@@ -26,7 +26,7 @@ export default function SearchBox({setInputValue}) {
   const refRBSheet = useRef();
   const [flatlistVisiblity, setFlatlistVisiblity] = useState(false);
   const [listData, setListData] = useState(commandsList);
-  const [textInput, setTextInput] = useState('');
+  const [searchInput, setSearchInput] = useState('');
 
   const openTabSheet = () => {
     refRBSheet.current.open();
@@ -41,26 +41,25 @@ export default function SearchBox({setInputValue}) {
     }, 350);
   };
 
-  const onInputChange = (value) => {
-    setTextInput(value);
+useEffect(() => {
+  const filterData = () => {
+    return commandsList.filter((item) => {
+      const query = searchInput.toLowerCase();
+      // console.log(item);
+      const keywords = `${item.title}  ${item.tag}  ${item.description}`;
+      const index = keywords.toLowerCase().indexOf(query);
 
-    console.log(value);
-
-    const filterData = () => {
-      return commandsList.filter((item) => {
-        const val = value.toLowerCase();
-        // console.log(item);
-        const keywords = `${item.title}  ${item.tag}  ${item.description}`;
-        const index = keywords.toLowerCase().indexOf(val);
-
-        return index !== -1;
-      });
-    };
-
-    const filteredArr = filterData();
-    // console.log(filterData(), value);
-    debounce(setListData(filteredArr));
+      return index !== -1;
+    });
   };
+
+  const filteredArr = filterData();
+  // console.log(filterData(), value);
+
+  debounce(setListData(filteredArr));
+}, [searchInput])
+
+
 
   return (
     <>
@@ -78,15 +77,19 @@ export default function SearchBox({setInputValue}) {
 
             <TextInput
               style={styles.searchInput}
-              value={textInput}
-              onChangeText={onInputChange}
+              value={searchInput}
+              onChangeText={(val)=>setSearchInput(val)}
               placeholder="Search Query"
             />
-            <Icon name="close" size={24} />
+            <Icon name="close" size={24} onPress={() => setSearchInput('')} />
           </View>
           <SafeAreaView style={{marginBottom: 65, marginTop: 10, flexGrow: 1}}>
             {flatlistVisiblity && (
-              <CommandList listData={listData} setInputValue={setInputValue} refRBSheet={refRBSheet}/>
+              <CommandList
+                listData={listData}
+                setInputValue={setInputValue}
+                refRBSheet={refRBSheet}
+              />
             )}
           </SafeAreaView>
         </View>

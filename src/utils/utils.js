@@ -28,7 +28,7 @@ export const getLargestWidths = async (arr) => {
     }),
   );
 
-  // console.log(widths);
+  // (console.log)(widths);
 
   return widths;
 };
