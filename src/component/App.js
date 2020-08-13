@@ -29,7 +29,7 @@ import InputContainer from './InputContainer';
 import UpdateChecker from './UpdateChecker';
 
 //set app id and load ad
-AdMobInterstitial.setAdUnitID('ca-app-pub-3940256099942544/1033173712');
+AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
 AdMobInterstitial.requestAd();
 
 const App = () => {
@@ -45,6 +45,9 @@ const App = () => {
     );
 
     try {
+      // execute the query
+      const res = await ExecuteQuery(inputValue);
+
       //show ad
       AdMobInterstitial.isReady((isReady) => {
         if (isReady) {
@@ -56,10 +59,6 @@ const App = () => {
           AdMobInterstitial.requestAd().then(() => AdMobInterstitial.showAd());
         }
       });
-
-
-      // execute the query
-      const res = await ExecuteQuery(inputValue);
 
       const len = res.rows.length;
 
