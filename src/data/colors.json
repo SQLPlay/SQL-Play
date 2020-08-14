@@ -1,5 +1,7 @@
 {
     "primaryYellow": "#ffea00",
     "darkBGColor": "#121212",
-    "white": "#ffffff"
+    "lightDark": "#ffffff08",
+    "white": "#ffffff",
+    "surfaceDark": "#000099"
 }

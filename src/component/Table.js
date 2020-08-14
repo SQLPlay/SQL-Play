@@ -2,10 +2,18 @@ import React from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
 import {Table, Row, Rows} from 'react-native-table-component';
 
+import {
+  DynamicStyleSheet,
+  DynamicValue,
+  useDynamicValue,
+  ColorSchemeProvider,
+} from 'react-native-dynamic';
+
 export default function TableData({header, rows, tableWidths}) {
+  const styles = useDynamicValue(dynamicStyles);
   return (
     <>
-      <Text>Output</Text>
+      <Text style={styles.outputText}>Output</Text>
 
       <ScrollView horizontal={true} bounces={false}>
         <View style={styles.outPutContainer}>
@@ -30,7 +38,10 @@ export default function TableData({header, rows, tableWidths}) {
   );
 }
 
-const styles = StyleSheet.create({
+const dynamicStyles = new DynamicStyleSheet({
+  outputText: {
+    color: new DynamicValue('black', 'white'),
+  },
   tableBorder: {
     borderWidth: 2,
     borderColor: '#fdd835',
@@ -45,8 +56,7 @@ const styles = StyleSheet.create({
   },
   rowTxt: {
     margin: 6,
-    // color: "#fff"
-
+    color: new DynamicValue('black', 'white'),
   },
   outPutContainer: {
     flex: 1,

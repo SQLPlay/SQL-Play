@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {
   DynamicStyleSheet,
   DynamicValue,
   useDynamicValue,
 } from 'react-native-dynamic';
 
-// import SyntaxHighlighter from 'react-native-syntax-highlighter';
-// import {vs} from 'react-syntax-highlighter/styles/hljs';
+import {lightDark} from '../data/colors.json'
 
 export default function InputContainer({inputValue, setInputValue}) {
   const styles = useDynamicValue(dynamicStyles);
@@ -25,6 +25,7 @@ export default function InputContainer({inputValue, setInputValue}) {
         style={styles.input}
         onChangeText={(text) => setInputValue(text)}
         multiline
+        placeholderTextColor="gray"
         textAlignVertical="top"
         value={inputValue}
         autoCorrect={false}
@@ -51,9 +52,12 @@ const dynamicStyles = new DynamicStyleSheet({
     opacity: 1,
     height: 120,
     color: new DynamicValue('black', 'white'),
+    backgroundColor: new DynamicValue('white', lightDark)
+
   },
   inputHeader: {
     fontSize: 16,
+    color: new DynamicValue('black', 'white'),
   },
   deleteBtn: {
     position: 'absolute',

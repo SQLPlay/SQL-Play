@@ -28,7 +28,7 @@ import Table from './Table';
 import RunButton from './RunButton';
 import InputContainer from './InputContainer';
 import UpdateChecker from './UpdateChecker';
-
+import {darkBGColor} from '../data/colors.json'
 //set app id and load ad
 AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
 AdMobInterstitial.isReady((isReady) => {
@@ -118,7 +118,7 @@ const dynamicStyles = new DynamicStyleSheet({
   outerContainer: {
     height: '100%',
     width: '100%',
-    backgroundColor: new DynamicValue('white', 'black'),
+    backgroundColor: new DynamicValue('white', darkBGColor),
   },
   innercontainer: {
     padding: 5,

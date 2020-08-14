@@ -16,10 +16,19 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
+import {
+  DynamicStyleSheet,
+  DynamicValue,
+  useDynamicValue,
+  useDarkMode,
+} from 'react-native-dynamic';
+
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
-import {tomorrow} from 'react-syntax-highlighter/styles/hljs';
+import {vs2015, defaultStyle} from 'react-syntax-highlighter/styles/hljs';
+import {surfaceDark} from '../data/colors.json'
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -30,6 +39,9 @@ if (Platform.OS === 'android') {
 const ListItem = (props) => {
   const {title, description, syntax, index, setInputValue, refRBSheet} = props;
   const [currentIndex, setCurrentIndex] = useState(null);
+  const styles = useDynamicValue(dynamicStyles);
+
+  const isDark = useDarkMode()
   const onItemPress = (index) => {
     setCurrentIndex(index === currentIndex ? null : index);
     LayoutAnimation.configureNext(
@@ -63,7 +75,7 @@ const ListItem = (props) => {
                 fontSize={14}
                 language="sql"
                 wrapLines={true}
-                // style={tomorrow}
+                style={isDark ? vs2015 : defaultStyle}
                 wrapLines={true}
                 highlighter="hljs">
                 {syntax}
@@ -98,13 +110,14 @@ export default function CommandList({listData, setInputValue, refRBSheet}) {
   );
 }
 
-const styles = StyleSheet.create({
+const dynamicStyles = new DynamicStyleSheet({
   container: {
     padding: 5,
     height: '100%',
   },
   item: {
     borderWidth: 1,
+    borderColor: "gray",
     borderRadius: 5,
     padding: 10,
     marginVertical: 2,
@@ -119,9 +132,11 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
+    color: new DynamicValue('black', '#ffffffe7'),
   },
   description: {
     fontSize: 16,
+    color: new DynamicValue('black', '#ffffffe7'),
   },
 
   codeSyntaxContainer: {
