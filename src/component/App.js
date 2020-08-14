@@ -44,8 +44,7 @@ const App = () => {
   const [loaderVisibility, setLoaderVisibility] = useState(false);
 
   const styles = useDynamicValue(dynamicStyles);
-  const isDarkMode = useColorScheme();
-  console.log(isDarkMode);
+
 
   const runQuery = async () => {
     setLoaderVisibility(true);

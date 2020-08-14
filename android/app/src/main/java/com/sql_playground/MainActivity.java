@@ -1,7 +1,8 @@
 package com.sql_playground;
 
 import com.facebook.react.ReactActivity;
-
+import android.content.Intent; 
+import android.content.res.Configuration;
 public class MainActivity extends ReactActivity {
 
   /**
@@ -12,4 +13,11 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "SQL_PlayGround";
   }
+
+  @Override
+  public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+    getReactInstanceManager().onConfigurationChanged(this, newConfig);
+  }
 }
+
