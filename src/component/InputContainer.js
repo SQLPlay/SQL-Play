@@ -7,12 +7,17 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  DynamicStyleSheet,
+  DynamicValue,
+  useDynamicValue,
+} from 'react-native-dynamic';
 
 // import SyntaxHighlighter from 'react-native-syntax-highlighter';
 // import {vs} from 'react-syntax-highlighter/styles/hljs';
 
 export default function InputContainer({inputValue, setInputValue}) {
-
+  const styles = useDynamicValue(dynamicStyles);
   return (
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
@@ -31,12 +36,11 @@ export default function InputContainer({inputValue, setInputValue}) {
         onPress={() => setInputValue('')}>
         <Icon size={28} name="text-box-remove" color="#e74c3c" />
       </TouchableOpacity>
-
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const dynamicStyles = new DynamicStyleSheet({
   input: {
     borderColor: 'gray',
     borderWidth: 1,
@@ -45,8 +49,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 10,
     opacity: 1,
-    height: 120
-    // color: "transparent"
+    height: 120,
+    color: new DynamicValue('black', 'white'),
   },
   inputHeader: {
     fontSize: 16,

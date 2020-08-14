@@ -2,21 +2,21 @@ import React, {useState, useRef, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
-  ScrollView,
   View,
   Text,
   StatusBar,
-  TextInput,
-  Pressable,
-  Button,
   Alert,
-  ToastAndroid,
-  TouchableOpacity,
   ActivityIndicator,
-  Dimensions,
-  BackHandler,
   Modal,
+  useColorScheme
 } from 'react-native';
+
+import {
+  DynamicStyleSheet,
+  DynamicValue,
+  useDynamicValue,
+  ColorSchemeProvider,
+} from 'react-native-dynamic';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AdMobInterstitial} from 'react-native-admob';
@@ -43,9 +43,13 @@ const App = () => {
   const [inputValue, setInputValue] = useState('SELECT * FROM employees');
   const [loaderVisibility, setLoaderVisibility] = useState(false);
 
+  const styles = useDynamicValue(dynamicStyles);
+  const isDarkMode = useColorScheme();
+  console.log(isDarkMode);
+
   const runQuery = async () => {
     setLoaderVisibility(true);
- 
+
     try {
       // execute the query
       const res = await ExecuteQuery(inputValue);
@@ -76,7 +80,6 @@ const App = () => {
       // console.log(tableWidths);
       setLoaderVisibility(false);
 
-
       setTableData({header: header, rows: rowsArr});
     } catch (error) {
       setLoaderVisibility(false);
@@ -86,35 +89,37 @@ const App = () => {
 
   return (
     <>
-      <StatusBar barStyle="dark-content" backgroundColor="#c8b900" />
-      <SafeAreaView>
-        <Modal visible={loaderVisibility} transparent={true}>
-          <View style={styles.modalStyle}>
-            <ActivityIndicator size={50} color="gold" />
-          </View>
-        </Modal>
-        <View style={styles.outerContainer}>
-          <AppBar setInputValue={setInputValue} />
-          <View style={styles.innercontainer}>
-            <InputContainer
-              inputValue={inputValue}
-              setInputValue={setInputValue}
-            />
-            <Table {...tableData} tableWidths={tableWidths} />
-          </View>
+      <ColorSchemeProvider>
+        <StatusBar barStyle="dark-content" backgroundColor="#c8b900" />
+        <SafeAreaView>
+          <Modal visible={loaderVisibility} transparent={true}>
+            <View style={styles.modalStyle}>
+              <ActivityIndicator size={50} color="gold" />
+            </View>
+          </Modal>
+          <View style={styles.outerContainer}>
+            <AppBar setInputValue={setInputValue} />
+            <View style={styles.innercontainer}>
+              <InputContainer
+                inputValue={inputValue}
+                setInputValue={setInputValue}
+              />
+              <Table {...tableData} tableWidths={tableWidths} />
+            </View>
 
-          <RunButton runQuery={runQuery} />
-        </View>
-      </SafeAreaView>
+            <RunButton runQuery={runQuery} />
+          </View>
+        </SafeAreaView>
+      </ColorSchemeProvider>
     </>
   );
 };
 
-const styles = StyleSheet.create({
+const dynamicStyles = new DynamicStyleSheet({
   outerContainer: {
     height: '100%',
     width: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: new DynamicValue('white', 'black'),
   },
   innercontainer: {
     padding: 5,
