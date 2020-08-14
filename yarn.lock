@@ -6138,6 +6138,11 @@ rimraf@~2.2.6:
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
 
+rn-in-app-review@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/rn-in-app-review/-/rn-in-app-review-0.0.7.tgz#7131d5775505372c0acc6f0ff02bf90191b0753f"
+  integrity sha512-uHfp4OqZLanmTc30HskXh9GUeEQaTLrQ7WxOdkIBo3xH3KC4AWO43hZ5ciE8r1mk6+pT4EwHOmKb1h+xT6yMLQ==
+
 rsvp@^4.8.4:
   version "4.8.5"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.5.tgz#c8f155311d167f68f21e168df71ec5b083113734"

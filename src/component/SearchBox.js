@@ -1,20 +1,5 @@
 import React, {useRef, useEffect, useState, useCallback} from 'react';
-import {
-  View,
-  Button,
-  StyleSheet,
-  Text,
-  ScrollView,
-  TextInput,
-  FlatList,
-  SafeAreaView,
-  TouchableHighlight,
-  TouchableOpacity,
-  Platform,
-  UIManager,
-  LayoutAnimation,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {View, TextInput, SafeAreaView} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -22,7 +7,6 @@ import {
   DynamicStyleSheet,
   DynamicValue,
   useDynamicValue,
-  ColorSchemeProvider,
 } from 'react-native-dynamic';
 
 import commandsList from '../data/commands.json';
@@ -90,7 +74,12 @@ export default function SearchBox({setInputValue}) {
               onChangeText={(val) => setSearchInput(val)}
               placeholder="Search Query"
             />
-            <Icon name="close" size={24} color="gray" onPress={() => setSearchInput('')} />
+            <Icon
+              name="close"
+              size={24}
+              color="gray"
+              onPress={() => setSearchInput('')}
+            />
           </View>
           <SafeAreaView style={{marginBottom: 65, marginTop: 10, flexGrow: 1}}>
             {flatlistVisiblity && (

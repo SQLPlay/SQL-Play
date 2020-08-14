@@ -27,8 +27,12 @@ import AppBar from './AppBar';
 import Table from './Table';
 import RunButton from './RunButton';
 import InputContainer from './InputContainer';
-import UpdateChecker from './UpdateChecker';
+import UpdateChecker from '../utils/updateChecker';
+import "../utils/appReviewer"
 import {darkBGColor} from '../data/colors.json'
+
+
+
 //set app id and load ad
 AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
 AdMobInterstitial.isReady((isReady) => {
