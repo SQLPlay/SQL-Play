@@ -1,5 +1,5 @@
 import React, {useRef, useEffect, useState, useCallback} from 'react';
-import {View, TextInput, SafeAreaView} from 'react-native';
+import {View, TextInput, SafeAreaView, TouchableOpacity} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -54,7 +54,10 @@ export default function SearchBox({setInputValue}) {
 
   return (
     <>
-      <Icon name="search" size={24} onPress={openTabSheet} />
+      <TouchableOpacity onPress={openTabSheet}>
+        <Icon name="search" size={24} />
+      </TouchableOpacity>
+
       <RBSheet
         ref={refRBSheet}
         animationType="fade"
