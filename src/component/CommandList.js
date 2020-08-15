@@ -62,7 +62,7 @@ const ListItem = (props) => {
       <View style={styles.item}>
         <View styles={styles.header}>
           <Text style={styles.title}>{title}</Text>
-          <Icon name="arrow-drop-down" size={36} style={styles.dropDownIcon} />
+          <Icon name="arrow-drop-down" color={"gray"} size={36} style={styles.dropDownIcon} />
         </View>
 
         <Text style={styles.description}>{description}</Text>
