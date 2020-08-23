@@ -3,7 +3,7 @@
   "version": "1.0.3",
   "private": true,
   "description": "A simple and beautiful SQL playground",
-  "whatsNew": "UI updates and improvement",
+  "whatsNew": "Fix in app review",
   "scripts": {
     "postversion": "react-native-version",
     "android": "react-native run-android",
