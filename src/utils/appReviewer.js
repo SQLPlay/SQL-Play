@@ -40,10 +40,11 @@ const launchReview = () => {
 const run = async () => {
   //if data exist then compare it
   const timesOpened = await getAppData(timesOpenedId);
+  const intTimesOpened = +timesOpened;
   if (timesOpened) {
-    await setAppData(timesOpenedId, +timesOpened + 1);
-    console.log('times opened', +timesOpened + 1);
-    if (timesOpened > 5) {
+    await setAppData(timesOpenedId, timesOpened + 1);
+    console.log('times opened', intTimesOpened + 1);
+    if (intTimesOpened > 5) {
       const userAction = await getAppData(userActionId);
       // if user has already given or denied the review dont show popup
       if (!userAction) {
@@ -51,7 +52,7 @@ const run = async () => {
       }
     }
   } else {
-    await setAppData(timesOpenedId, 5);
+    await setAppData(timesOpenedId, 1);
     console.log('not found data');
   }
 };
