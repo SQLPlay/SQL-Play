@@ -1,6 +1,6 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, Text, View, Alert, Linking} from 'react-native';
+import {Alert, Linking} from 'react-native';
 import pkginfo from '../../package.json';
+import {setAppData, getAppData} from './storage';
 
 const appInfoURL =
   'https://github.com/ShivamJoker/SQL-Playground/raw/master/package.json';
@@ -23,7 +23,7 @@ const showAlert = (msg) => {
     [
       {
         text: 'Remind me later',
-        onPress: () => console.log('Ask me later pressed'),
+        onPress: saveForLater,
         style: 'cancel',
       },
       {
@@ -36,7 +36,22 @@ const showAlert = (msg) => {
   );
 };
 
+const remindedDateId = 'remindedDate';
+const saveForLater = async () => {
+  const date = new Date().toJSON();
+  setAppData(remindedDateId, date);
+};
+
 const checkIsUpdated = async () => {
+  const remindedDate = await getAppData(remindedDateId);
+  console.log(new Date(remindedDate));
+  const remindFrequencyMS = 48 * 60 * 60 * 1000; // 24hr
+
+  // if time spend is not more than 48hr then dont check
+  if (new Date() - new Date(remindedDate) < remindFrequencyMS) {
+    return;
+  }
+
   const {whatsNew, version} = await fetchAppDetails();
   const localVersion = pkginfo.version;
 

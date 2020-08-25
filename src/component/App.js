@@ -8,7 +8,8 @@ import {
   Alert,
   ActivityIndicator,
   Modal,
-  useColorScheme
+  ToastAndroid,
+  useColorScheme,
 } from 'react-native';
 
 import {
@@ -28,10 +29,8 @@ import Table from './Table';
 import RunButton from './RunButton';
 import InputContainer from './InputContainer';
 import UpdateChecker from '../utils/updateChecker';
-import "../utils/appReviewer"
-import {darkBGColor} from '../data/colors.json'
-
-
+import '../utils/appReviewer';
+import {darkBGColor} from '../data/colors.json';
 
 //set app id and load ad
 AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
@@ -48,7 +47,6 @@ const App = () => {
   const [loaderVisibility, setLoaderVisibility] = useState(false);
 
   const styles = useDynamicValue(dynamicStyles);
-
 
   const runQuery = async () => {
     setLoaderVisibility(true);
@@ -71,6 +69,16 @@ const App = () => {
 
       const len = res.rows.length;
 
+      console.log(res.rows);
+      if (len === 0) {
+        setLoaderVisibility(false);
+        ToastAndroid.showWithGravity(
+          'Query Executed!',
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM,
+        );
+        return;
+      }
       const header = Object.keys(res.rows.item(0)).reverse();
       const rowsArr = [];
 

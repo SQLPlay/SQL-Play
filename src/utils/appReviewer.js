@@ -40,7 +40,7 @@ const launchReview = () => {
 const run = async () => {
   //if data exist then compare it
   const timesOpened = await getAppData(timesOpenedId);
-  const intTimesOpened = +timesOpened;
+  const intTimesOpened = +timesOpened; //convert to int
   if (timesOpened) {
     await setAppData(timesOpenedId, timesOpened + 1);
     console.log('times opened', intTimesOpened + 1);

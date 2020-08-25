@@ -3,14 +3,18 @@ import SQLite from 'react-native-sqlite-storage';
 const db = SQLite.openDatabase({name: 'prepop.db', createFromLocation: 1});
 
 //query execution function with promise
-export const ExecuteQuery = (sql, params = []) => {
-  sql.replace(/^;/, ''); // remove any semicolon and add limit of 150
-  const formattedSQL = `${sql} limit 150`;
+export const ExecuteQuery = (query, params = []) => {
+  query.replace(/^;/, ''); // remove any semicolon 
+
+  if (query.search(/select/i) !== -1) {
+    query =  `${query} limit 150`; //limit of 150 if there is a select
+  }
+  
 
   return new Promise((resolve, reject) => {
     db.transaction((trans) => {
       trans.executeSql(
-        formattedSQL,
+        query,
         params,
         (tx, results) => {
           resolve(results);

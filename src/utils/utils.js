@@ -46,8 +46,8 @@ export const debounce = (callback, delay = 250) => {
 
 // returns 75/50 true false
 export const shouldShowAd = () => {
-  const rand = Math.floor(Math.random() * 4);
-  if (rand > 2) {
+  const rand = Math.floor(Math.random() * 5);
+  if (rand === 1) {
     return true;
   } else {
     return false;
