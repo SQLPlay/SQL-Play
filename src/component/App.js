@@ -57,13 +57,15 @@ const App = () => {
 
       //show ad
       AdMobInterstitial.isReady((isReady) => {
-        if (isReady) {
+        if (shouldShowAd()) {
           //if true only show ad
-          if (shouldShowAd()) {
+          if (isReady) {
             AdMobInterstitial.showAd();
+          } else {
+            AdMobInterstitial.requestAd().then(() =>
+              AdMobInterstitial.showAd(),
+            );
           }
-        } else {
-          AdMobInterstitial.requestAd().then(() => AdMobInterstitial.showAd());
         }
       });
 
