@@ -28,19 +28,19 @@ import AppBar from './AppBar';
 import Table from './Table';
 import RunButton from './RunButton';
 import InputContainer from './InputContainer';
-import UpdateChecker from '../utils/updateChecker';
+import '../utils/updateChecker';
 import '../utils/appReviewer';
-import {darkBGColor} from '../data/colors.json';
+import {darkBGColor} from "../data/colors.json";
 
 //set app id and load ad
 AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
-AdMobInterstitial.isReady((isReady) => {
+AdMobInterstitial.isReady((isReady: boolean) => {
   if (!isReady) {
     AdMobInterstitial.requestAd();
   }
 });
 
-const App = () => {
+const App: React.FC = () => {
   const [tableData, setTableData] = useState({header: [], rows: []}); // header rows with value
   const tableWidths = useRef([]);
   const [inputValue, setInputValue] = useState('SELECT * FROM employees');
@@ -56,7 +56,7 @@ const App = () => {
       const res = await ExecuteQuery(inputValue);
 
       //show ad
-      AdMobInterstitial.isReady((isReady) => {
+      AdMobInterstitial.isReady((isReady: boolean) => {
         if (shouldShowAd()) {
           //if true only show ad
           if (isReady) {
@@ -69,7 +69,7 @@ const App = () => {
         }
       });
 
-      const len = res.rows.length;
+      const len: number = res.rows.length;
 
       console.log(res.rows);
       if (len === 0) {
