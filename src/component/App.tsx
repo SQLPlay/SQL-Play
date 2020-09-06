@@ -20,6 +20,7 @@ import {
 } from 'react-native-dynamic';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// @ts-ignore
 import {AdMobInterstitial} from 'react-native-admob';
 import {ExecuteQuery} from '../utils/storage';
 
@@ -30,7 +31,7 @@ import RunButton from './RunButton';
 import InputContainer from './InputContainer';
 import '../utils/updateChecker';
 import '../utils/appReviewer';
-import {darkBGColor} from "../data/colors.json";
+import {darkBGColor} from '../data/colors.json';
 
 //set app id and load ad
 AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
@@ -40,11 +41,22 @@ AdMobInterstitial.isReady((isReady: boolean) => {
   }
 });
 
+interface tableDataNode {
+  header: Array<string>;
+  rows: Array<Array<any>>;
+}
+
 const App: React.FC = () => {
-  const [tableData, setTableData] = useState({header: [], rows: []}); // header rows with value
-  const tableWidths = useRef([]);
-  const [inputValue, setInputValue] = useState('SELECT * FROM employees');
-  const [loaderVisibility, setLoaderVisibility] = useState(false);
+  const [tableData, setTableData] = useState<tableDataNode>({
+    header: [],
+    rows: [],
+  }); // header rows with value
+
+  const tableWidths = useRef<Array<any>>([]);
+  const [inputValue, setInputValue] = useState<string>(
+    'SELECT * FROM employees',
+  );
+  const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
 
   const styles = useDynamicValue(dynamicStyles);
 
@@ -53,7 +65,7 @@ const App: React.FC = () => {
 
     try {
       // execute the query
-      const res = await ExecuteQuery(inputValue);
+      const res: any = await ExecuteQuery(inputValue);
 
       //show ad
       AdMobInterstitial.isReady((isReady: boolean) => {
@@ -90,8 +102,9 @@ const App: React.FC = () => {
       }
       // pass the header and result arr to get the largest widths of their respective column
       tableWidths.current = await getLargestWidths([header, ...rowsArr]);
-      // console.log(tableWidths);
+      console.log(typeof tableWidths.current[1]);
       setLoaderVisibility(false);
+      // console.log(rowsArr);
 
       setTableData({header: header, rows: rowsArr});
     } catch (error) {

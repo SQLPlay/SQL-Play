@@ -13,16 +13,19 @@ import commandsList from '../data/commands.json';
 import {debounce} from '../utils/utils';
 import CommandList from './CommandList';
 import {darkBGColor} from '../data/colors.json';
+import {SeachInputProp} from './AppBar';
 
-export default function SearchBox({setInputValue}) {
-  const refRBSheet = useRef();
+const SearchBox: React.FC<SeachInputProp> = ({setInputValue}) => {
+  const refRBSheet = useRef<RBSheet>(null);
   const [flatlistVisiblity, setFlatlistVisiblity] = useState(false);
   const [listData, setListData] = useState(commandsList);
   const [searchInput, setSearchInput] = useState('');
 
   const styles = useDynamicValue(dynamicStyles);
   const openTabSheet = () => {
-    refRBSheet.current.open();
+    if (refRBSheet.current !== null) {
+      refRBSheet.current.open();
+    }
     setTimeout(() => {
       setFlatlistVisiblity(true);
     }, 350);
@@ -74,7 +77,7 @@ export default function SearchBox({setInputValue}) {
               style={styles.searchInput}
               value={searchInput}
               placeholderTextColor="gray"
-              onChangeText={(val) => setSearchInput(val)}
+              onChangeText={(val: string) => setSearchInput(val)}
               placeholder="Search Query"
             />
             <Icon
@@ -97,7 +100,9 @@ export default function SearchBox({setInputValue}) {
       </RBSheet>
     </>
   );
-}
+};
+
+export default SearchBox;
 
 const dynamicStyles = new DynamicStyleSheet({
   sheetContainer: {

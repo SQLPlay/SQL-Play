@@ -2,14 +2,18 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import SearchBox from './SearchBox';
 
-export default function AppBar({setInputValue}) {
+export interface SeachInputProp {
+  setInputValue: (query: string) => void;
+}
+
+const AppBar: React.FC<SeachInputProp> = ({setInputValue}) => {
   return (
     <View style={styles.appBar}>
       <Text style={styles.appBarTxt}>SQL Playground</Text>
-      <SearchBox setInputValue={setInputValue}/>
+      <SearchBox setInputValue={setInputValue} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   appBar: {
@@ -26,3 +30,5 @@ const styles = StyleSheet.create({
     color: '#2f3542',
   },
 });
+
+export default AppBar;
