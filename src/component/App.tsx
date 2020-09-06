@@ -19,7 +19,6 @@ import {
   ColorSchemeProvider,
 } from 'react-native-dynamic';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // @ts-ignore
 import {AdMobInterstitial} from 'react-native-admob';
 import {ExecuteQuery} from '../utils/storage';
@@ -102,7 +101,7 @@ const App: React.FC = () => {
       }
       // pass the header and result arr to get the largest widths of their respective column
       tableWidths.current = await getLargestWidths([header, ...rowsArr]);
-      console.log(typeof tableWidths.current[1]);
+      
       setLoaderVisibility(false);
       // console.log(rowsArr);
 
