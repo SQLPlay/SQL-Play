@@ -48,7 +48,7 @@ interface tableDataNode {
 const App: React.FC = () => {
   const [tableData, setTableData] = useState<tableDataNode>({
     header: [],
-    rows: [],
+    rows: [[]],
   }); // header rows with value
 
   const tableWidths = useRef<Array<any>>([]);
@@ -92,8 +92,8 @@ const App: React.FC = () => {
         );
         return;
       }
-      const header = Object.keys(res.rows.item(0)).reverse();
-      const rowsArr = [];
+      const header: string[] = Object.keys(res.rows.item(0)).reverse();
+      const rowsArr: any[] = [];
 
       for (let i = 0; i < len; i++) {
         let row = res.rows.item(i);
@@ -101,7 +101,8 @@ const App: React.FC = () => {
       }
       // pass the header and result arr to get the largest widths of their respective column
       tableWidths.current = await getLargestWidths([header, ...rowsArr]);
-      
+      // console.log(([header, ...rowsArr]));
+
       setLoaderVisibility(false);
       // console.log(rowsArr);
 

@@ -17,9 +17,9 @@ import {SeachInputProp} from './AppBar';
 
 const SearchBox: React.FC<SeachInputProp> = ({setInputValue}) => {
   const refRBSheet = useRef<RBSheet>(null);
-  const [flatlistVisiblity, setFlatlistVisiblity] = useState(false);
+  const [flatlistVisiblity, setFlatlistVisiblity] = useState<boolean>(false);
   const [listData, setListData] = useState(commandsList);
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState<string>('');
 
   const styles = useDynamicValue(dynamicStyles);
   const openTabSheet = () => {

@@ -1,17 +1,35 @@
-import SQLite from 'react-native-sqlite-storage';
+import SQLite, {ResultSet, SQLError} from 'react-native-sqlite-storage';
 
-const db = SQLite.openDatabase({name: 'prepop.db', createFromLocation: 1});
+const errorCB = (err: SQLError) => {
+  console.warn('SQL Error: ' + err);
+};
+
+const openCB = () => {
+  console.log('Database OPENED');
+};
+
+const db = SQLite.openDatabase(
+  {
+    name: 'prepop.db',
+    createFromLocation: 1,
+    location: 'default',
+  },
+  openCB,
+  errorCB,
+);
 
 //query execution function with promise
-export const ExecuteQuery = (query, params = []) => {
-  query.replace(/^;/, ''); // remove any semicolon 
+export const ExecuteQuery = (
+  query: string,
+  params = [],
+): Promise<ResultSet> => {
+  query.replace(/^;/, ''); // remove any semicolon
 
   if (query.search(/select/i) !== -1) {
-    query =  `${query} limit 150`; //limit of 150 if there is a select
+    query = `${query} limit 150`; //limit of 150 if there is a select
   }
-  
 
-  return new Promise((resolve, reject) => {
+  return new Promise<ResultSet>((resolve, reject) => {
     db.transaction((trans) => {
       trans.executeSql(
         query,
@@ -35,16 +53,19 @@ const createAppDataTable = async () => {
 };
 
 // setAppDataVal
-export const setAppData = async (id, val) => {
+export const setAppData = async (id: string, val: string) => {
   return await ExecuteQuery(
     `INSERT OR REPLACE INTO appData(id, value) VALUES ("${id}", "${val}");`,
   );
 };
 
 // this will get the string data
-export const getAppData = async (id) => {
+export const getAppData = async (id: string): Promise<string | null> => {
   // destructre it
-  const res = await ExecuteQuery(
+  interface resObj {
+    rows: any;
+  }
+  const res: ResultSet = await ExecuteQuery(
     `SELECT value from appData where id = "${id}"`,
   );
 
@@ -52,7 +73,7 @@ export const getAppData = async (id) => {
   if (res.rows.length !== 0) {
     return res.rows.item(0).value;
   } else {
-    return null ;
+    return null;
   }
 };
 

@@ -1,8 +1,8 @@
 import rnTextSize from 'react-native-text-size';
 
-export const getLargestWidths = async (arr: [[]]) => {
+export const getLargestWidths = async (arr: Array<Array<any>>) => {
   // first remap array with indexed
-  const remappedArr = arr[0].map((_, idx: number) =>
+  const remappedArr: any[] = arr[0].map((_, idx: number) =>
     arr.map((row) => row[idx]),
   );
 
@@ -33,7 +33,7 @@ export const getLargestWidths = async (arr: [[]]) => {
   return widths;
 };
 
-export const debounce = (callback: () => void, delay = 250) => {
+export const debounce = (callback: any, delay = 250) => {
   let timeoutId: ReturnType<typeof setTimeout>;
   return (...args: []) => {
     clearTimeout(timeoutId);
