@@ -1,6 +1,8 @@
 import rnTextSize from 'react-native-text-size';
 
-export const getLargestWidths = async (arr: Array<Array<any>>) => {
+export const getLargestWidths = async (
+  arr: Array<Array<any>>,
+): Promise<Array<number>> => {
   // first remap array with indexed
   const remappedArr: any[] = arr[0].map((_, idx: number) =>
     arr.map((row) => row[idx]),
@@ -23,7 +25,7 @@ export const getLargestWidths = async (arr: Array<Array<any>>) => {
   });
 
   // console.log('largest values', largestValues);
-  const widths = await Promise.all(
+  const widths: Array<number> = await Promise.all(
     largestValues.map(async (item: string) => {
       const val = await rnTextSize.measure({text: item, width: 220});
       return val.width + 18;

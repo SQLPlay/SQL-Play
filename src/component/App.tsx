@@ -51,7 +51,7 @@ const App: React.FC = () => {
     rows: [[]],
   }); // header rows with value
 
-  const tableWidths = useRef<Array<any>>([]);
+  const tableWidths = useRef<Array<number>>([]);
   const [inputValue, setInputValue] = useState<string>(
     'SELECT * FROM employees',
   );
