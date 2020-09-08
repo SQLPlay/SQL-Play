@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
+//@ts-ignore
 import {Table, Row, Rows} from 'react-native-table-component';
 
 import {
@@ -9,7 +10,13 @@ import {
   ColorSchemeProvider,
 } from 'react-native-dynamic';
 
-export default function TableData({header, rows, tableWidths}) {
+interface Props {
+  header: number[];
+  rows: number[];
+  tableWidths: {current: []};
+}
+
+const DataTable: FC<Props> = ({header, rows, tableWidths}) => {
   const styles = useDynamicValue(dynamicStyles);
   return (
     <>
@@ -36,7 +43,8 @@ export default function TableData({header, rows, tableWidths}) {
       </ScrollView>
     </>
   );
-}
+};
+export default DataTable;
 
 const dynamicStyles = new DynamicStyleSheet({
   outputText: {

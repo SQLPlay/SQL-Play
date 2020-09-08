@@ -1,4 +1,11 @@
-import React, {useRef, useEffect, useState, useCallback} from 'react';
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
+  FC,
+  RefObject,
+} from 'react';
 import {
   View,
   Button,
@@ -23,26 +30,35 @@ import {
   useDarkMode,
 } from 'react-native-dynamic';
 
-
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+//@ts-ignore
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
+//@ts-ignore
 import {vs2015, defaultStyle} from 'react-syntax-highlighter/styles/hljs';
-
+import RBSheet from 'react-native-raw-bottom-sheet';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 }
-
-const ListItem = (props) => {
+interface LIProps {
+  title: string;
+  description: string;
+  syntax: string;
+  index: number;
+  id: string;
+  setInputValue: (val: string) => void;
+  refRBSheet: RefObject<RBSheet>;
+}
+const ListItem: FC<LIProps> = (props) => {
   const {title, description, syntax, index, setInputValue, refRBSheet} = props;
-  const [currentIndex, setCurrentIndex] = useState(null);
+
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const styles = useDynamicValue(dynamicStyles);
 
-  const isDark = useDarkMode()
-  const onItemPress = (index) => {
+  const isDark = useDarkMode();
+  const onItemPress = (index: number | null) => {
     setCurrentIndex(index === currentIndex ? null : index);
     LayoutAnimation.configureNext(
       LayoutAnimation.create(
@@ -53,16 +69,23 @@ const ListItem = (props) => {
     );
   };
 
-  const onSyntaxPress = (syntax) => {
+  const onSyntaxPress = (syntax: string) => {
     setInputValue(syntax);
-    refRBSheet.current.close();
+    if (refRBSheet.current !== null) {
+      refRBSheet.current.close();
+    }
   };
   return (
     <TouchableWithoutFeedback onPress={() => onItemPress(index)}>
       <View style={styles.item}>
-        <View styles={styles.header}>
+        <View style={styles.header}>
           <Text style={styles.title}>{title}</Text>
-          <Icon name="arrow-drop-down" color={"gray"} size={36} style={styles.dropDownIcon} />
+          <Icon
+            name="arrow-drop-down"
+            color={'gray'}
+            size={36}
+            style={styles.dropDownIcon}
+          />
         </View>
 
         <Text style={styles.description}>{description}</Text>
@@ -76,7 +99,6 @@ const ListItem = (props) => {
                 language="sql"
                 wrapLines={true}
                 style={isDark ? vs2015 : defaultStyle}
-                wrapLines={true}
                 highlighter="hljs">
                 {syntax}
               </SyntaxHighlighter>
@@ -88,7 +110,19 @@ const ListItem = (props) => {
   );
 };
 
-export default function CommandList({listData, setInputValue, refRBSheet}) {
+interface Props {
+  listData: {
+    id: string;
+    title: string;
+    description: string;
+    syntax: string;
+    index: number;
+  }[];
+  setInputValue: (val: string) => void;
+  refRBSheet: RefObject<RBSheet>;
+}
+const CommandList: FC<Props> = ({listData, setInputValue, refRBSheet}) => {
+  interface renderItemProp {}
   return (
     <FlatList
       data={listData}
@@ -108,7 +142,8 @@ export default function CommandList({listData, setInputValue, refRBSheet}) {
       keyExtractor={(item) => item.id}
     />
   );
-}
+};
+export default CommandList;
 
 const dynamicStyles = new DynamicStyleSheet({
   container: {
@@ -117,7 +152,7 @@ const dynamicStyles = new DynamicStyleSheet({
   },
   item: {
     borderWidth: 1,
-    borderColor: "gray",
+    borderColor: 'gray',
     borderRadius: 5,
     padding: 10,
     marginVertical: 2,

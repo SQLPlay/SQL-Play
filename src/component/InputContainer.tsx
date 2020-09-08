@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, FC} from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,9 +14,14 @@ import {
   useDynamicValue,
 } from 'react-native-dynamic';
 
-import {lightDark} from '../data/colors.json'
+import {lightDark} from '../data/colors.json';
 
-export default function InputContainer({inputValue, setInputValue}) {
+interface Props {
+  inputValue: string;
+  setInputValue: (val: string) => void;
+}
+
+const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
   const styles = useDynamicValue(dynamicStyles);
   return (
     <View>
@@ -39,7 +44,7 @@ export default function InputContainer({inputValue, setInputValue}) {
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 const dynamicStyles = new DynamicStyleSheet({
   input: {
@@ -52,8 +57,7 @@ const dynamicStyles = new DynamicStyleSheet({
     opacity: 1,
     height: 120,
     color: new DynamicValue('black', 'white'),
-    backgroundColor: new DynamicValue('white', lightDark)
-
+    backgroundColor: new DynamicValue('white', lightDark),
   },
   inputHeader: {
     fontSize: 16,

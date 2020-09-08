@@ -16,9 +16,15 @@ import {darkBGColor} from '../data/colors.json';
 import {SeachInputProp} from './AppBar';
 
 const SearchBox: React.FC<SeachInputProp> = ({setInputValue}) => {
+  interface listDataProps {
+    id: string;
+    title: string;
+    description: string;
+    syntax: string;
+  }
   const refRBSheet = useRef<RBSheet>(null);
   const [flatlistVisiblity, setFlatlistVisiblity] = useState<boolean>(false);
-  const [listData, setListData] = useState(commandsList);
+  const [listData, setListData] = useState<listDataProps[]>(commandsList);
   const [searchInput, setSearchInput] = useState<string>('');
 
   const styles = useDynamicValue(dynamicStyles);

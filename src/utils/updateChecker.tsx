@@ -10,12 +10,12 @@ const fetchAppDetails = async () => {
   const res = await fetch(appInfoURL);
   const body = await res.json();
   const info = {version: body.version, whatsNew: body.whatsNew};
-  // console.log(info);
+  console.log(info);
   return info;
 };
 
 // show the alert to user to update app
-const showAlert = (msg) => {
+const showAlert = (msg: string): void => {
   Alert.alert(
     'New Update Available',
     `Whats New ? \n${msg}
@@ -36,24 +36,27 @@ const showAlert = (msg) => {
   );
 };
 
-const remindedDateId = 'remindedDate';
-const saveForLater = async () => {
-  const date = new Date().toJSON();
+const remindedDateId: string = 'remindedDate';
+const saveForLater = async (): Promise<void> => {
+  const date: string = new Date().toJSON();
   setAppData(remindedDateId, date);
 };
 
 const checkIsUpdated = async () => {
-  const remindedDate = await getAppData(remindedDateId);
-  console.log(new Date(remindedDate));
-  const remindFrequencyMS = 48 * 60 * 60 * 1000; // 24hr
+  const remindedDate: string = await getAppData(remindedDateId) ?? '0';
+  // console.log(new Date(remindedDate));
+  const remindFrequencyMS: number = 48 * 60 * 60 * 1000; // 24hr
 
   // if time spend is not more than 48hr then dont check
-  if (new Date() - new Date(remindedDate) < remindFrequencyMS) {
+  const currentDate: number = new Date().valueOf();
+  const prvDate: number = new Date(remindedDate).valueOf();
+
+  if (currentDate - prvDate < remindFrequencyMS) {
     return;
   }
 
-  const {whatsNew, version} = await fetchAppDetails();
-  const localVersion = pkginfo.version;
+  const {whatsNew , version} = await fetchAppDetails();
+  const localVersion: string = pkginfo.version;
 
   if (localVersion !== version) {
     showAlert(whatsNew);

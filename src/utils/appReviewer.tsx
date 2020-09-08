@@ -1,3 +1,4 @@
+// @ts-ignore
 import RnInAppReview from 'rn-in-app-review';
 import {getAppData, setAppData} from './storage';
 import {Alert, ToastAndroid} from 'react-native';
@@ -25,7 +26,7 @@ const showReviewAlert = () => {
 };
 
 const launchReview = () => {
-  RnInAppReview.launchReviewFlow(async (isSuccessful) => {
+  RnInAppReview.launchReviewFlow(async (isSuccessful: boolean) => {
     if (isSuccessful) {
       ToastAndroid.showWithGravity(
         'Thank You!',
@@ -38,22 +39,26 @@ const launchReview = () => {
 };
 
 const run = async () => {
-  //if data exist then compare it
-  const timesOpened = await getAppData(timesOpenedId);
-  const intTimesOpened = +timesOpened; //convert to int
-  if (timesOpened) {
-    await setAppData(timesOpenedId, timesOpened + 1);
-    console.log('times opened', intTimesOpened + 1);
-    if (intTimesOpened > 5) {
-      const userAction = await getAppData(userActionId);
-      // if user has already given or denied the review dont show popup
-      if (!userAction) {
-        showReviewAlert();
+  const getTimesOpened = (): Promise<number> =>
+    getAppData(timesOpenedId).then((data) => {
+      if (typeof data === 'number') {
+        return data;
+      } else {
+        return 0;
       }
+    });
+  //if data exist then compare it
+  const timesOpened: number = (await getTimesOpened()) ?? 0;
+  console.log(typeof timesOpened);
+
+  await setAppData(timesOpenedId, timesOpened + 1);
+
+  if (timesOpened > 5) {
+    const userAction = await getAppData(userActionId);
+    // if user has already given or denied the review dont show popup
+    if (!userAction) {
+      showReviewAlert();
     }
-  } else {
-    await setAppData(timesOpenedId, 1);
-    console.log('not found data');
   }
 };
 

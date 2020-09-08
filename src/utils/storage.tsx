@@ -53,18 +53,18 @@ const createAppDataTable = async () => {
 };
 
 // setAppDataVal
-export const setAppData = async (id: string, val: string) => {
+export const setAppData = async (id: string, val: string | number) => {
   return await ExecuteQuery(
     `INSERT OR REPLACE INTO appData(id, value) VALUES ("${id}", "${val}");`,
   );
 };
 
 // this will get the string data
-export const getAppData = async (id: string): Promise<string | null> => {
+export const getAppData = async (
+  id: string,
+): Promise<string | null> => {
   // destructre it
-  interface resObj {
-    rows: any;
-  }
+
   const res: ResultSet = await ExecuteQuery(
     `SELECT value from appData where id = "${id}"`,
   );

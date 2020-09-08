@@ -1,8 +1,17 @@
-import React from 'react';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import React, {FC} from 'react';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  GestureResponderEvent,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function RunButton({runQuery}) {
+interface Props {
+  runQuery: (event: GestureResponderEvent) => void;
+}
+const RunButton: FC<Props> = ({runQuery}) => {
   return (
     <TouchableOpacity onPress={runQuery} style={styles.runBtn}>
       <Icon
@@ -13,7 +22,9 @@ export default function RunButton({runQuery}) {
       />
     </TouchableOpacity>
   );
-}
+};
+
+export default RunButton;
 
 const styles = StyleSheet.create({
   runBtn: {
