@@ -15,7 +15,7 @@ import {
   useDynamicValue,
 } from 'react-native-dynamic';
 
-import {lightDark} from '../data/colors.json';
+import {lightDark, surfaceDark} from '../data/colors.json';
 
 interface Props {
   inputValue: string;
@@ -38,15 +38,25 @@ const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
         numberOfLines={4}
         placeholder="Type your SQL query"
       />
-      <TouchableOpacity
-        style={styles.deleteBtn}
-        onPress={() => setInputValue('')}>
-        <Icon size={28} name="text-box-remove" color="#e74c3c" />
-      </TouchableOpacity>
+      <View style={styles.sideButtonContainer}>
+        <TouchableOpacity onPress={() => null}>
+          <Icon size={30} name="arrow-up-bold-box" color="#34495e" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.downArrow}
+          onPress={() => null}>
+          <Icon size={30} name="arrow-up-bold-box" color="#34495e" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setInputValue('')}>
+          <Icon size={30} name="text-box-remove" color="#e74c3c" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
+
 export default InputContainer;
+
 const dynamicStyles = new DynamicStyleSheet({
   input: {
     borderColor: 'gray',
@@ -64,9 +74,19 @@ const dynamicStyles = new DynamicStyleSheet({
     fontSize: 16,
     color: new DynamicValue('black', 'white'),
   },
-  deleteBtn: {
+  sideButtonContainer: {
     position: 'absolute',
     bottom: 12,
     right: 3,
+  },
+  downArrow: {
+    transform: [{rotate: '180deg'}],
+    marginTop: -5,
+    marginBottom: -5,
+  },
+  deleteBtn: {
+    // position: 'absolute',
+    // bottom: 12,
+    // right: 3,
   },
 });
