@@ -5,6 +5,7 @@ import {
   View,
   TextInput,
   TouchableOpacity,
+  TextInputComponent,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -45,7 +46,7 @@ const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
     </View>
   );
 };
-
+export default InputContainer;
 const dynamicStyles = new DynamicStyleSheet({
   input: {
     borderColor: 'gray',

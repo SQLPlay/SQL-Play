@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, RefObject} from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
 //@ts-ignore
 import {Table, Row, Rows} from 'react-native-table-component';
@@ -11,9 +11,9 @@ import {
 } from 'react-native-dynamic';
 
 interface Props {
-  header: number[];
-  rows: number[];
-  tableWidths: {current: []};
+  header: any[];
+  rows: any[];
+  tableWidths: RefObject<number[]>;
 }
 
 const DataTable: FC<Props> = ({header, rows, tableWidths}) => {

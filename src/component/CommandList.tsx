@@ -52,6 +52,8 @@ interface LIProps {
   refRBSheet: RefObject<RBSheet>;
 }
 const ListItem: FC<LIProps> = (props) => {
+  // console.log('props', props);
+
   const {title, description, syntax, index, setInputValue, refRBSheet} = props;
 
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
@@ -116,7 +118,7 @@ interface Props {
     title: string;
     description: string;
     syntax: string;
-    index: number;
+    index?: number;
   }[];
   setInputValue: (val: string) => void;
   refRBSheet: RefObject<RBSheet>;
@@ -132,7 +134,6 @@ const CommandList: FC<Props> = ({listData, setInputValue, refRBSheet}) => {
         <ListItem
           {...item}
           index={index}
-          listData={listData}
           setInputValue={setInputValue}
           refRBSheet={refRBSheet}
         />

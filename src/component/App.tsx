@@ -84,7 +84,7 @@ const App: React.FC = () => {
 
       const len: number = res.rows.length;
 
-      console.log(res.rows);
+      // console.log(res.rows);
       if (len === 0) {
         setLoaderVisibility(false);
         ToastAndroid.showWithGravity(

@@ -49,7 +49,7 @@ export const debounce = (callback: any, delay = 250) => {
 // returns 75/50 true false
 export const shouldShowAd = (): boolean => {
   const rand: number = Math.floor(Math.random() * 7);
-  console.log('rand', rand);
+  // console.log('rand', rand);
   if (rand === 1) {
     return true;
   } else {
