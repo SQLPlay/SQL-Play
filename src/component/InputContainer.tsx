@@ -15,7 +15,7 @@ import {
   useDynamicValue,
 } from 'react-native-dynamic';
 
-import {lightDark, surfaceDark} from '../data/colors.json';
+import {lightDark, sideButton} from '../data/colors.json';
 
 interface Props {
   inputValue: string;
@@ -40,15 +40,13 @@ const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
       />
       <View style={styles.sideButtonContainer}>
         <TouchableOpacity onPress={() => null}>
-          <Icon size={30} name="arrow-up-bold-box" color="#34495e" />
+          <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.downArrow}
-          onPress={() => null}>
-          <Icon size={30} name="arrow-up-bold-box" color="#34495e" />
+        <TouchableOpacity style={styles.downArrow} onPress={() => null}>
+          <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setInputValue('')}>
-          <Icon size={30} name="text-box-remove" color="#e74c3c" />
+          <Icon size={30} name="text-box-remove" color={sideButton} />
         </TouchableOpacity>
       </View>
     </View>
@@ -63,6 +61,7 @@ const dynamicStyles = new DynamicStyleSheet({
     borderWidth: 1,
     fontSize: 16,
     fontFamily: 'monospace',
+    paddingRight: 25,
     marginBottom: 10,
     marginTop: 10,
     opacity: 1,

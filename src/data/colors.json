@@ -3,5 +3,6 @@
     "darkBGColor": "#121212",
     "lightDark": "#ffffff08",
     "white": "#ffffff",
-    "surfaceDark": "#000099"
+    "surfaceDark": "#000099",
+    "sideButton": "#666666"
 }

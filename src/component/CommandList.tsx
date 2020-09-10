@@ -129,7 +129,8 @@ const CommandList: FC<Props> = ({listData, setInputValue, refRBSheet}) => {
     <FlatList
       data={listData}
       bounces={false}
-      maxToRenderPerBatch={3}
+      maxToRenderPerBatch={5}
+      scrollEventThrottle={15}
       renderItem={({item, index}) => (
         <ListItem
           {...item}
@@ -138,8 +139,8 @@ const CommandList: FC<Props> = ({listData, setInputValue, refRBSheet}) => {
           refRBSheet={refRBSheet}
         />
       )}
-      initialNumToRender={2}
-      windowSize={5}
+      initialNumToRender={5}
+      windowSize={40}
       keyExtractor={(item) => item.id}
     />
   );
