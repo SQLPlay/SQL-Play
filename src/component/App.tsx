@@ -21,7 +21,7 @@ import {
 
 // @ts-ignore
 import {AdMobInterstitial} from 'react-native-admob';
-import {ExecuteQuery} from '../utils/storage';
+import {ExecuteUserQuery} from '../utils/storage';
 
 import {getLargestWidths, shouldShowAd} from '../utils/utils';
 import AppBar from './AppBar';
@@ -66,7 +66,7 @@ const App: React.FC = () => {
 
     try {
       // execute the query
-      const res: any = await ExecuteQuery(inputValue);
+      const res: any = await ExecuteUserQuery(inputValue);
 
       //show ad
       AdMobInterstitial.isReady((isReady: boolean) => {

@@ -1,4 +1,7 @@
-import SQLite, {ResultSet, SQLError} from 'react-native-sqlite-storage';
+import SQLite, {
+  ResultSet,
+  SQLError,
+} from 'react-native-sqlite-storage';
 
 const errorCB = (err: SQLError) => {
   console.warn('SQL Error: ' + err);
@@ -8,7 +11,7 @@ const openCB = () => {
   console.log('Database OPENED');
 };
 
-const db = SQLite.openDatabase(
+const userDb = SQLite.openDatabase(
   {
     name: 'prepop.db',
     createFromLocation: 1,
@@ -18,8 +21,17 @@ const db = SQLite.openDatabase(
   errorCB,
 );
 
+const appDb = SQLite.openDatabase(
+  {
+    name: 'app.db',
+    location: 'Library',
+  },
+  openCB,
+  errorCB,
+);
+
 //query execution function with promise
-export const ExecuteQuery = (
+export const ExecuteUserQuery = (
   query: string,
   params = [],
 ): Promise<ResultSet> => {
@@ -30,7 +42,28 @@ export const ExecuteQuery = (
   }
 
   return new Promise<ResultSet>((resolve, reject) => {
-    db.transaction((trans) => {
+    userDb.transaction((trans) => {
+      trans.executeSql(
+        query,
+        params,
+        (tx, results) => {
+          resolve(results);
+        },
+        (error) => {
+          reject(error);
+        },
+      );
+    });
+  });
+};
+
+//query execution function with promise
+export const ExecuteAppQuery = (
+  query: string,
+  params = [],
+): Promise<ResultSet> => {
+  return new Promise<ResultSet>((resolve, reject) => {
+    userDb.transaction((trans) => {
       trans.executeSql(
         query,
         params,
@@ -47,25 +80,23 @@ export const ExecuteQuery = (
 
 //add functions for basic value and string storage
 const createAppDataTable = async () => {
-  await ExecuteQuery(
+  await ExecuteAppQuery(
     `CREATE TABLE IF NOT EXISTS appData(id String Primary KEY, value string);`,
   );
 };
 
 // setAppDataVal
 export const setAppData = async (id: string, val: string | number) => {
-  return await ExecuteQuery(
+  return await ExecuteAppQuery(
     `INSERT OR REPLACE INTO appData(id, value) VALUES ("${id}", "${val}");`,
   );
 };
 
 // this will get the string data
-export const getAppData = async (
-  id: string,
-): Promise<string | null> => {
+export const getAppData = async (id: string): Promise<string | null> => {
   // destructre it
 
-  const res: ResultSet = await ExecuteQuery(
+  const res: ResultSet = await ExecuteAppQuery(
     `SELECT value from appData where id = "${id}"`,
   );
 
