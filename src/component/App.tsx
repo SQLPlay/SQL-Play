@@ -34,13 +34,13 @@ import {darkBGColor} from '../data/colors.json';
 
 //set app id and load ad
 AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
-AdMobInterstitial.isReady((isReady: boolean) => {
-  // console.log('Ad is ready', isReady);
+// AdMobInterstitial.isReady((isReady: boolean) => {
+//   // console.log('Ad is ready', isReady);
 
-  if (!isReady) {
-    AdMobInterstitial.requestAd();
-  }
-});
+//   if (!isReady) {
+//     AdMobInterstitial.requestAd();
+//   }
+// });
 
 interface tableDataNode {
   header: Array<string>;

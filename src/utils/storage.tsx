@@ -1,7 +1,4 @@
-import SQLite, {
-  ResultSet,
-  SQLError,
-} from 'react-native-sqlite-storage';
+import SQLite, {ResultSet, SQLError} from 'react-native-sqlite-storage';
 
 const errorCB = (err: SQLError) => {
   console.warn('SQL Error: ' + err);
@@ -63,7 +60,7 @@ export const ExecuteAppQuery = (
   params = [],
 ): Promise<ResultSet> => {
   return new Promise<ResultSet>((resolve, reject) => {
-    userDb.transaction((trans) => {
+    appDb.transaction((trans) => {
       trans.executeSql(
         query,
         params,
@@ -108,4 +105,24 @@ export const getAppData = async (id: string): Promise<string | null> => {
   }
 };
 
+//add functions for storing user commands
+const createUserCommandsTable = async () => {
+  console.log('creating table');
+
+  await ExecuteAppQuery(
+    `CREATE TABLE IF NOT EXISTS userCommands(command String NOT NULL);`,
+    
+  );
+};
+
+const insertUserCommand = async (val: string) => {
+  return await ExecuteAppQuery(
+    `INSERT INTO userCommands(command) VALUES ("${val}");`,
+  );
+};
+
 createAppDataTable();
+
+createUserCommandsTable();
+
+insertUserCommand('Select * from artists');
