@@ -17,6 +17,7 @@
     "react-native": "0.63.2",
     "react-native-admob": "^2.0.0-beta.6",
     "react-native-dynamic": "^1.0.0",
+    "react-native-material-menu": "^1.1.3",
     "react-native-raw-bottom-sheet": "^2.2.0",
     "react-native-sqlite-storage": "^5.0.0",
     "react-native-syntax-highlighter": "^2.1.0",
