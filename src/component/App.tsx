@@ -21,7 +21,7 @@ import {
 
 // @ts-ignore
 import {AdMobInterstitial} from 'react-native-admob';
-import {ExecuteUserQuery} from '../utils/storage';
+import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
 
 import {getLargestWidths, shouldShowAd} from '../utils/utils';
 import AppBar from './AppBar';
@@ -41,6 +41,20 @@ AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
 //     AdMobInterstitial.requestAd();
 //   }
 // });
+
+const loadAd = () => {
+  //show ad
+  AdMobInterstitial.isReady((isReady: boolean) => {
+    if (shouldShowAd()) {
+      //if true only show ad
+      if (isReady) {
+        AdMobInterstitial.showAd();
+      } else {
+        AdMobInterstitial.requestAd().then(() => AdMobInterstitial.showAd());
+      }
+    }
+  });
+};
 
 interface tableDataNode {
   header: Array<string>;
@@ -63,25 +77,11 @@ const App: React.FC = () => {
 
   const runQuery = async () => {
     setLoaderVisibility(true);
-
+    await insertUserCommand(inputValue); // store the command in db
     try {
       // execute the query
       const res: any = await ExecuteUserQuery(inputValue);
-
-      //show ad
-      AdMobInterstitial.isReady((isReady: boolean) => {
-        if (shouldShowAd()) {
-          //if true only show ad
-          if (isReady) {
-            AdMobInterstitial.showAd();
-          } else {
-            AdMobInterstitial.requestAd().then(() =>
-              AdMobInterstitial.showAd(),
-            );
-          }
-        }
-      });
-
+      // loadAd()
       const len: number = res.rows.length;
 
       // console.log(res.rows);

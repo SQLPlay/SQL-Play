@@ -110,19 +110,58 @@ const createUserCommandsTable = async () => {
   console.log('creating table');
 
   await ExecuteAppQuery(
-    `CREATE TABLE IF NOT EXISTS userCommands(command String NOT NULL);`,
-    
+    `CREATE TABLE IF NOT EXISTS 
+    userCommands(id INTEGER PRIMARY KEY AUTOINCREMENT, command String NOT NULL);`,
   );
 };
 
-const insertUserCommand = async (val: string) => {
+export const insertUserCommand = async (val: string) => {
   return await ExecuteAppQuery(
     `INSERT INTO userCommands(command) VALUES ("${val}");`,
   );
+};
+
+// will be used for autocomplete
+export const findUserCommands = async (val: string) => {
+  const res: ResultSet = await ExecuteAppQuery(
+    `SELECT * from userCommands 
+    WHERE command LIKE "${val}%"
+    ORDER BY id desc
+    LIMIT 1
+    `,
+  );
+
+  if (res.rows.length !== 0) {
+    return res.rows.item(0).command;
+  } else {
+    return null;
+  }
+};
+
+// will get the last command from user db
+export const getLastUserCommand = async (offset: number) => {
+  const res: ResultSet = await ExecuteAppQuery(
+    `SELECT * from userCommands 
+    ORDER BY id desc
+    LIMIT 1
+    OFFSET ${offset}
+    `,
+  );
+
+  if (res.rows.length !== 0) {
+    return res.rows.item(0).command;
+  } else {
+    return null;
+  }
 };
 
 createAppDataTable();
 
 createUserCommandsTable();
 
-insertUserCommand('Select * from artists');
+// insertUserCommand('Select yoyo from empylohre');
+
+const testCommands = async () => {
+  console.log(await getLastUserCommand(4));
+};
+// testCommands();

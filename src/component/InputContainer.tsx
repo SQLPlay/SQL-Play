@@ -1,4 +1,4 @@
-import React, {useState, FC} from 'react';
+import React, {useState, FC, useEffect, useRef} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,13 +16,37 @@ import {
 } from 'react-native-dynamic';
 
 import {lightDark, sideButton} from '../data/colors.json';
-
+import {getLastUserCommand} from '../utils/storage';
 interface Props {
   inputValue: string;
   setInputValue: (val: string) => void;
 }
 
 const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
+  const historyOffset = useRef<number>(-1);
+
+  const onUpArrowPress = async () => {
+    const lastCommand = await getLastUserCommand(historyOffset.current + 1);
+    // console.log(historyOffset.current + 1, lastCommand);
+
+    // only set if command is there
+    if (lastCommand) {
+      setInputValue(lastCommand);
+      historyOffset.current++;
+    }
+  };
+  const onDownArrowPress = async () => {
+    if (historyOffset.current === 0) return; // do nothing if offset it 0
+
+    const lastCommand = await getLastUserCommand(historyOffset.current - 1);
+    // console.log(historyOffset.current - 1, lastCommand);
+    // only set if command is there
+    if (lastCommand) {
+      setInputValue(lastCommand);
+      historyOffset.current--;
+    }
+  };
+
   const styles = useDynamicValue(dynamicStyles);
   return (
     <View>
@@ -39,10 +63,10 @@ const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
         placeholder="Type your SQL query"
       />
       <View style={styles.sideButtonContainer}>
-        <TouchableOpacity onPress={() => null}>
+        <TouchableOpacity onPress={onUpArrowPress}>
           <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.downArrow} onPress={() => null}>
+        <TouchableOpacity style={styles.downArrow} onPress={onDownArrowPress}>
           <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setInputValue('')}>
