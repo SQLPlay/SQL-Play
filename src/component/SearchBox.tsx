@@ -64,7 +64,7 @@ const SearchBox: React.FC<SeachInputProp> = ({setInputValue}) => {
   return (
     <>
       <TouchableOpacity onPress={openTabSheet}>
-        <Icon name="search" size={24} />
+        <Icon name="search" size={25} />
       </TouchableOpacity>
 
       <RBSheet
