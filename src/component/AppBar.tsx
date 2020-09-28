@@ -12,7 +12,7 @@ const AppBar: React.FC<SeachInputProp> = ({setInputValue}) => {
       <Text style={styles.appBarTxt}>SQL Playground</Text>
       <View style={styles.optionContainer}>
         <SearchBox setInputValue={setInputValue} />
-        <MenuOptions />
+        <MenuOptions setInputValue={setInputValue}/>
       </View>
     </View>
   );
