@@ -1,4 +1,11 @@
-import React, {useState, FC, useEffect, useRef} from 'react';
+import React, {
+  useState,
+  FC,
+  useEffect,
+  useRef,
+  useCallback,
+  RefCallback,
+} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,7 +23,8 @@ import {
 } from 'react-native-dynamic';
 
 import {lightDark, sideButton} from '../data/colors.json';
-import {getLastUserCommand} from '../utils/storage';
+import {findUserCommands, getLastUserCommand} from '../utils/storage';
+import {debounce} from '../utils/utils';
 interface Props {
   inputValue: string;
   setInputValue: (val: string) => void;
@@ -24,6 +32,7 @@ interface Props {
 
 const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
   const historyOffset = useRef<number>(-1);
+  const [autoCompleteTxt, setAutoCompleteTxt] = useState<string>('');
 
   const onUpArrowPress = async () => {
     const lastCommand = await getLastUserCommand(historyOffset.current + 1);
@@ -47,21 +56,41 @@ const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
     }
   };
 
+  type CallbackType = (...args: string[]) => void;
+
+  const getAutoComplete = useCallback<CallbackType>(
+    debounce((val: string) =>
+      findUserCommands(val).then((e) => {
+        console.log('autocomplete', e);
+        setAutoCompleteTxt(e);
+      }),
+    ),
+    [],
+  );
+
+  useEffect(() => {
+    getAutoComplete(inputValue);
+  }, [inputValue]);
+
   const styles = useDynamicValue(dynamicStyles);
   return (
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setInputValue(text)}
-        multiline
-        placeholderTextColor="gray"
-        textAlignVertical="top"
-        value={inputValue}
-        autoCorrect={false}
-        numberOfLines={4}
-        placeholder="Type your SQL query"
-      />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          onChangeText={(text) => setInputValue(text)}
+          multiline
+          placeholderTextColor="gray"
+          textAlignVertical="top"
+          value={inputValue}
+          autoCorrect={false}
+          numberOfLines={4}
+          placeholder="Type your SQL query"
+        />
+        <Text style={styles.autoCompleteTxt}>{autoCompleteTxt}</Text>
+      </View>
+
       <View style={styles.sideButtonContainer}>
         <TouchableOpacity onPress={onUpArrowPress}>
           <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
@@ -96,6 +125,18 @@ const dynamicStyles = new DynamicStyleSheet({
   inputHeader: {
     fontSize: 16,
     color: new DynamicValue('black', 'white'),
+  },
+  inputContainer: {
+    position: 'relative',
+  },
+  autoCompleteTxt: {
+    position: 'absolute',
+    fontFamily: 'monospace',
+    fontSize: 16,
+    color: 'gray',
+    top: 20,
+    left: 4,
+    opacity: 0.8,
   },
   sideButtonContainer: {
     position: 'absolute',
