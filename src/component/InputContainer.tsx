@@ -22,6 +22,8 @@ import {
   useDynamicValue,
 } from 'react-native-dynamic';
 
+import GestureRecognizer from 'react-native-swipe-gestures';
+
 import {lightDark, sideButton} from '../data/colors.json';
 import {findUserCommands, getLastUserCommand} from '../utils/storage';
 import {debounce} from '../utils/utils';
@@ -69,27 +71,35 @@ const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
   );
 
   useEffect(() => {
-    getAutoComplete(inputValue);
+    console.log(inputValue);
+
+    if (inputValue !== '') {
+      getAutoComplete(inputValue);
+    } else {
+      setAutoCompleteTxt('');
+    }
   }, [inputValue]);
 
   const styles = useDynamicValue(dynamicStyles);
   return (
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => setInputValue(text)}
-          multiline
-          placeholderTextColor="gray"
-          textAlignVertical="top"
-          value={inputValue}
-          autoCorrect={false}
-          numberOfLines={4}
-          placeholder="Type your SQL query"
-        />
-        <Text style={styles.autoCompleteTxt}>{autoCompleteTxt}</Text>
-      </View>
+      <GestureRecognizer onSwipeRight={() => setInputValue(autoCompleteTxt)}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            onChangeText={(text) => setInputValue(text)}
+            multiline
+            placeholderTextColor="gray"
+            textAlignVertical="top"
+            value={inputValue}
+            autoCorrect={false}
+            numberOfLines={4}
+            placeholder="Type your SQL query"
+          />
+          <Text style={styles.autoCompleteTxt}>{autoCompleteTxt}</Text>
+        </View>
+      </GestureRecognizer>
 
       <View style={styles.sideButtonContainer}>
         <TouchableOpacity onPress={onUpArrowPress}>
