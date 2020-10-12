@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {Dimensions, Image, Modal, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Image, Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {darkYellow} from '../data/colors.json';
 
@@ -7,14 +7,14 @@ interface Props {
   modalState: boolean;
   setModalState: (val: boolean) => void;
 }
-const {width} = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 const GoPremium: FC<Props> = ({modalState, setModalState}) => {
   return (
     <Modal
       visible={modalState}
       animationType="slide"
       onRequestClose={() => setModalState(false)}>
-      <View>
+      <View style={styles.container}>
         <View style={styles.header}>
           <Image
             style={styles.logo}
@@ -45,6 +45,9 @@ const GoPremium: FC<Props> = ({modalState, setModalState}) => {
           <Icon name="check-decagram" color={darkYellow} size={24} />
           <Text style={styles.featureTxt}> Swipe Gestures</Text>
         </View>
+        <TouchableOpacity style={styles.buyBtn}>
+          <Text style={styles.buyBtnTxt}>Buy Now</Text>
+        </TouchableOpacity>
       </View>
     </Modal>
   );
@@ -53,20 +56,30 @@ const GoPremium: FC<Props> = ({modalState, setModalState}) => {
 export default GoPremium;
 
 const styles = StyleSheet.create({
+  container:{
+    height: height,
+    // backgroundColor: "pink"
+  },
   title: {
     fontSize: 24,
     textAlign: 'center',
     padding: 2,
-    fontWeight:"700"
+  },
+  logo: {
+    width: 150,
+    height: 200,
+    marginHorizontal: 'auto',
   },
   header: {
     alignItems: 'center',
-    flexDirection: 'row',
+    flexDirection: 'column',
     margin: 10
   },
   featureTxt: {
     fontSize: 20,
     justifyContent: 'center',
+    textAlign:"center"
+  
   },
   featureTxtContainer: {
     alignItems: 'center',
@@ -77,9 +90,18 @@ const styles = StyleSheet.create({
     width: width,
     height: width / 2.7,
   },
-  logo: {
-    width: 150,
-    height: 200,
-    marginHorizontal: 'auto',
+  buyBtn:{
+      position: "absolute",
+      bottom: 30,
+      alignItems: "center",
+      width: width
   },
+  buyBtnTxt:{
+    fontSize: 20,
+    textAlign:"center",
+    backgroundColor: darkYellow,
+    padding: 8,
+    width: 370,
+    borderRadius: 5
+  }
 });
