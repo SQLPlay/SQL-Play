@@ -2,11 +2,16 @@ import React, {FC, useRef, useState} from 'react';
 import {View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+//@ts-ignore
+import Share from 'react-native-share'
+
+import RNFS from 'react-native-fs'
 
 //@ts-ignore
 import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
 import {SeachInputProp} from './AppBar';
 import GoPremium from './GoPremium';
+import { requestExternalWritePermission } from '../utils/utils';
 
 const MenuOptions: FC<SeachInputProp> = ({setInputValue}) => {
   const menuRef = useRef<Menu>(null);
@@ -18,7 +23,23 @@ const MenuOptions: FC<SeachInputProp> = ({setInputValue}) => {
   };
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const exportCSV = async () => {
+    const isGranted:boolean = await requestExternalWritePermission()
+    if (!isGranted) {
+      return
+    }
+    var path = RNFS.DownloadDirectoryPath + '/sqlplay.txt';
+    console.log(path);
+    
+    try {
+      await RNFS.writeFile(path, 'Lorem ipsum dolor sit amet', 'utf8');
 
+    const shareResponse = await Share.open({url: `file://${path}`, title: "Data Exported", message: "Please save it or share it"});
+    } catch (error) {
+       console.log(error.message);
+    }
+  
+  }
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <GoPremium modalState={modalOpen} setModalState={setModalOpen} />
@@ -38,8 +59,8 @@ const MenuOptions: FC<SeachInputProp> = ({setInputValue}) => {
           <Text> Go premium</Text>
         </MenuItem>
         <MenuItem onPress={() => null}>Supported query</MenuItem>
-        <MenuItem onPress={() => null} disabled>
-          Menu item 3
+        <MenuItem onPress={() => exportCSV()} >
+          Export Data
         </MenuItem>
         <MenuDivider />
         <MenuItem onPress={() => null}>Menu item 4</MenuItem>
