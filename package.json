@@ -16,6 +16,7 @@
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-admob": "^2.0.0-beta.6",
+    "react-native-dialog-input": "^1.0.8",
     "react-native-dynamic": "^1.0.0",
     "react-native-fs": "^2.16.6",
     "react-native-iap": "^4.6.1",
