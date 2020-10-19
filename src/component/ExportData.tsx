@@ -99,17 +99,22 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
   };
 
   const shareCSV = async (): Promise<void> => {
-    const shareResponse = await Share.open({
-      url: `file://${path}`,
-      title: 'Table Exported',
-      message: 'Please save it or share it',
-    });
+    try {
+      const shareResponse = await Share.open({
+        url: `file://${path}`,
+        title: 'Table Exported',
+        message: 'Please save it or share it',
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   /** We will reset all the states here */
   const onCancel = (): void => {
-    setIsExported(false);
     setModalState(false);
+
+    setIsExported(false);
     setFieldValue('');
   };
 
@@ -140,18 +145,16 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
             : 'Type the table name'}
         </Dialog.Description>
       )}
-      {isLoading ? (
-        <ActivityIndicator color="gold" size="large" />
+      {!isLoading && !isExported ? (
+        <Dialog.Input
+          autoFocus={true}
+          style={styles.tableInput}
+          placeholder="Employees"
+          onChangeText={(text: string) => setFieldValue(text)}
+          value={fieldValue}
+        />
       ) : (
-        !isExported && (
-          <Dialog.Input
-            autoFocus={true}
-            style={styles.tableInput}
-            placeholder="Employees"
-            onChangeText={(text: string) => setFieldValue(text)}
-            value={fieldValue}
-          />
-        )
+        isLoading && <ActivityIndicator color="gold" size="large" />
       )}
 
       {!!exportErr && <Text style={styles.errorTxt}>{exportErr}</Text>}
