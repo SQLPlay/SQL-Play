@@ -16,6 +16,7 @@ interface Props {
   setModalState: (val: boolean) => void;
 }
 
+let path: string = '';
 const ExportData: FC<Props> = ({modalState, setModalState}) => {
   const [exportErr, setExportErr] = useState<string>('');
   const [fieldValue, setFieldValue] = useState<string>('');
@@ -87,18 +88,37 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
     try {
       /** Path of saving the csv file */
       const randomNum: number = Math.floor(Math.random() * 899 + 100);
-      const path = `${RNFS.DownloadDirectoryPath}/${fieldValue}_${randomNum}.csv`;
+      path = `${RNFS.DownloadDirectoryPath}/${fieldValue}_${randomNum}.csv`;
       console.log(path);
 
       await RNFS.writeFile(path, csvString, 'utf8');
       setIsExported(true);
-      // const shareResponse = await Share.open({
-      //   url: `file://${path}`,
-      //   title: 'Table Exported',
-      //   message: 'Please save it or share it',
-      // });
     } catch (error) {
       console.log(error.message);
+    }
+  };
+
+  const shareCSV = async (): Promise<void> => {
+    const shareResponse = await Share.open({
+      url: `file://${path}`,
+      title: 'Table Exported',
+      message: 'Please save it or share it',
+    });
+  };
+
+  /** We will reset all the states here */
+  const onCancel = (): void => {
+    setIsExported(false);
+    setModalState(false);
+    setFieldValue('');
+  };
+
+  /** Handle when user clicks the export or share button both are in same */
+  const onExportOrShare = (): void => {
+    if (isExported) {
+      shareCSV();
+    } else {
+      exportCSV();
     }
   };
 
@@ -106,7 +126,7 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
     <Dialog.Container
       visible={modalState}
       contentStyle={{height: 220, justifyContent: 'space-around'}}
-      onBackdropPress={() => setModalState(false)}>
+      onBackdropPress={onCancel}>
       {!isLoading && (
         <Dialog.Title>
           {isExported ? 'Table Exported Sucessfully' : 'Export Table in CSV'}
@@ -135,13 +155,11 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
       )}
 
       {!!exportErr && <Text style={styles.errorTxt}>{exportErr}</Text>}
-      {!isLoading && (
-        <Dialog.Button label="Cancel" onPress={() => setModalState(false)} />
-      )}
+      {!isLoading && <Dialog.Button label="Cancel" onPress={onCancel} />}
       {!isLoading && (
         <Dialog.Button
           label={isExported ? 'Share' : 'Export'}
-          onPress={() => exportCSV()}
+          onPress={onExportOrShare}
         />
       )}
     </Dialog.Container>
