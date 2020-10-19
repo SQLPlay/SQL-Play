@@ -43,7 +43,7 @@ const saveForLater = async (): Promise<void> => {
 };
 
 const checkIsUpdated = async () => {
-  const remindedDate: string = await getAppData(remindedDateId) ?? '0';
+  const remindedDate: string = (await getAppData(remindedDateId)) ?? '0';
   // console.log(new Date(remindedDate));
   const remindFrequencyMS: number = 48 * 60 * 60 * 1000; // 24hr
 
@@ -55,7 +55,7 @@ const checkIsUpdated = async () => {
     return;
   }
 
-  const {whatsNew , version} = await fetchAppDetails();
+  const {whatsNew, version} = await fetchAppDetails();
   const localVersion: string = pkginfo.version;
 
   if (localVersion !== version) {
@@ -63,4 +63,4 @@ const checkIsUpdated = async () => {
   }
 };
 
-checkIsUpdated();
+// checkIsUpdated();

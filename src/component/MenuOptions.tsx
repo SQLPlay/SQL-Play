@@ -3,7 +3,6 @@ import {View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-
 //@ts-ignore
 import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
 import {SeachInputProp} from './AppBar';
@@ -25,8 +24,11 @@ const MenuOptions: FC<SeachInputProp> = ({setInputValue}) => {
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <GoPremium modalState={premiumModalOpen} setModalState={setPremiumModalOpen} />
-      <ExportData modalState={exportModal} setModalState={setExportModal}/>
+      <GoPremium
+        modalState={premiumModalOpen}
+        setModalState={setPremiumModalOpen}
+      />
+      <ExportData modalState={exportModal} setModalState={setExportModal} />
       <Menu
         ref={menuRef}
         style={{maxWidth: 'auto'}}
@@ -43,7 +45,11 @@ const MenuOptions: FC<SeachInputProp> = ({setInputValue}) => {
           <Text> Go premium</Text>
         </MenuItem>
         <MenuItem onPress={() => null}>Supported query</MenuItem>
-        <MenuItem onPress={() => setExportModal(true)} >
+        <MenuItem
+          onPress={() => {
+            menuRef.current.hide();
+            setExportModal(true);
+          }}>
           Export Data
         </MenuItem>
         <MenuDivider />

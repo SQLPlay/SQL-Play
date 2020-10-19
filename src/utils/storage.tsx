@@ -31,11 +31,15 @@ const appDb = SQLite.openDatabase(
 export const ExecuteUserQuery = (
   query: string,
   params = [],
+  noLimit: boolean = false,
 ): Promise<ResultSet> => {
   query.replace(/^;/, ''); // remove any semicolon
 
   if (query.search(/select/i) !== -1) {
-    query = `${query} limit 150`; //limit of 150 if there is a select
+    // if no limit then no need to add limit
+    if (!noLimit) {
+      query = `${query} limit 150`; //limit of 150 if there is a select
+    }
   }
 
   return new Promise<ResultSet>((resolve, reject) => {
