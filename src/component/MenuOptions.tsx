@@ -10,7 +10,7 @@ import GoPremium from './GoPremium';
 
 import ExportData from './ExportData';
 
-const MenuOptions: FC<SeachInputProp> = ({setInputValue}) => {
+const MenuOptions: FC<SeachInputProp> = ({setInputValue, isPremium, setIsPremium}) => {
   const menuRef = useRef<Menu>(null);
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
   const [exportModal, setExportModal] = useState<boolean>(false);
@@ -47,6 +47,7 @@ In future this app may allow you to create and select difference databases.
       <GoPremium
         modalState={premiumModalOpen}
         setModalState={setPremiumModalOpen}
+        setIsPremium={setIsPremium}
       />
       <ExportData modalState={exportModal} setModalState={setExportModal} />
       <Menu
@@ -60,6 +61,7 @@ In future this app may allow you to create and select difference databases.
           />
         }>
         <MenuItem
+          disabled={!isPremium}
           onPress={() => {
             menuRef.current.hide();
             setExportModal(true);

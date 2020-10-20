@@ -4,15 +4,17 @@ import MenuOptions from './MenuOptions';
 import SearchBox from './SearchBox';
 export interface SeachInputProp {
   setInputValue: (query: string) => void;
+  isPremium?: boolean;
+  setIsPremium?: (isPrem: boolean) => void;
 }
 
-const AppBar: React.FC<SeachInputProp> = ({setInputValue}) => {
+const AppBar: React.FC<SeachInputProp> = ({setInputValue, isPremium, setIsPremium}) => {
   return (
     <View style={styles.appBar}>
       <Text style={styles.appBarTxt}>SQL Playground</Text>
       <View style={styles.optionContainer}>
         <SearchBox setInputValue={setInputValue} />
-        <MenuOptions setInputValue={setInputValue}/>
+        <MenuOptions isPremium={isPremium} setInputValue={setInputValue} setIsPremium={setIsPremium}/>
       </View>
     </View>
   );
@@ -31,14 +33,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 22,
     color: '#2f3542',
-    marginLeft: 15
+    marginLeft: 15,
   },
   optionContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     width: 70,
     justifyContent: 'space-between',
-
-  }
+  },
 });
 
 export default AppBar;

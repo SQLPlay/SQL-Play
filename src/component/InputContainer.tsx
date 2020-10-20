@@ -30,6 +30,7 @@ import {debounce} from '../utils/utils';
 interface Props {
   inputValue: string;
   setInputValue: (val: string) => void;
+  isPremium: boolean;
 }
 
 const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {

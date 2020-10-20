@@ -23,7 +23,11 @@ import {
 import {AdMobInterstitial} from 'react-native-admob';
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
 
-import {getLargestWidths, shouldShowAd} from '../utils/utils';
+import {
+  getLargestWidths,
+  shouldShowAd,
+  checkForPremiumUser,
+} from '../utils/utils';
 import AppBar from './AppBar';
 import Table from './Table';
 import RunButton from './RunButton';
@@ -72,7 +76,7 @@ const App: React.FC = () => {
     'SELECT * FROM employees',
   );
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
-
+  const [isPremium, setIsPremium] = useState<boolean>(false);
   const styles = useDynamicValue(dynamicStyles);
 
   const runQuery = async () => {
@@ -115,6 +119,21 @@ const App: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    /** check premium and set here */
+    const fetchPRemium = async () => {
+      console.log('it runs');
+
+      const isPremRes = await checkForPremiumUser();
+      console.log('is prem res', isPremRes);
+
+      setIsPremium(isPremRes);
+    };
+    console.log('fetching');
+
+    fetchPRemium();
+  }, []);
+
   return (
     <>
       <ColorSchemeProvider>
@@ -126,11 +145,12 @@ const App: React.FC = () => {
             </View>
           </Modal>
           <View style={styles.outerContainer}>
-            <AppBar setInputValue={setInputValue} />
+            <AppBar setInputValue={setInputValue} isPremium={isPremium} setIsPremium={setIsPremium}/>
             <View style={styles.innercontainer}>
               <InputContainer
                 inputValue={inputValue}
                 setInputValue={setInputValue}
+                isPremium={isPremium}
               />
               <Table {...tableData} tableWidths={tableWidths} />
             </View>

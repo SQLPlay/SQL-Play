@@ -11,6 +11,7 @@ import {
   Platform,
   EmitterSubscription,
 } from 'react-native';
+
 import iapUtils, {
   IAPErrorCode,
   ProductPurchase,
@@ -28,7 +29,7 @@ import RNIap, {
 } from 'react-native-iap';
 
 //items of products
-const itemSkus: string[] | undefined = Platform.select({
+export const itemSkus: string[] | undefined = Platform.select({
   android: ['premium'],
 });
 
@@ -37,9 +38,12 @@ let purchaseUpdate: EmitterSubscription, purchaseError: EmitterSubscription;
 interface Props {
   modalState: boolean;
   setModalState: (val: boolean) => void;
+  setIsPremium: (isPrem: boolean) => void;
 }
 const {width, height} = Dimensions.get('window');
-const GoPremium: FC<Props> = ({modalState, setModalState}) => {
+
+/** Ui component here */
+const GoPremium: FC<Props> = ({modalState, setModalState, setIsPremium}) => {
   const getItems = async (): Promise<void> => {
     try {
       const result: boolean = await RNIap.initConnection();
@@ -51,24 +55,20 @@ const GoPremium: FC<Props> = ({modalState, setModalState}) => {
       const products: Product[] = await RNIap.getProducts(itemSkus);
       console.log('Products', products[0].title);
 
-      const restore: Array<
-        ProductPurchase | Subscription
-      > = await RNIap.getAvailablePurchases();
-      console.log('your item was', restore);
-
       purchaseUpdate = purchaseUpdatedListener(async (purchase) => {
         const receipt: string = purchase.transactionReceipt;
         if (receipt) {
           try {
             const ackResult: string | void = await finishTransaction(purchase);
+            Alert.alert(
+              'Purchase complete',
+              'Thanks for purchasing, Now you can enjoy the premium benefits ',
+            );
+            /** make it affect on all app  */
+            setIsPremium(true);
           } catch (ackErr) {
             console.warn('ackErr', ackErr);
           }
-
-          Alert.alert(
-            'Purchase complete',
-            'Thanks for purchasing, Now you can enjoy the premium benefits ',
-          );
         }
       });
 
@@ -76,8 +76,8 @@ const GoPremium: FC<Props> = ({modalState, setModalState}) => {
         console.log('purchaseErrorListener', error);
         Alert.alert('purchase error', JSON.stringify(error.message));
       });
-      //   const consumed = await RNIap.consumeAllItemsAndroid();
-      //   console.log('consumed all items?', consumed);
+      // const consumed = await RNIap.consumeAllItemsAndroid();
+      // console.log('consumed all items?', consumed);
     } catch (err) {
       console.warn(err.code, err.message);
     }

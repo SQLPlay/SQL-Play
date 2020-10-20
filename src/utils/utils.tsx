@@ -1,5 +1,7 @@
-import  {PermissionsAndroid} from 'react-native'
+import {PermissionsAndroid} from 'react-native';
 import rnTextSize from 'react-native-text-size';
+import RNIap, {ProductPurchase, Subscription} from 'react-native-iap';
+import {itemSkus} from '../component/GoPremium';
 
 export const getLargestWidths = async (
   arr: Array<Array<any>>,
@@ -58,29 +60,42 @@ export const shouldShowAd = (): boolean => {
   }
 };
 
-// will handle the permission 
-export const requestExternalWritePermission = async ():Promise<boolean> => {
+// will handle the permission
+export const requestExternalWritePermission = async (): Promise<boolean> => {
   try {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
       {
-        title: "SQL Playground Permission",
+        title: 'SQL Playground Permission',
         message:
-          "SQL Playground needs external write permission" +
-          "to save the CSV file.",
-        buttonNeutral: "Ask Me Later",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK"
-      }
+          'SQL Playground needs external write permission' +
+          'to save the CSV file.',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
       return true;
     } else {
-      console.log("Camera permission denied");
+      console.log('Camera permission denied');
       return false;
     }
   } catch (err) {
     console.warn(err);
+    return false;
+  }
+};
+
+/** Function for checking if user already has the product */
+export const checkForPremiumUser = async (): Promise<boolean> => {
+  const restore: Array<
+    ProductPurchase | Subscription
+  > = await RNIap.getAvailablePurchases();
+  // console.log('your item was', restore);
+  if (itemSkus && restore[0].productId === itemSkus[0]) {
+    return true;
+  } else {
     return false;
   }
 };
