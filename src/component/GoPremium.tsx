@@ -12,12 +12,6 @@ import {
   EmitterSubscription,
 } from 'react-native';
 
-import iapUtils, {
-  IAPErrorCode,
-  ProductPurchase,
-  Subscription,
-} from 'react-native-iap';
-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {darkYellow} from '../data/colors.json';
 
@@ -39,11 +33,17 @@ interface Props {
   modalState: boolean;
   setModalState: (val: boolean) => void;
   setIsPremium: (isPrem: boolean) => void;
+  isPremium: boolean;
 }
 const {width, height} = Dimensions.get('window');
 
 /** Ui component here */
-const GoPremium: FC<Props> = ({modalState, setModalState, setIsPremium}) => {
+const GoPremium: FC<Props> = ({
+  modalState,
+  setModalState,
+  setIsPremium,
+  isPremium,
+}) => {
   const getItems = async (): Promise<void> => {
     try {
       const result: boolean = await RNIap.initConnection();
@@ -117,17 +117,14 @@ const GoPremium: FC<Props> = ({modalState, setModalState, setIsPremium}) => {
       onRequestClose={() => setModalState(false)}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Image
-            style={styles.logo}
-            source={{uri: 'https://i.imgur.com/O0ltOif.png'}}
-          />
+          <Image style={styles.logo} source={require('../images/sqlpro.png')} />
           <Text style={styles.title}>
             Go Premium to {'\n'}unlock all features
           </Text>
         </View>
         <Image
           style={styles.image}
-          source={{uri: 'https://i.imgur.com/3SfnapZ.jpg'}}
+          source={require('../images/autocomplete.png')}
           resizeMode="contain"
         />
         <View style={styles.featureTxtContainer}>
@@ -146,8 +143,13 @@ const GoPremium: FC<Props> = ({modalState, setModalState, setIsPremium}) => {
           <Icon name="check-decagram" color={darkYellow} size={24} />
           <Text style={styles.featureTxt}> Swipe Gestures</Text>
         </View>
-        <TouchableOpacity style={styles.buyBtn} onPress={buyPremium}>
-          <Text style={styles.buyBtnTxt}>Buy Now</Text>
+        <TouchableOpacity
+          style={styles.buyBtn}
+          onPress={buyPremium}
+          disabled={isPremium}>
+          <Text style={styles.buyBtnTxt}>
+            {isPremium ? 'Sweet! You have Premium' : 'Buy Now'}
+          </Text>
         </TouchableOpacity>
       </View>
     </Modal>

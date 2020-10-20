@@ -62,17 +62,19 @@ const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
   type CallbackType = (...args: string[]) => void;
 
   const getAutoComplete = useCallback<CallbackType>(
-    debounce((val: string) =>
-      findUserCommands(val).then((e) => {
-        console.log('autocomplete', e);
-        setAutoCompleteTxt(e);
-      }),
+    debounce(
+      (val: string) =>
+        findUserCommands(val).then((e) => {
+          console.log('autocomplete', e);
+          setAutoCompleteTxt(e);
+        }),
+      200,
     ),
     [],
   );
 
   useEffect(() => {
-    console.log(inputValue);
+    // console.log(inputValue);
 
     if (inputValue !== '') {
       getAutoComplete(inputValue);
@@ -85,7 +87,9 @@ const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
   return (
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
-      <GestureRecognizer onSwipeRight={() => setInputValue(autoCompleteTxt)}>
+      <GestureRecognizer
+        onSwipeRight={() => setInputValue(autoCompleteTxt)}
+        onSwipeLeft={() => setInputValue('')}>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}

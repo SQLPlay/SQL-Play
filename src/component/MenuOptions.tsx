@@ -10,7 +10,11 @@ import GoPremium from './GoPremium';
 
 import ExportData from './ExportData';
 
-const MenuOptions: FC<SeachInputProp> = ({setInputValue, isPremium, setIsPremium}) => {
+const MenuOptions: FC<SeachInputProp> = ({
+  setInputValue,
+  isPremium,
+  setIsPremium,
+}) => {
   const menuRef = useRef<Menu>(null);
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
   const [exportModal, setExportModal] = useState<boolean>(false);
@@ -37,7 +41,7 @@ All your queries are run for a single database, so all your tables are in a sing
 
 In future this app may allow you to create and select difference databases.
 `,
-      [],
+      [{text: 'OK', style: 'cancel'}],
       {cancelable: true},
     );
   };
@@ -47,6 +51,7 @@ In future this app may allow you to create and select difference databases.
       <GoPremium
         modalState={premiumModalOpen}
         setModalState={setPremiumModalOpen}
+        isPremium={isPremium}
         setIsPremium={setIsPremium}
       />
       <ExportData modalState={exportModal} setModalState={setExportModal} />
@@ -61,7 +66,7 @@ In future this app may allow you to create and select difference databases.
           />
         }>
         <MenuItem
-          disabled={!isPremium}
+          disabled={isPremium}
           onPress={() => {
             menuRef.current.hide();
             setExportModal(true);
@@ -77,7 +82,7 @@ In future this app may allow you to create and select difference databases.
             menuRef.current.hide();
           }}>
           <MCIcon name="crown" size={16} />
-          <Text> Go premium</Text>
+          <Text> {!isPremium && 'Go '}Premium</Text>
         </MenuItem>
       </Menu>
     </View>

@@ -89,13 +89,18 @@ export const requestExternalWritePermission = async (): Promise<boolean> => {
 
 /** Function for checking if user already has the product */
 export const checkForPremiumUser = async (): Promise<boolean> => {
-  const restore: Array<
-    ProductPurchase | Subscription
-  > = await RNIap.getAvailablePurchases();
-  // console.log('your item was', restore);
-  if (itemSkus && restore[0].productId === itemSkus[0]) {
-    return true;
-  } else {
+  try {
+    const restore: Array<
+      ProductPurchase | Subscription
+    > = await RNIap.getAvailablePurchases();
+    // console.log('your item was', restore);
+    if (itemSkus && restore[0].productId === itemSkus[0]) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(error);
     return false;
   }
 };
