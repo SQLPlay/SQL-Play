@@ -146,7 +146,7 @@ const dynamicStyles = new DynamicStyleSheet({
     zIndex: 1,
     fontFamily: 'monospace',
     fontSize: 16,
-    color: 'red',
+    color: 'gray',
     top: 4.8,
     left: 4.8,
     opacity: 0.8,
