@@ -59,7 +59,6 @@ In future this app may allow you to create and select difference databases.
             size={25}
           />
         }>
-        <MenuItem onPress={showAllTables}>List all tables</MenuItem>
         <MenuItem
           onPress={() => {
             menuRef.current.hide();
@@ -67,6 +66,7 @@ In future this app may allow you to create and select difference databases.
           }}>
           Export Data
         </MenuItem>
+        <MenuItem onPress={showAllTables}>List all tables</MenuItem>
         <MenuItem onPress={showSupportedQuery}>Supported query</MenuItem>
         <MenuDivider />
         <MenuItem

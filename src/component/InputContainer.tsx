@@ -119,33 +119,36 @@ const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
 export default InputContainer;
 
 const dynamicStyles = new DynamicStyleSheet({
-  input: {
-    borderColor: 'gray',
-    borderWidth: 1,
-    fontSize: 16,
-    fontFamily: 'monospace',
-    paddingRight: 25,
-    marginBottom: 10,
-    marginTop: 10,
-    opacity: 1,
-    height: 120,
-    color: new DynamicValue('black', 'white'),
-    backgroundColor: new DynamicValue('white', lightDark),
-  },
   inputHeader: {
     fontSize: 16,
     color: new DynamicValue('black', 'white'),
   },
   inputContainer: {
     position: 'relative',
+    borderColor: 'gray',
+    marginBottom: 10,
+    marginTop: 10,
+    borderWidth: 1,
+    backgroundColor: new DynamicValue('white', lightDark),
+  },
+  input: {
+    fontSize: 16,
+    fontFamily: 'monospace',
+    padding: 5,
+    // position: 'relative',
+    zIndex: 2,
+    opacity: 1,
+    height: 120,
+    color: new DynamicValue('black', 'white'),
   },
   autoCompleteTxt: {
     position: 'absolute',
+    zIndex: 1,
     fontFamily: 'monospace',
     fontSize: 16,
-    color: 'gray',
-    top: 20,
-    left: 4,
+    color: 'red',
+    top: 4.8,
+    left: 4.8,
     opacity: 0.8,
   },
   sideButtonContainer: {
