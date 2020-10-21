@@ -74,7 +74,7 @@ const GoPremium: FC<Props> = ({
 
       purchaseError = purchaseErrorListener((error) => {
         console.log('purchaseErrorListener', error);
-        Alert.alert('purchase error', JSON.stringify(error.message));
+        // Alert.alert('purchase error', JSON.stringify(error.message));
       });
       // const consumed = await RNIap.consumeAllItemsAndroid();
       // console.log('consumed all items?', consumed);

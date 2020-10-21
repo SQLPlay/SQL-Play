@@ -105,7 +105,9 @@ const InputContainer: FC<Props> = ({
 
   useEffect(() => {
     // console.log(inputValue);
-
+    if (!isPremium) {
+      return;
+    }
     if (inputValue !== '') {
       getAutoComplete(inputValue);
     } else {
@@ -118,8 +120,8 @@ const InputContainer: FC<Props> = ({
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
       <GestureRecognizer
-        onSwipeRight={() => setInputValue(autoCompleteTxt)}
-        onSwipeLeft={() => setInputValue('')}>
+        onSwipeRight={() => isPremium && setInputValue(autoCompleteTxt)}
+        onSwipeLeft={() => isPremium && setInputValue('')}>
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}

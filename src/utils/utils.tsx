@@ -100,7 +100,7 @@ export const checkForPremiumUser = async (): Promise<boolean> => {
       return false;
     }
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return false;
   }
 };

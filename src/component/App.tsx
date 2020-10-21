@@ -138,6 +138,7 @@ const App: React.FC = () => {
 
       try {
         const result = await startUpdateFlow('flexible');
+        console.log(result);
       } catch (e) {
         console.log('error:', e);
       }
