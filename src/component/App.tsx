@@ -22,6 +22,8 @@ import {
 // @ts-ignore
 import {AdMobInterstitial} from 'react-native-admob';
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
+// @ts-ignore
+import {startUpdateFlow} from '@gurukumparan/react-native-android-inapp-updates';
 
 import {
   getLargestWidths,
@@ -126,17 +128,23 @@ const App: React.FC = () => {
 
   useEffect(() => {
     /** check premium and set here */
-    const fetchPRemium = async () => {
+    const init = async () => {
       console.log('it runs');
 
       const isPremRes = await checkForPremiumUser();
       console.log('is prem res', isPremRes);
 
       setIsPremium(isPremRes);
+
+      try {
+        const result = await startUpdateFlow('flexible');
+      } catch (e) {
+        console.log('error:', e);
+      }
     };
     console.log('fetching');
 
-    fetchPRemium();
+    init();
   }, []);
 
   return (

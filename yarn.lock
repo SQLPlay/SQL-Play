@@ -728,6 +728,13 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@gurukumparan/react-native-android-inapp-updates@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/@gurukumparan/react-native-android-inapp-updates/-/react-native-android-inapp-updates-1.0.18.tgz#a971d7a6672cc1c9625aa167e750f27abe8105f5"
+  integrity sha512-szm9vdt3hZebLxnN/OLd0VVY7AyUHMQK+Cfixb+0QkyHI+gba5o4G6B4s916QWIMBUSJBuq39+3VuyqowfxVrw==
+  dependencies:
+    bs-platform "^8.2.0"
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -1922,6 +1929,11 @@ browser-resolve@^1.11.3:
   integrity sha512-exDi1BYWB/6raKHmDTCicQfTkqwN5fioMFV4j8BsfMU4R2DK/QfZfK7kOVkmWCNANf0snkBzqGqAJBao9gZMdQ==
   dependencies:
     resolve "1.1.7"
+
+bs-platform@^8.2.0:
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-8.3.1.tgz#49ac0d7b84bcec190a7361353557cae965f92c67"
+  integrity sha512-U7nKEGF1BfvODzcv1g2loeltE8YRCgX8mMlCojImsgI0HwfQKEq7ggO5dF1ae9ZfFxiLaI0069ZyoK5GLBO2OQ==
 
 bser@2.1.1:
   version "2.1.1"
