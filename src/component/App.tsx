@@ -87,7 +87,10 @@ const App: React.FC = () => {
     try {
       // execute the query
       const res: any = await ExecuteUserQuery(inputValue);
-      // loadAd()
+      /** Show add if user is not premium */
+      if (!isPremium) {
+        loadAd();
+      }
       const len: number = res.rows.length;
 
       // console.log(res.rows);
