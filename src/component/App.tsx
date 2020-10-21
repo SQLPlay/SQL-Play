@@ -32,7 +32,7 @@ import AppBar from './AppBar';
 import Table from './Table';
 import RunButton from './RunButton';
 import InputContainer from './InputContainer';
-import '../utils/updateChecker';
+
 import '../utils/appReviewer';
 import {darkBGColor} from '../data/colors.json';
 
