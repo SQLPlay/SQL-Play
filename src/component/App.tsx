@@ -24,6 +24,7 @@ import {AdMobInterstitial} from 'react-native-admob';
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
 // @ts-ignore
 import {startUpdateFlow} from '@gurukumparan/react-native-android-inapp-updates';
+import SplashScreen from 'react-native-splash-screen';
 
 import {
   getLargestWidths,
@@ -129,10 +130,9 @@ const App: React.FC = () => {
   useEffect(() => {
     /** check premium and set here */
     const init = async () => {
-      console.log('it runs');
-
       const isPremRes = await checkForPremiumUser();
       console.log('is prem res', isPremRes);
+      SplashScreen.hide();
 
       setIsPremium(isPremRes);
 
@@ -143,7 +143,6 @@ const App: React.FC = () => {
         console.log('error:', e);
       }
     };
-    console.log('fetching');
 
     init();
   }, []);

@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFEB3B">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="263dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:contentDescription="sql playground logo"
+        android:foregroundGravity="center_vertical|clip_horizontal|fill_vertical|center_horizontal"
+        android:maxWidth="100px"
+        android:maxHeight="100px"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/logo" />
 </LinearLayout>

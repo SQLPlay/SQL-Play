@@ -5993,6 +5993,11 @@ react-native-share@^4.0.2:
   resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-4.0.2.tgz#1a2287748083e08247e951d9ef8c7a100d39cc1c"
   integrity sha512-2dbeyBx8bQoOu0V2fsj3xNv3Mta9KwGRUT/Yvb+SBRtwX3YSwYC65DqRPk1L1CeO7ABxiXZaEaL1MM7LIDuGSA==
 
+react-native-splash-screen@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
+  integrity sha512-Ls9qiNZzW/OLFoI25wfjjAcrf2DZ975hn2vr6U9gyuxi2nooVbzQeFoQS5vQcbCt9QX5NY8ASEEAtlLdIa6KVg==
+
 react-native-sqlite-storage@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-native-sqlite-storage/-/react-native-sqlite-storage-5.0.0.tgz#fb015c928b59d3000360fb0774a99545e7a695d6"
