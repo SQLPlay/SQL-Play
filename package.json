@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "description": "A simple and beautiful SQL playground",
-  "whatsNew": "Fixed many bugs",
+  "whatsNew": "v2 released with New Features",
   "scripts": {
     "postversion": "react-native-version",
     "android": "react-native run-android",

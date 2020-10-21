@@ -132,8 +132,8 @@ android {
         applicationId "com.sql_playground"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName "1.0.4"
+        versionCode 10
+        versionName "2.0.0"
     }
     splits {
         abi {
