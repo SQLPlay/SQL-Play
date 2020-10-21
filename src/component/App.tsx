@@ -77,6 +77,8 @@ const App: React.FC = () => {
   );
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(false);
+  const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
+
   const styles = useDynamicValue(dynamicStyles);
 
   const runQuery = async () => {
@@ -145,9 +147,16 @@ const App: React.FC = () => {
             </View>
           </Modal>
           <View style={styles.outerContainer}>
-            <AppBar setInputValue={setInputValue} isPremium={isPremium} setIsPremium={setIsPremium}/>
+            <AppBar
+              premiumModalOpen={premiumModalOpen}
+              setPremiumModalOpen={setPremiumModalOpen}
+              setInputValue={setInputValue}
+              isPremium={isPremium}
+              setIsPremium={setIsPremium}
+            />
             <View style={styles.innercontainer}>
               <InputContainer
+                setPremiumModalOpen={setPremiumModalOpen}
                 inputValue={inputValue}
                 setInputValue={setInputValue}
                 isPremium={isPremium}

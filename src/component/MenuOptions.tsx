@@ -1,22 +1,31 @@
-import React, {FC, useRef, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {View, Text, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 //@ts-ignore
 import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
-import {SeachInputProp} from './AppBar';
 import GoPremium from './GoPremium';
 
 import ExportData from './ExportData';
 
-const MenuOptions: FC<SeachInputProp> = ({
+export interface Props {
+  setInputValue: (query: string) => void;
+  isPremium: boolean;
+  setIsPremium: (isPrem: boolean) => void;
+  setPremiumModalOpen: (isOpen: boolean) => void;
+  premiumModalOpen: boolean;
+}
+
+
+const MenuOptions: FC<Props> = ({
   setInputValue,
   isPremium,
   setIsPremium,
+  setPremiumModalOpen,
+  premiumModalOpen,
 }) => {
   const menuRef = useRef<Menu>(null);
-  const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
   const [exportModal, setExportModal] = useState<boolean>(false);
 
   const showAllTables = (): void => {
@@ -66,7 +75,7 @@ In future this app may allow you to create and select difference databases.
           />
         }>
         <MenuItem
-          disabled={isPremium}
+          disabled={!isPremium}
           onPress={() => {
             menuRef.current.hide();
             setExportModal(true);

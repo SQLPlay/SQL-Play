@@ -160,7 +160,7 @@ export default GoPremium;
 
 const styles = StyleSheet.create({
   container: {
-    height: height,
+    height: '100%',
     // backgroundColor: "pink"
   },
   title: {
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   },
   buyBtn: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 20,
     alignItems: 'center',
     width: width,
   },
@@ -203,7 +203,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     backgroundColor: darkYellow,
     padding: 8,
-    width: 370,
+    maxWidth: 350,
+    width: width - 20,
     borderRadius: 5,
   },
 });

@@ -1,5 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 
+//@ts-ignore
 import Dialog from 'react-native-dialog';
 
 //@ts-ignore

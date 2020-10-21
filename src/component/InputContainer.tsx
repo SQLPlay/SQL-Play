@@ -13,6 +13,7 @@ import {
   TextInput,
   TouchableOpacity,
   TextInputComponent,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -27,17 +28,40 @@ import GestureRecognizer from 'react-native-swipe-gestures';
 import {lightDark, sideButton} from '../data/colors.json';
 import {findUserCommands, getLastUserCommand} from '../utils/storage';
 import {debounce} from '../utils/utils';
+
 interface Props {
   inputValue: string;
   setInputValue: (val: string) => void;
   isPremium: boolean;
+  setPremiumModalOpen: (isOpen: boolean) => void;
 }
 
-const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
+const InputContainer: FC<Props> = ({
+  inputValue,
+  setInputValue,
+  isPremium,
+  setPremiumModalOpen,
+}) => {
   const historyOffset = useRef<number>(-1);
   const [autoCompleteTxt, setAutoCompleteTxt] = useState<string>('');
 
-  const onUpArrowPress = async () => {
+  const showPremiumAlert = (): void => {
+    Alert.alert(
+      'Go premium to unlock query history',
+      'By going premium, you can unlock history with autocomplete and many more',
+      [
+        {text: 'Go Premium', onPress: () => setPremiumModalOpen(true)},
+        {text: 'Close', style: 'cancel'},
+      ],
+    );
+  };
+
+  const onUpArrowPress = async (): Promise<void> => {
+    /** show premium alert when user is not premium */
+    if (!isPremium) {
+      showPremiumAlert();
+      return;
+    }
     const lastCommand = await getLastUserCommand(historyOffset.current + 1);
     // console.log(historyOffset.current + 1, lastCommand);
 
@@ -47,7 +71,13 @@ const InputContainer: FC<Props> = ({inputValue, setInputValue}) => {
       historyOffset.current++;
     }
   };
-  const onDownArrowPress = async () => {
+  const onDownArrowPress = async (): Promise<void> => {
+    /** show premium alert when user is not premium */
+    if (!isPremium) {
+      showPremiumAlert();
+      return;
+    }
+
     if (historyOffset.current === 0) return; // do nothing if offset it 0
 
     const lastCommand = await getLastUserCommand(historyOffset.current - 1);

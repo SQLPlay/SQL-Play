@@ -2,19 +2,34 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import MenuOptions from './MenuOptions';
 import SearchBox from './SearchBox';
-export interface SeachInputProp {
+
+export interface Props {
   setInputValue: (query: string) => void;
-  isPremium?: boolean;
-  setIsPremium?: (isPrem: boolean) => void;
+  isPremium: boolean;
+  setIsPremium: (isPrem: boolean) => void;
+  setPremiumModalOpen: (isOpen: boolean) => void;
+  premiumModalOpen: boolean;
 }
 
-const AppBar: React.FC<SeachInputProp> = ({setInputValue, isPremium, setIsPremium}) => {
+const AppBar: React.FC<Props> = ({
+  setInputValue,
+  isPremium,
+  setIsPremium,
+  setPremiumModalOpen,
+  premiumModalOpen,
+}) => {
   return (
     <View style={styles.appBar}>
       <Text style={styles.appBarTxt}>SQL Playground</Text>
       <View style={styles.optionContainer}>
         <SearchBox setInputValue={setInputValue} />
-        <MenuOptions isPremium={isPremium} setInputValue={setInputValue} setIsPremium={setIsPremium}/>
+        <MenuOptions
+          isPremium={isPremium}
+          setInputValue={setInputValue}
+          setIsPremium={setIsPremium}
+          setPremiumModalOpen={setPremiumModalOpen}
+          premiumModalOpen={premiumModalOpen}
+        />
       </View>
     </View>
   );
