@@ -123,6 +123,9 @@ const GoPremium: FC<Props> = ({
       animationType="slide"
       onRequestClose={() => setModalState(false)}>
       <View style={styles.container}>
+        <View style={styles.closeBtnContainer}>
+          <Icon name="close" size={30} onPress={() => setModalState(false)} />
+        </View>
         <View style={styles.header}>
           <Image style={styles.logo} source={require('../images/sqlpro.png')} />
           <Text style={styles.title}>
@@ -175,6 +178,10 @@ const styles = StyleSheet.create({
   container: {
     height: '100%',
     // backgroundColor: "pink"
+  },
+  closeBtnContainer: {
+    alignItems: 'flex-end',
+    padding: 5,
   },
   title: {
     fontSize: 24,
