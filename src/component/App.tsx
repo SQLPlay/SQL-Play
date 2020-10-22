@@ -129,10 +129,11 @@ const App: React.FC = () => {
 
   useEffect(() => {
     /** check premium and set here */
+    SplashScreen.hide();
+
     const init = async () => {
       const isPremRes = await checkForPremiumUser();
       console.log('is prem res', isPremRes);
-      SplashScreen.hide();
 
       setIsPremium(isPremRes);
 
