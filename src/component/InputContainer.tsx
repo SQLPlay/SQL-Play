@@ -98,7 +98,7 @@ const InputContainer: FC<Props> = ({
           console.log('autocomplete', e);
           setAutoCompleteTxt(e);
         }),
-      200,
+      100,
     ),
     [],
   );

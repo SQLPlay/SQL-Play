@@ -10,6 +10,7 @@ import {
   View,
   Platform,
   EmitterSubscription,
+  ActivityIndicator,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -44,6 +45,8 @@ const GoPremium: FC<Props> = ({
   setIsPremium,
   isPremium,
 }) => {
+  const [purchaseProcessing, setPurchaseProcessing] = useState<boolean>(false);
+
   const getItems = async (): Promise<void> => {
     try {
       const result: boolean = await RNIap.initConnection();
@@ -66,6 +69,7 @@ const GoPremium: FC<Props> = ({
             );
             /** make it affect on all app  */
             setIsPremium(true);
+            setPurchaseProcessing(false);
           } catch (ackErr) {
             console.warn('ackErr', ackErr);
           }
@@ -74,12 +78,14 @@ const GoPremium: FC<Props> = ({
 
       purchaseError = purchaseErrorListener((error) => {
         console.log('purchaseErrorListener', error);
+        setPurchaseProcessing(false);
         // Alert.alert('purchase error', JSON.stringify(error.message));
       });
       // const consumed = await RNIap.consumeAllItemsAndroid();
       // console.log('consumed all items?', consumed);
     } catch (err) {
-      console.warn(err.code, err.message);
+      console.log(err.code, err.message);
+      setPurchaseProcessing(false);
     }
   };
 
@@ -104,10 +110,11 @@ const GoPremium: FC<Props> = ({
       if (!itemSkus) {
         return;
       }
+      setPurchaseProcessing(true);
       await RNIap.requestPurchase(itemSkus[0]);
       console.log('Purchase success');
     } catch (err) {
-      console.warn(err.code, err.message);
+      console.log(err.code, err.message);
     }
   };
   return (
@@ -147,9 +154,15 @@ const GoPremium: FC<Props> = ({
           style={styles.buyBtn}
           onPress={buyPremium}
           disabled={isPremium}>
-          <Text style={styles.buyBtnTxt}>
-            {isPremium ? 'Sweet! You have Premium' : 'Buy Now'}
-          </Text>
+          {!purchaseProcessing ? (
+            <Text style={styles.buyBtnTxt}>
+              {isPremium ? 'Sweet! You have Premium' : 'Buy Now'}
+            </Text>
+          ) : (
+            <View style={styles.loaderContainer}>
+              <ActivityIndicator color="#fcfcfc" />
+            </View>
+          )}
         </TouchableOpacity>
       </View>
     </Modal>
@@ -203,6 +216,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     backgroundColor: darkYellow,
     padding: 8,
+    maxWidth: 350,
+    width: width - 20,
+    borderRadius: 5,
+  },
+  loaderContainer: {
+    backgroundColor: darkYellow,
+    padding: 12,
     maxWidth: 350,
     width: width - 20,
     borderRadius: 5,

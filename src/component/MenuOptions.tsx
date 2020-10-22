@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {View, Text, Alert} from 'react-native';
+import {View, Text, Alert, Linking} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -16,7 +16,6 @@ export interface Props {
   setPremiumModalOpen: (isOpen: boolean) => void;
   premiumModalOpen: boolean;
 }
-
 
 const MenuOptions: FC<Props> = ({
   setInputValue,
@@ -55,6 +54,11 @@ In future this app may allow you to create and select difference databases.
     );
   };
 
+  const sendMailFeedback = (): void => {
+    Linking.openURL(
+      'mailto:hi@creativeshi.com?subject=SQL%20Playground%20Feedback',
+    );
+  };
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <GoPremium
@@ -83,7 +87,8 @@ In future this app may allow you to create and select difference databases.
           Export Data
         </MenuItem>
         <MenuItem onPress={showAllTables}>List all tables</MenuItem>
-        <MenuItem onPress={showSupportedQuery}>Supported query</MenuItem>
+        <MenuItem onPress={showSupportedQuery}>Query Support</MenuItem>
+        <MenuItem onPress={sendMailFeedback}>Send Feedback</MenuItem>
         <MenuDivider />
         <MenuItem
           onPress={() => {
