@@ -143,6 +143,10 @@ const GoPremium: FC<Props> = ({
         </View>
         <View style={styles.featureTxtContainer}>
           <Icon name="check-decagram" color={darkYellow} size={24} />
+          <Text style={styles.featureTxt}> Export Tables</Text>
+        </View>
+        <View style={styles.featureTxtContainer}>
+          <Icon name="check-decagram" color={darkYellow} size={24} />
           <Text style={styles.featureTxt}> Query History</Text>
         </View>
         <View style={styles.featureTxtContainer}>
