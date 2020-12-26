@@ -117,7 +117,7 @@ const GoPremium: FC<Props> = ({
       console.log(err.code, err.message);
     }
   };
-  return (
+  return ( 
     <Modal
       visible={modalState}
       animationType="slide"

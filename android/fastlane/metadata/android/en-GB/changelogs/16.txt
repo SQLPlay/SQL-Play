@@ -1,0 +1,6 @@
+Added SQL Play Premium
+Added CSV table export feature
+Added history and autocomplete
+Added feedback option and more
+Few bugs fixed and improvements
+*Fixed splash

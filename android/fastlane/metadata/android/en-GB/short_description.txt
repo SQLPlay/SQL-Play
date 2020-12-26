@@ -1,0 +1,1 @@
+Run SQL queries in your phone and see your data in beautiful tables
