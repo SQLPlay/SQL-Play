@@ -20,8 +20,8 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-*/*.xcframework
-*/*.framework
+*.xcframework/
+*.framework/
 
 # Android/IntelliJ
 #
