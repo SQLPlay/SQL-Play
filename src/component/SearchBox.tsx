@@ -93,7 +93,7 @@ const SearchBox: React.FC<SeachInputProp> = ({setInputValue}) => {
               onPress={() => setSearchInput('')}
             />
           </View>
-          <SafeAreaView style={{marginBottom: 65, marginTop: 10, flexGrow: 1}}>
+          <View style={{marginBottom: 65, marginTop: 10, flexGrow: 1}}>
             {flatlistVisiblity && (
               <CommandList
                 listData={listData}
@@ -101,7 +101,7 @@ const SearchBox: React.FC<SeachInputProp> = ({setInputValue}) => {
                 refRBSheet={refRBSheet}
               />
             )}
-          </SafeAreaView>
+          </View>
         </View>
       </RBSheet>
     </>

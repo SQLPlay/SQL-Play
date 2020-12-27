@@ -10,6 +10,7 @@ import {
   Modal,
   ToastAndroid,
   useColorScheme,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import {
@@ -140,7 +141,8 @@ const App: React.FC = () => {
       const isPremRes = await checkForPremiumUser();
       console.log('is prem res', isPremRes);
 
-      setIsPremium(isPremRes);
+      // setIsPremium(isPremRes);
+      setIsPremium(true);
 
       try {
         const result = await startUpdateFlow('flexible');
@@ -150,39 +152,41 @@ const App: React.FC = () => {
       }
     };
 
-    init();
+    // init();
   }, []);
 
   return (
     <>
       <ColorSchemeProvider>
-        <StatusBar barStyle="dark-content" backgroundColor="#c8b900" />
+        {/* <StatusBar barStyle="dark-content" backgroundColor="#c8b900" /> */}
         <SafeAreaView>
-          <Modal visible={loaderVisibility} transparent={true}>
-            <View style={styles.modalStyle}>
-              <ActivityIndicator size={50} color="gold" />
-            </View>
-          </Modal>
-          <View style={styles.outerContainer}>
-            <AppBar
-              premiumModalOpen={premiumModalOpen}
-              setPremiumModalOpen={setPremiumModalOpen}
-              setInputValue={setInputValue}
-              isPremium={isPremium}
-              setIsPremium={setIsPremium}
-            />
-            <View style={styles.innercontainer}>
-              <InputContainer
+          <KeyboardAvoidingView behavior="padding">
+            <Modal visible={loaderVisibility} transparent={true}>
+              <View style={styles.modalStyle}>
+                <ActivityIndicator size={50} color="gold" />
+              </View>
+            </Modal>
+            <View style={styles.outerContainer}>
+              <AppBar
+                premiumModalOpen={premiumModalOpen}
                 setPremiumModalOpen={setPremiumModalOpen}
-                inputValue={inputValue}
                 setInputValue={setInputValue}
                 isPremium={isPremium}
+                setIsPremium={setIsPremium}
               />
-              <Table {...tableData} tableWidths={tableWidths} />
-            </View>
+              <View style={styles.innercontainer}>
+                <InputContainer
+                  setPremiumModalOpen={setPremiumModalOpen}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  isPremium={isPremium}
+                />
+                <Table {...tableData} tableWidths={tableWidths} />
+              </View>
 
-            <RunButton runQuery={runQuery} />
-          </View>
+              <RunButton runQuery={runQuery} />
+            </View>
+          </KeyboardAvoidingView>
         </SafeAreaView>
       </ColorSchemeProvider>
     </>

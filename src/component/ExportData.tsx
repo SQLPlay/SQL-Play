@@ -34,6 +34,7 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
   const exportCSV = async (): Promise<void> => {
     const isGranted: boolean = await requestExternalWritePermission();
     let csvString: string = '';
+    console.log(isGranted);
 
     if (!isGranted) {
       return;
@@ -110,6 +111,9 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
       console.log(err);
     }
   };
+  useEffect(() => {
+    console.log(modalState);
+  }, [modalState]);
 
   /** We will reset all the states here */
   const onCancel = (): void => {
@@ -129,44 +133,46 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
   };
 
   return (
-    <Dialog.Container
-      visible={modalState}
-      contentStyle={{height: 220, justifyContent: 'space-around'}}
-      onBackdropPress={onCancel}>
-      {!isLoading && (
-        <Dialog.Title>
-          {isExported ? 'Table Exported Sucessfully' : 'Export Table in CSV'}
-        </Dialog.Title>
-      )}
+    <View style={{flex: 1}}>
+      <Dialog.Container
+        visible={true}
+        contentStyle={{height: 220, justifyContent: 'space-around'}}
+        onBackdropPress={onCancel}>
+        {!isLoading && (
+          <Dialog.Title>
+            {isExported ? 'Table Exported Sucessfully' : 'Export Table in CSV'}
+          </Dialog.Title>
+        )}
 
-      {!isLoading && (
-        <Dialog.Description>
-          {isExported
-            ? 'CSV file saved in your downloads\nWould you like to share it ?'
-            : 'Type the table name'}
-        </Dialog.Description>
-      )}
-      {!isLoading && !isExported ? (
-        <Dialog.Input
-          autoFocus={true}
-          style={styles.tableInput}
-          placeholder="Employees"
-          onChangeText={(text: string) => setFieldValue(text)}
-          value={fieldValue}
-        />
-      ) : (
-        isLoading && <ActivityIndicator color="gold" size="large" />
-      )}
+        {!isLoading && (
+          <Dialog.Description>
+            {isExported
+              ? 'CSV file saved in your downloads\nWould you like to share it ?'
+              : 'Type the table name'}
+          </Dialog.Description>
+        )}
+        {!isLoading && !isExported ? (
+          <Dialog.Input
+            autoFocus={true}
+            style={styles.tableInput}
+            placeholder="Employees"
+            onChangeText={(text: string) => setFieldValue(text)}
+            value={fieldValue}
+          />
+        ) : (
+          isLoading && <ActivityIndicator color="gold" size="large" />
+        )}
 
-      {!!exportErr && <Text style={styles.errorTxt}>{exportErr}</Text>}
-      {!isLoading && <Dialog.Button label="Cancel" onPress={onCancel} />}
-      {!isLoading && (
-        <Dialog.Button
-          label={isExported ? 'Share' : 'Export'}
-          onPress={onExportOrShare}
-        />
-      )}
-    </Dialog.Container>
+        {!!exportErr && <Text style={styles.errorTxt}>{exportErr}</Text>}
+        {!isLoading && <Dialog.Button label="Cancel" onPress={onCancel} />}
+        {!isLoading && (
+          <Dialog.Button
+            label={isExported ? 'Share' : 'Export'}
+            onPress={onExportOrShare}
+          />
+        )}
+      </Dialog.Container>
+    </View>
   );
 };
 

@@ -11,6 +11,7 @@ import {
   Platform,
   EmitterSubscription,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -117,12 +118,13 @@ const GoPremium: FC<Props> = ({
       console.log(err.code, err.message);
     }
   };
-  return ( 
+  return (
     <Modal
       visible={modalState}
       animationType="slide"
+      presentationStyle="overFullScreen"
       onRequestClose={() => setModalState(false)}>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.closeBtnContainer}>
           <Icon name="close" size={30} onPress={() => setModalState(false)} />
         </View>
@@ -171,7 +173,7 @@ const GoPremium: FC<Props> = ({
             </View>
           )}
         </TouchableOpacity>
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 };

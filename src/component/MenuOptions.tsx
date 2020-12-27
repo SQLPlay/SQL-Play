@@ -59,6 +59,7 @@ In future this app may allow you to create and select difference databases.
       'mailto:hi@creativeshi.com?subject=SQL%20Playground%20Feedback',
     );
   };
+  // menuRef.current.show()
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <GoPremium
@@ -92,8 +93,8 @@ In future this app may allow you to create and select difference databases.
         <MenuDivider />
         <MenuItem
           onPress={() => {
-            setPremiumModalOpen(true);
             menuRef.current.hide();
+            setPremiumModalOpen(true);
           }}>
           <MCIcon name="crown" size={16} />
           <Text> {!isPremium && 'Go '}Premium</Text>
