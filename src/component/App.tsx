@@ -38,6 +38,11 @@ import InputContainer from './InputContainer';
 
 import '../utils/appReviewer';
 import {darkBGColor} from '../data/colors.json';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+MCIcon.loadFont();
+
+MIcon.loadFont();
 
 //set app id and load ad
 AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');

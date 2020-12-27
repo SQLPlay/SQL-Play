@@ -12,7 +12,7 @@ const userDb = SQLite.openDatabase(
   {
     name: 'prepop.db',
     createFromLocation: 1,
-    location: 'default',
+    location: 'Library',
   },
   openCB,
   errorCB,

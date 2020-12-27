@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   TextInputComponent,
   Alert,
+  Platform,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -35,6 +36,8 @@ interface Props {
   isPremium: boolean;
   setPremiumModalOpen: (isOpen: boolean) => void;
 }
+
+const codeFont = Platform.OS === 'ios' ? 'courier' : 'monospace';
 
 const InputContainer: FC<Props> = ({
   inputValue,
@@ -170,7 +173,7 @@ const dynamicStyles = new DynamicStyleSheet({
   },
   input: {
     fontSize: 16,
-    fontFamily: 'monospace',
+    fontFamily: codeFont,
     padding: 5,
     // position: 'relative',
     zIndex: 2,
@@ -181,7 +184,7 @@ const dynamicStyles = new DynamicStyleSheet({
   autoCompleteTxt: {
     position: 'absolute',
     zIndex: 1,
-    fontFamily: 'monospace',
+    fontFamily: codeFont,
     fontSize: 16,
     color: 'gray',
     top: 4.8,

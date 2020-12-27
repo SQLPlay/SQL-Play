@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:GoogleMobileAds.xcframework"
+      name = "GoogleMobileAds.xcframework">
+      <Group
+         location = "group:ios-arm64_i386_x86_64-simulator"
+         name = "ios-arm64_i386_x86_64-simulator">
+         <Group
+            location = "group:GoogleMobileAds.framework"
+            name = "GoogleMobileAds.framework">
+            <FileRef
+               location = "group:GoogleMobileAds">
+            </FileRef>
+            <Group
+               location = "group:Headers"
+               name = "Headers">
+               <FileRef
+                  location = "group:GADMediaContent.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADExtras.h">
+               </FileRef>
+               <FileRef
+                  location = "group:DFPRequest.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADUnifiedNativeAdAssetIdentifiers.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAppOpenAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventInterstitialDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:DFPBannerView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADVideoController.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardedAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADVideoOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventNativeAdDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAdImageAdLoaderOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardedAdBeta.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAdImage+Mediation.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAudioVideoManagerDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInstreamAdView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:DFPInterstitial.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdLoaderAdTypes.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventInterstitial.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdFormat.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInAppPurchase.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdMetadata.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardedAdDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventRequest.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADFullScreenContentDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAudioVideoManager.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADServerSideVerificationOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardedInterstitialAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADMediaView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADMuteThisAdReason.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdSizeDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADVideoControllerDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeExpressAdViewDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADMediaAspectRatio.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInitializationStatus.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdSize.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GoogleMobileAdsDefines.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInterstitial.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdChoicesView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdReward.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADDebugOptionsViewController.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAdViewAdOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardedAdMetadataDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdLoader.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAdImage.h">
+               </FileRef>
+               <Group
+                  location = "group:Mediation"
+                  name = "Mediation">
+                  <FileRef
+                     location = "group:GADMediationNativeAd.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMEnums.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationAdConfiguration.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationAdRequest.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMAdNetworkAdapterProtocol.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationBannerAd.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationAdEventDelegate.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMAdNetworkConnectorProtocol.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMRewardBasedVideoAdNetworkConnectorProtocol.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationAdSize.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMRewardBasedVideoAdNetworkAdapterProtocol.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationRewardedAd.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationServerConfiguration.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediatedUnifiedNativeAd.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationAd.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediatedUnifiedNativeAdNotificationSource.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationAdapter.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationInterstitialAd.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADVersionNumber.h">
+                  </FileRef>
+               </Group>
+               <FileRef
+                  location = "group:GADNativeCustomTemplateAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAdDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADPresentationError.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAppEventDelegateBeta.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADDisplayAdMeasurement.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeMuteThisAdLoaderOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventNativeAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAppEventDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardBasedVideoAdDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADSearchBannerView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdNetworkExtras.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADUnifiedNativeAd+CustomClickGesture.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADUnifiedNativeAdUnconfirmedClickDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADResponseInfo.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventBanner.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRequestError.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventExtras.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRequest.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GAMInterstitialAdBeta.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADUnifiedNativeAdDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADMultipleAdsAdLoaderOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdLoaderDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventBannerDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeExpressAdView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdValue.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADBannerViewDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInstreamAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADDynamicHeightSearchRequest.h">
+               </FileRef>
+               <Group
+                  location = "group:RTBMediation"
+                  name = "RTBMediation">
+                  <FileRef
+                     location = "group:GADRTBRequestParameters.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADRTBAdapter.h">
+                  </FileRef>
+               </Group>
+               <FileRef
+                  location = "group:GoogleMobileAds.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventParameters.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADUnifiedNativeAd+ConfirmationClick.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardBasedVideoAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADMobileAds.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInAppPurchaseDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRequestConfiguration.h">
+               </FileRef>
+               <FileRef
+                  location = "group:DFPBannerViewOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADDelayedAdRenderingOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAdMediaAdLoaderOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADUnifiedNativeAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInterstitialDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADBannerView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInterstitialAdBeta.h">
+               </FileRef>
+            </Group>
+            <Group
+               location = "group:Modules"
+               name = "Modules">
+               <FileRef
+                  location = "group:module.modulemap">
+               </FileRef>
+            </Group>
+         </Group>
+      </Group>
+      <FileRef
+         location = "group:Info.plist">
+      </FileRef>
+      <Group
+         location = "group:ios-arm64_armv7"
+         name = "ios-arm64_armv7">
+         <Group
+            location = "group:GoogleMobileAds.framework"
+            name = "GoogleMobileAds.framework">
+            <FileRef
+               location = "group:GoogleMobileAds">
+            </FileRef>
+            <Group
+               location = "group:Headers"
+               name = "Headers">
+               <FileRef
+                  location = "group:GADMediaContent.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADExtras.h">
+               </FileRef>
+               <FileRef
+                  location = "group:DFPRequest.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADUnifiedNativeAdAssetIdentifiers.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAppOpenAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventInterstitialDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:DFPBannerView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADVideoController.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardedAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADVideoOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventNativeAdDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAdImageAdLoaderOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardedAdBeta.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAdImage+Mediation.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAudioVideoManagerDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInstreamAdView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:DFPInterstitial.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdLoaderAdTypes.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventInterstitial.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdFormat.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInAppPurchase.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdMetadata.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardedAdDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventRequest.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADFullScreenContentDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAudioVideoManager.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADServerSideVerificationOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardedInterstitialAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADMediaView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADMuteThisAdReason.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdSizeDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADVideoControllerDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeExpressAdViewDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADMediaAspectRatio.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInitializationStatus.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdSize.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GoogleMobileAdsDefines.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInterstitial.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdChoicesView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdReward.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADDebugOptionsViewController.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAdViewAdOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardedAdMetadataDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdLoader.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAdImage.h">
+               </FileRef>
+               <Group
+                  location = "group:Mediation"
+                  name = "Mediation">
+                  <FileRef
+                     location = "group:GADMediationNativeAd.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMEnums.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationAdConfiguration.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationAdRequest.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMAdNetworkAdapterProtocol.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationBannerAd.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationAdEventDelegate.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMAdNetworkConnectorProtocol.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMRewardBasedVideoAdNetworkConnectorProtocol.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationAdSize.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMRewardBasedVideoAdNetworkAdapterProtocol.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationRewardedAd.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationServerConfiguration.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediatedUnifiedNativeAd.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationAd.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediatedUnifiedNativeAdNotificationSource.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationAdapter.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADMediationInterstitialAd.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADVersionNumber.h">
+                  </FileRef>
+               </Group>
+               <FileRef
+                  location = "group:GADNativeCustomTemplateAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAdDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADPresentationError.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAppEventDelegateBeta.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADDisplayAdMeasurement.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeMuteThisAdLoaderOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventNativeAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAppEventDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardBasedVideoAdDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADSearchBannerView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdNetworkExtras.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADUnifiedNativeAd+CustomClickGesture.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADUnifiedNativeAdUnconfirmedClickDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADResponseInfo.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventBanner.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRequestError.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventExtras.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRequest.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GAMInterstitialAdBeta.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADUnifiedNativeAdDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADMultipleAdsAdLoaderOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdLoaderDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventBannerDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeExpressAdView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADAdValue.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADBannerViewDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInstreamAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADDynamicHeightSearchRequest.h">
+               </FileRef>
+               <Group
+                  location = "group:RTBMediation"
+                  name = "RTBMediation">
+                  <FileRef
+                     location = "group:GADRTBRequestParameters.h">
+                  </FileRef>
+                  <FileRef
+                     location = "group:GADRTBAdapter.h">
+                  </FileRef>
+               </Group>
+               <FileRef
+                  location = "group:GoogleMobileAds.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADCustomEventParameters.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADUnifiedNativeAd+ConfirmationClick.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRewardBasedVideoAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADMobileAds.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInAppPurchaseDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADRequestConfiguration.h">
+               </FileRef>
+               <FileRef
+                  location = "group:DFPBannerViewOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADDelayedAdRenderingOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADNativeAdMediaAdLoaderOptions.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADUnifiedNativeAd.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInterstitialDelegate.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADBannerView.h">
+               </FileRef>
+               <FileRef
+                  location = "group:GADInterstitialAdBeta.h">
+               </FileRef>
+            </Group>
+            <Group
+               location = "group:Modules"
+               name = "Modules">
+               <FileRef
+                  location = "group:module.modulemap">
+               </FileRef>
+            </Group>
+         </Group>
+      </Group>
+   </Group>
+   <FileRef
+      location = "self:">
+   </FileRef>
+</Workspace>
