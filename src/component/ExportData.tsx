@@ -10,7 +10,13 @@ import RNFS from 'react-native-fs';
 
 import {requestExternalWritePermission} from '../utils/utils';
 import {ExecuteUserQuery} from '../utils/storage';
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 interface Props {
   modalState: boolean;
@@ -133,46 +139,45 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
   };
 
   return (
-    <View style={{flex: 1}}>
-      <Dialog.Container
-        visible={true}
-        contentStyle={{height: 220, justifyContent: 'space-around'}}
-        onBackdropPress={onCancel}>
-        {!isLoading && (
-          <Dialog.Title>
-            {isExported ? 'Table Exported Sucessfully' : 'Export Table in CSV'}
-          </Dialog.Title>
-        )}
+    <Dialog.Container
+      visible={modalState}
+      contentStyle={{height: 220, marginBottom: 40, justifyContent: 'space-around'}}
+      
+      onBackdropPress={onCancel}>
+      {!isLoading && (
+        <Dialog.Title>
+          {isExported ? 'Table Exported Sucessfully' : 'Export Table in CSV'}
+        </Dialog.Title>
+      )}
 
-        {!isLoading && (
-          <Dialog.Description>
-            {isExported
-              ? 'CSV file saved in your downloads\nWould you like to share it ?'
-              : 'Type the table name'}
-          </Dialog.Description>
-        )}
-        {!isLoading && !isExported ? (
-          <Dialog.Input
-            autoFocus={true}
-            style={styles.tableInput}
-            placeholder="Employees"
-            onChangeText={(text: string) => setFieldValue(text)}
-            value={fieldValue}
-          />
-        ) : (
-          isLoading && <ActivityIndicator color="gold" size="large" />
-        )}
+      {!isLoading && (
+        <Dialog.Description>
+          {isExported
+            ? 'CSV file saved in your downloads\nWould you like to share it ?'
+            : 'Type the table name'}
+        </Dialog.Description>
+      )}
+      {!isLoading && !isExported ? (
+        <Dialog.Input
+          autoFocus={true}
+          style={styles.tableInput}
+          placeholder="Employees"
+          onChangeText={(text: string) => setFieldValue(text)}
+          value={fieldValue}
+        />
+      ) : (
+        isLoading && <ActivityIndicator color="gold" size="large" />
+      )}
 
-        {!!exportErr && <Text style={styles.errorTxt}>{exportErr}</Text>}
-        {!isLoading && <Dialog.Button label="Cancel" onPress={onCancel} />}
-        {!isLoading && (
-          <Dialog.Button
-            label={isExported ? 'Share' : 'Export'}
-            onPress={onExportOrShare}
-          />
-        )}
-      </Dialog.Container>
-    </View>
+      {!!exportErr && <Text style={styles.errorTxt}>{exportErr}</Text>}
+      {!isLoading && <Dialog.Button label="Cancel" onPress={onCancel} />}
+      {!isLoading && (
+        <Dialog.Button
+          label={isExported ? 'Share' : 'Export'}
+          onPress={onExportOrShare}
+        />
+      )}
+    </Dialog.Container>
   );
 };
 
@@ -180,7 +185,7 @@ export default ExportData;
 
 const styles = StyleSheet.create({
   tableInput: {
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     marginLeft: 3,
     marginRight: 3,
   },

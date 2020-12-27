@@ -138,21 +138,21 @@ const App: React.FC = () => {
     SplashScreen.hide();
 
     const init = async () => {
-      const isPremRes = await checkForPremiumUser();
-      console.log('is prem res', isPremRes);
+      // const isPremRes = await checkForPremiumUser();
+      // console.log('is prem res', isPremRes);
 
       // setIsPremium(isPremRes);
       setIsPremium(true);
 
-      try {
-        const result = await startUpdateFlow('flexible');
-        console.log(result);
-      } catch (e) {
-        console.log('error:', e);
-      }
+      // try {
+      //   const result = await startUpdateFlow('flexible');
+      //   console.log(result);
+      // } catch (e) {
+      //   console.log('error:', e);
+      // }
     };
 
-    // init();
+    init();
   }, []);
 
   return (

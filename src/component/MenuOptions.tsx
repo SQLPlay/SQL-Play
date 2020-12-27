@@ -82,8 +82,9 @@ In future this app may allow you to create and select difference databases.
         <MenuItem
           disabled={!isPremium}
           onPress={() => {
-            menuRef.current.hide();
-            setExportModal(true);
+            menuRef.current.hide(() => {
+              setExportModal(true);
+            });
           }}>
           Export Data
         </MenuItem>
@@ -93,8 +94,9 @@ In future this app may allow you to create and select difference databases.
         <MenuDivider />
         <MenuItem
           onPress={() => {
-            menuRef.current.hide();
-            setPremiumModalOpen(true);
+            menuRef.current.hide(() => {
+              setPremiumModalOpen(true);
+            });
           }}>
           <MCIcon name="crown" size={16} />
           <Text> {!isPremium && 'Go '}Premium</Text>
