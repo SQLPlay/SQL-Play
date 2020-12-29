@@ -8,7 +8,6 @@ import {
   Alert,
   ActivityIndicator,
   Modal,
-  ToastAndroid,
   useColorScheme,
   KeyboardAvoidingView,
 } from 'react-native';
@@ -41,6 +40,8 @@ import '../utils/appReviewer';
 import {darkBGColor} from '../data/colors.json';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Snackbar from 'react-native-snackbar';
+
 MCIcon.loadFont();
 
 MIcon.loadFont();
@@ -105,11 +106,7 @@ const App: React.FC = () => {
       // console.log(res.rows);
       if (len === 0) {
         setLoaderVisibility(false);
-        ToastAndroid.showWithGravity(
-          'Query Executed!',
-          ToastAndroid.SHORT,
-          ToastAndroid.BOTTOM,
-        );
+        Snackbar.show({text: 'Query Executed!'});
         return;
       }
       const header: string[] = Object.keys(res.rows.item(0)).reverse();
@@ -158,36 +155,40 @@ const App: React.FC = () => {
   return (
     <>
       <ColorSchemeProvider>
-        <StatusBar barStyle="dark-content" backgroundColor="#c8b900" translucent/>
-        {/* <SafeAreaView> */}
-          <KeyboardAvoidingView behavior="padding">
-            <Modal visible={loaderVisibility} transparent={true}>
-              <View style={styles.modalStyle}>
-                <ActivityIndicator size={50} color="gold" />
-              </View>
-            </Modal>
-            <View style={styles.outerContainer}>
-              <AppBar
-                premiumModalOpen={premiumModalOpen}
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor="#c8b900"
+          translucent
+        />
+        <SafeAreaView>
+        <KeyboardAvoidingView behavior="padding">
+          <Modal visible={loaderVisibility} transparent={true}>
+            <View style={styles.modalStyle}>
+              <ActivityIndicator size={50} color="gold" />
+            </View>
+          </Modal>
+          <View style={styles.outerContainer}>
+            <AppBar
+              premiumModalOpen={premiumModalOpen}
+              setPremiumModalOpen={setPremiumModalOpen}
+              setInputValue={setInputValue}
+              isPremium={isPremium}
+              setIsPremium={setIsPremium}
+            />
+            <View style={styles.innercontainer}>
+              <InputContainer
                 setPremiumModalOpen={setPremiumModalOpen}
+                inputValue={inputValue}
                 setInputValue={setInputValue}
                 isPremium={isPremium}
-                setIsPremium={setIsPremium}
               />
-              <View style={styles.innercontainer}>
-                <InputContainer
-                  setPremiumModalOpen={setPremiumModalOpen}
-                  inputValue={inputValue}
-                  setInputValue={setInputValue}
-                  isPremium={isPremium}
-                />
-                <Table {...tableData} tableWidths={tableWidths} />
-              </View>
-
-              <RunButton runQuery={runQuery} />
+              <Table {...tableData} tableWidths={tableWidths} />
             </View>
-          </KeyboardAvoidingView>
-        {/* </SafeAreaView> */}
+
+            <RunButton runQuery={runQuery} />
+          </View>
+        </KeyboardAvoidingView>
+        </SafeAreaView>
       </ColorSchemeProvider>
     </>
   );

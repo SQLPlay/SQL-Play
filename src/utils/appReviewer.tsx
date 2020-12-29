@@ -1,7 +1,8 @@
 // @ts-ignore
 import RnInAppReview from 'rn-in-app-review';
 import {getAppData, setAppData} from './storage';
-import {Alert, ToastAndroid} from 'react-native';
+import {Alert} from 'react-native';
+import Snackbar from 'react-native-snackbar';
 
 const timesOpenedId = 'noOfTimesOpened';
 const userActionId = 'userActionOnReview';
@@ -28,11 +29,7 @@ const showReviewAlert = () => {
 const launchReview = () => {
   RnInAppReview.launchReviewFlow(async (isSuccessful: boolean) => {
     if (isSuccessful) {
-      ToastAndroid.showWithGravity(
-        'Thank You!',
-        ToastAndroid.SHORT,
-        ToastAndroid.CENTER,
-      );
+      Snackbar.show({text: 'Thank You!'});
       await setAppData(userActionId, 'given');
     }
   });
