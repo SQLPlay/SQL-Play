@@ -292,6 +292,8 @@ PODS:
     - React-Core
   - RNShare (5.1.0):
     - React-Core
+  - RNSnackbar (2.3.1):
+    - React-Core
   - RNTextSize (4.0.0-rc.1):
     - React
   - RNVectorIcons (7.1.0):
@@ -334,6 +336,7 @@ DEPENDENCIES:
   - RNFS (from `../node_modules/react-native-fs`)
   - RNIap (from `../node_modules/react-native-iap`)
   - RNShare (from `../node_modules/react-native-share`)
+  - RNSnackbar (from `../node_modules/react-native-snackbar`)
   - RNTextSize (from `../node_modules/react-native-text-size/ios`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -413,6 +416,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-iap"
   RNShare:
     :path: "../node_modules/react-native-share"
+  RNSnackbar:
+    :path: "../node_modules/react-native-snackbar"
   RNTextSize:
     :path: "../node_modules/react-native-text-size/ios"
   RNVectorIcons:
@@ -460,6 +465,7 @@ SPEC CHECKSUMS:
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNIap: 64d7d32ba6edde36921858399433c9ca0a5245e6
   RNShare: fed99fd743f80ca255903c1da46fc9a6430efab6
+  RNSnackbar: 559b3b4fedd6bbbe017e4f357ae230536b35b115
   RNTextSize: 7efa06531c6bb7ab6ed070b4ce0d1248cf06fcdf
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6

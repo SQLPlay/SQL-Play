@@ -38,13 +38,13 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
   }, [fieldValue]);
 
   const exportCSV = async (): Promise<void> => {
-    const isGranted: boolean = await requestExternalWritePermission();
+    // const isGranted: boolean = await requestExternalWritePermission();
     let csvString: string = '';
-    console.log(isGranted);
+    // console.log(isGranted);
 
-    if (!isGranted) {
-      return;
-    }
+    // if (!isGranted) {
+    //   return;
+    // }
 
     try {
       setIsLoading(true);
@@ -96,7 +96,7 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
     try {
       /** Path of saving the csv file */
       const randomNum: number = Math.floor(Math.random() * 899 + 100);
-      path = `${RNFS.DownloadDirectoryPath}/${fieldValue}_${randomNum}.csv`;
+      path = `${RNFS.DocumentDirectoryPath}/${fieldValue}_${randomNum}.csv`;
       console.log(path);
 
       await RNFS.writeFile(path, csvString, 'utf8');

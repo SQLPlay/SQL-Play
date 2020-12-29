@@ -158,8 +158,8 @@ const App: React.FC = () => {
   return (
     <>
       <ColorSchemeProvider>
-        {/* <StatusBar barStyle="dark-content" backgroundColor="#c8b900" /> */}
-        <SafeAreaView>
+        <StatusBar barStyle="dark-content" backgroundColor="#c8b900" translucent/>
+        {/* <SafeAreaView> */}
           <KeyboardAvoidingView behavior="padding">
             <Modal visible={loaderVisibility} transparent={true}>
               <View style={styles.modalStyle}>
@@ -187,7 +187,7 @@ const App: React.FC = () => {
               <RunButton runQuery={runQuery} />
             </View>
           </KeyboardAvoidingView>
-        </SafeAreaView>
+        {/* </SafeAreaView> */}
       </ColorSchemeProvider>
     </>
   );
