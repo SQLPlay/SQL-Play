@@ -96,7 +96,7 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
     try {
       /** Path of saving the csv file */
       const randomNum: number = Math.floor(Math.random() * 899 + 100);
-      path = `${RNFS.DocumentDirectoryPath}/${fieldValue}_${randomNum}.csv`;
+      path = `${RNFS.TemporaryDirectoryPath}/${fieldValue}_${randomNum}.csv`;
       console.log(path);
 
       await RNFS.writeFile(path, csvString, 'utf8');
@@ -111,7 +111,7 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
       const shareResponse = await Share.open({
         url: `file://${path}`,
         title: 'Table Exported',
-        message: 'Please save it or share it',
+        message: 'Share the CSV file',
       });
     } catch (err) {
       console.log(err);
@@ -141,8 +141,11 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
   return (
     <Dialog.Container
       visible={modalState}
-      contentStyle={{height: 220, marginBottom: 40, justifyContent: 'space-around'}}
-      
+      contentStyle={{
+        height: 220,
+        marginBottom: 40,
+        justifyContent: 'space-around',
+      }}
       onBackdropPress={onCancel}>
       {!isLoading && (
         <Dialog.Title>
@@ -153,7 +156,7 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
       {!isLoading && (
         <Dialog.Description>
           {isExported
-            ? 'CSV file saved in your downloads\nWould you like to share it ?'
+            ? 'Share or Save it anywhere you want'
             : 'Type the table name'}
         </Dialog.Description>
       )}

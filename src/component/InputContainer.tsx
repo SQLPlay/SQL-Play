@@ -132,7 +132,7 @@ const InputContainer: FC<Props> = ({
             multiline
             placeholderTextColor="gray"
             textAlignVertical="top"
-            value={inputValue}
+            defaultValue={inputValue}
             autoCorrect={false}
             numberOfLines={4}
             placeholder="Type your SQL query"
@@ -140,7 +140,6 @@ const InputContainer: FC<Props> = ({
           <Text style={styles.autoCompleteTxt}>{autoCompleteTxt}</Text>
         </View>
       </GestureRecognizer>
-
       <View style={styles.sideButtonContainer}>
         <TouchableOpacity onPress={onUpArrowPress}>
           <Icon size={30} name="arrow-up-bold-box" color={sideButton} />

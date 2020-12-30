@@ -48,13 +48,7 @@ MIcon.loadFont();
 
 //set app id and load ad
 AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
-// AdMobInterstitial.isReady((isReady: boolean) => {
-//   // console.log('Ad is ready', isReady);
 
-//   if (!isReady) {
-//     AdMobInterstitial.requestAd();
-//   }
-// });
 
 const loadAd = () => {
   //show ad
