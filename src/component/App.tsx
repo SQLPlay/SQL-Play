@@ -49,7 +49,6 @@ MIcon.loadFont();
 //set app id and load ad
 AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
 
-
 const loadAd = () => {
   //show ad
   AdMobInterstitial.isReady((isReady: boolean) => {
@@ -129,11 +128,11 @@ const App: React.FC = () => {
     SplashScreen.hide();
 
     const init = async () => {
-      // const isPremRes = await checkForPremiumUser();
-      // console.log('is prem res', isPremRes);
+      const isPremRes = await checkForPremiumUser();
+      console.log('is prem res', isPremRes);
 
       // setIsPremium(isPremRes);
-      setIsPremium(true);
+      // setIsPremium(true);
 
       // try {
       //   const result = await startUpdateFlow('flexible');
@@ -155,33 +154,33 @@ const App: React.FC = () => {
           translucent
         />
         <SafeAreaView>
-        <KeyboardAvoidingView behavior="padding">
-          <Modal visible={loaderVisibility} transparent={true}>
-            <View style={styles.modalStyle}>
-              <ActivityIndicator size={50} color="gold" />
-            </View>
-          </Modal>
-          <View style={styles.outerContainer}>
-            <AppBar
-              premiumModalOpen={premiumModalOpen}
-              setPremiumModalOpen={setPremiumModalOpen}
-              setInputValue={setInputValue}
-              isPremium={isPremium}
-              setIsPremium={setIsPremium}
-            />
-            <View style={styles.innercontainer}>
-              <InputContainer
+          <KeyboardAvoidingView behavior="padding">
+            <Modal visible={loaderVisibility} transparent={true}>
+              <View style={styles.modalStyle}>
+                <ActivityIndicator size={50} color="gold" />
+              </View>
+            </Modal>
+            <View style={styles.outerContainer}>
+              <AppBar
+                premiumModalOpen={premiumModalOpen}
                 setPremiumModalOpen={setPremiumModalOpen}
-                inputValue={inputValue}
                 setInputValue={setInputValue}
                 isPremium={isPremium}
+                setIsPremium={setIsPremium}
               />
-              <Table {...tableData} tableWidths={tableWidths} />
-            </View>
+              <View style={styles.innercontainer}>
+                <InputContainer
+                  setPremiumModalOpen={setPremiumModalOpen}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  isPremium={isPremium}
+                />
+                <Table {...tableData} tableWidths={tableWidths} />
+              </View>
 
-            <RunButton runQuery={runQuery} />
-          </View>
-        </KeyboardAvoidingView>
+              <RunButton runQuery={runQuery} />
+            </View>
+          </KeyboardAvoidingView>
         </SafeAreaView>
       </ColorSchemeProvider>
     </>

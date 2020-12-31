@@ -27,6 +27,7 @@ import RNIap, {
 //items of products
 export const itemSkus: string[] | undefined = Platform.select({
   android: ['premium'],
+  ios: ['premium'],
 });
 
 let purchaseUpdate: EmitterSubscription, purchaseError: EmitterSubscription;
