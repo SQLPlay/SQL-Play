@@ -6144,6 +6144,11 @@ react-native-sqlite-storage@^5.0.0:
   resolved "https://registry.yarnpkg.com/react-native-sqlite-storage/-/react-native-sqlite-storage-5.0.0.tgz#fb015c928b59d3000360fb0774a99545e7a695d6"
   integrity sha512-c1Joq3/tO1nmIcP8SkRZNolPSbfvY8uZg5lXse0TmjIPC0qHVbk96IMvWGyly1TmYCIpxpuDRc0/xCffDbYIvg==
 
+react-native-status-bar-height@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-status-bar-height/-/react-native-status-bar-height-2.6.0.tgz#b6afd25b6e3d533c43d0fcdcfd5cafd775592cea"
+  integrity sha512-z3SGLF0mHT+OlJDq7B7h/jXPjWcdBT3V14Le5L2PjntjjWM3+EJzq2BcXDwV+v67KFNJic5pgA26cCmseYek6w==
+
 react-native-swipe-gestures@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz#a172cb0f3e7478ccd681fd36b8bfbcdd098bde7c"
@@ -6540,6 +6545,11 @@ rn-in-app-review@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/rn-in-app-review/-/rn-in-app-review-0.0.7.tgz#7131d5775505372c0acc6f0ff02bf90191b0753f"
   integrity sha512-uHfp4OqZLanmTc30HskXh9GUeEQaTLrQ7WxOdkIBo3xH3KC4AWO43hZ5ciE8r1mk6+pT4EwHOmKb1h+xT6yMLQ==
+
+rn-secure-storage@^3.0.0-beta.0:
+  version "3.0.0-beta.0"
+  resolved "https://registry.yarnpkg.com/rn-secure-storage/-/rn-secure-storage-3.0.0-beta.0.tgz#4a9c1e4b17f4cf90d85124b4994fff60a84bffd4"
+  integrity sha512-6X7Ik65odyJ/cj9DpxURZy3FIDMYGtNeYuDVA/IvtDPw48cs93XJAnHZ2qon7LCP+IchqA/DR/TfbJNglRJqsw==
 
 rsvp@^4.8.4:
   version "4.8.5"

@@ -290,6 +290,8 @@ PODS:
     - React
   - RNIap (5.2.0):
     - React-Core
+  - RNSecureStorage (3.0.0-beta.0):
+    - React
   - RNShare (5.1.0):
     - React-Core
   - RNSnackbar (2.3.1):
@@ -335,6 +337,7 @@ DEPENDENCIES:
   - rn-in-app-review (from `../node_modules/rn-in-app-review`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNIap (from `../node_modules/react-native-iap`)
+  - RNSecureStorage (from `../node_modules/rn-secure-storage`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
   - RNTextSize (from `../node_modules/react-native-text-size/ios`)
@@ -414,6 +417,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fs"
   RNIap:
     :path: "../node_modules/react-native-iap"
+  RNSecureStorage:
+    :path: "../node_modules/rn-secure-storage"
   RNShare:
     :path: "../node_modules/react-native-share"
   RNSnackbar:
@@ -464,6 +469,7 @@ SPEC CHECKSUMS:
   rn-in-app-review: 957b7090ca0f1ed2e60703ade0e7c181ca34667b
   RNFS: 2bd9eb49dc82fa9676382f0585b992c424cd59df
   RNIap: 64d7d32ba6edde36921858399433c9ca0a5245e6
+  RNSecureStorage: 14168b29d1e56fb7539f087882949f3fb01da05d
   RNShare: fed99fd743f80ca255903c1da46fc9a6430efab6
   RNSnackbar: 559b3b4fedd6bbbe017e4f357ae230536b35b115
   RNTextSize: 7efa06531c6bb7ab6ed070b4ce0d1248cf06fcdf

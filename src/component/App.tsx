@@ -10,6 +10,7 @@ import {
   Modal,
   useColorScheme,
   KeyboardAvoidingView,
+  Dimensions
 } from 'react-native';
 
 import {
@@ -18,6 +19,7 @@ import {
   useDynamicValue,
   ColorSchemeProvider,
 } from 'react-native-dynamic';
+import RNSecureStorage, {ACCESSIBLE} from 'rn-secure-storage';
 
 // @ts-ignore
 import {AdMobInterstitial} from 'react-native-admob';
@@ -37,14 +39,17 @@ import RunButton from './RunButton';
 import InputContainer from './InputContainer';
 
 import '../utils/appReviewer';
-import {darkBGColor} from '../data/colors.json';
+import {darkBGColor, darkYellow} from '../data/colors.json';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Snackbar from 'react-native-snackbar';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 MCIcon.loadFont();
 
 MIcon.loadFont();
+
+const {height, width} = Dimensions.get("window")
 
 //set app id and load ad
 AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
@@ -126,14 +131,37 @@ const App: React.FC = () => {
   useEffect(() => {
     /** check premium and set here */
     SplashScreen.hide();
+    const setItem = () => {
+      RNSecureStorage.setItem('token', '^W((nXWi~M`$Gtu<s+;$`M1SotPG^~', {
+        accessible: ACCESSIBLE.WHEN_UNLOCKED,
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    /**
+     * Get a value from secure storage.
+     */
+    const getItem = () => {
+      RNSecureStorage.getItem('token')
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    // setItem()
 
+    getItem();
     const init = async () => {
-      const isPremRes = await checkForPremiumUser();
-      console.log('is prem res', isPremRes);
-
+      // const isPremRes = await checkForPremiumUser();
+      // console.log('is prem res', isPremRes);
       // setIsPremium(isPremRes);
       // setIsPremium(true);
-
       // try {
       //   const result = await startUpdateFlow('flexible');
       //   console.log(result);
@@ -141,6 +169,7 @@ const App: React.FC = () => {
       //   console.log('error:', e);
       // }
     };
+    console.log(StatusBar.currentHeight);
 
     init();
   }, []);
@@ -151,45 +180,49 @@ const App: React.FC = () => {
         <StatusBar
           barStyle="dark-content"
           backgroundColor="#c8b900"
-          translucent
+          // translucent
         />
-        <SafeAreaView>
-          <KeyboardAvoidingView behavior="padding">
-            <Modal visible={loaderVisibility} transparent={true}>
-              <View style={styles.modalStyle}>
-                <ActivityIndicator size={50} color="gold" />
-              </View>
-            </Modal>
-            <View style={styles.outerContainer}>
-              <AppBar
-                premiumModalOpen={premiumModalOpen}
+        <View style={styles.statusBar} />
+        
+        <KeyboardAvoidingView behavior="padding">
+          <Modal visible={loaderVisibility} transparent={true}>
+            <View style={styles.modalStyle}>
+              <ActivityIndicator size={50} color="gold" />
+            </View>
+          </Modal>
+          <View style={styles.outerContainer}>
+            <AppBar
+              premiumModalOpen={premiumModalOpen}
+              setPremiumModalOpen={setPremiumModalOpen}
+              setInputValue={setInputValue}
+              isPremium={isPremium}
+              setIsPremium={setIsPremium}
+            />
+            <View style={styles.innercontainer}>
+              <InputContainer
                 setPremiumModalOpen={setPremiumModalOpen}
+                inputValue={inputValue}
                 setInputValue={setInputValue}
                 isPremium={isPremium}
-                setIsPremium={setIsPremium}
               />
-              <View style={styles.innercontainer}>
-                <InputContainer
-                  setPremiumModalOpen={setPremiumModalOpen}
-                  inputValue={inputValue}
-                  setInputValue={setInputValue}
-                  isPremium={isPremium}
-                />
-                <Table {...tableData} tableWidths={tableWidths} />
-              </View>
-
-              <RunButton runQuery={runQuery} />
+              <Table {...tableData} tableWidths={tableWidths} />
             </View>
-          </KeyboardAvoidingView>
-        </SafeAreaView>
+
+            <RunButton runQuery={runQuery} />
+          </View>
+        </KeyboardAvoidingView>
       </ColorSchemeProvider>
     </>
   );
 };
 
 const dynamicStyles = new DynamicStyleSheet({
+  statusBar: {
+    height: getStatusBarHeight(),
+    backgroundColor: '#c8b900',
+  },
   outerContainer: {
-    height: '100%',
+    height: height - getStatusBarHeight(),
     width: '100%',
     backgroundColor: new DynamicValue('white', darkBGColor),
   },
