@@ -10,7 +10,7 @@ import {
   Modal,
   useColorScheme,
   KeyboardAvoidingView,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 
 import {
@@ -19,7 +19,6 @@ import {
   useDynamicValue,
   ColorSchemeProvider,
 } from 'react-native-dynamic';
-import RNSecureStorage, {ACCESSIBLE} from 'rn-secure-storage';
 
 // @ts-ignore
 import {AdMobInterstitial} from 'react-native-admob';
@@ -28,11 +27,7 @@ import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
 import {startUpdateFlow} from '@gurukumparan/react-native-android-inapp-updates';
 import SplashScreen from 'react-native-splash-screen';
 
-import {
-  getLargestWidths,
-  shouldShowAd,
-  checkForPremiumUser,
-} from '../utils/utils';
+import {getLargestWidths, shouldShowAd, getIsPremium} from '../utils/utils';
 import AppBar from './AppBar';
 import Table from './Table';
 import RunButton from './RunButton';
@@ -49,7 +44,7 @@ MCIcon.loadFont();
 
 MIcon.loadFont();
 
-const {height, width} = Dimensions.get("window")
+const {height, width} = Dimensions.get('window');
 
 //set app id and load ad
 AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
@@ -131,37 +126,10 @@ const App: React.FC = () => {
   useEffect(() => {
     /** check premium and set here */
     SplashScreen.hide();
-    const setItem = () => {
-      RNSecureStorage.setItem('token', '^W((nXWi~M`$Gtu<s+;$`M1SotPG^~', {
-        accessible: ACCESSIBLE.WHEN_UNLOCKED,
-      })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    /**
-     * Get a value from secure storage.
-     */
-    const getItem = () => {
-      RNSecureStorage.getItem('token')
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    // setItem()
 
-    getItem();
     const init = async () => {
-      // const isPremRes = await checkForPremiumUser();
-      // console.log('is prem res', isPremRes);
-      // setIsPremium(isPremRes);
-      // setIsPremium(true);
+      const isPremRes = await getIsPremium();
+      setIsPremium(isPremRes);
       // try {
       //   const result = await startUpdateFlow('flexible');
       //   console.log(result);
@@ -169,7 +137,7 @@ const App: React.FC = () => {
       //   console.log('error:', e);
       // }
     };
-    console.log(StatusBar.currentHeight);
+    console.log(getStatusBarHeight(), height);
 
     init();
   }, []);
@@ -180,10 +148,10 @@ const App: React.FC = () => {
         <StatusBar
           barStyle="dark-content"
           backgroundColor="#c8b900"
-          // translucent
+          translucent
         />
         <View style={styles.statusBar} />
-        
+
         <KeyboardAvoidingView behavior="padding">
           <Modal visible={loaderVisibility} transparent={true}>
             <View style={styles.modalStyle}>

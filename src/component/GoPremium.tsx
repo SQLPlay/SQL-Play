@@ -12,6 +12,7 @@ import {
   EmitterSubscription,
   ActivityIndicator,
   SafeAreaView,
+  ScrollView,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,6 +24,8 @@ import RNIap, {
   finishTransaction,
   Product,
 } from 'react-native-iap';
+import RNSecureStorage, {ACCESSIBLE} from 'rn-secure-storage';
+import {restorePremium} from '../utils/utils';
 
 //items of products
 export const itemSkus: string[] | undefined = Platform.select({
@@ -70,6 +73,9 @@ const GoPremium: FC<Props> = ({
               'Thanks for purchasing, Now you can enjoy the premium benefits ',
             );
             /** make it affect on all app  */
+            RNSecureStorage.setItem('purchase', 'sql.premium', {
+              accessible: ACCESSIBLE.AFTER_FIRST_UNLOCK,
+            });
             setIsPremium(true);
             setPurchaseProcessing(false);
           } catch (ackErr) {
@@ -119,62 +125,104 @@ const GoPremium: FC<Props> = ({
       console.log(err.code, err.message);
     }
   };
+
+  const handleRestore = async (): Promise<void> => {
+    try {
+      setPurchaseProcessing(true);
+      const success = await restorePremium();
+      if (success) {
+        Alert.alert(
+          'Purchase complete',
+          'Thanks for purchasing, Now you can enjoy the premium benefits ',
+        );
+        RNSecureStorage.setItem('purchase', 'sql.premium', {
+          accessible: ACCESSIBLE.AFTER_FIRST_UNLOCK,
+        });
+        setIsPremium(true);
+      } else {
+        Alert.alert('Failed to restore your purchase');
+      }
+      setPurchaseProcessing(false);
+    } catch (error) {
+      setPurchaseProcessing(false);
+      console.log(error);
+      Alert.alert('Failed to restore your purchase', error);
+    }
+  };
   return (
     <Modal
       visible={modalState}
       animationType="slide"
       presentationStyle="overFullScreen"
       onRequestClose={() => setModalState(false)}>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.closeBtnContainer}>
-          <Icon name="close" size={30} onPress={() => setModalState(false)} />
-        </View>
-        <View style={styles.header}>
-          <Image style={styles.logo} source={require('../images/sqlpro.png')} />
-          <Text style={styles.title}>
-            Go Premium to {'\n'}unlock all features
-          </Text>
-        </View>
-        <Image
-          style={styles.image}
-          source={require('../images/autocomplete.png')}
-          resizeMode="contain"
-        />
-        <View style={styles.featureTxtContainer}>
-          <Icon name="check-decagram" color={darkYellow} size={24} />
-          <Text style={styles.featureTxt}> Ads Free</Text>
-        </View>
-        <View style={styles.featureTxtContainer}>
-          <Icon name="check-decagram" color={darkYellow} size={24} />
-          <Text style={styles.featureTxt}> Export Tables</Text>
-        </View>
-        <View style={styles.featureTxtContainer}>
-          <Icon name="check-decagram" color={darkYellow} size={24} />
-          <Text style={styles.featureTxt}> Query History</Text>
-        </View>
-        <View style={styles.featureTxtContainer}>
-          <Icon name="check-decagram" color={darkYellow} size={24} />
-          <Text style={styles.featureTxt}> Autocomplete</Text>
-        </View>
-        <View style={styles.featureTxtContainer}>
-          <Icon name="check-decagram" color={darkYellow} size={24} />
-          <Text style={styles.featureTxt}> Swipe Gestures</Text>
-        </View>
-        <TouchableOpacity
-          style={styles.buyBtn}
-          onPress={buyPremium}
-          disabled={isPremium}>
-          {!purchaseProcessing ? (
-            <Text style={styles.buyBtnTxt}>
-              {isPremium ? 'Sweet! You have Premium' : 'Buy Now'}
-            </Text>
-          ) : (
-            <View style={styles.loaderContainer}>
-              <ActivityIndicator color="#fcfcfc" />
+      <ScrollView contentContainerStyle={{height: height}}>
+        <SafeAreaView style={styles.container}>
+          <View>
+            <View style={styles.closeBtnContainer}>
+              <Icon
+                name="close"
+                size={30}
+                onPress={() => setModalState(false)}
+              />
             </View>
-          )}
-        </TouchableOpacity>
-      </SafeAreaView>
+            <View style={styles.header}>
+              <Image
+                style={styles.logo}
+                source={require('../images/sqlpro.png')}
+              />
+              <Text style={styles.title}>
+                Go Premium to {'\n'}unlock all features
+              </Text>
+            </View>
+            <Image
+              style={styles.image}
+              source={require('../images/autocomplete.png')}
+              resizeMode="contain"
+            />
+            <View style={styles.featureTxtContainer}>
+              <Icon name="check-decagram" color={darkYellow} size={24} />
+              <Text style={styles.featureTxt}> Ads Free</Text>
+            </View>
+            <View style={styles.featureTxtContainer}>
+              <Icon name="check-decagram" color={darkYellow} size={24} />
+              <Text style={styles.featureTxt}> Export Tables</Text>
+            </View>
+            <View style={styles.featureTxtContainer}>
+              <Icon name="check-decagram" color={darkYellow} size={24} />
+              <Text style={styles.featureTxt}> Query History</Text>
+            </View>
+            <View style={styles.featureTxtContainer}>
+              <Icon name="check-decagram" color={darkYellow} size={24} />
+              <Text style={styles.featureTxt}> Autocomplete</Text>
+            </View>
+            <View style={styles.featureTxtContainer}>
+              <Icon name="check-decagram" color={darkYellow} size={24} />
+              <Text style={styles.featureTxt}> Swipe Gestures</Text>
+            </View>
+          </View>
+          <View>
+            <TouchableOpacity
+              style={styles.buyBtn}
+              onPress={buyPremium}
+              disabled={isPremium}>
+              {!purchaseProcessing ? (
+                <Text style={styles.buyBtnTxt}>
+                  {isPremium ? 'Sweet! You have Premium' : 'Buy Now'}
+                </Text>
+              ) : (
+                <View style={styles.loaderContainer}>
+                  <ActivityIndicator color="#fcfcfc" />
+                </View>
+              )}
+            </TouchableOpacity>
+            {!isPremium && (
+              <TouchableOpacity onPress={handleRestore}>
+                <Text style={styles.restoreBtn}>Restore Purchase</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        </SafeAreaView>
+      </ScrollView>
     </Modal>
   );
 };
@@ -183,8 +231,9 @@ export default GoPremium;
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    // backgroundColor: "pink"
+    flexGrow: 1,
+    // backgroundColor: 'pink',
+    justifyContent: 'space-between',
   },
   closeBtnContainer: {
     alignItems: 'flex-end',
@@ -197,7 +246,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 150,
-    height: 200,
+    height: 180,
     marginHorizontal: 'auto',
   },
   header: {
@@ -220,8 +269,9 @@ const styles = StyleSheet.create({
     height: width / 2.7,
   },
   buyBtn: {
-    position: 'absolute',
-    bottom: 20,
+    // position: 'absolute',
+    // bottom: 20,
+    marginVertical: 5,
     alignItems: 'center',
     width: width,
   },
@@ -233,6 +283,12 @@ const styles = StyleSheet.create({
     maxWidth: 350,
     width: width - 20,
     borderRadius: 5,
+  },
+  restoreBtn: {
+    textAlign: 'center',
+    padding: 5,
+    color: '#0984e3',
+    fontSize: 16,
   },
   loaderContainer: {
     backgroundColor: darkYellow,

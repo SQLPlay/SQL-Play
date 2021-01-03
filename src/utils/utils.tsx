@@ -2,6 +2,7 @@ import {PermissionsAndroid} from 'react-native';
 import rnTextSize from 'react-native-text-size';
 import RNIap, {ProductPurchase, Subscription} from 'react-native-iap';
 import {itemSkus} from '../component/GoPremium';
+import RNSecureStorage from 'rn-secure-storage';
 
 export const getLargestWidths = async (
   arr: Array<Array<any>>,
@@ -88,7 +89,7 @@ export const requestExternalWritePermission = async (): Promise<boolean> => {
 };
 
 /** Function for checking if user already has the product */
-export const checkForPremiumUser = async (): Promise<boolean> => {
+export const restorePremium = async (): Promise<boolean> => {
   try {
     const restore: Array<
       ProductPurchase | Subscription
@@ -101,6 +102,21 @@ export const checkForPremiumUser = async (): Promise<boolean> => {
     }
   } catch (error) {
     console.log(error);
+    return false;
+  }
+};
+
+export const getIsPremium = async (): Promise<boolean> => {
+  try {
+    const res = await RNSecureStorage.getItem('purchase');
+    console.log(res);
+    if (res === 'sql.premium') {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(error);
     return false;
   }
 };
