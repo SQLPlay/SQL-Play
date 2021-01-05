@@ -150,35 +150,37 @@ const App: React.FC = () => {
           backgroundColor="#c8b900"
           translucent
         />
-        <View style={styles.statusBar} />
+        <SafeAreaView>
+          <KeyboardAvoidingView behavior="padding">
+            {/* <View style={styles.statusBar} /> */}
 
-        <KeyboardAvoidingView behavior="padding">
-          <Modal visible={loaderVisibility} transparent={true}>
-            <View style={styles.modalStyle}>
-              <ActivityIndicator size={50} color="gold" />
-            </View>
-          </Modal>
-          <View style={styles.outerContainer}>
-            <AppBar
-              premiumModalOpen={premiumModalOpen}
-              setPremiumModalOpen={setPremiumModalOpen}
-              setInputValue={setInputValue}
-              isPremium={isPremium}
-              setIsPremium={setIsPremium}
-            />
-            <View style={styles.innercontainer}>
-              <InputContainer
+            <Modal visible={loaderVisibility} transparent={true}>
+              <View style={styles.modalStyle}>
+                <ActivityIndicator size={50} color="gold" />
+              </View>
+            </Modal>
+            <View style={styles.outerContainer}>
+              <AppBar
+                premiumModalOpen={premiumModalOpen}
                 setPremiumModalOpen={setPremiumModalOpen}
-                inputValue={inputValue}
                 setInputValue={setInputValue}
                 isPremium={isPremium}
+                setIsPremium={setIsPremium}
               />
-              <Table {...tableData} tableWidths={tableWidths} />
-            </View>
+              <View style={styles.innercontainer}>
+                <InputContainer
+                  setPremiumModalOpen={setPremiumModalOpen}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  isPremium={isPremium}
+                />
+                <Table {...tableData} tableWidths={tableWidths} />
+              </View>
 
-            <RunButton runQuery={runQuery} />
-          </View>
-        </KeyboardAvoidingView>
+              <RunButton runQuery={runQuery} />
+            </View>
+          </KeyboardAvoidingView>
+        </SafeAreaView>
       </ColorSchemeProvider>
     </>
   );
