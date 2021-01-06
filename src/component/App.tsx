@@ -11,6 +11,7 @@ import {
   useColorScheme,
   KeyboardAvoidingView,
   Dimensions,
+  Platform,
 } from 'react-native';
 
 import {
@@ -150,37 +151,38 @@ const App: React.FC = () => {
           backgroundColor="#c8b900"
           translucent
         />
-        <SafeAreaView>
-          <KeyboardAvoidingView behavior="padding">
-            {/* <View style={styles.statusBar} /> */}
+        <KeyboardAvoidingView
+          style={{flex: 1}}
+          {...(Platform.OS === 'ios' && {behavior: 'padding'})}
+          keyboardVerticalOffset={Platform.select({ios: 0, android: 500})}>
+          <View style={styles.statusBar} />
 
-            <Modal visible={loaderVisibility} transparent={true}>
-              <View style={styles.modalStyle}>
-                <ActivityIndicator size={50} color="gold" />
-              </View>
-            </Modal>
-            <View style={styles.outerContainer}>
-              <AppBar
-                premiumModalOpen={premiumModalOpen}
+          <Modal visible={loaderVisibility} transparent={true}>
+            <View style={styles.modalStyle}>
+              <ActivityIndicator size={50} color="gold" />
+            </View>
+          </Modal>
+          <View style={styles.outerContainer}>
+            <AppBar
+              premiumModalOpen={premiumModalOpen}
+              setPremiumModalOpen={setPremiumModalOpen}
+              setInputValue={setInputValue}
+              isPremium={isPremium}
+              setIsPremium={setIsPremium}
+            />
+            <View style={styles.innercontainer}>
+              <InputContainer
                 setPremiumModalOpen={setPremiumModalOpen}
+                inputValue={inputValue}
                 setInputValue={setInputValue}
                 isPremium={isPremium}
-                setIsPremium={setIsPremium}
               />
-              <View style={styles.innercontainer}>
-                <InputContainer
-                  setPremiumModalOpen={setPremiumModalOpen}
-                  inputValue={inputValue}
-                  setInputValue={setInputValue}
-                  isPremium={isPremium}
-                />
-                <Table {...tableData} tableWidths={tableWidths} />
-              </View>
-
-              <RunButton runQuery={runQuery} />
+              <Table {...tableData} tableWidths={tableWidths} />
             </View>
-          </KeyboardAvoidingView>
-        </SafeAreaView>
+
+            <RunButton runQuery={runQuery} />
+          </View>
+        </KeyboardAvoidingView>
       </ColorSchemeProvider>
     </>
   );
@@ -192,9 +194,8 @@ const dynamicStyles = new DynamicStyleSheet({
     backgroundColor: '#c8b900',
   },
   outerContainer: {
-    height: height - getStatusBarHeight(),
-    width: '100%',
     backgroundColor: new DynamicValue('white', darkBGColor),
+    flex: 1,
   },
   innercontainer: {
     padding: 5,
