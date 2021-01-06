@@ -133,6 +133,7 @@ const InputContainer: FC<Props> = ({
             placeholderTextColor="gray"
             textAlignVertical="top"
             defaultValue={inputValue}
+            keyboardType="ascii-capable"
             autoCorrect={false}
             numberOfLines={4}
             placeholder="Type your SQL query"
