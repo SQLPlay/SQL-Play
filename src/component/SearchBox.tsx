@@ -37,15 +37,21 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
   const refRBSheet = useRef<RBSheet>(null);
   const [listData, setListData] = useState<listDataProps[]>(commandsList);
   const [searchInput, setSearchInput] = useState<string>('');
+  const [sheetOpen, setSheetOpen] = useState<boolean>(false);
 
   const styles = useDynamicValue(dynamicStyles);
   const openTabSheet = () => {
     if (refRBSheet.current !== null) {
       refRBSheet.current.open();
+      setTimeout(() => {
+        setSheetOpen(true);
+      }, 200);
     }
   };
 
-  const onTabSheetClose = () => {};
+  const onTabSheetClose = () => {
+    setSheetOpen(false);
+  };
 
   useEffect(() => {
     const filterData = () => {
@@ -76,8 +82,9 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
         animationType="fade"
         customStyles={{container: styles.sheetContainer}}
         closeOnDragDown={true}
-        // closeOnPressMask={true}
-        // onClose={onTabSheetClose}
+        closeOnPressMask={false}
+        openDuration={150}
+        onClose={onTabSheetClose}
         height={height / 2.1}>
         <TouchableWithoutFeedback>
           <View style={styles.container}>

@@ -130,8 +130,8 @@ const CommandList: FC<Props> = ({listData, setInputValue, refRBSheet}) => {
       data={listData}
       bounces={false}
       maxToRenderPerBatch={5}
-      scrollEventThrottle={15}
-      keyboardShouldPersistTaps='handled'
+      scrollEventThrottle={30}
+      keyboardShouldPersistTaps="handled"
       renderItem={({item, index}) => (
         <ListItem
           {...item}
@@ -141,7 +141,7 @@ const CommandList: FC<Props> = ({listData, setInputValue, refRBSheet}) => {
         />
       )}
       initialNumToRender={5}
-      windowSize={40}
+      windowSize={30}
       keyExtractor={(item) => item.id}
     />
   );
