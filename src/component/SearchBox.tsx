@@ -1,5 +1,11 @@
 import React, {useRef, useEffect, useState, useCallback} from 'react';
-import {View, TextInput, SafeAreaView, TouchableOpacity} from 'react-native';
+import {
+  View,
+  TextInput,
+  SafeAreaView,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -13,9 +19,11 @@ import commandsList from '../data/commands.json';
 import {debounce} from '../utils/utils';
 import CommandList from './CommandList';
 import {darkBGColor} from '../data/colors.json';
-import {SeachInputProp} from './AppBar';
+interface Props {
+  setInputValue: (query: string) => void;
+}
 
-const SearchBox: React.FC<SeachInputProp> = ({setInputValue}) => {
+const SearchBox: React.FC<Props> = ({setInputValue}) => {
   interface listDataProps {
     id: string;
     title: string;
@@ -23,7 +31,6 @@ const SearchBox: React.FC<SeachInputProp> = ({setInputValue}) => {
     syntax: string;
   }
   const refRBSheet = useRef<RBSheet>(null);
-  const [flatlistVisiblity, setFlatlistVisiblity] = useState<boolean>(false);
   const [listData, setListData] = useState<listDataProps[]>(commandsList);
   const [searchInput, setSearchInput] = useState<string>('');
 
@@ -32,16 +39,9 @@ const SearchBox: React.FC<SeachInputProp> = ({setInputValue}) => {
     if (refRBSheet.current !== null) {
       refRBSheet.current.open();
     }
-    setTimeout(() => {
-      setFlatlistVisiblity(true);
-    }, 350);
   };
 
-  const onTabSheetClose = () => {
-    setTimeout(() => {
-      setFlatlistVisiblity(false);
-    }, 350);
-  };
+  const onTabSheetClose = () => {};
 
   useEffect(() => {
     const filterData = () => {
@@ -75,34 +75,34 @@ const SearchBox: React.FC<SeachInputProp> = ({setInputValue}) => {
         closeOnPressMask={true}
         onClose={onTabSheetClose}
         height={380}>
-        <View style={styles.container}>
-          <View style={styles.inputContainer}>
-            <Icon name="search" color="gray" size={24} />
+        <TouchableWithoutFeedback>
+          <View style={styles.container}>
+            <View style={styles.inputContainer}>
+              <Icon name="search" color="gray" size={24} />
 
-            <TextInput
-              style={styles.searchInput}
-              value={searchInput}
-              placeholderTextColor="gray"
-              onChangeText={(val: string) => setSearchInput(val)}
-              placeholder="Search Query"
-            />
-            <Icon
-              name="close"
-              size={24}
-              color="gray"
-              onPress={() => setSearchInput('')}
-            />
-          </View>
-          <View style={{marginBottom: 65, marginTop: 10, flexGrow: 1}}>
-            {flatlistVisiblity && (
+              <TextInput
+                style={styles.searchInput}
+                value={searchInput}
+                placeholderTextColor="gray"
+                onChangeText={(val: string) => setSearchInput(val)}
+                placeholder="Search Query"
+              />
+              <Icon
+                name="close"
+                size={24}
+                color="gray"
+                onPress={() => setSearchInput('')}
+              />
+            </View>
+            <View style={{marginBottom: 65, marginTop: 10, flexGrow: 1}}>
               <CommandList
                 listData={listData}
                 setInputValue={setInputValue}
                 refRBSheet={refRBSheet}
               />
-            )}
+            </View>
           </View>
-        </View>
+        </TouchableWithoutFeedback>
       </RBSheet>
     </>
   );

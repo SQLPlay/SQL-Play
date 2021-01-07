@@ -131,6 +131,7 @@ const CommandList: FC<Props> = ({listData, setInputValue, refRBSheet}) => {
       bounces={false}
       maxToRenderPerBatch={5}
       scrollEventThrottle={15}
+      keyboardShouldPersistTaps='handled'
       renderItem={({item, index}) => (
         <ListItem
           {...item}
