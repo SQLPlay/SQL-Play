@@ -5,6 +5,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Dimensions,
 } from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -19,6 +20,9 @@ import commandsList from '../data/commands.json';
 import {debounce} from '../utils/utils';
 import CommandList from './CommandList';
 import {darkBGColor} from '../data/colors.json';
+
+const {height} = Dimensions.get('window');
+
 interface Props {
   setInputValue: (query: string) => void;
 }
@@ -72,9 +76,9 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
         animationType="fade"
         customStyles={{container: styles.sheetContainer}}
         closeOnDragDown={true}
-        closeOnPressMask={true}
-        onClose={onTabSheetClose}
-        height={380}>
+        // closeOnPressMask={true}
+        // onClose={onTabSheetClose}
+        height={height / 2.1}>
         <TouchableWithoutFeedback>
           <View style={styles.container}>
             <View style={styles.inputContainer}>
