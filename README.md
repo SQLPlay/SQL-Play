@@ -1,10 +1,12 @@
-# SQL-Playground
+# SQL-Play
 Simple app to practice and learn SQL in React Native using SQLite
 
 ![app banner](https://images-ext-1.discordapp.net/external/gOHjs-tzPnexy5Jb6i3LW6HaS2TMFDKTaCKfZkegwjk/https/lh3.googleusercontent.com/AiTtPMBZGW1Xaunamgerhi89sbvkKu3N93HcQnCwBTAJU_ndr01QTLwIwdg0bl3u1Q?width=400&height=195)
 
 # Download
-<a href='https://play.google.com/store/apps/details?id=com.sql_playground'><img alt='Get it on Google Play' width="300" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+<a href="https://apps.apple.com/us/app/sql-play/id1546888933?itsct=apps_box&amp;itscg=30200"><img height=70px src="http://sqlplay.net/images/app-store-badge.svg" alt="Download on the App Store"></a>
+<a href="https://play.google.com/store/apps/details?id=com.sql_playground&amp;hl=en_US&amp;gl=US&amp;pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img height=70px alt="Get it on Google Play" src="http://sqlplay.net/images/google-play-badge.png"></a>
+
 
 ## How to develop ?
 1. Clone the repo
