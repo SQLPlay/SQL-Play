@@ -24,14 +24,8 @@ import RNIap, {
   finishTransaction,
   Product,
 } from 'react-native-iap';
-import RNSecureStorage, {ACCESSIBLE} from 'rn-secure-storage';
-import {restorePremium} from '../utils/utils';
 
-//items of products
-export const itemSkus: string[] | undefined = Platform.select({
-  android: ['premium'],
-  ios: ['premium'],
-});
+import {itemSkus, restorePremium} from '../utils/utils';
 
 let purchaseUpdate: EmitterSubscription, purchaseError: EmitterSubscription;
 
@@ -73,9 +67,7 @@ const GoPremium: FC<Props> = ({
               'Thanks for purchasing, Now you can enjoy the premium benefits ',
             );
             /** make it affect on all app  */
-            RNSecureStorage.setItem('purchase', 'sql.premium', {
-              accessible: ACCESSIBLE.AFTER_FIRST_UNLOCK,
-            });
+
             setIsPremium(true);
             setPurchaseProcessing(false);
           } catch (ackErr) {
@@ -135,9 +127,7 @@ const GoPremium: FC<Props> = ({
           'Purchase complete',
           'Thanks for purchasing, Now you can enjoy the premium benefits ',
         );
-        RNSecureStorage.setItem('purchase', 'sql.premium', {
-          accessible: ACCESSIBLE.AFTER_FIRST_UNLOCK,
-        });
+
         setIsPremium(true);
       } else {
         Alert.alert('Failed to restore your purchase');

@@ -6,7 +6,10 @@ platform :ios, '13.0'
 target 'SQL_PlayGround' do
   config = use_native_modules!
 
-  use_react_native!(:path => config["reactNativePath"])
+  use_react_native!(
+                    :path => config["reactNativePath"],
+                    :hermes_enabled => true
+                   )
 
   target 'SQL_PlayGroundTests' do
     pod 'Google-Mobile-Ads-SDK'

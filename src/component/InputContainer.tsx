@@ -6,16 +6,18 @@ import React, {
   useCallback,
   RefCallback,
 } from 'react';
+
 import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   TouchableOpacity,
   TextInputComponent,
   Alert,
   Platform,
+  TextComponent,
 } from 'react-native';
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
@@ -25,6 +27,7 @@ import {
 } from 'react-native-dynamic';
 
 import GestureRecognizer from 'react-native-swipe-gestures';
+import {TextInput} from 'react-native-gesture-handler';
 
 import {lightDark, sideButton} from '../data/colors.json';
 import {findUserCommands, getLastUserCommand} from '../utils/storage';
@@ -127,6 +130,7 @@ const InputContainer: FC<Props> = ({
         onSwipeLeft={() => isPremium && setInputValue('')}>
         <View style={styles.inputContainer}>
           <TextInput
+            onGestureEvent={(e) => console.log(e)}
             style={styles.input}
             onChangeText={(text) => setInputValue(text)}
             multiline
@@ -138,7 +142,11 @@ const InputContainer: FC<Props> = ({
             numberOfLines={4}
             placeholder="Type your SQL query"
           />
-          <Text style={styles.autoCompleteTxt}>{autoCompleteTxt}</Text>
+          <Text
+            onPress={() => isPremium && setInputValue(autoCompleteTxt)}
+            style={styles.autoCompleteTxt}>
+            {autoCompleteTxt}
+          </Text>
         </View>
       </GestureRecognizer>
       <View style={styles.sideButtonContainer}>

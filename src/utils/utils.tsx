@@ -1,8 +1,12 @@
-import {PermissionsAndroid} from 'react-native';
+import {PermissionsAndroid, Platform} from 'react-native';
 import rnTextSize from 'react-native-text-size';
-import RNIap, {ProductPurchase, Subscription} from 'react-native-iap';
-import {itemSkus} from '../component/GoPremium';
-import RNSecureStorage from 'rn-secure-storage';
+import SInfo from 'react-native-sensitive-info';
+import RNSecureStorage, {ACCESSIBLE} from 'rn-secure-storage';
+
+export const itemSkus: string[] | undefined = Platform.select({
+  android: ['premium'],
+  ios: ['premium'],
+});
 
 export const getLargestWidths = async (
   arr: Array<Array<any>>,
@@ -108,7 +112,8 @@ export const restorePremium = async (): Promise<boolean> => {
 
 export const getIsPremium = async (): Promise<boolean> => {
   try {
-    const res = await RNSecureStorage.getItem('purchase');
+    await SInfo.setItem('purchase', 'sql.premium', {});
+    const res = await SInfo.getItem('purchase', {});
     console.log(res);
     if (res === 'sql.premium') {
       return true;
