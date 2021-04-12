@@ -27,7 +27,12 @@ import {
 } from 'react-native-dynamic';
 
 import GestureRecognizer from 'react-native-swipe-gestures';
-import {TextInput} from 'react-native-gesture-handler';
+import {
+  Directions,
+  FlingGestureHandler,
+  PanGestureHandler,
+  TextInput,
+} from 'react-native-gesture-handler';
 
 import {lightDark, sideButton} from '../data/colors.json';
 import {findUserCommands, getLastUserCommand} from '../utils/storage';
@@ -125,30 +130,35 @@ const InputContainer: FC<Props> = ({
   return (
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
-      <GestureRecognizer
-        onSwipeRight={() => isPremium && setInputValue(autoCompleteTxt)}
-        onSwipeLeft={() => isPremium && setInputValue('')}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            onGestureEvent={(e) => console.log(e)}
-            style={styles.input}
-            onChangeText={(text) => setInputValue(text)}
-            multiline
-            placeholderTextColor="gray"
-            textAlignVertical="top"
-            defaultValue={inputValue}
-            keyboardType="ascii-capable"
-            autoCorrect={false}
-            numberOfLines={4}
-            placeholder="Type your SQL query"
-          />
-          <Text
-            onPress={() => isPremium && setInputValue(autoCompleteTxt)}
-            style={styles.autoCompleteTxt}>
-            {autoCompleteTxt}
-          </Text>
-        </View>
-      </GestureRecognizer>
+      <View style={styles.inputContainer}>
+        <FlingGestureHandler
+          direction={Directions.RIGHT}
+          onHandlerStateChange={() =>
+            isPremium && setInputValue(autoCompleteTxt)
+          }>
+          <FlingGestureHandler
+            direction={Directions.LEFT}
+            onHandlerStateChange={() => isPremium && setInputValue('')}>
+            <TextInput
+              style={styles.input}
+              onChangeText={(text) => setInputValue(text)}
+              multiline
+              placeholderTextColor="gray"
+              textAlignVertical="top"
+              defaultValue={inputValue}
+              keyboardType="ascii-capable"
+              autoCorrect={false}
+              numberOfLines={4}
+              placeholder="Type your SQL query"
+            />
+          </FlingGestureHandler>
+        </FlingGestureHandler>
+        <Text
+          onPress={() => isPremium && setInputValue(autoCompleteTxt)}
+          style={styles.autoCompleteTxt}>
+          {autoCompleteTxt}
+        </Text>
+      </View>
       <View style={styles.sideButtonContainer}>
         <TouchableOpacity onPress={onUpArrowPress}>
           <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
