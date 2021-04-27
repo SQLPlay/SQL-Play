@@ -1,8 +1,7 @@
 import {PermissionsAndroid, Platform} from 'react-native';
 import rnTextSize from 'react-native-text-size';
 import SInfo from 'react-native-sensitive-info';
-import RNSecureStorage, {ACCESSIBLE} from 'rn-secure-storage';
-
+import RNIap, {ProductPurchase, Subscription} from 'react-native-iap';
 export const itemSkus: string[] | undefined = Platform.select({
   android: ['premium'],
   ios: ['premium'],
@@ -92,7 +91,14 @@ export const requestExternalWritePermission = async (): Promise<boolean> => {
   }
 };
 
-/** Function for checking if user already has the product */
+export const savePremium = async (): Promise<void> => {
+  try {
+    await SInfo.setItem('purchase', 'sql.premium', {});
+  } catch (err) {
+    console.log('Error in saving purchase', err);
+  }
+};
+
 export const restorePremium = async (): Promise<boolean> => {
   try {
     const restore: Array<
@@ -100,6 +106,7 @@ export const restorePremium = async (): Promise<boolean> => {
     > = await RNIap.getAvailablePurchases();
     // console.log('your item was', restore);
     if (itemSkus && restore[0].productId === itemSkus[0]) {
+      savePremium();
       return true;
     } else {
       return false;
@@ -112,9 +119,7 @@ export const restorePremium = async (): Promise<boolean> => {
 
 export const getIsPremium = async (): Promise<boolean> => {
   try {
-    await SInfo.setItem('purchase', 'sql.premium', {});
     const res = await SInfo.getItem('purchase', {});
-    console.log(res);
     if (res === 'sql.premium') {
       return true;
     } else {

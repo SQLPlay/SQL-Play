@@ -35,7 +35,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 //@ts-ignore
 import {vs2015, defaultStyle} from 'react-syntax-highlighter/styles/hljs';
-import RBSheet from 'react-native-raw-bottom-sheet';
+import BottomSheet, {
+  BottomSheetFlatList,
+  BottomSheetModal,
+} from '@gorhom/bottom-sheet';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -49,12 +52,19 @@ interface LIProps {
   index: number;
   id: string;
   setInputValue: (val: string) => void;
-  refRBSheet: RefObject<RBSheet>;
+  bottomSheetRef: RefObject<BottomSheetModal>;
 }
 const ListItem: FC<LIProps> = (props) => {
   // console.log('props', props);
 
-  const {title, description, syntax, index, setInputValue, refRBSheet} = props;
+  const {
+    title,
+    description,
+    syntax,
+    index,
+    setInputValue,
+    bottomSheetRef,
+  } = props;
 
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const styles = useDynamicValue(dynamicStyles);
@@ -73,9 +83,7 @@ const ListItem: FC<LIProps> = (props) => {
 
   const onSyntaxPress = (syntax: string) => {
     setInputValue(syntax);
-    if (refRBSheet.current !== null) {
-      refRBSheet.current.close();
-    }
+    bottomSheetRef.current?.close();
   };
   return (
     <TouchableWithoutFeedback onPress={() => onItemPress(index)}>
@@ -121,12 +129,12 @@ interface Props {
     index?: number;
   }[];
   setInputValue: (val: string) => void;
-  refRBSheet: RefObject<RBSheet>;
+  bottomSheetRef: RefObject<BottomSheetModal>;
 }
-const CommandList: FC<Props> = ({listData, setInputValue, refRBSheet}) => {
+const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
   interface renderItemProp {}
   return (
-    <FlatList
+    <BottomSheetFlatList
       data={listData}
       bounces={false}
       maxToRenderPerBatch={5}
@@ -137,7 +145,7 @@ const CommandList: FC<Props> = ({listData, setInputValue, refRBSheet}) => {
           {...item}
           index={index}
           setInputValue={setInputValue}
-          refRBSheet={refRBSheet}
+          bottomSheetRef={bottomSheetRef}
         />
       )}
       initialNumToRender={5}

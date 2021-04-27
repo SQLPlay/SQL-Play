@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState, useCallback} from 'react';
+import React, {useRef, useEffect, useState, useCallback, useMemo} from 'react';
 import {
   View,
   TextInput,
@@ -7,7 +7,14 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
 } from 'react-native';
-import RBSheet from 'react-native-raw-bottom-sheet';
+
+import BottomSheet, {
+  BottomSheetBackdrop,
+  BottomSheetModal,
+  BottomSheetTextInput,
+  BottomSheetView,
+} from '@gorhom/bottom-sheet';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
@@ -20,6 +27,8 @@ import commandsList from '../data/commands.json';
 import {debounce} from '../utils/utils';
 import CommandList from './CommandList';
 import {darkBGColor} from '../data/colors.json';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {CustomHandle, CustomBG} from './CustomHandle';
 
 const {height} = Dimensions.get('window');
 
@@ -34,23 +43,21 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
     description: string;
     syntax: string;
   }
-  const refRBSheet = useRef<RBSheet>(null);
+  const bottomSheetRef = useRef<BottomSheetModal>(null);
   const [listData, setListData] = useState<listDataProps[]>(commandsList);
   const [searchInput, setSearchInput] = useState<string>('');
-  const [sheetOpen, setSheetOpen] = useState<boolean>(false);
+
+  const {top: topSafeArea, bottom: bottomSafeArea} = useSafeAreaInsets();
+  console.log(height, getStatusBarHeight());
+  const snapPoints = useMemo(() => ['50%', '100%'], []);
+
+  const handleSheetChanges = useCallback((index: number) => {
+    console.log('handleSheetChanges', index);
+  }, []);
 
   const styles = useDynamicValue(dynamicStyles);
   const openTabSheet = () => {
-    if (refRBSheet.current !== null) {
-      refRBSheet.current.open();
-      setTimeout(() => {
-        setSheetOpen(true);
-      }, 200);
-    }
-  };
-
-  const onTabSheetClose = () => {
-    setSheetOpen(false);
+    bottomSheetRef.current?.present();
   };
 
   useEffect(() => {
@@ -77,44 +84,43 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
         <Icon name="search" size={25} />
       </TouchableOpacity>
 
-      <RBSheet
-        ref={refRBSheet}
-        animationType="fade"
-        customStyles={{container: styles.sheetContainer}}
-        closeOnDragDown={true}
-        closeOnPressMask={false}
-        openDuration={150}
-        onClose={onTabSheetClose}
-        height={height / 2.1}>
-        <TouchableWithoutFeedback>
-          <View style={styles.container}>
-            <View style={styles.inputContainer}>
-              <Icon name="search" color="gray" size={24} />
+      <BottomSheetModal
+        ref={bottomSheetRef}
+        index={0}
+        snapPoints={snapPoints}
+        topInset={topSafeArea}
+        handleComponent={CustomHandle}
+        backgroundComponent={CustomBG}
+        backdropComponent={BottomSheetBackdrop}
+        keyboardBehavior="extend"
+        onChange={handleSheetChanges}>
+        <BottomSheetView style={styles.container}>
+          <BottomSheetView style={styles.inputContainer}>
+            <Icon name="search" color="gray" size={24} />
 
-              <TextInput
-                style={styles.searchInput}
-                value={searchInput}
-                placeholderTextColor="gray"
-                onChangeText={(val: string) => setSearchInput(val)}
-                placeholder="Search Query"
-              />
-              <Icon
-                name="close"
-                size={24}
-                color="gray"
-                onPress={() => setSearchInput('')}
-              />
-            </View>
-            <View style={{marginBottom: 65, marginTop: 10, flexGrow: 1}}>
-              <CommandList
-                listData={listData}
-                setInputValue={setInputValue}
-                refRBSheet={refRBSheet}
-              />
-            </View>
-          </View>
-        </TouchableWithoutFeedback>
-      </RBSheet>
+            <BottomSheetTextInput
+              style={styles.searchInput}
+              value={searchInput}
+              placeholderTextColor="gray"
+              onChangeText={(val: string) => setSearchInput(val)}
+              placeholder="Search Query"
+            />
+            <Icon
+              name="close"
+              size={24}
+              color="gray"
+              onPress={() => setSearchInput('')}
+            />
+          </BottomSheetView>
+          <BottomSheetView style={{marginTop: 10, flexGrow: 1}}>
+            <CommandList
+              listData={listData}
+              setInputValue={setInputValue}
+              bottomSheetRef={bottomSheetRef}
+            />
+          </BottomSheetView>
+        </BottomSheetView>
+      </BottomSheetModal>
     </>
   );
 };
@@ -123,11 +129,12 @@ export default SearchBox;
 
 const dynamicStyles = new DynamicStyleSheet({
   sheetContainer: {
-    backgroundColor: new DynamicValue('white', darkBGColor),
+    // backgroundColor: new DynamicValue('white', darkBGColor),
   },
   container: {
     padding: 5,
-    height: '100%',
+    // backgroundColor: new DynamicValue('white', darkBGColor),
+    flex: 1,
   },
   inputContainer: {
     flexDirection: 'row',
@@ -150,6 +157,6 @@ const dynamicStyles = new DynamicStyleSheet({
     // textAlign: 'center',
   },
   codeSyntaxContainer: {
-    marginTop: 10,
+    // marginTop: 10,
   },
 });

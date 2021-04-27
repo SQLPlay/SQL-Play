@@ -25,7 +25,7 @@ import RNIap, {
   Product,
 } from 'react-native-iap';
 
-import {itemSkus, restorePremium} from '../utils/utils';
+import {itemSkus, restorePremium, savePremium} from '../utils/utils';
 
 let purchaseUpdate: EmitterSubscription, purchaseError: EmitterSubscription;
 
@@ -67,7 +67,7 @@ const GoPremium: FC<Props> = ({
               'Thanks for purchasing, Now you can enjoy the premium benefits ',
             );
             /** make it affect on all app  */
-
+            savePremium();
             setIsPremium(true);
             setPurchaseProcessing(false);
           } catch (ackErr) {

@@ -40,6 +40,8 @@ import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Snackbar from 'react-native-snackbar';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 MCIcon.loadFont();
 
@@ -138,7 +140,6 @@ const App: React.FC = () => {
       //   console.log('error:', e);
       // }
     };
-    console.log(getStatusBarHeight(), height);
 
     init();
   }, []);
@@ -146,43 +147,47 @@ const App: React.FC = () => {
   return (
     <>
       <ColorSchemeProvider>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor="#c8b900"
-          translucent
-        />
-        <KeyboardAvoidingView
-          style={{flex: 1}}
-          {...(Platform.OS === 'ios' && {behavior: 'padding'})}
-          keyboardVerticalOffset={Platform.select({ios: 0, android: 500})}>
-          <View style={styles.statusBar} />
-
-          <Modal visible={loaderVisibility} transparent={true}>
-            <View style={styles.modalStyle}>
-              <ActivityIndicator size={50} color="gold" />
-            </View>
-          </Modal>
-          <View style={styles.outerContainer}>
-            <AppBar
-              premiumModalOpen={premiumModalOpen}
-              setPremiumModalOpen={setPremiumModalOpen}
-              setInputValue={setInputValue}
-              isPremium={isPremium}
-              setIsPremium={setIsPremium}
+        <BottomSheetModalProvider>
+          <SafeAreaProvider>
+            <StatusBar
+              barStyle="dark-content"
+              backgroundColor="#c8b900"
+              translucent
             />
-            <View style={styles.innercontainer}>
-              <InputContainer
-                setPremiumModalOpen={setPremiumModalOpen}
-                inputValue={inputValue}
-                setInputValue={setInputValue}
-                isPremium={isPremium}
-              />
-              <Table {...tableData} tableWidths={tableWidths} />
-            </View>
+            <KeyboardAvoidingView
+              style={{flex: 1}}
+              {...(Platform.OS === 'ios' && {behavior: 'padding'})}
+              keyboardVerticalOffset={Platform.select({ios: 0, android: 500})}>
+              <View style={styles.statusBar} />
 
-            <RunButton runQuery={runQuery} />
-          </View>
-        </KeyboardAvoidingView>
+              <Modal visible={loaderVisibility} transparent={true}>
+                <View style={styles.modalStyle}>
+                  <ActivityIndicator size={50} color="gold" />
+                </View>
+              </Modal>
+              <View style={styles.outerContainer}>
+                <AppBar
+                  premiumModalOpen={premiumModalOpen}
+                  setPremiumModalOpen={setPremiumModalOpen}
+                  setInputValue={setInputValue}
+                  isPremium={isPremium}
+                  setIsPremium={setIsPremium}
+                />
+                <View style={styles.innercontainer}>
+                  <InputContainer
+                    setPremiumModalOpen={setPremiumModalOpen}
+                    inputValue={inputValue}
+                    setInputValue={setInputValue}
+                    isPremium={isPremium}
+                  />
+                  <Table {...tableData} tableWidths={tableWidths} />
+                </View>
+
+                <RunButton runQuery={runQuery} />
+              </View>
+            </KeyboardAvoidingView>
+          </SafeAreaProvider>
+        </BottomSheetModalProvider>
       </ColorSchemeProvider>
     </>
   );

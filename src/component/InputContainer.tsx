@@ -1,21 +1,12 @@
-import React, {
-  useState,
-  FC,
-  useEffect,
-  useRef,
-  useCallback,
-  RefCallback,
-} from 'react';
+import React, {useState, FC, useEffect, useRef, useCallback} from 'react';
 
 import {
-  StyleSheet,
   Text,
   View,
+  TouchableWithoutFeedback,
   TouchableOpacity,
-  TextInputComponent,
   Alert,
   Platform,
-  TextComponent,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -26,17 +17,18 @@ import {
   useDynamicValue,
 } from 'react-native-dynamic';
 
-import GestureRecognizer from 'react-native-swipe-gestures';
 import {
   Directions,
   FlingGestureHandler,
-  PanGestureHandler,
+  FlingGestureHandlerStateChangeEvent,
+  State,
   TextInput,
 } from 'react-native-gesture-handler';
 
 import {lightDark, sideButton} from '../data/colors.json';
 import {findUserCommands, getLastUserCommand} from '../utils/storage';
 import {debounce} from '../utils/utils';
+import GestureRecognizer from 'react-native-swipe-gestures';
 
 interface Props {
   inputValue: string;
@@ -89,7 +81,9 @@ const InputContainer: FC<Props> = ({
       return;
     }
 
-    if (historyOffset.current === 0) return; // do nothing if offset it 0
+    if (historyOffset.current === 0) {
+      return;
+    } // do nothing if offset it 0
 
     const lastCommand = await getLastUserCommand(historyOffset.current - 1);
     // console.log(historyOffset.current - 1, lastCommand);
@@ -102,11 +96,12 @@ const InputContainer: FC<Props> = ({
 
   type CallbackType = (...args: string[]) => void;
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getAutoComplete = useCallback<CallbackType>(
     debounce(
       (val: string) =>
         findUserCommands(val).then((e) => {
-          console.log('autocomplete', e);
+          // console.log('autocomplete', e);
           setAutoCompleteTxt(e);
         }),
       100,
@@ -124,37 +119,63 @@ const InputContainer: FC<Props> = ({
     } else {
       setAutoCompleteTxt('');
     }
-  }, [inputValue]);
+  }, [getAutoComplete, inputValue, isPremium]);
 
+  const clearInput = () => {
+    setInputValue('');
+  };
+
+  const setAutoInput = () => {
+    isPremium && setInputValue(autoCompleteTxt);
+  };
+
+  const handleSwipeLeft = ({
+    nativeEvent,
+  }: FlingGestureHandlerStateChangeEvent) => {
+    if (nativeEvent.state === State.ACTIVE) {
+      isPremium && clearInput();
+    }
+  };
+
+  const handleSwipeRight = ({
+    nativeEvent,
+  }: FlingGestureHandlerStateChangeEvent) => {
+    if (nativeEvent.oldState === State.ACTIVE) {
+      setAutoInput();
+    }
+  };
   const styles = useDynamicValue(dynamicStyles);
   return (
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
       <View style={styles.inputContainer}>
-        <FlingGestureHandler
-          direction={Directions.RIGHT}
-          onHandlerStateChange={() =>
-            isPremium && setInputValue(autoCompleteTxt)
-          }>
+        <GestureRecognizer onSwipeRight={() => console.log('works')}>
           <FlingGestureHandler
-            direction={Directions.LEFT}
-            onHandlerStateChange={() => isPremium && setInputValue('')}>
-            <TextInput
-              style={styles.input}
-              onChangeText={(text) => setInputValue(text)}
-              multiline
-              placeholderTextColor="gray"
-              textAlignVertical="top"
-              defaultValue={inputValue}
-              keyboardType="ascii-capable"
-              autoCorrect={false}
-              numberOfLines={4}
-              placeholder="Type your SQL query"
-            />
+            direction={Directions.RIGHT}
+            onHandlerStateChange={handleSwipeRight}>
+            <FlingGestureHandler
+              direction={Directions.LEFT}
+              onHandlerStateChange={handleSwipeLeft}>
+              <TextInput
+                style={styles.input}
+                autoFocus={true}
+                autoCapitalize="characters"
+                onChangeText={(text) => setInputValue(text)}
+                multiline
+                placeholderTextColor="gray"
+                textAlignVertical="top"
+                defaultValue={inputValue}
+                keyboardType="ascii-capable"
+                autoCorrect={false}
+                numberOfLines={4}
+                placeholder="Type your SQL query"
+              />
+            </FlingGestureHandler>
           </FlingGestureHandler>
-        </FlingGestureHandler>
+        </GestureRecognizer>
         <Text
-          onPress={() => isPremium && setInputValue(autoCompleteTxt)}
+          suppressHighlighting={true}
+          onLongPress={setAutoInput}
           style={styles.autoCompleteTxt}>
           {autoCompleteTxt}
         </Text>
@@ -166,7 +187,7 @@ const InputContainer: FC<Props> = ({
         <TouchableOpacity style={styles.downArrow} onPress={onDownArrowPress}>
           <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setInputValue('')}>
+        <TouchableOpacity onPress={clearInput}>
           <Icon size={30} name="text-box-remove" color={sideButton} />
         </TouchableOpacity>
       </View>
@@ -198,6 +219,9 @@ const dynamicStyles = new DynamicStyleSheet({
     opacity: 1,
     height: 120,
     color: new DynamicValue('black', 'white'),
+  },
+  autoCompleteTxtContainer: {
+    position: 'absolute',
   },
   autoCompleteTxt: {
     position: 'absolute',
