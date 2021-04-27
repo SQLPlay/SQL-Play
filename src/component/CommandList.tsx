@@ -5,6 +5,7 @@ import React, {
   useCallback,
   FC,
   RefObject,
+  memo,
 } from 'react';
 import {
   View,
@@ -120,6 +121,8 @@ const ListItem: FC<LIProps> = (props) => {
   );
 };
 
+const MemoizedLI = memo(ListItem);
+
 interface Props {
   listData: {
     id: string;
@@ -138,10 +141,10 @@ const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
       data={listData}
       bounces={false}
       maxToRenderPerBatch={5}
-      scrollEventThrottle={30}
+      // scrollEventThrottle={30}
       keyboardShouldPersistTaps="handled"
       renderItem={({item, index}) => (
-        <ListItem
+        <MemoizedLI
           {...item}
           index={index}
           setInputValue={setInputValue}

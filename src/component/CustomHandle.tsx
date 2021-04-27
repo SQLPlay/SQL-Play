@@ -4,11 +4,17 @@ import {
 } from '@gorhom/bottom-sheet';
 import React, {FC} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
+import {
+  DynamicStyleSheet,
+  DynamicValue,
+  useDynamicValue,
+} from 'react-native-dynamic';
 import {darkBGColor} from '../data/colors.json';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
 export const CustomHandle: FC<BottomSheetHandleProps> = () => {
+  const styles = useDynamicValue(dynamicStyles);
   return (
     <View style={styles.container}>
       <View style={styles.indicator} />
@@ -17,10 +23,11 @@ export const CustomHandle: FC<BottomSheetHandleProps> = () => {
 };
 
 export const CustomBG: FC<BottomSheetBackdropProps> = () => {
+  const styles = useDynamicValue(dynamicStyles);
   return <View style={styles.background} />;
 };
 
-const styles = StyleSheet.create({
+const dynamicStyles = new DynamicStyleSheet({
   container: {
     padding: 10,
   },
@@ -34,7 +41,7 @@ const styles = StyleSheet.create({
   },
   background: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#fff',
+    backgroundColor: new DynamicValue('white', darkBGColor),
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },

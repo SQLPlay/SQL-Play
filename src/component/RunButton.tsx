@@ -15,10 +15,10 @@ const RunButton: FC<Props> = ({runQuery}) => {
   return (
     <TouchableOpacity onPress={runQuery} style={styles.runBtn}>
       <Icon
-        name="send-circle"
-        size={50}
-        color="#2ecc71"
-        style={{transform: [{scale: 1.2}]}}
+        name="send"
+        size={25}
+        style={{transform: [{translateX: 2}]}}
+        color="#Fff"
       />
     </TouchableOpacity>
   );
@@ -31,9 +31,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     right: 10,
-    width: 50,
-    height: 50,
-    backgroundColor: '#fff',
+    padding: 10,
+    // width: 50,
+    // height: 50,
+    backgroundColor: '#2ecc71',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 250,
