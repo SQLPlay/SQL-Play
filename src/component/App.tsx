@@ -42,6 +42,11 @@ import Snackbar from 'react-native-snackbar';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {
+  TourGuideProvider,
+  TourGuideZone,
+  useTourGuideController,
+} from 'rn-tourguide';
 
 MCIcon.loadFont();
 
@@ -71,7 +76,7 @@ interface tableDataNode {
   rows: Array<Array<any>>;
 }
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const [tableData, setTableData] = useState<tableDataNode>({
     header: [],
     rows: [[]],
@@ -86,6 +91,13 @@ const App: React.FC = () => {
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
 
   const styles = useDynamicValue(dynamicStyles);
+  const {
+    canStart,
+    start,
+    stop,
+    eventEmitter,
+    getCurrentStep,
+  } = useTourGuideController();
 
   const runQuery = async () => {
     setLoaderVisibility(true);
@@ -144,54 +156,92 @@ const App: React.FC = () => {
     init();
   }, []);
 
+  useEffect(() => {
+    if (canStart) {
+      console.log('calling start');
+      start?.();
+    }
+  }, [canStart]);
+  const handleOnStart = () => console.log('start');
+  const handleOnStop = () => console.log('stop');
+  const handleOnStepChange = () => console.log(`stepChange`);
+
+  React.useEffect(() => {
+    eventEmitter?.on('start', handleOnStart);
+    eventEmitter?.on('stop', handleOnStop);
+    eventEmitter?.on('stepChange', handleOnStepChange);
+
+    return () => {
+      eventEmitter?.off('start', handleOnStart);
+      eventEmitter?.off('stop', handleOnStop);
+      eventEmitter?.off('stepChange', handleOnStepChange);
+    };
+  }, []);
+
   return (
-    <>
-      <ColorSchemeProvider>
-        <BottomSheetModalProvider>
-          <SafeAreaProvider>
-            <StatusBar
-              barStyle="dark-content"
-              backgroundColor="#c8b900"
-              translucent
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      {...(Platform.OS === 'ios' && {behavior: 'padding'})}
+      keyboardVerticalOffset={Platform.select({
+        ios: 0,
+        android: 500,
+      })}>
+      <View style={styles.statusBar} />
+
+      <Modal visible={loaderVisibility} transparent={true}>
+        <View style={styles.modalStyle}>
+          <ActivityIndicator size={50} color="gold" />
+        </View>
+      </Modal>
+      <View style={styles.outerContainer}>
+        <AppBar
+          premiumModalOpen={premiumModalOpen}
+          setPremiumModalOpen={setPremiumModalOpen}
+          setInputValue={setInputValue}
+          isPremium={isPremium}
+          setIsPremium={setIsPremium}
+        />
+        <View style={styles.innercontainer}>
+          <TourGuideZone zone={1} text="Type your SQL query">
+            <InputContainer
+              setPremiumModalOpen={setPremiumModalOpen}
+              inputValue={inputValue}
+              setInputValue={setInputValue}
+              isPremium={isPremium}
             />
-            <KeyboardAvoidingView
-              style={{flex: 1}}
-              {...(Platform.OS === 'ios' && {behavior: 'padding'})}
-              keyboardVerticalOffset={Platform.select({ios: 0, android: 500})}>
-              <View style={styles.statusBar} />
+          </TourGuideZone>
+          <TourGuideZone
+            zone={2}
+            shape="rectangle"
+            text="Press the run button to execute the query">
+            <Table {...tableData} tableWidths={tableWidths} />
+          </TourGuideZone>
+        </View>
 
-              <Modal visible={loaderVisibility} transparent={true}>
-                <View style={styles.modalStyle}>
-                  <ActivityIndicator size={50} color="gold" />
-                </View>
-              </Modal>
-              <View style={styles.outerContainer}>
-                <AppBar
-                  premiumModalOpen={premiumModalOpen}
-                  setPremiumModalOpen={setPremiumModalOpen}
-                  setInputValue={setInputValue}
-                  isPremium={isPremium}
-                  setIsPremium={setIsPremium}
-                />
-                <View style={styles.innercontainer}>
-                  <InputContainer
-                    setPremiumModalOpen={setPremiumModalOpen}
-                    inputValue={inputValue}
-                    setInputValue={setInputValue}
-                    isPremium={isPremium}
-                  />
-                  <Table {...tableData} tableWidths={tableWidths} />
-                </View>
-
-                <RunButton runQuery={runQuery} />
-              </View>
-            </KeyboardAvoidingView>
-          </SafeAreaProvider>
-        </BottomSheetModalProvider>
-      </ColorSchemeProvider>
-    </>
+        <RunButton runQuery={runQuery} />
+      </View>
+    </KeyboardAvoidingView>
   );
 };
+const App = () => (
+  <ColorSchemeProvider>
+    <BottomSheetModalProvider>
+      <SafeAreaProvider>
+        <TourGuideProvider
+          dismissOnPress={true}
+          androidStatusBarVisible={true}
+          animationDuration={250}>
+          <StatusBar
+            barStyle="dark-content"
+            backgroundColor="#c8b900"
+            translucent
+          />
+          <AppContent />
+        </TourGuideProvider>
+      </SafeAreaProvider>
+    </BottomSheetModalProvider>
+  </ColorSchemeProvider>
+);
 
 const dynamicStyles = new DynamicStyleSheet({
   statusBar: {
