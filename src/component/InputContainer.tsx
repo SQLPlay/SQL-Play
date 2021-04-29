@@ -149,7 +149,9 @@ const InputContainer: FC<Props> = ({
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
       <View style={styles.inputContainer}>
-        <GestureRecognizer onSwipeRight={() => console.log('works')}>
+        <GestureRecognizer
+          onSwipeRight={setAutoInput}
+          onSwipeLeft={() => isPremium && clearInput()}>
           <FlingGestureHandler
             direction={Directions.RIGHT}
             onHandlerStateChange={handleSwipeRight}>
@@ -159,7 +161,6 @@ const InputContainer: FC<Props> = ({
               <TextInput
                 style={styles.input}
                 autoFocus={true}
-                autoCapitalize="characters"
                 onChangeText={(text) => setInputValue(text)}
                 multiline
                 placeholderTextColor="gray"

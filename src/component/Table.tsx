@@ -1,4 +1,4 @@
-import React, {FC, RefObject} from 'react';
+import React, {FC, RefObject, memo} from 'react';
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
 //@ts-ignore
 import {Table, Row, Rows} from 'react-native-table-component';
@@ -44,7 +44,7 @@ const DataTable: FC<Props> = ({header, rows, tableWidths}) => {
     </>
   );
 };
-export default DataTable;
+export default memo(DataTable);
 
 const dynamicStyles = new DynamicStyleSheet({
   outputText: {
@@ -56,7 +56,7 @@ const dynamicStyles = new DynamicStyleSheet({
   },
   head: {
     height: 40,
-    backgroundColor: '#fff176',
+    backgroundColor: '#ffea00',
   },
   headerText: {
     margin: 6,
@@ -67,8 +67,8 @@ const dynamicStyles = new DynamicStyleSheet({
     color: new DynamicValue('black', 'white'),
   },
   outPutContainer: {
-    flex: 1,
-    marginBottom: 235,
+    // flex: 1,
+    // marginBottom: 235,
     marginTop: 10,
     width: '100%',
   },

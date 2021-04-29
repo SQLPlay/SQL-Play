@@ -20,7 +20,7 @@ const AppBar: React.FC<Props> = ({
 }) => {
   return (
     <View style={styles.appBar}>
-      <Text style={styles.appBarTxt}>SQL Playground</Text>
+      <Text style={styles.appBarTxt}>SQL Play</Text>
       <View style={styles.optionContainer}>
         <SearchBox setInputValue={setInputValue} />
         <MenuOptions

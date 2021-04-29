@@ -1,4 +1,4 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, FC} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -12,6 +12,7 @@ import {
   KeyboardAvoidingView,
   Dimensions,
   Platform,
+  Keyboard,
 } from 'react-native';
 
 import {
@@ -20,6 +21,13 @@ import {
   useDynamicValue,
   ColorSchemeProvider,
 } from 'react-native-dynamic';
+
+import {
+  copilot,
+  CopilotStep,
+  CopilotWrappedComponentProps,
+  walkthroughable,
+} from 'react-native-copilot';
 
 // @ts-ignore
 import {AdMobInterstitial} from 'react-native-admob';
@@ -70,8 +78,13 @@ interface tableDataNode {
   header: Array<string>;
   rows: Array<Array<any>>;
 }
+const CoInputContainer: FC = (props) => (
+  <View {...props.copilot}>
+    <InputContainer {...props} />
+  </View>
+);
 
-const App: React.FC = () => {
+const App: React.FC<CopilotWrappedComponentProps> = (props) => {
   const [tableData, setTableData] = useState<tableDataNode>({
     header: [],
     rows: [[]],
@@ -88,6 +101,7 @@ const App: React.FC = () => {
   const styles = useDynamicValue(dynamicStyles);
 
   const runQuery = async () => {
+    Keyboard.dismiss();
     setLoaderVisibility(true);
     await insertUserCommand(inputValue); // store the command in db
     try {
@@ -141,55 +155,62 @@ const App: React.FC = () => {
       // }
     };
 
+    // props.start();
     init();
   }, []);
 
   return (
-    <>
-      <ColorSchemeProvider>
-        <BottomSheetModalProvider>
-          <SafeAreaProvider>
-            <StatusBar
-              barStyle="dark-content"
-              backgroundColor="#c8b900"
-              translucent
-            />
-            <KeyboardAvoidingView
-              style={{flex: 1}}
-              {...(Platform.OS === 'ios' && {behavior: 'padding'})}
-              keyboardVerticalOffset={Platform.select({ios: 0, android: 500})}>
-              <View style={styles.statusBar} />
+    <ColorSchemeProvider>
+      <BottomSheetModalProvider>
+        <SafeAreaProvider>
+          <StatusBar
+            barStyle="dark-content"
+            backgroundColor="#c8b900"
+            translucent
+          />
+          <KeyboardAvoidingView
+            style={{flex: 1}}
+            {...(Platform.OS === 'ios' && {behavior: 'padding'})}
+            keyboardVerticalOffset={Platform.select({
+              ios: 0,
+              android: 500,
+            })}>
+            <View style={styles.statusBar} />
 
-              <Modal visible={loaderVisibility} transparent={true}>
-                <View style={styles.modalStyle}>
-                  <ActivityIndicator size={50} color="gold" />
-                </View>
-              </Modal>
-              <View style={styles.outerContainer}>
-                <AppBar
-                  premiumModalOpen={premiumModalOpen}
-                  setPremiumModalOpen={setPremiumModalOpen}
-                  setInputValue={setInputValue}
-                  isPremium={isPremium}
-                  setIsPremium={setIsPremium}
-                />
-                <View style={styles.innercontainer}>
-                  <InputContainer
+            <Modal visible={loaderVisibility} transparent={true}>
+              <View style={styles.modalStyle}>
+                <ActivityIndicator size={50} color="gold" />
+              </View>
+            </Modal>
+            <View style={styles.outerContainer}>
+              <AppBar
+                premiumModalOpen={premiumModalOpen}
+                setPremiumModalOpen={setPremiumModalOpen}
+                setInputValue={setInputValue}
+                isPremium={isPremium}
+                setIsPremium={setIsPremium}
+              />
+              <View style={styles.innercontainer}>
+                <CopilotStep
+                  order={1}
+                  name="Query Input"
+                  text="Type your SQL query">
+                  <CoInputContainer
                     setPremiumModalOpen={setPremiumModalOpen}
                     inputValue={inputValue}
                     setInputValue={setInputValue}
                     isPremium={isPremium}
                   />
-                  <Table {...tableData} tableWidths={tableWidths} />
-                </View>
-
-                <RunButton runQuery={runQuery} />
+                </CopilotStep>
+                <Table {...tableData} tableWidths={tableWidths} />
               </View>
-            </KeyboardAvoidingView>
-          </SafeAreaProvider>
-        </BottomSheetModalProvider>
-      </ColorSchemeProvider>
-    </>
+
+              <RunButton runQuery={runQuery} />
+            </View>
+          </KeyboardAvoidingView>
+        </SafeAreaProvider>
+      </BottomSheetModalProvider>
+    </ColorSchemeProvider>
   );
 };
 
@@ -213,4 +234,4 @@ const dynamicStyles = new DynamicStyleSheet({
   },
 });
 
-export default App;
+export default copilot({animated: true, overlay: 'svg'})(App);
