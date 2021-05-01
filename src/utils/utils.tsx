@@ -3,27 +3,10 @@ import rnTextSize from 'react-native-text-size';
 import SInfo from 'react-native-sensitive-info';
 import RNIap, {ProductPurchase, Subscription} from 'react-native-iap';
 
-// @ts-ignore
-import {startUpdateFlow} from '@gurukumparan/react-native-android-inapp-updates';
-
 export const itemSkus: string[] | undefined = Platform.select({
   android: ['premium'],
   ios: ['premium'],
 });
-
-export const isAndroid: boolean = Platform.OS === 'android';
-export const checkAndroidUpdate = async () => {
-  try {
-    const result = await startUpdateFlow('flexible');
-    console.log(result);
-  } catch (e) {
-    console.error('error:', e);
-  }
-};
-
-if (isAndroid) {
-  checkAndroidUpdate();
-}
 
 export const getLargestWidths = async (
   arr: Array<Array<any>>,

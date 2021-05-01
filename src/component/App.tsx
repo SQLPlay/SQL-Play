@@ -32,8 +32,6 @@ import {
 // @ts-ignore
 import {AdMobInterstitial} from 'react-native-admob';
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
-// @ts-ignore
-import {startUpdateFlow} from '@gurukumparan/react-native-android-inapp-updates';
 import SplashScreen from 'react-native-splash-screen';
 
 import {getLargestWidths, shouldShowAd, getIsPremium} from '../utils/utils';
@@ -43,6 +41,7 @@ import RunButton from './RunButton';
 import InputContainer from './InputContainer';
 
 import '../utils/appReviewer';
+import '../utils/updateChecker';
 import {darkBGColor, darkYellow} from '../data/colors.json';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -147,12 +146,6 @@ const App: React.FC<CopilotWrappedComponentProps> = (props) => {
     const init = async () => {
       const isPremRes = await getIsPremium();
       setIsPremium(isPremRes);
-      // try {
-      //   const result = await startUpdateFlow('flexible');
-      //   console.log(result);
-      // } catch (e) {
-      //   console.log('error:', e);
-      // }
     };
 
     // props.start();

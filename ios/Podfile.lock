@@ -336,6 +336,8 @@ PODS:
     - React-perflogger (= 0.64.0)
   - rn-in-app-review (0.0.7):
     - React
+  - RNDeviceInfo (8.1.2):
+    - React-Core
   - RNFS (2.17.0):
     - React
   - RNGestureHandler (1.10.3):
@@ -423,6 +425,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - rn-in-app-review (from `../node_modules/rn-in-app-review`)
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNIap (from `../node_modules/react-native-iap`)
@@ -513,6 +516,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   rn-in-app-review:
     :path: "../node_modules/rn-in-app-review"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNFS:
     :path: "../node_modules/react-native-fs"
   RNGestureHandler:
@@ -577,6 +582,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: cad74a1eaa53ee6e7a3620231939d8fe2c6afcf0
   ReactCommon: cfe2b7fd20e0dbd2d1185cd7d8f99633fbc5ff05
   rn-in-app-review: 957b7090ca0f1ed2e60703ade0e7c181ca34667b
+  RNDeviceInfo: 3266783bcb6aa4b0c785d6080a407f8a5fc68326
   RNFS: 93d5b5535eb39d98e6b19009faa8fe717f7ea45d
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNIap: 766e9b9393fc7630d6dfae371fa998c573b99dec

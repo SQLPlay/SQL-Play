@@ -7,6 +7,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   Keyboard,
+  Platform,
 } from 'react-native';
 
 import BottomSheet, {
@@ -59,7 +60,9 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
   const styles = useDynamicValue(dynamicStyles);
   const openTabSheet = () => {
     bottomSheetRef.current?.present();
-    Keyboard.dismiss();
+    if (Platform.OS === 'ios') {
+      Keyboard.dismiss();
+    }
   };
 
   useEffect(() => {
@@ -94,7 +97,10 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
         handleComponent={CustomHandle}
         backgroundComponent={CustomBG}
         backdropComponent={BottomSheetBackdrop}
-        keyboardBehavior="interactive"
+        keyboardBehavior={Platform.select({
+          ios: 'interactive',
+          android: 'extend',
+        })}
         onChange={handleSheetChanges}>
         <BottomSheetView style={styles.container}>
           <BottomSheetView style={styles.inputContainer}>
