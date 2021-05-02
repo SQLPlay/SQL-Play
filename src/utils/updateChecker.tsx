@@ -1,3 +1,4 @@
+import {Platform} from 'react-native';
 import SpInAppUpdates, {
   NeedsUpdateResponse,
   IAUUpdateKind,

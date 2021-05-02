@@ -28,7 +28,8 @@ const MenuOptions: FC<Props> = ({
   const [exportModal, setExportModal] = useState<boolean>(false);
 
   const showAllTables = (): void => {
-    const query: string = `SELECT name FROM sqlite_master \nWHERE type='table';`;
+    const query: string =
+      "SELECT name FROM sqlite_master \nWHERE type='table';";
     menuRef.current.hide();
     setInputValue(query);
   };

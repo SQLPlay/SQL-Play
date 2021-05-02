@@ -1,4 +1,4 @@
-import {PermissionsAndroid, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import rnTextSize from 'react-native-text-size';
 import SInfo from 'react-native-sensitive-info';
 import RNIap, {ProductPurchase, Subscription} from 'react-native-iap';
@@ -61,33 +61,6 @@ export const shouldShowAd = (): boolean => {
   if (rand === 1) {
     return true;
   } else {
-    return false;
-  }
-};
-
-// will handle the permission
-export const requestExternalWritePermission = async (): Promise<boolean> => {
-  try {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-      {
-        title: 'SQL Playground Permission',
-        message:
-          'SQL Playground needs external write permission' +
-          'to save the CSV file.',
-        buttonNeutral: 'Ask Me Later',
-        buttonNegative: 'Cancel',
-        buttonPositive: 'OK',
-      },
-    );
-    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      return true;
-    } else {
-      console.log('Camera permission denied');
-      return false;
-    }
-  } catch (err) {
-    console.warn(err);
     return false;
   }
 };
