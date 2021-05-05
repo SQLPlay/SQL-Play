@@ -97,7 +97,7 @@ def enableSeparateBuildPerCPUArchitecture = false
  * Run Proguard to shrink the Java bytecode in release builds.
  */
 def enableProguardInReleaseBuilds = false
-def useIntlJsc = false
+
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -122,6 +122,8 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
+    ndkVersion rootProject.ext.ndkVersion
+
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -133,8 +135,8 @@ android {
         applicationId "com.sql_playground"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 21
-        versionName "2.5.1"
+        versionCode 22
+        versionName "2.5.2"
     }
     splits {
         abi {
@@ -170,11 +172,12 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // https://developer.android.com/studio/build/configure-apk-splits.html
+            // Example: versionCode 1 will generate 1001 for armeabi-v7a, 1002 for x86, etc.
             def versionCodes = ["armeabi-v7a": 1, "x86": 2, "arm64-v8a": 3, "x86_64": 4]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+                        defaultConfig.versionCode * 1000 + versionCodes.get(abi)
             }
 
         }
@@ -199,12 +202,6 @@ dependencies {
 
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.flipper'
-    }
-
-    if (useIntlJsc) {
-        implementation 'org.webkit:android-jsc-intl:+'
-    } else {
-        implementation 'org.webkit:android-jsc:+'
     }
 
     if (enableHermes) {
