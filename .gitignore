@@ -65,3 +65,5 @@ key.json
 android/app/release/
 
 android/app/release/app-release.aab
+private_key.pepk
+ios/SQL_PlayGround.app.dSYM.zip
