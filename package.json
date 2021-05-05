@@ -33,6 +33,7 @@
     "react-native-splash-screen": "^3.2.0",
     "react-native-sqlite-storage": "^5.0.0",
     "react-native-status-bar-height": "^2.6.0",
+    "react-native-svg": "^12.1.1",
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-syntax-highlighter": "^2.1.0",
     "react-native-table-component": "^1.2.1",

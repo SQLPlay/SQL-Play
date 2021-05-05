@@ -10,7 +10,7 @@ PODS:
     - React-jsi (= 0.64.0)
     - ReactCommon/turbomodule/core (= 0.64.0)
   - glog (0.3.5)
-  - Google-Mobile-Ads-SDK (7.69.0):
+  - Google-Mobile-Ads-SDK (8.4.0):
     - GoogleAppMeasurement (~> 7.0)
     - GoogleUserMessagingPlatform (~> 1.1)
   - GoogleAppMeasurement (7.11.0):
@@ -381,6 +381,8 @@ PODS:
     - React-Core
   - RNSnackbar (2.4.0):
     - React-Core
+  - RNSVG (12.1.1):
+    - React
   - RNTextSize (4.0.0-rc.1):
     - React
   - RNVectorIcons (8.1.0):
@@ -436,6 +438,7 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - RNTextSize (from `../node_modules/react-native-text-size/ios`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -538,6 +541,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share"
   RNSnackbar:
     :path: "../node_modules/react-native-snackbar"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   RNTextSize:
     :path: "../node_modules/react-native-text-size/ios"
   RNVectorIcons:
@@ -602,6 +607,7 @@ SPEC CHECKSUMS:
   RNReanimated: b8c8004b43446e3c2709fe64b2b41072f87428ad
   RNShare: 4df87d1791f50a2c7b1d89432fb9bbb7c02a9c9a
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
+  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNTextSize: 7efa06531c6bb7ab6ed070b4ce0d1248cf06fcdf
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf

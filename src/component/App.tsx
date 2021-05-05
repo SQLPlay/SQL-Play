@@ -138,6 +138,28 @@ const App: React.FC = () => {
     init();
   }, []);
 
+  useEffect(() => {
+    if (canStart) {
+      console.log('calling start');
+      start?.();
+    }
+  }, [canStart]);
+  const handleOnStart = () => console.log('start');
+  const handleOnStop = () => console.log('stop');
+  const handleOnStepChange = () => console.log(`stepChange`);
+
+  React.useEffect(() => {
+    eventEmitter?.on('start', handleOnStart);
+    eventEmitter?.on('stop', handleOnStop);
+    eventEmitter?.on('stepChange', handleOnStepChange);
+
+    return () => {
+      eventEmitter?.off('start', handleOnStart);
+      eventEmitter?.off('stop', handleOnStop);
+      eventEmitter?.off('stepChange', handleOnStepChange);
+    };
+  }, []);
+
   return (
     <ColorSchemeProvider>
       <BottomSheetModalProvider>
@@ -204,6 +226,25 @@ const App: React.FC = () => {
     </ColorSchemeProvider>
   );
 };
+const App = () => (
+  <ColorSchemeProvider>
+    <BottomSheetModalProvider>
+      <SafeAreaProvider>
+        <TourGuideProvider
+          dismissOnPress={true}
+          androidStatusBarVisible={true}
+          animationDuration={250}>
+          <StatusBar
+            barStyle="dark-content"
+            backgroundColor="#c8b900"
+            translucent
+          />
+          <AppContent />
+        </TourGuideProvider>
+      </SafeAreaProvider>
+    </BottomSheetModalProvider>
+  </ColorSchemeProvider>
+);
 
 const dynamicStyles = new DynamicStyleSheet({
   statusBar: {
