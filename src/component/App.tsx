@@ -1,18 +1,16 @@
 import React, {useState, useRef, useEffect, FC} from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
   View,
-  Text,
   StatusBar,
   Alert,
   ActivityIndicator,
   Modal,
-  useColorScheme,
   KeyboardAvoidingView,
   Dimensions,
   Platform,
   Keyboard,
+  Button,
+  TouchableOpacity,
 } from 'react-native';
 
 import {
@@ -21,13 +19,6 @@ import {
   useDynamicValue,
   ColorSchemeProvider,
 } from 'react-native-dynamic';
-
-import {
-  copilot,
-  CopilotStep,
-  CopilotWrappedComponentProps,
-  walkthroughable,
-} from 'react-native-copilot';
 
 // @ts-ignore
 import {AdMobInterstitial} from 'react-native-admob';
@@ -49,6 +40,7 @@ import Snackbar from 'react-native-snackbar';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {AppTour, AppTourView} from 'react-native-app-tour';
 
 MCIcon.loadFont();
 
@@ -77,13 +69,7 @@ interface tableDataNode {
   header: Array<string>;
   rows: Array<Array<any>>;
 }
-const CoInputContainer: FC = (props) => (
-  <View {...props.copilot}>
-    <InputContainer {...props} />
-  </View>
-);
-
-const App: React.FC<CopilotWrappedComponentProps> = (props) => {
+const App: React.FC = () => {
   const [tableData, setTableData] = useState<tableDataNode>({
     header: [],
     rows: [[]],
@@ -98,6 +84,7 @@ const App: React.FC<CopilotWrappedComponentProps> = (props) => {
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
 
   const styles = useDynamicValue(dynamicStyles);
+  let target;
 
   const runQuery = async () => {
     Keyboard.dismiss();
@@ -148,7 +135,6 @@ const App: React.FC<CopilotWrappedComponentProps> = (props) => {
       setIsPremium(isPremRes);
     };
 
-    // props.start();
     init();
   }, []);
 
@@ -184,21 +170,33 @@ const App: React.FC<CopilotWrappedComponentProps> = (props) => {
                 setIsPremium={setIsPremium}
               />
               <View style={styles.innercontainer}>
-                <CopilotStep
-                  order={1}
-                  name="Query Input"
-                  text="Type your SQL query">
-                  <CoInputContainer
-                    setPremiumModalOpen={setPremiumModalOpen}
-                    inputValue={inputValue}
-                    setInputValue={setInputValue}
-                    isPremium={isPremium}
-                  />
-                </CopilotStep>
+                <InputContainer
+                  setPremiumModalOpen={setPremiumModalOpen}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  isPremium={isPremium}
+                />
                 <Table {...tableData} tableWidths={tableWidths} />
               </View>
 
-              <RunButton runQuery={runQuery} />
+              <View
+                style={styles.runBtn}
+                key={'Center Right'}
+                ref={(ref) => {
+                  if (!ref) return;
+
+                  let props = {
+                    order: 2,
+                    title: 'This is a target button 5',
+                    description: 'We have the best targets, believe me',
+                    outerCircleColor: '#3f52ae',
+                  };
+
+                  target = AppTourView.for(ref, {...props});
+                  AppTour.ShowFor(target);
+                }}>
+                <RunButton runQuery={runQuery} />
+              </View>
             </View>
           </KeyboardAvoidingView>
         </SafeAreaProvider>
@@ -211,6 +209,11 @@ const dynamicStyles = new DynamicStyleSheet({
   statusBar: {
     height: getStatusBarHeight(),
     backgroundColor: '#c8b900',
+  },
+  runBtn: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
   },
   outerContainer: {
     backgroundColor: new DynamicValue('white', darkBGColor),
@@ -227,4 +230,4 @@ const dynamicStyles = new DynamicStyleSheet({
   },
 });
 
-export default copilot({animated: true, overlay: 'svg'})(App);
+export default App;

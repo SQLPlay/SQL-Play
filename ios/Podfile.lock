@@ -46,6 +46,7 @@ PODS:
     - GoogleUtilities/Logger
   - hermes-engine (0.7.2)
   - libevent (2.1.12)
+  - MaterialShowcase (0.6.5)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
     - nanopb/encode (= 2.30908.0)
@@ -336,6 +337,9 @@ PODS:
     - React-perflogger (= 0.64.0)
   - rn-in-app-review (0.0.7):
     - React
+  - RNAppTour (1.0.4):
+    - MaterialShowcase
+    - React
   - RNDeviceInfo (8.1.2):
     - React-Core
   - RNFS (2.17.0):
@@ -377,8 +381,6 @@ PODS:
     - React-Core
   - RNSnackbar (2.4.0):
     - React-Core
-  - RNSVG (12.1.1):
-    - React
   - RNTextSize (4.0.0-rc.1):
     - React
   - RNVectorIcons (8.1.0):
@@ -393,6 +395,7 @@ DEPENDENCIES:
   - Google-Mobile-Ads-SDK (~> 7.69.0)
   - hermes-engine (~> 0.7.2)
   - libevent (~> 2.1.12)
+  - MaterialShowcase (from `https://github.com/prscX/material-showcase-ios`, branch `swift-version-fix`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -425,6 +428,7 @@ DEPENDENCIES:
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - rn-in-app-review (from `../node_modules/rn-in-app-review`)
+  - RNAppTour (from `../node_modules/react-native-app-tour/ios`)
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -432,7 +436,6 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSnackbar (from `../node_modules/react-native-snackbar`)
-  - RNSVG (from `../node_modules/react-native-svg`)
   - RNTextSize (from `../node_modules/react-native-text-size/ios`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -458,6 +461,9 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  MaterialShowcase:
+    :branch: swift-version-fix
+    :git: https://github.com/prscX/material-showcase-ios
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -516,6 +522,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   rn-in-app-review:
     :path: "../node_modules/rn-in-app-review"
+  RNAppTour:
+    :path: "../node_modules/react-native-app-tour/ios"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFS:
@@ -530,14 +538,17 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-share"
   RNSnackbar:
     :path: "../node_modules/react-native-snackbar"
-  RNSVG:
-    :path: "../node_modules/react-native-svg"
   RNTextSize:
     :path: "../node_modules/react-native-text-size/ios"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
+
+CHECKOUT OPTIONS:
+  MaterialShowcase:
+    :commit: 3c0fc088cb05e0967edac3b618c314ecb116d048
+    :git: https://github.com/prscX/material-showcase-ios
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
@@ -551,6 +562,7 @@ SPEC CHECKSUMS:
   GoogleUtilities: 284cddc7fffc14ae1907efb6f78ab95c1fccaedc
   hermes-engine: 7d97ba46a1e29bacf3e3c61ecb2804a5ddd02d4f
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  MaterialShowcase: a8089890d2db83a2e5dc5fb91473e846e4770243
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
@@ -582,6 +594,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: cad74a1eaa53ee6e7a3620231939d8fe2c6afcf0
   ReactCommon: cfe2b7fd20e0dbd2d1185cd7d8f99633fbc5ff05
   rn-in-app-review: 957b7090ca0f1ed2e60703ade0e7c181ca34667b
+  RNAppTour: f669d3923675251369a4c4619d8e0538db6fa9d2
   RNDeviceInfo: 3266783bcb6aa4b0c785d6080a407f8a5fc68326
   RNFS: 93d5b5535eb39d98e6b19009faa8fe717f7ea45d
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
@@ -589,11 +602,10 @@ SPEC CHECKSUMS:
   RNReanimated: b8c8004b43446e3c2709fe64b2b41072f87428ad
   RNShare: 4df87d1791f50a2c7b1d89432fb9bbb7c02a9c9a
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
-  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   RNTextSize: 7efa06531c6bb7ab6ed070b4ce0d1248cf06fcdf
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
 
-PODFILE CHECKSUM: 5c3f20fa81f6815142618b336c24187f20a91a3f
+PODFILE CHECKSUM: eda7f1c9ff41f000e52d9436414bceaee97aec55
 
 COCOAPODS: 1.10.1

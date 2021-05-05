@@ -17,6 +17,12 @@ target 'SQL_PlayGround' do
     # Pods for testing
   end
 
+
+  use_frameworks!
+  
+  pod 'MaterialShowcase',:git => 'https://github.com/prscX/material-showcase-ios', :branch => 'swift-version-fix'
+  
+
   # Enables Flipper.
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
