@@ -82,7 +82,7 @@ export const ExecuteAppQuery = (
 //add functions for basic value and string storage
 const createAppDataTable = async () => {
   await ExecuteAppQuery(
-    `CREATE TABLE IF NOT EXISTS appData(id String Primary KEY, value string);`,
+    'CREATE TABLE IF NOT EXISTS appData(id String Primary KEY, value string);',
   );
 };
 

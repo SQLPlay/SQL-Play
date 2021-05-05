@@ -8,15 +8,8 @@ import Share from 'react-native-share';
 
 import RNFS from 'react-native-fs';
 
-import {requestExternalWritePermission} from '../utils/utils';
 import {ExecuteUserQuery} from '../utils/storage';
-import {
-  ActivityIndicator,
-  KeyboardAvoidingView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text} from 'react-native';
 
 interface Props {
   modalState: boolean;
@@ -38,13 +31,7 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
   }, [fieldValue]);
 
   const exportCSV = async (): Promise<void> => {
-    // const isGranted: boolean = await requestExternalWritePermission();
     let csvString: string = '';
-    // console.log(isGranted);
-
-    // if (!isGranted) {
-    //   return;
-    // }
 
     try {
       setIsLoading(true);
@@ -84,8 +71,6 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
       });
 
       csvString = CSVArray.join('\n');
-
-      console.log(csvString);
     } catch (error) {
       setIsLoading(false);
       setExportErr('Error in finding table');

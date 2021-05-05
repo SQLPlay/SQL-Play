@@ -9,7 +9,7 @@ import {
   DynamicValue,
   useDynamicValue,
 } from 'react-native-dynamic';
-import {darkBGColor} from '../data/colors.json';
+import {darkBGColor, lightDark} from '../data/colors.json';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
@@ -37,7 +37,7 @@ const dynamicStyles = new DynamicStyleSheet({
     width: (7.5 * WINDOW_WIDTH) / 100,
     height: 4,
     borderRadius: 4,
-    backgroundColor: '#fcfcfc',
+    backgroundColor: new DynamicValue('rgba(0, 0, 0, 0.75)', 'grey'),
   },
   background: {
     ...StyleSheet.absoluteFillObject,

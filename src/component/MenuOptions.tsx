@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {View, Text, Alert, Linking} from 'react-native';
+import {View, Text, Alert, Linking, Keyboard} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -28,7 +28,8 @@ const MenuOptions: FC<Props> = ({
   const [exportModal, setExportModal] = useState<boolean>(false);
 
   const showAllTables = (): void => {
-    const query: string = `SELECT name FROM sqlite_master \nWHERE type='table';`;
+    const query: string =
+      "SELECT name FROM sqlite_master \nWHERE type='table';";
     menuRef.current.hide();
     setInputValue(query);
   };
@@ -37,27 +38,32 @@ const MenuOptions: FC<Props> = ({
     Alert.alert(
       'Supported Queries',
 
-      `This app is built on top of SQLite, so the most queries of SQL is supported
+      `
+This app has been built on top of SQLite, so most of the SQL queries are supported.
 
-You can create, delete, modify and join the tables,
+You can create, delete, modify and join the tables.
 
-The select query works mostly same as SQL
+The select query works mostly the same as SQL.
 
-There is no user roles and authentication here
+There are no user roles or authentication here.
 
-All your queries are run for a single database, so all your tables are in a single datbase.
+All your queries are run for a single database, so all your tables are in a single database.
 
-In future this app may allow you to create and select difference databases.
-`,
+In future, this app may allow you to create and select different databases.
+      `,
       [{text: 'OK', style: 'cancel'}],
       {cancelable: true},
     );
   };
 
   const sendMailFeedback = (): void => {
-    Linking.openURL(
-      'mailto:hi@creativeshi.com?subject=SQL%20Playground%20Feedback',
-    );
+    try {
+      Linking.openURL(
+        'mailto:hi@creativeshi.com?subject=SQL%20Playground%20Feedback',
+      );
+    } catch (e) {
+      console.error(e);
+    }
   };
   // menuRef.current.show()
   return (
@@ -75,7 +81,10 @@ In future this app may allow you to create and select difference databases.
         button={
           <Icon
             name="more-vert"
-            onPress={() => menuRef.current.show()}
+            onPress={() => {
+              menuRef.current.show();
+              Keyboard.dismiss();
+            }}
             size={25}
           />
         }>

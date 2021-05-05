@@ -1,9 +1,9 @@
 {
-  "name": "SQL_PlayGround",
-  "version": "2.4.2",
+  "name": "SQL-Play",
+  "version": "2.5.2",
   "private": true,
   "description": "A simple and beautiful SQL playground",
-  "whatsNew": "v2 released with awesome New Features",
+  "whatsNew": "New search menu and performance improvement",
   "scripts": {
     "postversion": "react-native-version",
     "android": "react-native run-android",
@@ -14,10 +14,11 @@
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^3",
-    "@gurukumparan/react-native-android-inapp-updates": "^1.0.18",
-    "react": "17.0.2",
+    "react": "17.0.1",
     "react-native": "0.64.0",
     "react-native-admob": "^2.0.0-beta.6",
+    "react-native-app-tour": "^1.0.4",
+    "react-native-device-info": "^8.1.2",
     "react-native-dialog": "^6.1.0",
     "react-native-dynamic": "^1.0.0",
     "react-native-fs": "^2.16.6",
@@ -39,12 +40,15 @@
     "react-native-text-size": "^4.0.0-rc.1",
     "react-native-vector-icons": "^8.1.0",
     "rn-in-app-review": "^0.0.7",
-    "rn-tourguide": "^2.7.1"
+    "sp-react-native-in-app-updates": "^1.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.14.0",
     "@babel/runtime": "^7.8.4",
     "@react-native-community/eslint-config": "^2.0.0",
+    "@testing-library/jest-native": "^4.0.1",
+    "@testing-library/react-native": "^7.2.0",
     "@types/jest": "^26.0.13",
     "@types/react": "^17.0.0",
     "@types/react-native": "^0.64.2",
@@ -52,6 +56,8 @@
     "@types/react-native-vector-icons": "^6.4.5",
     "@types/react-test-renderer": "^17.0.0",
     "babel-jest": "^26.6.3",
+    "babel-plugin-transform-remove-console": "^6.9.4",
+    "detox": "^18.12.2",
     "eslint": "^7.16.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.65.2",

@@ -1,17 +1,16 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect, FC} from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
   View,
-  Text,
   StatusBar,
   Alert,
   ActivityIndicator,
   Modal,
-  useColorScheme,
   KeyboardAvoidingView,
   Dimensions,
   Platform,
+  Keyboard,
+  Button,
+  TouchableOpacity,
 } from 'react-native';
 
 import {
@@ -24,8 +23,6 @@ import {
 // @ts-ignore
 import {AdMobInterstitial} from 'react-native-admob';
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
-// @ts-ignore
-import {startUpdateFlow} from '@gurukumparan/react-native-android-inapp-updates';
 import SplashScreen from 'react-native-splash-screen';
 
 import {getLargestWidths, shouldShowAd, getIsPremium} from '../utils/utils';
@@ -35,6 +32,7 @@ import RunButton from './RunButton';
 import InputContainer from './InputContainer';
 
 import '../utils/appReviewer';
+import '../utils/updateChecker';
 import {darkBGColor, darkYellow} from '../data/colors.json';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -42,11 +40,7 @@ import Snackbar from 'react-native-snackbar';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {
-  TourGuideProvider,
-  TourGuideZone,
-  useTourGuideController,
-} from 'rn-tourguide';
+import {AppTour, AppTourView} from 'react-native-app-tour';
 
 MCIcon.loadFont();
 
@@ -75,8 +69,7 @@ interface tableDataNode {
   header: Array<string>;
   rows: Array<Array<any>>;
 }
-
-const AppContent: React.FC = () => {
+const App: React.FC = () => {
   const [tableData, setTableData] = useState<tableDataNode>({
     header: [],
     rows: [[]],
@@ -91,15 +84,10 @@ const AppContent: React.FC = () => {
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
 
   const styles = useDynamicValue(dynamicStyles);
-  const {
-    canStart,
-    start,
-    stop,
-    eventEmitter,
-    getCurrentStep,
-  } = useTourGuideController();
+  let target;
 
   const runQuery = async () => {
+    Keyboard.dismiss();
     setLoaderVisibility(true);
     await insertUserCommand(inputValue); // store the command in db
     try {
@@ -145,108 +133,87 @@ const AppContent: React.FC = () => {
     const init = async () => {
       const isPremRes = await getIsPremium();
       setIsPremium(isPremRes);
-      // try {
-      //   const result = await startUpdateFlow('flexible');
-      //   console.log(result);
-      // } catch (e) {
-      //   console.log('error:', e);
-      // }
     };
 
     init();
   }, []);
 
-  useEffect(() => {
-    if (canStart) {
-      console.log('calling start');
-      start?.();
-    }
-  }, [canStart]);
-  const handleOnStart = () => console.log('start');
-  const handleOnStop = () => console.log('stop');
-  const handleOnStepChange = () => console.log(`stepChange`);
-
-  React.useEffect(() => {
-    eventEmitter?.on('start', handleOnStart);
-    eventEmitter?.on('stop', handleOnStop);
-    eventEmitter?.on('stepChange', handleOnStepChange);
-
-    return () => {
-      eventEmitter?.off('start', handleOnStart);
-      eventEmitter?.off('stop', handleOnStop);
-      eventEmitter?.off('stepChange', handleOnStepChange);
-    };
-  }, []);
-
   return (
-    <KeyboardAvoidingView
-      style={{flex: 1}}
-      {...(Platform.OS === 'ios' && {behavior: 'padding'})}
-      keyboardVerticalOffset={Platform.select({
-        ios: 0,
-        android: 500,
-      })}>
-      <View style={styles.statusBar} />
-
-      <Modal visible={loaderVisibility} transparent={true}>
-        <View style={styles.modalStyle}>
-          <ActivityIndicator size={50} color="gold" />
-        </View>
-      </Modal>
-      <View style={styles.outerContainer}>
-        <AppBar
-          premiumModalOpen={premiumModalOpen}
-          setPremiumModalOpen={setPremiumModalOpen}
-          setInputValue={setInputValue}
-          isPremium={isPremium}
-          setIsPremium={setIsPremium}
-        />
-        <View style={styles.innercontainer}>
-          <TourGuideZone zone={1} text="Type your SQL query">
-            <InputContainer
-              setPremiumModalOpen={setPremiumModalOpen}
-              inputValue={inputValue}
-              setInputValue={setInputValue}
-              isPremium={isPremium}
-            />
-          </TourGuideZone>
-          <TourGuideZone
-            zone={2}
-            shape="rectangle"
-            text="Press the run button to execute the query">
-            <Table {...tableData} tableWidths={tableWidths} />
-          </TourGuideZone>
-        </View>
-
-        <RunButton runQuery={runQuery} />
-      </View>
-    </KeyboardAvoidingView>
-  );
-};
-const App = () => (
-  <ColorSchemeProvider>
-    <BottomSheetModalProvider>
-      <SafeAreaProvider>
-        <TourGuideProvider
-          dismissOnPress={true}
-          androidStatusBarVisible={true}
-          animationDuration={250}>
+    <ColorSchemeProvider>
+      <BottomSheetModalProvider>
+        <SafeAreaProvider>
           <StatusBar
             barStyle="dark-content"
             backgroundColor="#c8b900"
             translucent
           />
-          <AppContent />
-        </TourGuideProvider>
-      </SafeAreaProvider>
-    </BottomSheetModalProvider>
-  </ColorSchemeProvider>
-);
+          <KeyboardAvoidingView
+            style={{flex: 1}}
+            {...(Platform.OS === 'ios' && {behavior: 'padding'})}
+            keyboardVerticalOffset={Platform.select({
+              ios: 0,
+              android: 500,
+            })}>
+            <View style={styles.statusBar} />
+
+            <Modal visible={loaderVisibility} transparent={true}>
+              <View style={styles.modalStyle}>
+                <ActivityIndicator size={50} color="gold" />
+              </View>
+            </Modal>
+            <View style={styles.outerContainer}>
+              <AppBar
+                premiumModalOpen={premiumModalOpen}
+                setPremiumModalOpen={setPremiumModalOpen}
+                setInputValue={setInputValue}
+                isPremium={isPremium}
+                setIsPremium={setIsPremium}
+              />
+              <View style={styles.innercontainer}>
+                <InputContainer
+                  setPremiumModalOpen={setPremiumModalOpen}
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  isPremium={isPremium}
+                />
+                <Table {...tableData} tableWidths={tableWidths} />
+              </View>
+
+              <View
+                style={styles.runBtn}
+                key={'Center Right'}
+                ref={(ref) => {
+                  if (!ref) return;
+
+                  let props = {
+                    order: 2,
+                    title: 'This is a target button 5',
+                    description: 'We have the best targets, believe me',
+                    outerCircleColor: '#3f52ae',
+                  };
+
+                  target = AppTourView.for(ref, {...props});
+                  AppTour.ShowFor(target);
+                }}>
+                <RunButton runQuery={runQuery} />
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+        </SafeAreaProvider>
+      </BottomSheetModalProvider>
+    </ColorSchemeProvider>
+  );
+};
 
 const dynamicStyles = new DynamicStyleSheet({
   statusBar: {
     height: getStatusBarHeight(),
     backgroundColor: '#c8b900',
+  },
+  runBtn: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
   },
   outerContainer: {
     backgroundColor: new DynamicValue('white', darkBGColor),
