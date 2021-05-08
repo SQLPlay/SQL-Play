@@ -80,9 +80,13 @@ import com.android.build.OutputFile
 project.ext.react = [
     enableHermes: true,  // clean and rebuild if changing
 ]
+project.ext.sentryCli = [
+    logLevel: "debug"
+]
 
 apply from: "../../node_modules/react-native/react.gradle"
-
+apply from: "../../node_modules/@sentry/react-native/sentry.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -135,8 +139,8 @@ android {
         applicationId "com.sql_playground"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 22
-        versionName "2.5.2"
+        versionCode 23
+        versionName "2.5.3"
     }
     splits {
         abi {
