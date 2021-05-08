@@ -20,6 +20,10 @@ import {
   ColorSchemeProvider,
 } from 'react-native-dynamic';
 
+import Config from 'react-native-config';
+
+import * as Sentry from '@sentry/react-native';
+
 // @ts-ignore
 import {AdMobInterstitial} from 'react-native-admob';
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
@@ -40,7 +44,12 @@ import Snackbar from 'react-native-snackbar';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {AppTour, AppTourView} from 'react-native-app-tour';
+// import {AppTour, AppTourView} from 'react-native-app-tour';
+
+Sentry.init({
+  dsn: Config.DNS,
+  debug: __DEV__,
+});
 
 MCIcon.loadFont();
 
@@ -126,14 +135,14 @@ const App: React.FC = () => {
     }
   };
 
+  const init = async () => {
+    const isPremRes = await getIsPremium();
+    // setIsPremium(isPremRes);
+  };
   useEffect(() => {
     /** check premium and set here */
-    SplashScreen.hide();
 
-    const init = async () => {
-      const isPremRes = await getIsPremium();
-      setIsPremium(isPremRes);
-    };
+    SplashScreen.hide();
 
     init();
   }, []);
@@ -179,24 +188,7 @@ const App: React.FC = () => {
                 <Table {...tableData} tableWidths={tableWidths} />
               </View>
 
-              <View
-                style={styles.runBtn}
-                key={'Center Right'}
-                ref={(ref) => {
-                  if (!ref) return;
-
-                  let props = {
-                    order: 2,
-                    title: 'This is a target button 5',
-                    description: 'We have the best targets, believe me',
-                    outerCircleColor: '#3f52ae',
-                  };
-
-                  target = AppTourView.for(ref, {...props});
-                  AppTour.ShowFor(target);
-                }}>
-                <RunButton runQuery={runQuery} />
-              </View>
+              <RunButton runQuery={runQuery} />
             </View>
           </KeyboardAvoidingView>
         </SafeAreaProvider>
@@ -209,11 +201,6 @@ const dynamicStyles = new DynamicStyleSheet({
   statusBar: {
     height: getStatusBarHeight(),
     backgroundColor: '#c8b900',
-  },
-  runBtn: {
-    position: 'absolute',
-    bottom: 10,
-    right: 10,
   },
   outerContainer: {
     backgroundColor: new DynamicValue('white', darkBGColor),

@@ -13,12 +13,12 @@ export const getLargestWidths = async (
 ): Promise<Array<number>> => {
   // first remap array with indexed
   const remappedArr: any[] = arr[0].map((_, idx: number) =>
-    arr.map((row) => row[idx]),
+    arr.map(row => row[idx]),
   );
 
   // console.log('remapped', remappedArr);
   //now find the highest length in the remapped array
-  const largestValues: string[] = remappedArr.map((item) => {
+  const largestValues: string[] = remappedArr.map(item => {
     // console.log('map ', item);
 
     // user the reduce on each item and find the largest element and return its length
