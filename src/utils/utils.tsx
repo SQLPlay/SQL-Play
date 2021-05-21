@@ -2,6 +2,7 @@ import {Platform} from 'react-native';
 import rnTextSize from 'react-native-text-size';
 import SInfo from 'react-native-sensitive-info';
 import RNIap, {ProductPurchase, Subscription} from 'react-native-iap';
+import Config from 'react-native-config';
 
 export const itemSkus: string[] | undefined = Platform.select({
   android: ['premium'],
@@ -54,9 +55,26 @@ export const debounce = (callback: any, delay = 250) => {
   };
 };
 
+export const getInterstitialId = (): string => {
+  const testAdId = 'ca-app-pub-3940256099942544/8691691433';
+  if (__DEV__) {
+    return testAdId;
+  }
+  const platformID = Platform.select({
+    ios: Config.GAD_IOS,
+    android: Config.GAD_ANDROID,
+  });
+
+  if (platformID) {
+    return platformID;
+  }
+
+  return testAdId;
+};
+
 // returns 75/50 true false
 export const shouldShowAd = (): boolean => {
-  const rand: number = Math.floor(Math.random() * 7);
+  const rand: number = Math.floor(Math.random() * 5);
   // console.log('rand', rand);
   if (rand === 1) {
     return true;

@@ -5,12 +5,11 @@ import SpInAppUpdates, {
   StartUpdateOptions,
 } from 'sp-react-native-in-app-updates';
 
-import {version} from '../../package.json';
 const inAppUpdates = new SpInAppUpdates(
   false, // isDebug
 );
 
-inAppUpdates.checkNeedsUpdate({curVersion: version}).then((result) => {
+inAppUpdates.checkNeedsUpdate({}).then(result => {
   if (result.shouldUpdate) {
     let updateOptions: StartUpdateOptions = {};
     if (Platform.OS === 'android') {

@@ -65,7 +65,7 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
       // console.log(tableData);
 
       const CSVArray: string[] = [];
-      tableData.forEach((row) => {
+      tableData.forEach(row => {
         const line = row.join(',');
         CSVArray.push(line);
       });

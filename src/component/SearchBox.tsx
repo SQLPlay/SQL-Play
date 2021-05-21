@@ -67,7 +67,7 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
 
   useEffect(() => {
     const filterData = () => {
-      return commandsList.filter((item) => {
+      return commandsList.filter(item => {
         const query = searchInput.toLowerCase();
         // console.log(item);
         const keywords = `${item.title}  ${item.tag}  ${item.description}`;

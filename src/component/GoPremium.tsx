@@ -57,7 +57,7 @@ const GoPremium: FC<Props> = ({
       const products: Product[] = await RNIap.getProducts(itemSkus);
       console.log('Products', products[0].title);
 
-      purchaseUpdate = purchaseUpdatedListener(async (purchase) => {
+      purchaseUpdate = purchaseUpdatedListener(async purchase => {
         const receipt: string = purchase.transactionReceipt;
         if (receipt) {
           try {
@@ -76,7 +76,7 @@ const GoPremium: FC<Props> = ({
         }
       });
 
-      purchaseError = purchaseErrorListener((error) => {
+      purchaseError = purchaseErrorListener(error => {
         console.log('purchaseErrorListener', error);
         setPurchaseProcessing(false);
         // Alert.alert('purchase error', JSON.stringify(error.message));

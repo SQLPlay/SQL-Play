@@ -55,7 +55,7 @@ interface LIProps {
   setInputValue: (val: string) => void;
   bottomSheetRef: RefObject<BottomSheetModal>;
 }
-const ListItem: FC<LIProps> = (props) => {
+const ListItem: FC<LIProps> = props => {
   // console.log('props', props);
 
   const {
@@ -153,7 +153,7 @@ const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
       )}
       initialNumToRender={5}
       windowSize={30}
-      keyExtractor={(item) => item.id}
+      keyExtractor={item => item.id}
     />
   );
 };

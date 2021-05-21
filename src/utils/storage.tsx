@@ -43,14 +43,14 @@ export const ExecuteUserQuery = (
   }
 
   return new Promise<ResultSet>((resolve, reject) => {
-    userDb.transaction((trans) => {
+    userDb.transaction(trans => {
       trans.executeSql(
         query,
         params,
         (tx, results) => {
           resolve(results);
         },
-        (error) => {
+        error => {
           reject(error);
         },
       );
@@ -64,14 +64,14 @@ export const ExecuteAppQuery = (
   params = [],
 ): Promise<ResultSet> => {
   return new Promise<ResultSet>((resolve, reject) => {
-    appDb.transaction((trans) => {
+    appDb.transaction(trans => {
       trans.executeSql(
         query,
         params,
         (tx, results) => {
           resolve(results);
         },
-        (error) => {
+        error => {
           reject(error);
         },
       );

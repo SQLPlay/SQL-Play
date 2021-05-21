@@ -8146,10 +8146,11 @@ source-map@^0.7.3:
   integrity sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
 
 sp-react-native-in-app-updates@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/sp-react-native-in-app-updates/-/sp-react-native-in-app-updates-1.0.3.tgz#d69b66d7907d2a2213f3fd474ee4b7f9526c3530"
-  integrity sha512-5E7NZR93mIpWBJCwlD1HMcZSTOXpIVaDr4f0w6yUWcc6+Fzo5yAUIK5lpQaXEgdUL0C4nch1W5OIdWWsrYLaQQ==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/sp-react-native-in-app-updates/-/sp-react-native-in-app-updates-1.1.0.tgz#1771009ded0da4c448895948299b66e8bd70e63f"
+  integrity sha512-hkXOcO7uKF9PM7mfUiiPPFT3MZII/r9nl1zb9D4CIyBzxnyELvGudrsfj2Ctp6gTdxhXApqIFms7ayVpD7G4Mg==
   dependencies:
+    react-native-device-info "^8.1.2"
     react-native-siren "0.0.3"
     semver "7.2.1"
     underscore "1.10.2"

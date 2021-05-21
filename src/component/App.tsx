@@ -29,7 +29,12 @@ import {AdMobInterstitial} from 'react-native-admob';
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
 import SplashScreen from 'react-native-splash-screen';
 
-import {getLargestWidths, shouldShowAd, getIsPremium} from '../utils/utils';
+import {
+  getLargestWidths,
+  shouldShowAd,
+  getIsPremium,
+  getInterstitialId,
+} from '../utils/utils';
 import AppBar from './AppBar';
 import Table from './Table';
 import RunButton from './RunButton';
@@ -52,27 +57,14 @@ Sentry.init({
 });
 
 MCIcon.loadFont();
-
 MIcon.loadFont();
 
-const {height, width} = Dimensions.get('window');
+AdMobInterstitial.setAdUnitID(getInterstitialId());
 
-//set app id and load ad
-AdMobInterstitial.setAdUnitID('ca-app-pub-9677914909567793/9794581114');
-
-const loadAd = () => {
-  //show ad
-  AdMobInterstitial.isReady((isReady: boolean) => {
-    if (shouldShowAd()) {
-      //if true only show ad
-      if (isReady) {
-        AdMobInterstitial.showAd();
-      } else {
-        AdMobInterstitial.requestAd().then(() => AdMobInterstitial.showAd());
-      }
-    }
-  });
-};
+// enable testing on simulators
+if (__DEV__) {
+  AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
+}
 
 interface tableDataNode {
   header: Array<string>;
@@ -95,6 +87,15 @@ const App: React.FC = () => {
   const styles = useDynamicValue(dynamicStyles);
   let target;
 
+  const showAd = () => {
+    if (!shouldShowAd()) {
+      return;
+    }
+    AdMobInterstitial.requestAd().then(() => {
+      AdMobInterstitial.showAd();
+    });
+  };
+
   const runQuery = async () => {
     Keyboard.dismiss();
     setLoaderVisibility(true);
@@ -104,7 +105,7 @@ const App: React.FC = () => {
       const res: any = await ExecuteUserQuery(inputValue);
       /** Show add if user is not premium */
       if (!isPremium) {
-        loadAd();
+        showAd();
       }
       const len: number = res.rows.length;
 
@@ -145,6 +146,9 @@ const App: React.FC = () => {
     SplashScreen.hide();
 
     init();
+    return () => {
+      AdMobInterstitial.removeAllListeners();
+    };
   }, []);
 
   return (

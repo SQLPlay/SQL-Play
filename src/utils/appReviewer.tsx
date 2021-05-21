@@ -37,7 +37,7 @@ const launchReview = () => {
 
 const run = async () => {
   const getTimesOpened = (): Promise<number> =>
-    getAppData(timesOpenedId).then((data) => {
+    getAppData(timesOpenedId).then(data => {
       if (typeof data === 'number') {
         return data;
       } else {
