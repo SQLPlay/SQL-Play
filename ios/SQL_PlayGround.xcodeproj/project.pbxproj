@@ -5,6 +5,7 @@
 	};
 	objectVersion = 52;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* SQL_PlayGroundTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SQL_PlayGroundTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
@@ -749,7 +750,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shivam Kumar (S5R9TLLYK9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shivam Kumar (S5R9TLLYK9)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = S5R9TLLYK9;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -786,7 +787,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Shivam Kumar (S5R9TLLYK9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shivam Kumar (S5R9TLLYK9)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = S5R9TLLYK9;
 				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -100,7 +100,7 @@ const InputContainer: FC<Props> = ({
   const getAutoComplete = useCallback<CallbackType>(
     debounce(
       (val: string) =>
-        findUserCommands(val).then((e) => {
+        findUserCommands(val).then(e => {
           // console.log('autocomplete', e);
           setAutoCompleteTxt(e);
         }),
@@ -161,7 +161,7 @@ const InputContainer: FC<Props> = ({
               <TextInput
                 style={styles.input}
                 autoFocus={true}
-                onChangeText={(text) => setInputValue(text)}
+                onChangeText={text => setInputValue(text)}
                 multiline
                 placeholderTextColor="gray"
                 textAlignVertical="top"
