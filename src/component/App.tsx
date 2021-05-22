@@ -85,14 +85,19 @@ const App: React.FC = () => {
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
 
   const styles = useDynamicValue(dynamicStyles);
-  let target;
 
   const showAd = () => {
     if (!shouldShowAd()) {
       return;
     }
-    AdMobInterstitial.requestAd().then(() => {
-      AdMobInterstitial.showAd();
+    AdMobInterstitial.isReady((isReady: boolean) => {
+      if (isReady) {
+        AdMobInterstitial.showAd();
+        return;
+      }
+      AdMobInterstitial.requestAd().then(() => {
+        AdMobInterstitial.showAd();
+      });
     });
   };
 

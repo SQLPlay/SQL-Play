@@ -74,7 +74,7 @@ export const getInterstitialId = (): string => {
 
 // returns 75/50 true false
 export const shouldShowAd = (): boolean => {
-  const rand: number = Math.floor(Math.random() * 5);
+  const rand: number = Math.floor(Math.random() * 6);
   // console.log('rand', rand);
   if (rand === 1) {
     return true;
