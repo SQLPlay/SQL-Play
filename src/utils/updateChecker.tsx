@@ -9,7 +9,7 @@ const inAppUpdates = new SpInAppUpdates(
   false, // isDebug
 );
 
-inAppUpdates.checkNeedsUpdate({}).then(result => {
+inAppUpdates.checkNeedsUpdate().then(result => {
   if (result.shouldUpdate) {
     let updateOptions: StartUpdateOptions = {};
     if (Platform.OS === 'android') {
