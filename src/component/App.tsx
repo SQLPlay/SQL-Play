@@ -63,6 +63,7 @@ AdMobInterstitial.setAdUnitID(getInterstitialId());
 
 // enable testing on simulators
 if (__DEV__) {
+  Alert.alert('Running in testing');
   AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
 }
 
