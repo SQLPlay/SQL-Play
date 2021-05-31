@@ -24,8 +24,6 @@ import Config from 'react-native-config';
 
 import * as Sentry from '@sentry/react-native';
 
-// @ts-ignore
-import {AdMobInterstitial} from 'react-native-admob';
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -49,6 +47,7 @@ import Snackbar from 'react-native-snackbar';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import AdMobPlus, {InterstitialAd} from '@admob-plus/react-native';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
 
 Sentry.init({
@@ -56,16 +55,16 @@ Sentry.init({
   debug: __DEV__,
 });
 
+if (__DEV__) {
+  /* AdMobPlus.setDevMode(true); */
+}
+console.log(AdMobPlus);
 MCIcon.loadFont();
 MIcon.loadFont();
 
-AdMobInterstitial.setAdUnitID(getInterstitialId());
-
-// enable testing on simulators
-if (__DEV__) {
-  Alert.alert('Running in testing');
-  AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
-}
+const interstitial = new InterstitialAd({
+  adUnitId: getInterstitialId(),
+});
 
 interface tableDataNode {
   header: Array<string>;
@@ -87,19 +86,12 @@ const App: React.FC = () => {
 
   const styles = useDynamicValue(dynamicStyles);
 
-  const showAd = () => {
+  const showAd = async () => {
+    await interstitial.load();
+    await interstitial.show();
     if (!shouldShowAd()) {
       return;
     }
-    AdMobInterstitial.isReady((isReady: boolean) => {
-      if (isReady) {
-        AdMobInterstitial.showAd();
-        return;
-      }
-      AdMobInterstitial.requestAd().then(() => {
-        AdMobInterstitial.showAd();
-      });
-    });
   };
 
   const runQuery = async () => {
@@ -142,19 +134,25 @@ const App: React.FC = () => {
     }
   };
 
+  const setupAdmob = async () => {
+    await AdMobPlus.start();
+
+    await interstitial.load();
+    await interstitial.show();
+  };
+
   const init = async () => {
     const isPremRes = await getIsPremium();
-    // setIsPremium(isPremRes);
+    setIsPremium(isPremRes);
+    // Setup ad only when user is not premium
+    if (!isPremRes) {
+      setupAdmob();
+    }
   };
   useEffect(() => {
-    /** check premium and set here */
-
     SplashScreen.hide();
-
     init();
-    return () => {
-      AdMobInterstitial.removeAllListeners();
-    };
+    return () => {};
   }, []);
 
   return (

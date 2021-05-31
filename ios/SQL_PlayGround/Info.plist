@@ -22,10 +22,18 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>13</string>
-	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-9677914909567793~6781543261</string>
-	<key>GADIsAdManagerApp</key>
-	<true />
+		<key>GADApplicationIdentifier</key>
+		<string>ca-app-pub-9677914909567793~6781543261</string>
+		<key>SKAdNetworkItems</key>
+			<array>
+					<dict>
+							<key>SKAdNetworkIdentifier</key>
+							<string>cstr6suwn9.skadnetwork</string>
+					</dict>
+			</array>
+		<!-- Add this if your are using requestTrackingAuthorization() -->
+		<key>NSUserTrackingUsageDescription</key>
+		<string>This identifier will be used to deliver personalized ads to you.</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>itms-apps</string>
