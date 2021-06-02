@@ -1,6 +1,6 @@
 {
   "name": "SQL-Play",
-  "version": "2.5.7",
+  "version": "2.5.9",
   "private": true,
   "description": "A simple and beautiful SQL playground",
   "whatsNew": "New search menu and performance improvement",

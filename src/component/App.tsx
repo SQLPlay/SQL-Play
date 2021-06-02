@@ -47,7 +47,7 @@ import Snackbar from 'react-native-snackbar';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import AdMobPlus, {InterstitialAd} from '@admob-plus/react-native';
+import AdMob, {InterstitialAd} from '@admob-plus/react-native';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
 
 Sentry.init({
@@ -55,10 +55,6 @@ Sentry.init({
   debug: __DEV__,
 });
 
-if (__DEV__) {
-  /* AdMobPlus.setDevMode(true); */
-}
-console.log(AdMobPlus);
 MCIcon.loadFont();
 MIcon.loadFont();
 
@@ -87,11 +83,11 @@ const App: React.FC = () => {
   const styles = useDynamicValue(dynamicStyles);
 
   const showAd = async () => {
-    await interstitial.load();
-    await interstitial.show();
     if (!shouldShowAd()) {
       return;
     }
+    await interstitial.load();
+    await interstitial.show();
   };
 
   const runQuery = async () => {
@@ -135,7 +131,7 @@ const App: React.FC = () => {
   };
 
   const setupAdmob = async () => {
-    await AdMobPlus.start();
+    await AdMob.start();
 
     await interstitial.load();
     await interstitial.show();
