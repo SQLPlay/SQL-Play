@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@admob-plus/react-native@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@admob-plus/react-native/-/react-native-1.6.0.tgz#199ec159a4d391687394008987821d74515aea63"
-  integrity sha512-k2BkHhHhRaWUyujZgxEUnaAxpgF4FH1++C67DnnRjX9GrHVajDd4MHkHAIMRrzw36uhgbesFMq4uOqZi6uqwiQ==
+"@admob-plus/react-native@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@admob-plus/react-native/-/react-native-1.7.0.tgz#16438267e742474191dea0a0116385564a728f31"
+  integrity sha512-CLVz/IFQRWs47KpgKAo9F1Zjc0YMK8JfyzQCGZjGEJpPejHCPkc9PlPq/kHE6fCm0RKeqL7+FJIBuiKsv92ePQ==
 
 "@babel/code-frame@7.12.11":
   version "7.12.11"

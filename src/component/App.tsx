@@ -79,15 +79,25 @@ const App: React.FC = () => {
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(false);
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
+  const isAdLoaded = useRef(false);
 
   const styles = useDynamicValue(dynamicStyles);
+
+  /**
+   * load ad if it's not already loaded
+   */
+  const loadAd = async () => {
+    if (await interstitial.isLoaded()) return;
+    await interstitial.load();
+  };
 
   const showAd = async () => {
     if (!shouldShowAd()) {
       return;
     }
-    await interstitial.load();
+    await loadAd();
     await interstitial.show();
+    await loadAd();
   };
 
   const runQuery = async () => {
@@ -132,9 +142,7 @@ const App: React.FC = () => {
 
   const setupAdmob = async () => {
     await AdMob.start();
-
-    await interstitial.load();
-    await interstitial.show();
+    await loadAd();
   };
 
   const init = async () => {
