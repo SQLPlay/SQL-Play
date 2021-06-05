@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@admob-plus/react-native@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@admob-plus/react-native/-/react-native-1.7.0.tgz#16438267e742474191dea0a0116385564a728f31"
+  integrity sha512-CLVz/IFQRWs47KpgKAo9F1Zjc0YMK8JfyzQCGZjGEJpPejHCPkc9PlPq/kHE6fCm0RKeqL7+FJIBuiKsv92ePQ==
+
 "@babel/code-frame@7.12.11":
   version "7.12.11"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.12.11.tgz#f4ad435aa263db935b8f10f2c552d23fb716a63f"
@@ -7013,7 +7018,7 @@ prompts@^2.0.1, prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.5.10, prop-types@^15.7.2:
+prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -7134,13 +7139,6 @@ react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
-
-react-native-admob@^2.0.0-beta.6:
-  version "2.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/react-native-admob/-/react-native-admob-2.0.0-beta.6.tgz#ef6f8986a13f323d076fd4fcb9a617fe3809331e"
-  integrity sha512-Tzk1N5c6so/Dj58q51uqWkd5i/X5a/cgLNYczng78hRGroRxU6Av2lMlwxZK2RFFtFxUhfpg2xNN2bhEqCydDA==
-  dependencies:
-    prop-types "^15.5.10"
 
 react-native-clean-project@^3.6.3:
   version "3.6.3"

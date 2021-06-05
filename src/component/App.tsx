@@ -24,8 +24,6 @@ import Config from 'react-native-config';
 
 import * as Sentry from '@sentry/react-native';
 
-// @ts-ignore
-import {AdMobInterstitial} from 'react-native-admob';
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -49,6 +47,7 @@ import Snackbar from 'react-native-snackbar';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import AdMob, {InterstitialAd} from '@admob-plus/react-native';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
 
 Sentry.init({
@@ -59,12 +58,9 @@ Sentry.init({
 MCIcon.loadFont();
 MIcon.loadFont();
 
-AdMobInterstitial.setAdUnitID(getInterstitialId());
-
-// enable testing on simulators
-if (__DEV__) {
-  AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
-}
+const interstitial = new InterstitialAd({
+  adUnitId: getInterstitialId(),
+});
 
 interface tableDataNode {
   header: Array<string>;
@@ -83,22 +79,25 @@ const App: React.FC = () => {
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(false);
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
+  const isAdLoaded = useRef(false);
 
   const styles = useDynamicValue(dynamicStyles);
 
-  const showAd = () => {
+  /**
+   * load ad if it's not already loaded
+   */
+  const loadAd = async () => {
+    if (await interstitial.isLoaded()) return;
+    await interstitial.load();
+  };
+
+  const showAd = async () => {
     if (!shouldShowAd()) {
       return;
     }
-    AdMobInterstitial.isReady((isReady: boolean) => {
-      if (isReady) {
-        AdMobInterstitial.showAd();
-        return;
-      }
-      AdMobInterstitial.requestAd().then(() => {
-        AdMobInterstitial.showAd();
-      });
-    });
+    await loadAd();
+    await interstitial.show();
+    await loadAd();
   };
 
   const runQuery = async () => {
@@ -141,19 +140,23 @@ const App: React.FC = () => {
     }
   };
 
+  const setupAdmob = async () => {
+    await AdMob.start();
+    await loadAd();
+  };
+
   const init = async () => {
     const isPremRes = await getIsPremium();
-    // setIsPremium(isPremRes);
+    setIsPremium(isPremRes);
+    // Setup ad only when user is not premium
+    if (!isPremRes) {
+      setupAdmob();
+    }
   };
   useEffect(() => {
-    /** check premium and set here */
-
     SplashScreen.hide();
-
     init();
-    return () => {
-      AdMobInterstitial.removeAllListeners();
-    };
+    return () => {};
   }, []);
 
   return (
