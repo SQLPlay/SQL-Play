@@ -58,9 +58,7 @@ Sentry.init({
 MCIcon.loadFont();
 MIcon.loadFont();
 
-const interstitial = new InterstitialAd({
-  adUnitId: getInterstitialId(),
-});
+let interstitial: InterstitialAd
 
 interface tableDataNode {
   header: Array<string>;
@@ -142,6 +140,11 @@ const App: React.FC = () => {
 
   const setupAdmob = async () => {
     await AdMob.start();
+    if (!interstitial) {
+      interstitial = new InterstitialAd({
+        adUnitId: getInterstitialId(),
+      });
+    }
     await loadAd();
   };
 
