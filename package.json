@@ -1,6 +1,6 @@
 {
   "name": "SQL-Play",
-  "version": "2.5.10",
+  "version": "2.5.11",
   "private": false,
   "description": "A simple and beautiful SQL playground",
   "scripts": {
@@ -9,6 +9,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "clean": "react-native-clean-project",
+    "deploy:android": "cd android && bundle exec fastlane beta && cd ..",
     "test": "jest",
     "lint": "eslint ."
   },
