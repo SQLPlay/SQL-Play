@@ -140,9 +140,8 @@ const App: React.FC = () => {
   const setupAdmob = async () => {
     await AdMob.start();
     if (!interstitial) {
-      console.log(getInterstitialId());
       interstitial = new InterstitialAd({
-        adUnitId: 'ca-app-pub-3940256099942544/8691691433',
+        adUnitId: getInterstitialId(),
       });
     }
     await loadAd();
