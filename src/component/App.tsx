@@ -58,7 +58,7 @@ Sentry.init({
 MCIcon.loadFont();
 MIcon.loadFont();
 
-let interstitial: InterstitialAd
+let interstitial: InterstitialAd;
 
 interface tableDataNode {
   header: Array<string>;
@@ -77,7 +77,6 @@ const App: React.FC = () => {
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(false);
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
-  const isAdLoaded = useRef(false);
 
   const styles = useDynamicValue(dynamicStyles);
 
@@ -141,8 +140,9 @@ const App: React.FC = () => {
   const setupAdmob = async () => {
     await AdMob.start();
     if (!interstitial) {
+      console.log(getInterstitialId());
       interstitial = new InterstitialAd({
-        adUnitId: getInterstitialId(),
+        adUnitId: 'ca-app-pub-3940256099942544/8691691433',
       });
     }
     await loadAd();
@@ -223,6 +223,7 @@ const dynamicStyles = new DynamicStyleSheet({
   },
   innercontainer: {
     padding: 5,
+    paddingBottom: 10,
   },
   modalStyle: {
     flex: 1,
