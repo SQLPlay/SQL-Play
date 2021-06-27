@@ -141,6 +141,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 38
         versionName "2.5.9"
+        missingDimensionStrategy 'store', 'play'
     }
     splits {
         abi {
