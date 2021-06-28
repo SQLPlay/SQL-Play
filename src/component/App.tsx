@@ -149,7 +149,7 @@ const App: React.FC = () => {
 
   const init = async () => {
     const isPremRes = await getIsPremium();
-    setIsPremium(isPremRes);
+    setIsPremium(true);
     // Setup ad only when user is not premium
     if (!isPremRes) {
       setupAdmob();
@@ -184,7 +184,7 @@ const App: React.FC = () => {
                 <ActivityIndicator size={50} color="gold" />
               </View>
             </Modal>
-            <View style={styles.outerContainer}>
+            <View testID="query-runner" style={styles.outerContainer}>
               <AppBar
                 premiumModalOpen={premiumModalOpen}
                 setPremiumModalOpen={setPremiumModalOpen}

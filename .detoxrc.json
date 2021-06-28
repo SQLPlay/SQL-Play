@@ -1,0 +1,35 @@
+{
+  "testRunner": "mocha",
+  "runnerConfig": "e2e/.mocharc.json",
+  "apps": {
+    "ios": {
+      "type": "ios.app",
+      "binaryPath": "ios/Build/SQL_Play/Build/Products/Debug-iphonesimulator/SQL_PlayGround.app"
+    },
+    "android": {
+      "type": "android.apk",
+      "binaryPath": "SPECIFY_PATH_TO_YOUR_APP_BINARY"
+    }
+  },
+  "devices": {
+    "simulator": {
+      "type": "ios.simulator",
+      "device": {
+        "type": "iPhone 12"
+      }
+    },
+    "emulator": {
+      "type": "android.emulator",
+      "device": {
+        "avdName": "Pixel_3a_API_30_x86"
+      }
+    }
+  },
+  "configurations": {
+    "ios": {
+      "device": "simulator",
+      "app": "ios"
+    }
+  }
+}
+

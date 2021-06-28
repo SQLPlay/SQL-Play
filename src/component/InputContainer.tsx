@@ -148,7 +148,7 @@ const InputContainer: FC<Props> = ({
   return (
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
-      <View style={styles.inputContainer}>
+      <View style={styles.inputContainer} testID="query-input">
         <GestureRecognizer
           onSwipeRight={setAutoInput}
           onSwipeLeft={() => isPremium && clearInput()}>

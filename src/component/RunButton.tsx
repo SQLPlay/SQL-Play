@@ -13,7 +13,7 @@ interface Props {
 }
 const RunButton: FC<Props> = ({runQuery}) => {
   return (
-    <TouchableOpacity onPress={runQuery} style={styles.runBtn}>
+    <TouchableOpacity testID="run-btn" onPress={runQuery} style={styles.runBtn}>
       <Icon
         name="send"
         size={25}
