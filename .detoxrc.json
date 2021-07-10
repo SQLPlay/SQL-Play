@@ -8,7 +8,8 @@
     },
     "android": {
       "type": "android.apk",
-      "binaryPath": "SPECIFY_PATH_TO_YOUR_APP_BINARY"
+      "binaryPath":  "android/app/build/outputs/apk/debug/app-debug.apk",
+      "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd .."
     }
   },
   "devices": {
@@ -21,7 +22,7 @@
     "emulator": {
       "type": "android.emulator",
       "device": {
-        "avdName": "Pixel_3a_API_30_x86"
+        "avdName": "Pixel_3a_API_29"
       }
     }
   },
@@ -29,7 +30,12 @@
     "ios": {
       "device": "simulator",
       "app": "ios"
+    },
+    "android": {
+      "device": "emulator",
+      "app": "android"
     }
+
   }
 }
 

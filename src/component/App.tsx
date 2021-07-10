@@ -84,15 +84,21 @@ const App: React.FC = () => {
    * load ad if it's not already loaded
    */
   const loadAd = async () => {
-    if (await interstitial.isLoaded()) return;
-    await interstitial.load();
+    const isLoaded = await interstitial.isLoaded();
+    console.log('is loaded', isLoaded);
+    if (isLoaded?.value) return;
+    return await interstitial.load();
   };
 
   const showAd = async () => {
     if (!shouldShowAd()) {
       return;
     }
+    console.log('time to show ad');
+    // the ad load function isnt working
     await loadAd();
+    //needing to ad this
+    /* await interstitial.load(); */
     await interstitial.show();
     await loadAd();
   };
@@ -149,10 +155,10 @@ const App: React.FC = () => {
 
   const init = async () => {
     const isPremRes = await getIsPremium();
-    setIsPremium(true);
+    setIsPremium(isPremRes);
     // Setup ad only when user is not premium
     if (!isPremRes) {
-      setupAdmob();
+      /* setupAdmob(); */
     }
   };
   useEffect(() => {

@@ -1,5 +1,5 @@
 PODS:
-  - AdMobPlusRN (1.10.0):
+  - AdMobPlusRN (1.10.2):
     - Google-Mobile-Ads-SDK (>= 8.6.0)
     - React-Core
   - boost-for-react-native (1.63.0)
@@ -426,7 +426,7 @@ PODS:
     - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSentry (2.5.2):
+  - RNSentry (2.6.0):
     - React-Core
     - Sentry (= 7.0.0)
   - RNShare (6.2.1):
@@ -636,7 +636,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AdMobPlusRN: 52615542fbe8d40c86672d30d78284667772afb6
+  AdMobPlusRN: 86937d44b9cf8a8e9be5501838c1bf5ae199556e
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
@@ -693,7 +693,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNIap: c9ec66feaf72edced0f82cbd2bf8ca73ea9511bf
   RNReanimated: 9c13c86454bfd54dab7505c1a054470bfecd2563
-  RNSentry: bfa1e2776c7413570e790cbbf79d2060dd0a565b
+  RNSentry: a2b02b326ae4fce91ce7c57d3f7dcf8df4f72269
   RNShare: 5ac8f6532ca4cd80fc71caef1cfbba1854a6a045
   RNSnackbar: be3333a21a453ccc272f41a8add5a71f7d44dfcd
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
