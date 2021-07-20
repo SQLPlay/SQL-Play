@@ -25,7 +25,7 @@ import Config from 'react-native-config';
 import * as Sentry from '@sentry/react-native';
 
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
-import SplashScreen from 'react-native-splash-screen';
+import SplashScreen from 'react-native-bootsplash';
 
 import {
   getLargestWidths,
@@ -162,7 +162,7 @@ const App: React.FC = () => {
     }
   };
   useEffect(() => {
-    SplashScreen.hide();
+    SplashScreen.hide({fade: true});
     init();
     return () => {};
   }, []);
