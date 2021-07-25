@@ -1,0 +1,39 @@
+{
+  "testRunner": "mocha",
+  "runnerConfig": "e2e/.mocharc.json",
+  "apps": {
+    "ios": {
+      "type": "ios.app",
+      "binaryPath": "ios/Build/SQL_Play/Build/Products/Debug-iphonesimulator/SQL_PlayGround.app"
+    },
+    "android": {
+      "type": "android.apk",
+      "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+      "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd .."
+    }
+  },
+  "devices": {
+    "simulator": {
+      "type": "ios.simulator",
+      "device": {
+        "type": "iPhone 12"
+      }
+    },
+    "emulator": {
+      "type": "android.emulator",
+      "device": {
+        "avdName": "Pixel_API_29_AOSP"
+      }
+    }
+  },
+  "configurations": {
+    "ios": {
+      "device": "simulator",
+      "app": "ios"
+    },
+    "android": {
+      "device": "emulator",
+      "app": "android"
+    }
+  }
+}

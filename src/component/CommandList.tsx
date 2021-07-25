@@ -138,6 +138,7 @@ const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
   interface renderItemProp {}
   return (
     <BottomSheetFlatList
+      testID="commandList"
       data={listData}
       bounces={false}
       maxToRenderPerBatch={5}

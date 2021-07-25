@@ -22,7 +22,7 @@ const DataTable: FC<Props> = ({header, rows, tableWidths}) => {
     <>
       <Text style={styles.outputText}>Output</Text>
 
-      <ScrollView horizontal={true} bounces={false}>
+      <ScrollView testID="table" horizontal={true} bounces={false}>
         <View style={styles.outPutContainer}>
           <ScrollView bounces={false}>
             <Table borderStyle={styles.tableBorder}>

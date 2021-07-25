@@ -25,7 +25,7 @@ import Config from 'react-native-config';
 import * as Sentry from '@sentry/react-native';
 
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
-import SplashScreen from 'react-native-splash-screen';
+import SplashScreen from 'react-native-bootsplash';
 
 import {
   getLargestWidths,
@@ -84,15 +84,21 @@ const App: React.FC = () => {
    * load ad if it's not already loaded
    */
   const loadAd = async () => {
-    if (await interstitial.isLoaded()) return;
-    await interstitial.load();
+    const isLoaded = await interstitial.isLoaded();
+    console.log('is loaded', isLoaded);
+    if (isLoaded?.value) return;
+    return await interstitial.load();
   };
 
   const showAd = async () => {
     if (!shouldShowAd()) {
       return;
     }
+    console.log('time to show ad');
+    // the ad load function isnt working
     await loadAd();
+    //needing to ad this
+    /* await interstitial.load(); */
     await interstitial.show();
     await loadAd();
   };
@@ -140,9 +146,8 @@ const App: React.FC = () => {
   const setupAdmob = async () => {
     await AdMob.start();
     if (!interstitial) {
-      console.log(getInterstitialId());
       interstitial = new InterstitialAd({
-        adUnitId: 'ca-app-pub-3940256099942544/8691691433',
+        adUnitId: getInterstitialId(),
       });
     }
     await loadAd();
@@ -153,11 +158,11 @@ const App: React.FC = () => {
     setIsPremium(isPremRes);
     // Setup ad only when user is not premium
     if (!isPremRes) {
-      setupAdmob();
+      /* setupAdmob(); */
     }
   };
   useEffect(() => {
-    SplashScreen.hide();
+    SplashScreen.hide({fade: true});
     init();
     return () => {};
   }, []);
@@ -185,7 +190,7 @@ const App: React.FC = () => {
                 <ActivityIndicator size={50} color="gold" />
               </View>
             </Modal>
-            <View style={styles.outerContainer}>
+            <View testID="query-runner" style={styles.outerContainer}>
               <AppBar
                 premiumModalOpen={premiumModalOpen}
                 setPremiumModalOpen={setPremiumModalOpen}

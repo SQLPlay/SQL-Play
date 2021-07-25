@@ -100,7 +100,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 
 /**
@@ -136,11 +136,13 @@ android {
     }
 
     defaultConfig {
+        testBuildType System.getProperty('testBuildType', 'debug')  // This will later be used to control the test apk build type
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         applicationId "com.sql_playground"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 39
-        versionName "2.5.10"
+        versionCode 42
+        versionName "2.5.11"
         missingDimensionStrategy 'store', 'play'
     }
     splits {
@@ -169,6 +171,14 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            // Detox-specific additions to pro-guard
+            proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
+        }
+        releaseE2E {
+            initWith release
+            setMatchingFallbacks('release')
+
+            proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
         }
     }
 
@@ -193,6 +203,13 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    //boot splash
+    implementation project(':react-native-bootsplash')
+
+    //detox dependencies
+    androidTestImplementation('com.wix:detox:+') { transitive = true } 
+    androidTestImplementation 'junit:junit:4.12'
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation project(path: ':@admob-plus_react-native')
