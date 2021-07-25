@@ -28,11 +28,15 @@ describe('Test Basic UI', () => {
     await element(by.id('table')).swipe('left', 'fast', 1);
   });
 
-  it('Open and close the search panel', async () => {
-    await tapOnId('search-btn');
-    const commandList = element(by.id('commandList'));
-    await commandList.swipe('up');
-    await commandList.swipe('down');
-    await commandList.swipe('down');
-  });
+  // it('Open and close the search panel', async () => {
+  //   // await device.pressBack();
+  //   await tapOnId('search-btn');
+  //   // await element(by.id('searchBox')).tap();
+
+  //   const commandList = element(by.id('commandList'));
+  //   await expect(commandList).toBeVisible();
+  //   // await commandList.swipe('up');
+  //   // await commandList.swipe('down');
+  //   // await commandList.swipe('down');
+  // });
 });
