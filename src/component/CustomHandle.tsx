@@ -16,7 +16,7 @@ const WINDOW_WIDTH = Dimensions.get('window').width;
 export const CustomHandle: FC<BottomSheetHandleProps> = () => {
   const styles = useDynamicValue(dynamicStyles);
   return (
-    <View style={styles.container}>
+    <View testID="bottom-sheet-handle" style={styles.container}>
       <View style={styles.indicator} />
     </View>
   );

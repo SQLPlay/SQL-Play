@@ -9,6 +9,7 @@ describe('Test Basic UI', () => {
   const tapOnId = async id => {
     await element(by.id(id)).tap();
   };
+  const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   it('Show the input to run queries', async () => {
     await expect(element(by.id('query-runner'))).toBeVisible();
@@ -28,15 +29,15 @@ describe('Test Basic UI', () => {
     await element(by.id('table')).swipe('left', 'fast', 1);
   });
 
-  // it('Open and close the search panel', async () => {
-  //   // await device.pressBack();
-  //   await tapOnId('search-btn');
-  //   // await element(by.id('searchBox')).tap();
-
-  //   const commandList = element(by.id('commandList'));
-  //   await expect(commandList).toBeVisible();
-  //   // await commandList.swipe('up');
-  //   // await commandList.swipe('down');
-  //   // await commandList.swipe('down');
-  // });
+  it('Open and close the search panel', async () => {
+    // await device.pressBack();
+    await tapOnId('search-btn');
+    // await element(by.id('searchBox')).tap();
+    const commandList = element(by.id('bottom-sheet-handle'));
+    // await expect(commandList).toBeVisible();
+    await commandList.swipe('up');
+    // sleep(200);
+    await commandList.swipe('down');
+    // await commandList.swipe('down');
+  });
 });
