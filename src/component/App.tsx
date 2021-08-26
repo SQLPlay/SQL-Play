@@ -1,16 +1,13 @@
-import React, {useState, useRef, useEffect, FC} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
-  StatusBar,
   Alert,
-  ActivityIndicator,
   Modal,
-  KeyboardAvoidingView,
-  Dimensions,
   Platform,
   Keyboard,
-  Button,
-  TouchableOpacity,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+  StatusBar,
 } from 'react-native';
 
 import {
@@ -86,7 +83,9 @@ const App: React.FC = () => {
   const loadAd = async () => {
     const isLoaded = await interstitial.isLoaded();
     console.log('is loaded', isLoaded);
-    if (isLoaded?.value) return;
+    if (isLoaded?.value) {
+      return;
+    }
     return await interstitial.load();
   };
 
@@ -143,26 +142,26 @@ const App: React.FC = () => {
     }
   };
 
-  const setupAdmob = async () => {
-    await AdMob.start();
-    if (!interstitial) {
-      interstitial = new InterstitialAd({
-        adUnitId: getInterstitialId(),
-      });
-    }
-    await loadAd();
-  };
-
-  const init = async () => {
-    const isPremRes = await getIsPremium();
-    setIsPremium(isPremRes);
-    // Setup ad only when user is not premium
-    if (!isPremRes) {
-      /* setupAdmob(); */
-    }
-  };
   useEffect(() => {
-    SplashScreen.hide({fade: true});
+    const setupAdmob = async () => {
+      await AdMob.start();
+      if (!interstitial) {
+        interstitial = new InterstitialAd({
+          adUnitId: getInterstitialId(),
+        });
+      }
+      await loadAd();
+    };
+
+    const init = async () => {
+      const isPremRes = await getIsPremium();
+      setIsPremium(isPremRes);
+      // Setup ad only when user is not premium
+      if (!isPremRes) {
+        setupAdmob();
+      }
+      await SplashScreen.hide({fade: true});
+    };
     init();
     return () => {};
   }, []);
