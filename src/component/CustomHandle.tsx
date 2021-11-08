@@ -1,4 +1,5 @@
 import {
+  BottomSheetBackdrop,
   BottomSheetBackdropProps,
   BottomSheetHandleProps,
 } from '@gorhom/bottom-sheet';
@@ -21,6 +22,10 @@ export const CustomHandle: FC<BottomSheetHandleProps> = () => {
     </View>
   );
 };
+
+export const CustomBackdrop: FC<BottomSheetBackdropProps> = props => (
+  <BottomSheetBackdrop {...props} appearsOnIndex={1} disappearsOnIndex={-1} />
+);
 
 export const CustomBG: FC<BottomSheetBackdropProps> = () => {
   const styles = useDynamicValue(dynamicStyles);

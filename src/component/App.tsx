@@ -37,7 +37,7 @@ import InputContainer from './InputContainer';
 
 import '../utils/appReviewer';
 import '../utils/updateChecker';
-import {darkBGColor, darkYellow} from '../data/colors.json';
+import {darkBGColor} from '../data/colors.json';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Snackbar from 'react-native-snackbar';
@@ -45,6 +45,7 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import AdMob, {InterstitialAd} from '@admob-plus/react-native';
+import GoPremium from './GoPremium';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
 
 Sentry.init({
@@ -83,16 +84,16 @@ const App: React.FC = () => {
   const loadAd = async () => {
     const isLoaded = await interstitial.isLoaded();
     console.log('is loaded', isLoaded);
-    if (isLoaded?.value) {
+    if (isLoaded) {
       return;
     }
     return await interstitial.load();
   };
 
   const showAd = async () => {
-    if (!shouldShowAd()) {
-      return;
-    }
+    // if (!shouldShowAd()) {
+    //   return;
+    // }
     console.log('time to show ad');
     // the ad load function isnt working
     await loadAd();
@@ -150,6 +151,7 @@ const App: React.FC = () => {
           adUnitId: getInterstitialId(),
         });
       }
+      console.log(getInterstitialId());
       await loadAd();
     };
 
@@ -175,13 +177,20 @@ const App: React.FC = () => {
             backgroundColor="#c8b900"
             translucent
           />
+          <GoPremium
+            modalState={premiumModalOpen}
+            setModalState={setPremiumModalOpen}
+            isPremium={isPremium}
+            setIsPremium={setIsPremium}
+          />
           <KeyboardAvoidingView
             style={{flex: 1}}
             {...(Platform.OS === 'ios' && {behavior: 'padding'})}
             keyboardVerticalOffset={Platform.select({
               ios: 0,
               android: 500,
-            })}>
+            })}
+          >
             <View style={styles.statusBar} />
 
             <Modal visible={loaderVisibility} transparent={true}>

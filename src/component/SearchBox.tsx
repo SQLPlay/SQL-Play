@@ -30,7 +30,7 @@ import {debounce} from '../utils/utils';
 import CommandList from './CommandList';
 import {darkBGColor} from '../data/colors.json';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {CustomHandle, CustomBG} from './CustomHandle';
+import {CustomHandle, CustomBG, CustomBackdrop} from './CustomHandle';
 
 const {height} = Dimensions.get('window');
 
@@ -50,7 +50,6 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
   const [searchInput, setSearchInput] = useState<string>('');
 
   const {top: topSafeArea, bottom: bottomSafeArea} = useSafeAreaInsets();
-  console.log(height, getStatusBarHeight());
   const snapPoints = useMemo(() => ['50%', '100%'], []);
 
   const handleSheetChanges = useCallback((index: number) => {
@@ -94,40 +93,36 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
         index={0}
         snapPoints={snapPoints}
         topInset={topSafeArea}
+        style={styles.container}
         handleComponent={CustomHandle}
         backgroundComponent={CustomBG}
-        backdropComponent={BottomSheetBackdrop}
-        keyboardBehavior={Platform.select({
-          ios: 'interactive',
-          android: 'extend',
-        })}
-        onChange={handleSheetChanges}>
-        <BottomSheetView style={styles.container}>
-          <BottomSheetView style={styles.inputContainer}>
-            <Icon name="search" color="gray" size={24} />
+        backdropComponent={CustomBackdrop}
+        android_keyboardInputMode="adjustResize"
+        keyboardBehavior="extend"
+        onChange={handleSheetChanges}
+      >
+        <BottomSheetView style={styles.inputContainer}>
+          <Icon name="search" color="gray" size={24} />
 
-            <BottomSheetTextInput
-              style={styles.searchInput}
-              value={searchInput}
-              placeholderTextColor="gray"
-              onChangeText={(val: string) => setSearchInput(val)}
-              placeholder="Search Query"
-            />
-            <Icon
-              name="close"
-              size={24}
-              color="gray"
-              onPress={() => setSearchInput('')}
-            />
-          </BottomSheetView>
-          <BottomSheetView style={{marginTop: 10, flexGrow: 1}}>
-            <CommandList
-              listData={listData}
-              setInputValue={setInputValue}
-              bottomSheetRef={bottomSheetRef}
-            />
-          </BottomSheetView>
+          <BottomSheetTextInput
+            style={styles.searchInput}
+            value={searchInput}
+            placeholderTextColor="gray"
+            onChangeText={(val: string) => setSearchInput(val)}
+            placeholder="Search Query"
+          />
+          <Icon
+            name="close"
+            size={24}
+            color="gray"
+            onPress={() => setSearchInput('')}
+          />
         </BottomSheetView>
+        <CommandList
+          listData={listData}
+          setInputValue={setInputValue}
+          bottomSheetRef={bottomSheetRef}
+        />
       </BottomSheetModal>
     </>
   );

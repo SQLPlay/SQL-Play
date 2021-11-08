@@ -1,12 +1,4 @@
-import React, {
-  useRef,
-  useEffect,
-  useState,
-  useCallback,
-  FC,
-  RefObject,
-  memo,
-} from 'react';
+import React, {useState, useCallback, FC, RefObject, memo} from 'react';
 import {
   View,
   Button,
@@ -22,6 +14,7 @@ import {
   UIManager,
   LayoutAnimation,
   TouchableWithoutFeedback,
+  Pressable,
 } from 'react-native';
 
 import {
@@ -36,10 +29,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 //@ts-ignore
 import {vs2015, defaultStyle} from 'react-syntax-highlighter/styles/hljs';
-import BottomSheet, {
-  BottomSheetFlatList,
-  BottomSheetModal,
-} from '@gorhom/bottom-sheet';
+import {BottomSheetFlatList, BottomSheetModal} from '@gorhom/bottom-sheet';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -58,14 +48,8 @@ interface LIProps {
 const ListItem: FC<LIProps> = props => {
   // console.log('props', props);
 
-  const {
-    title,
-    description,
-    syntax,
-    index,
-    setInputValue,
-    bottomSheetRef,
-  } = props;
+  const {title, description, syntax, index, setInputValue, bottomSheetRef} =
+    props;
 
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const styles = useDynamicValue(dynamicStyles);
@@ -82,12 +66,12 @@ const ListItem: FC<LIProps> = props => {
     );
   };
 
-  const onSyntaxPress = (syntax: string) => {
+  const onSyntaxPress = () => {
     setInputValue(syntax);
     bottomSheetRef.current?.close();
   };
   return (
-    <TouchableWithoutFeedback onPress={() => onItemPress(index)}>
+    <Pressable onPress={() => onItemPress(index)}>
       <View style={styles.item}>
         <View style={styles.header}>
           <Text style={styles.title}>{title}</Text>
@@ -102,7 +86,8 @@ const ListItem: FC<LIProps> = props => {
         <Text style={styles.description}>{description}</Text>
         <TouchableHighlight
           style={styles.codeSyntaxContainer}
-          onPress={() => onSyntaxPress(syntax)}>
+          onPress={() => onSyntaxPress(syntax)}
+        >
           <View>
             {index === currentIndex && (
               <SyntaxHighlighter
@@ -110,14 +95,15 @@ const ListItem: FC<LIProps> = props => {
                 language="sql"
                 wrapLines={true}
                 style={isDark ? vs2015 : defaultStyle}
-                highlighter="hljs">
+                highlighter="hljs"
+              >
                 {syntax}
               </SyntaxHighlighter>
             )}
           </View>
         </TouchableHighlight>
       </View>
-    </TouchableWithoutFeedback>
+    </Pressable>
   );
 };
 
@@ -135,7 +121,6 @@ interface Props {
   bottomSheetRef: RefObject<BottomSheetModal>;
 }
 const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
-  interface renderItemProp {}
   return (
     <BottomSheetFlatList
       testID="commandList"
@@ -143,6 +128,7 @@ const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
       bounces={false}
       maxToRenderPerBatch={5}
       // scrollEventThrottle={30}
+      contentContainerStyle={{paddingVertical: 5}}
       keyboardShouldPersistTaps="handled"
       renderItem={({item, index}) => (
         <MemoizedLI
@@ -166,6 +152,7 @@ const dynamicStyles = new DynamicStyleSheet({
     height: '100%',
   },
   item: {
+    flex: 1,
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 5,

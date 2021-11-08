@@ -44,7 +44,7 @@ const GoPremium: FC<Props> = ({
   setIsPremium,
   isPremium,
 }) => {
-  const [purchaseProcessing, setPurchaseProcessing] = useState<boolean>(false);
+  const [purchaseProcessing, setPurchaseProcessing] = useState(false);
 
   const getItems = async (): Promise<void> => {
     try {
@@ -143,8 +143,9 @@ const GoPremium: FC<Props> = ({
     <Modal
       visible={modalState}
       animationType="slide"
-      presentationStyle="overFullScreen"
-      onRequestClose={() => setModalState(false)}>
+      presentationStyle="fullScreen"
+      onRequestClose={() => setModalState(false)}
+    >
       <ScrollView contentContainerStyle={{height: height}}>
         <SafeAreaView style={styles.container}>
           <View>
@@ -194,7 +195,8 @@ const GoPremium: FC<Props> = ({
             <TouchableOpacity
               style={styles.buyBtn}
               onPress={buyPremium}
-              disabled={isPremium}>
+              disabled={isPremium}
+            >
               {!purchaseProcessing ? (
                 <Text style={styles.buyBtnTxt}>
                   {isPremium ? 'Sweet! You have Premium' : 'Buy Now'}

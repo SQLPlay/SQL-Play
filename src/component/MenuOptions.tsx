@@ -3,8 +3,7 @@ import {View, Text, Alert, Linking, Keyboard} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-//@ts-ignore
-import Menu, {MenuItem, MenuDivider} from 'react-native-material-menu';
+import {Menu, MenuItem, MenuDivider} from 'react-native-material-menu';
 import GoPremium from './GoPremium';
 
 import ExportData from './ExportData';
@@ -24,17 +23,21 @@ const MenuOptions: FC<Props> = ({
   setPremiumModalOpen,
   premiumModalOpen,
 }) => {
-  const menuRef = useRef<Menu>(null);
-  const [exportModal, setExportModal] = useState<boolean>(false);
+  const [exportModal, setExportModal] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    console.log('model', premiumModalOpen);
+  }, [premiumModalOpen]);
 
   const showAllTables = (): void => {
     const query: string =
       "SELECT name FROM sqlite_master \nWHERE type='table';";
-    menuRef.current.hide();
+    setMenuOpen(false);
     setInputValue(query);
   };
   const showSupportedQuery = (): void => {
-    menuRef.current.hide();
+    setMenuOpen(false);
     Alert.alert(
       'Supported Queries',
 
@@ -65,48 +68,43 @@ In future, this app may allow you to create and select different databases.
       console.error(e);
     }
   };
-  // menuRef.current.show()
+
+  const openPremiumModal = async () => {
+    setMenuOpen(false);
+    setPremiumModalOpen(true);
+  };
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <GoPremium
-        modalState={premiumModalOpen}
-        setModalState={setPremiumModalOpen}
-        isPremium={isPremium}
-        setIsPremium={setIsPremium}
-      />
       <ExportData modalState={exportModal} setModalState={setExportModal} />
       <Menu
-        ref={menuRef}
+        visible={menuOpen}
+        onRequestClose={() => setMenuOpen(false)}
         style={{maxWidth: 'auto'}}
-        button={
+        anchor={
           <Icon
             name="more-vert"
             onPress={() => {
-              menuRef.current.show();
+              setMenuOpen(true);
               Keyboard.dismiss();
             }}
             size={25}
           />
-        }>
+        }
+      >
         <MenuItem
           disabled={!isPremium}
           onPress={() => {
-            menuRef.current.hide(() => {
-              setExportModal(true);
-            });
-          }}>
+            setMenuOpen(false);
+            setExportModal(true);
+          }}
+        >
           Export Data
         </MenuItem>
         <MenuItem onPress={showAllTables}>List all tables</MenuItem>
         <MenuItem onPress={showSupportedQuery}>Query Support</MenuItem>
         <MenuItem onPress={sendMailFeedback}>Send Feedback</MenuItem>
         <MenuDivider />
-        <MenuItem
-          onPress={() => {
-            menuRef.current.hide(() => {
-              setPremiumModalOpen(true);
-            });
-          }}>
+        <MenuItem onPress={openPremiumModal}>
           <MCIcon name="crown" size={16} />
           <Text> {!isPremium && 'Go '}Premium</Text>
         </MenuItem>
