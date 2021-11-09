@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@admob-plus/react-native@1.16.0":
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/@admob-plus/react-native/-/react-native-1.16.0.tgz#ec53df229371b74b658f68a3b7d3ecad4a690239"
-  integrity sha512-K0eqBTIbJQvyKyWsr/LVvrBRwN3R0cUiOS9qnrp7TU9IaWUAvsIICUGilurramXHV4ouktksopWBlVX9lU8luQ==
-
 "@babel/code-frame@^7.0.0":
   version "7.14.5"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.14.5.tgz#23b08d740e83f49c5e59945fbf1b43e80bbf4edb"
@@ -1547,6 +1542,11 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
+
+"@react-native-admob/admob@1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@react-native-admob/admob/-/admob-1.1.2.tgz#36c0af218306199fbe19d1dd13ce8bd2c5ecd8f2"
+  integrity sha512-G0SiV7gwr60MxhjsyPSJnmRFrHvBUKEL1fjl8YfbDbg/gJiGnKzYltooRuxMtwN0Maftx5d6bZXqPym6WvqVpQ==
 
 "@react-native-community/cli-debugger-ui@^6.0.0-rc.0":
   version "6.0.0-rc.0"

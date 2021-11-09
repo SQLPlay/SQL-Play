@@ -44,9 +44,11 @@ import Snackbar from 'react-native-snackbar';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import AdMob, {InterstitialAd} from '@admob-plus/react-native';
 import GoPremium from './GoPremium';
+import {TestIds, useInterstitialAd} from '@react-native-admob/admob';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
+
+const interstitialAdId = TestIds.INTERSTITIAL;
 
 Sentry.init({
   dsn: Config.DNS,
@@ -55,8 +57,6 @@ Sentry.init({
 
 MCIcon.loadFont();
 MIcon.loadFont();
-
-let interstitial: InterstitialAd;
 
 interface tableDataNode {
   header: Array<string>;
@@ -75,32 +75,22 @@ const App: React.FC = () => {
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(false);
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
-
+  const {load, adLoaded, show} = useInterstitialAd(TestIds.INTERSTITIAL);
   const styles = useDynamicValue(dynamicStyles);
-
-  /**
-   * load ad if it's not already loaded
-   */
-  const loadAd = async () => {
-    const isLoaded = await interstitial.isLoaded();
-    console.log('is loaded', isLoaded);
-    if (isLoaded) {
-      return;
-    }
-    return await interstitial.load();
-  };
 
   const showAd = async () => {
     // if (!shouldShowAd()) {
     //   return;
     // }
     console.log('time to show ad');
+    if (adLoaded) {
+      show();
+    } else {
+      load();
+    }
     // the ad load function isnt working
-    await loadAd();
     //needing to ad this
-    /* await interstitial.load(); */
-    await interstitial.show();
-    await loadAd();
+    // await interstitial.load();
   };
 
   const runQuery = async () => {
@@ -139,33 +129,23 @@ const App: React.FC = () => {
       setTableData({header: header, rows: rowsArr});
     } catch (error) {
       setLoaderVisibility(false);
-      Alert.alert('Error in DB', error.message);
+      Alert.alert('Error in DB', error?.message);
     }
   };
 
   useEffect(() => {
-    const setupAdmob = async () => {
-      await AdMob.start();
-      if (!interstitial) {
-        interstitial = new InterstitialAd({
-          adUnitId: getInterstitialId(),
-        });
-      }
-      console.log(getInterstitialId());
-      await loadAd();
-    };
-
-    const init = async () => {
-      const isPremRes = await getIsPremium();
-      setIsPremium(isPremRes);
-      // Setup ad only when user is not premium
-      if (!isPremRes) {
-        setupAdmob();
-      }
-      await SplashScreen.hide({fade: true});
-    };
-    init();
-    return () => {};
+    // const init = async () => {
+    //   const isPremRes = await getIsPremium();
+    //   setIsPremium(isPremRes);
+    //   // Setup ad only when user is not premium
+    //   if (!isPremRes) {
+    //   }
+    //   await SplashScreen.hide({fade: true});
+    // };
+    // init();
+    SplashScreen.hide({fade: true});
+    console.log('hello');
+    // return () => {};
   }, []);
 
   return (
