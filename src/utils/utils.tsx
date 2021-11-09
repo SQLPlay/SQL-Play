@@ -93,9 +93,8 @@ export const savePremium = async (): Promise<void> => {
 
 export const restorePremium = async (): Promise<boolean> => {
   try {
-    const restore: Array<
-      ProductPurchase | Subscription
-    > = await RNIap.getAvailablePurchases();
+    const restore: Array<ProductPurchase | Subscription> =
+      await RNIap.getAvailablePurchases();
     // console.log('your item was', restore);
     if (itemSkus && restore[0].productId === itemSkus[0]) {
       savePremium();

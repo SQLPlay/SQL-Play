@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
   StatusBar,
+  LogBox,
 } from 'react-native';
 
 import {
@@ -57,6 +58,8 @@ MCIcon.loadFont();
 MIcon.loadFont();
 
 let interstitial: InterstitialAd;
+
+LogBox.ignoreAllLogs();
 
 interface tableDataNode {
   header: Array<string>;
@@ -151,7 +154,7 @@ const App: React.FC = () => {
           adUnitId: getInterstitialId(),
         });
       }
-      console.log(getInterstitialId());
+      // console.log(getInterstitialId());
       await loadAd();
     };
 

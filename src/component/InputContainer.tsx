@@ -29,6 +29,7 @@ import {lightDark, sideButton} from '../data/colors.json';
 import {findUserCommands, getLastUserCommand} from '../utils/storage';
 import {debounce} from '../utils/utils';
 import GestureRecognizer from 'react-native-swipe-gestures';
+import {ids} from '../../e2e/ids';
 
 interface Props {
   inputValue: string;
@@ -148,19 +149,23 @@ const InputContainer: FC<Props> = ({
   return (
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
-      <View style={styles.inputContainer} testID="query-input">
+      <View style={styles.inputContainer}>
         <GestureRecognizer
           onSwipeRight={setAutoInput}
-          onSwipeLeft={() => isPremium && clearInput()}>
+          onSwipeLeft={() => isPremium && clearInput()}
+        >
           <FlingGestureHandler
             direction={Directions.RIGHT}
-            onHandlerStateChange={handleSwipeRight}>
+            onHandlerStateChange={handleSwipeRight}
+          >
             <FlingGestureHandler
               direction={Directions.LEFT}
-              onHandlerStateChange={handleSwipeLeft}>
+              onHandlerStateChange={handleSwipeLeft}
+            >
               <TextInput
                 style={styles.input}
                 autoFocus={true}
+                testID={ids.queryTextInput}
                 onChangeText={text => setInputValue(text)}
                 multiline
                 placeholderTextColor="gray"
@@ -177,7 +182,8 @@ const InputContainer: FC<Props> = ({
         <Text
           suppressHighlighting={true}
           onLongPress={setAutoInput}
-          style={styles.autoCompleteTxt}>
+          style={styles.autoCompleteTxt}
+        >
           {autoCompleteTxt}
         </Text>
       </View>

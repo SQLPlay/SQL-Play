@@ -1,10 +1,11 @@
 {
   "testRunner": "mocha",
-  "runnerConfig": "e2e/.mocharc.json",
+  "runnerConfig": "e2e/.mocharc.cjs",
   "apps": {
     "ios": {
       "type": "ios.app",
-      "binaryPath": "ios/Build/SQL_Play/Build/Products/Debug-iphonesimulator/SQL_PlayGround.app"
+      "binaryPath": "ios/Build/SQL_Play/Build/Products/Debug-iphonesimulator/SQL_PlayGround.app",
+      "build": "xcodebuild -project ios/SQL_PlayGround.xcodeproj -UseNewBuildSystem=NO -scheme SQL_PlayGround -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build"
     },
     "android": {
       "type": "android.apk",

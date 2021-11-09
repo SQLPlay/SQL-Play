@@ -10,6 +10,7 @@ import {
   DynamicValue,
   useDynamicValue,
 } from 'react-native-dynamic';
+import ids from '../../e2e/ids';
 import {darkBGColor, lightDark} from '../data/colors.json';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
@@ -17,7 +18,7 @@ const WINDOW_WIDTH = Dimensions.get('window').width;
 export const CustomHandle: FC<BottomSheetHandleProps> = () => {
   const styles = useDynamicValue(dynamicStyles);
   return (
-    <View testID="bottom-sheet-handle" style={styles.container}>
+    <View testID={ids.bottomSheetHandle} style={styles.container}>
       <View style={styles.indicator} />
     </View>
   );

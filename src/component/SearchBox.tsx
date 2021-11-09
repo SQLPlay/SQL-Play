@@ -1,17 +1,7 @@
-import React, {useRef, useEffect, useState, useCallback, useMemo} from 'react';
-import {
-  View,
-  TextInput,
-  SafeAreaView,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  Dimensions,
-  Keyboard,
-  Platform,
-} from 'react-native';
+import React, {useRef, useEffect, useState, useMemo} from 'react';
+import {TouchableOpacity, Keyboard, Platform} from 'react-native';
 
-import BottomSheet, {
-  BottomSheetBackdrop,
+import {
   BottomSheetModal,
   BottomSheetTextInput,
   BottomSheetView,
@@ -28,11 +18,8 @@ import {
 import commandsList from '../data/commands.json';
 import {debounce} from '../utils/utils';
 import CommandList from './CommandList';
-import {darkBGColor} from '../data/colors.json';
-import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {CustomHandle, CustomBG, CustomBackdrop} from './CustomHandle';
-
-const {height} = Dimensions.get('window');
+import {ids} from '../../e2e/ids';
 
 interface Props {
   setInputValue: (query: string) => void;
@@ -52,9 +39,9 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
   const {top: topSafeArea, bottom: bottomSafeArea} = useSafeAreaInsets();
   const snapPoints = useMemo(() => ['50%', '100%'], []);
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
+  // const handleSheetChanges = useCallback((index: number) => {
+  //   console.log('handleSheetChanges', index);
+  // }, []);
 
   const styles = useDynamicValue(dynamicStyles);
   const openTabSheet = () => {
@@ -84,7 +71,7 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
 
   return (
     <>
-      <TouchableOpacity testID="search-btn" onPress={openTabSheet}>
+      <TouchableOpacity testID={ids.searchBtn} onPress={openTabSheet}>
         <Icon name="search" size={25} />
       </TouchableOpacity>
 
@@ -99,7 +86,7 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
         backdropComponent={CustomBackdrop}
         android_keyboardInputMode="adjustResize"
         keyboardBehavior="extend"
-        onChange={handleSheetChanges}
+        // onChange={handleSheetChanges}
       >
         <BottomSheetView style={styles.inputContainer}>
           <Icon name="search" color="gray" size={24} />
@@ -107,6 +94,8 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
           <BottomSheetTextInput
             style={styles.searchInput}
             value={searchInput}
+            blurOnSubmit={false}
+            testID={ids.commandSearchInput}
             placeholderTextColor="gray"
             onChangeText={(val: string) => setSearchInput(val)}
             placeholder="Search Query"
@@ -115,6 +104,7 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
             name="close"
             size={24}
             color="gray"
+            testID={ids.commandSearchClearBtn}
             onPress={() => setSearchInput('')}
           />
         </BottomSheetView>
