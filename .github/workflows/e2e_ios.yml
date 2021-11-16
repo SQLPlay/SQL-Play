@@ -1,0 +1,35 @@
+name: E2E (iOS)
+
+on: [push]
+
+jobs:
+  build:
+    name: E2E (iOS)
+    runs-on: macOS-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Install Yarn Dependencies
+        run: yarn install
+
+      - name: Install Pod Dependencies
+        run: cd ./ios && pod install && cd ..
+
+      - name: Install Detox Dependencies
+        run: |
+          brew tap wix/brew
+          brew install applesimutils
+
+
+      - name: Run Detox Build
+        run: yarn e2e:build ios.release
+
+      - name: Run Detox Test(s)
+        run: bash ${{ github.workspace }}/script/run-e2e-ios-release.sh
+
