@@ -1,11 +1,14 @@
 {
   "testRunner": "mocha",
-  "runnerConfig": "e2e/.mocharc.cjs",
+  "runnerConfig": "e2e/.mocharc.json",
   "apps": {
-    "ios": {
+    "ios.release": {
       "type": "ios.app",
-      "binaryPath": "ios/Build/SQL_Play/Build/Products/Debug-iphonesimulator/SQL_PlayGround.app",
-      "build": "xcodebuild -project ios/SQL_PlayGround.xcodeproj -UseNewBuildSystem=NO -scheme SQL_PlayGround -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build"
+      "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/SQL_PlayGround.app",
+      "build": "xcodebuild -workspace ios/Sql_Playground.xcworkspace -scheme SQL_PlayGround -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
+      "device": {
+        "type": "iPhone 12"
+      }
     },
     "android": {
       "type": "android.apk",
@@ -28,9 +31,9 @@
     }
   },
   "configurations": {
-    "ios": {
+    "ios.release": {
       "device": "simulator",
-      "app": "ios"
+      "app": "ios.release"
     },
     "android": {
       "device": "emulator",

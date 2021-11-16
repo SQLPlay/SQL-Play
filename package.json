@@ -6,13 +6,16 @@
   "description": "A simple and beautiful SQL playground",
   "scripts": {
     "postversion": "react-native-version",
+    "detox-setup": "detox clean-framework-cache && detox build-framework-cache",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "clean": "react-native-clean-project",
     "deploy:android": "cd android && bundle exec fastlane beta && cd ..",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "e2e:build": "detox build --configuration",
+    "e2e:test": "detox test --configuration"
   },
   "dependencies": {
     "@admob-plus/react-native": "1.16.0",
