@@ -12,9 +12,7 @@
     "clean": "react-native-clean-project",
     "deploy:android": "cd android && bundle exec fastlane beta && cd ..",
     "test": "jest",
-    "lint": "eslint .",
-    "e2e:build": "detox build --configuration",
-    "e2e:test": "detox test --configuration"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@admob-plus/react-native": "1.16.0",
