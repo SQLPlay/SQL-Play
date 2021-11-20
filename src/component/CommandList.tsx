@@ -1,20 +1,13 @@
-import React, {useState, useCallback, FC, RefObject, memo} from 'react';
+import React, {useState, FC, RefObject, memo} from 'react';
 import {
   View,
-  Button,
-  StyleSheet,
   Text,
-  ScrollView,
-  TextInput,
-  FlatList,
-  SafeAreaView,
   TouchableHighlight,
-  TouchableOpacity,
   Platform,
   UIManager,
   LayoutAnimation,
-  TouchableWithoutFeedback,
   Pressable,
+  Keyboard,
 } from 'react-native';
 
 import {
@@ -30,6 +23,7 @@ import SyntaxHighlighter from 'react-native-syntax-highlighter';
 //@ts-ignore
 import {vs2015, defaultStyle} from 'react-syntax-highlighter/styles/hljs';
 import {BottomSheetFlatList, BottomSheetModal} from '@gorhom/bottom-sheet';
+import {ids} from '../../e2e/ids';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -57,6 +51,7 @@ const ListItem: FC<LIProps> = props => {
   const isDark = useDarkMode();
   const onItemPress = (index: number | null) => {
     setCurrentIndex(index === currentIndex ? null : index);
+    Keyboard.dismiss();
     LayoutAnimation.configureNext(
       LayoutAnimation.create(
         150,
@@ -66,12 +61,12 @@ const ListItem: FC<LIProps> = props => {
     );
   };
 
-  const onSyntaxPress = () => {
+  const onSyntaxPress = (syntax: string) => {
     setInputValue(syntax);
     bottomSheetRef.current?.close();
   };
   return (
-    <Pressable onPress={() => onItemPress(index)}>
+    <Pressable testID={ids.commandListItem} onPress={() => onItemPress(index)}>
       <View style={styles.item}>
         <View style={styles.header}>
           <Text style={styles.title}>{title}</Text>
@@ -84,11 +79,11 @@ const ListItem: FC<LIProps> = props => {
         </View>
 
         <Text style={styles.description}>{description}</Text>
-        <TouchableHighlight
+        <Pressable
           style={styles.codeSyntaxContainer}
           onPress={() => onSyntaxPress(syntax)}
         >
-          <View>
+          <View testID={ids.commandListItemQuery}>
             {index === currentIndex && (
               <SyntaxHighlighter
                 fontSize={14}
@@ -101,7 +96,7 @@ const ListItem: FC<LIProps> = props => {
               </SyntaxHighlighter>
             )}
           </View>
-        </TouchableHighlight>
+        </Pressable>
       </View>
     </Pressable>
   );
@@ -123,13 +118,14 @@ interface Props {
 const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
   return (
     <BottomSheetFlatList
-      testID="commandList"
+      testID={ids.commandListSheet}
       data={listData}
       bounces={false}
       maxToRenderPerBatch={5}
       // scrollEventThrottle={30}
       contentContainerStyle={{paddingVertical: 5}}
       keyboardShouldPersistTaps="handled"
+      keyboardDismissMode="on-drag"
       renderItem={({item, index}) => (
         <MemoizedLI
           {...item}

@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
   StatusBar,
+  LogBox,
 } from 'react-native';
 
 import {
