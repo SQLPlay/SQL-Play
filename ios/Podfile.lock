@@ -414,7 +414,7 @@ PODS:
     - React-perflogger (= 0.66.1)
   - rn-in-app-review (0.0.7):
     - React
-  - RNAdMob (1.1.2):
+  - RNAdMob (1.3.0):
     - Google-Mobile-Ads-SDK (~> 8.0)
     - React-Core
   - RNBootSplash (3.2.6):
@@ -733,7 +733,7 @@ SPEC CHECKSUMS:
   React-runtimeexecutor: 33a949a51bec5f8a3c9e8d8092deb259600d761e
   ReactCommon: 620442811dc6f707b4bf5e3b27d4f19c12d5a821
   rn-in-app-review: 957b7090ca0f1ed2e60703ade0e7c181ca34667b
-  RNAdMob: 42224ffaf26f529b788db79f877bd7129656a539
+  RNAdMob: 7ae03504e9f3b15cd0356aef09f1beab383c0200
   RNBootSplash: 51eef7e143faeab63f81ddbb7c1de38b8fba66ed
   RNDeviceInfo: 55175b0bd852c1c5d70d76efc04ed77799cef638
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32

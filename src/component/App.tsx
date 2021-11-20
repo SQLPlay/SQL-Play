@@ -45,10 +45,11 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import GoPremium from './GoPremium';
-import {TestIds, useInterstitialAd} from '@react-native-admob/admob';
+import {
+  FullScreenAdOptions,
+  useInterstitialAd,
+} from '@react-native-admob/admob';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
-
-const interstitialAdId = TestIds.INTERSTITIAL;
 
 Sentry.init({
   dsn: Config.DNS,
@@ -62,6 +63,11 @@ interface tableDataNode {
   header: Array<string>;
   rows: Array<Array<any>>;
 }
+
+const adConfig: FullScreenAdOptions = {
+  showOnLoaded: true,
+  loadOnMounted: false,
+};
 const App: React.FC = () => {
   const [tableData, setTableData] = useState<tableDataNode>({
     header: [],
@@ -75,22 +81,26 @@ const App: React.FC = () => {
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(false);
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
-  const {load, adLoaded, show} = useInterstitialAd(TestIds.INTERSTITIAL);
+  const {load, adLoaded, show} = useInterstitialAd(
+    getInterstitialId(),
+    adConfig,
+  );
   const styles = useDynamicValue(dynamicStyles);
 
+  useEffect(() => {
+    if (!adLoaded) return;
+    show();
+  }, [adLoaded]);
+
   const showAd = async () => {
-    // if (!shouldShowAd()) {
-    //   return;
-    // }
-    console.log('time to show ad');
-    if (adLoaded) {
-      show();
-    } else {
+    // if (!shouldShowAd()) return;
+
+    if (adLoaded) return;
+    try {
       load();
+    } catch (error) {
+      console.log('failed to load ad', error);
     }
-    // the ad load function isnt working
-    //needing to ad this
-    // await interstitial.load();
   };
 
   const runQuery = async () => {
@@ -134,17 +144,15 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    // const init = async () => {
-    //   const isPremRes = await getIsPremium();
-    //   setIsPremium(isPremRes);
-    //   // Setup ad only when user is not premium
-    //   if (!isPremRes) {
-    //   }
-    //   await SplashScreen.hide({fade: true});
-    // };
-    // init();
-    SplashScreen.hide({fade: true});
-    console.log('hello');
+    const init = async () => {
+      const isPremRes = await getIsPremium();
+      setIsPremium(isPremRes);
+      // Setup ad only when user is not premium
+      if (!isPremRes) {
+      }
+      await SplashScreen.hide({fade: true});
+    };
+    init();
     // return () => {};
   }, []);
 

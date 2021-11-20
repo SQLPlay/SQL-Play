@@ -58,7 +58,7 @@ export const debounce = (callback: any, delay = 250) => {
 export const getInterstitialId = (): string => {
   const testAdId = 'ca-app-pub-3940256099942544/8691691433';
   if (__DEV__) {
-    return testAdId;
+    // return testAdId;
   }
   const platformID = Platform.select({
     ios: Config.GAD_IOS,
@@ -93,9 +93,8 @@ export const savePremium = async (): Promise<void> => {
 
 export const restorePremium = async (): Promise<boolean> => {
   try {
-    const restore: Array<
-      ProductPurchase | Subscription
-    > = await RNIap.getAvailablePurchases();
+    const restore: Array<ProductPurchase | Subscription> =
+      await RNIap.getAvailablePurchases();
     // console.log('your item was', restore);
     if (itemSkus && restore[0].productId === itemSkus[0]) {
       savePremium();

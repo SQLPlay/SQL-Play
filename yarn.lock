@@ -1037,6 +1037,13 @@
     pirates "^4.0.0"
     source-map-support "^0.5.16"
 
+"@babel/runtime@^7.12.5":
+  version "7.16.3"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.3.tgz#b86f0db02a04187a3c17caa77de69840165d42d5"
+  integrity sha512-WBwekcqacdY2e9AF/Q7WLFUWmdJGJTkbjqTjoMDgXkVZ3ZRUvOPsLb5KdwISoQVsbP+DQzVZW4Zhci0DvpbNTQ==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@^7.15.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4":
   version "7.15.4"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.15.4.tgz#fd17d16bfdf878e6dd02d19753a39fa8a8d9c84a"
@@ -1543,10 +1550,16 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@react-native-admob/admob@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@react-native-admob/admob/-/admob-1.1.2.tgz#36c0af218306199fbe19d1dd13ce8bd2c5ecd8f2"
-  integrity sha512-G0SiV7gwr60MxhjsyPSJnmRFrHvBUKEL1fjl8YfbDbg/gJiGnKzYltooRuxMtwN0Maftx5d6bZXqPym6WvqVpQ==
+"@react-native-admob/admob@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@react-native-admob/admob/-/admob-1.2.1.tgz#1d6dcc4125558fe01f32225d1c5d7b138934a954"
+  integrity sha512-TJpSrp1tj93xG84+Y888y5lgLRHtxbbaE6Hg0Rij7e/k32KyisM2FisyHJmPTm4my5GyjkM9zO1C/PT3AkCiIA==
+
+"@react-native-admob/admob@ssh://git@github.com:react-native-admob/admob.git#top-viewcontroller":
+  version "1.3.0"
+  resolved "ssh://git@github.com:react-native-admob/admob.git#18271b5f6a06a8ccff25b2e10934109a70fc2c65"
+  dependencies:
+    use-deep-compare-effect "^1.8.1"
 
 "@react-native-community/cli-debugger-ui@^6.0.0-rc.0":
   version "6.0.0-rc.0"
@@ -3570,6 +3583,11 @@ depd@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
+
+dequal@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/dequal/-/dequal-2.0.2.tgz#85ca22025e3a87e65ef75a7a437b35284a7e319d"
+  integrity sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==
 
 destroy@~1.0.4:
   version "1.0.4"
@@ -8628,6 +8646,14 @@ urix@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/urix/-/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
   integrity sha1-2pN/emLiH+wf0Y1Js1wpNQZ6bHI=
+
+use-deep-compare-effect@^1.8.1:
+  version "1.8.1"
+  resolved "https://registry.yarnpkg.com/use-deep-compare-effect/-/use-deep-compare-effect-1.8.1.tgz#ef0ce3b3271edb801da1ec23bf0754ef4189d0c6"
+  integrity sha512-kbeNVZ9Zkc0RFGpfMN3MNfaKNvcLNyxOAAd9O4CBZ+kCBXXscn9s/4I+8ytUER4RDpEYs5+O6Rs4PqiZ+rHr5Q==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    dequal "^2.0.2"
 
 use-subscription@^1.0.0:
   version "1.5.1"
