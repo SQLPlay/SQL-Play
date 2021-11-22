@@ -24,7 +24,8 @@ describe('Test Command Search panel', () => {
   it('Should container query text in input', async () => {
     const queryInput = element(by.id(ids.queryTextInput));
     // const queryAttr = await queryInput.getAttributes();
-    expect(queryInput).toHaveText(
+
+    expect(queryInput).toHaveValue(
       'SELECT column_name(s)\nFROM table_name\nWHERE column_name operator value',
     );
   });

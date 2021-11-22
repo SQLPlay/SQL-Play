@@ -10,6 +10,14 @@
         "type": "iPhone 12"
       }
     },
+    "ios.debug": {
+      "type": "ios.app",
+      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/SQL_PlayGround.app",
+      "build": "xcodebuild -workspace ios/Sql_Playground.xcworkspace -scheme SQL_PlayGround -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+      "device": {
+        "type": "iPhone 12"
+      }
+    },
     "android": {
       "type": "android.apk",
       "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
@@ -34,6 +42,10 @@
     "ios.release": {
       "device": "simulator",
       "app": "ios.release"
+    },
+    "ios.debug": {
+      "device": "simulator",
+      "app": "ios.debug"
     },
     "android": {
       "device": "emulator",

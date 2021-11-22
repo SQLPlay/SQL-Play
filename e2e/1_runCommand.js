@@ -28,4 +28,16 @@ describe('Test Basic Query Execution', () => {
     await expect(table).toBeVisible();
     await table.swipe('left', 'fast', 1);
   });
+
+  it('Wait for ad to show', async () => {
+    await waitFor(element(by.text('Test mode')))
+      .toBeVisible()
+      .withTimeout(25000);
+
+    await waitFor(element(by.label('Close Advertisement')))
+      .toBeVisible()
+      .withTimeout(25000);
+
+    await element(by.label('Close Advertisement')).tap();
+  });
 });

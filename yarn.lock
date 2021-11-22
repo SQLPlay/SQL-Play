@@ -1815,14 +1815,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@react-native-admob/admob@^1.2.1":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@react-native-admob/admob/-/admob-1.2.1.tgz#1d6dcc4125558fe01f32225d1c5d7b138934a954"
-  integrity sha512-TJpSrp1tj93xG84+Y888y5lgLRHtxbbaE6Hg0Rij7e/k32KyisM2FisyHJmPTm4my5GyjkM9zO1C/PT3AkCiIA==
-
-"@react-native-admob/admob@ssh://git@github.com:react-native-admob/admob.git#top-viewcontroller":
+"@react-native-admob/admob@^1.3.0":
   version "1.3.0"
-  resolved "ssh://git@github.com:react-native-admob/admob.git#18271b5f6a06a8ccff25b2e10934109a70fc2c65"
+  resolved "https://registry.yarnpkg.com/@react-native-admob/admob/-/admob-1.3.0.tgz#f27cd599179034cd09290c22229c3ce7f152cd06"
+  integrity sha512-BuIT/EgJExQ7NNim+j0uLNumNBP0rvG6HOI7MnghPsER6GNQeT5FKz3gDUMdwOrT+1S5r+XW5saFuI4N2CMtyQ==
   dependencies:
     use-deep-compare-effect "^1.8.1"
 

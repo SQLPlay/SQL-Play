@@ -88,13 +88,8 @@ const App: React.FC = () => {
   );
   const styles = useDynamicValue(dynamicStyles);
 
-  useEffect(() => {
-    if (!adLoaded) return;
-    show();
-  }, [adLoaded]);
-
   const showAd = async () => {
-    // if (!shouldShowAd()) return;
+    if (!__DEV__ && !shouldShowAd()) return;
 
     if (adLoaded) return;
     try {
