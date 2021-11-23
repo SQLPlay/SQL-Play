@@ -50,6 +50,7 @@ import {
   FullScreenAdOptions,
   useInterstitialAd,
 } from '@react-native-admob/admob';
+import {isEmulator} from 'react-native-device-info';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
 
 Sentry.init({
@@ -82,14 +83,11 @@ const App: React.FC = () => {
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(false);
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
-  const {load, adLoaded, show} = useInterstitialAd(
-    getInterstitialId(),
-    adConfig,
-  );
+  const {load, adLoaded} = useInterstitialAd(getInterstitialId(), adConfig);
   const styles = useDynamicValue(dynamicStyles);
 
   const showAd = async () => {
-    if (!__DEV__ && !shouldShowAd()) return;
+    if (!__DEV__ && !shouldShowAd() && !isEmulator()) return;
 
     if (adLoaded) return;
     try {

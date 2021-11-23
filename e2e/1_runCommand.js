@@ -34,10 +34,7 @@ describe('Test Basic Query Execution', () => {
       .toBeVisible()
       .withTimeout(25000);
 
-    await waitFor(element(by.label('Close Advertisement')))
-      .toBeVisible()
-      .withTimeout(25000);
-
-    await element(by.label('Close Advertisement')).tap();
+    await device.terminateApp();
+    await device.launchApp();
   });
 });
