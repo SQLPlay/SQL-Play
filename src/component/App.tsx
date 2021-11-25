@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
   StatusBar,
+  LogBox,
 } from 'react-native';
 
 import {
@@ -37,14 +38,19 @@ import InputContainer from './InputContainer';
 
 import '../utils/appReviewer';
 import '../utils/updateChecker';
-import {darkBGColor, darkYellow} from '../data/colors.json';
+import {darkBGColor} from '../data/colors.json';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Snackbar from 'react-native-snackbar';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import AdMob, {InterstitialAd} from '@admob-plus/react-native';
+import GoPremium from './GoPremium';
+import {
+  FullScreenAdOptions,
+  useInterstitialAd,
+} from '@react-native-admob/admob';
+import {isEmulator} from 'react-native-device-info';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
 
 Sentry.init({
@@ -55,12 +61,15 @@ Sentry.init({
 MCIcon.loadFont();
 MIcon.loadFont();
 
-let interstitial: InterstitialAd;
-
 interface tableDataNode {
   header: Array<string>;
   rows: Array<Array<any>>;
 }
+
+const adConfig: FullScreenAdOptions = {
+  showOnLoaded: true,
+  loadOnMounted: false,
+};
 const App: React.FC = () => {
   const [tableData, setTableData] = useState<tableDataNode>({
     header: [],
@@ -74,32 +83,18 @@ const App: React.FC = () => {
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(false);
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
-
+  const {load, adLoaded} = useInterstitialAd(getInterstitialId(), adConfig);
   const styles = useDynamicValue(dynamicStyles);
 
-  /**
-   * load ad if it's not already loaded
-   */
-  const loadAd = async () => {
-    const isLoaded = await interstitial.isLoaded();
-    console.log('is loaded', isLoaded);
-    if (isLoaded?.value) {
-      return;
-    }
-    return await interstitial.load();
-  };
-
   const showAd = async () => {
-    if (!shouldShowAd()) {
-      return;
+    if (!__DEV__ && !shouldShowAd() && !isEmulator()) return;
+
+    if (adLoaded) return;
+    try {
+      load();
+    } catch (error) {
+      console.log('failed to load ad', error);
     }
-    console.log('time to show ad');
-    // the ad load function isnt working
-    await loadAd();
-    //needing to ad this
-    /* await interstitial.load(); */
-    await interstitial.show();
-    await loadAd();
   };
 
   const runQuery = async () => {
@@ -107,12 +102,13 @@ const App: React.FC = () => {
     setLoaderVisibility(true);
     await insertUserCommand(inputValue); // store the command in db
     try {
-      // execute the query
-      const res: any = await ExecuteUserQuery(inputValue);
       /** Show add if user is not premium */
       if (!isPremium) {
         showAd();
       }
+      // execute the query
+      const res: any = await ExecuteUserQuery(inputValue);
+
       const len: number = res.rows.length;
 
       // console.log(res.rows);
@@ -138,32 +134,21 @@ const App: React.FC = () => {
       setTableData({header: header, rows: rowsArr});
     } catch (error) {
       setLoaderVisibility(false);
-      Alert.alert('Error in DB', error.message);
+      Alert.alert('Error in DB', error?.message);
     }
   };
 
   useEffect(() => {
-    const setupAdmob = async () => {
-      await AdMob.start();
-      if (!interstitial) {
-        interstitial = new InterstitialAd({
-          adUnitId: getInterstitialId(),
-        });
-      }
-      await loadAd();
-    };
-
     const init = async () => {
       const isPremRes = await getIsPremium();
       setIsPremium(isPremRes);
       // Setup ad only when user is not premium
       if (!isPremRes) {
-        setupAdmob();
       }
       await SplashScreen.hide({fade: true});
     };
     init();
-    return () => {};
+    // return () => {};
   }, []);
 
   return (
@@ -175,13 +160,20 @@ const App: React.FC = () => {
             backgroundColor="#c8b900"
             translucent
           />
+          <GoPremium
+            modalState={premiumModalOpen}
+            setModalState={setPremiumModalOpen}
+            isPremium={isPremium}
+            setIsPremium={setIsPremium}
+          />
           <KeyboardAvoidingView
             style={{flex: 1}}
             {...(Platform.OS === 'ios' && {behavior: 'padding'})}
             keyboardVerticalOffset={Platform.select({
               ios: 0,
               android: 500,
-            })}>
+            })}
+          >
             <View style={styles.statusBar} />
 
             <Modal visible={loaderVisibility} transparent={true}>

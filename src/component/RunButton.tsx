@@ -7,13 +7,18 @@ import {
   GestureResponderEvent,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {ids} from '../../e2e/ids';
 
 interface Props {
   runQuery: (event: GestureResponderEvent) => void;
 }
 const RunButton: FC<Props> = ({runQuery}) => {
   return (
-    <TouchableOpacity testID="run-btn" onPress={runQuery} style={styles.runBtn}>
+    <TouchableOpacity
+      testID={ids.runBtn}
+      onPress={runQuery}
+      style={styles.runBtn}
+    >
       <Icon
         name="send"
         size={25}

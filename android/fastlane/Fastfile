@@ -16,27 +16,14 @@
 default_platform(:android)
 
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
 
   desc "Submit a new Beta Build to Play Store"
   lane :beta do
-    store_password = prompt(text: "Signing Store Password: ", secure_text: true)
-    key_password = prompt(text: "Alias Key Password: ", secure_text: true)
-    releaseFilePath = "/Users/shivam/Library/Mobile Documents/com~apple~CloudDocs/Keystore/keystore.jks"
     gradle(task: 'clean')
     gradle(
       task: 'bundle',
       build_type: 'Release',
       print_command: false,
-      properties: {
-        "android.injected.signing.store.file" => releaseFilePath,
-        "android.injected.signing.store.password" => store_password,
-        "android.injected.signing.key.alias" => "upload",
-        "android.injected.signing.key.password" => key_password,
-      }
     )
     changelog_from_git_commits
     upload_to_play_store(
