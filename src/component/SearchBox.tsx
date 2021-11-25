@@ -17,6 +17,7 @@ import {
 
 import commandsList from '../data/commands.json';
 import {debounce} from '../utils/utils';
+import fil from '../utils/fil';
 import CommandList from './CommandList';
 import {CustomHandle, CustomBG, CustomBackdrop} from './CustomHandle';
 import {ids} from '../../e2e/ids';
@@ -53,14 +54,14 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
 
   useEffect(() => {
     const filterData = () => {
-      return commandsList.filter(item => {
+      return fil(item => {
         const query = searchInput.toLowerCase();
         // console.log(item);
         const keywords = `${item.title}  ${item.tag}  ${item.description}`;
         const index = keywords.toLowerCase().indexOf(query);
 
         return index !== -1;
-      });
+      }, commandsList);
     };
 
     const filteredArr = filterData();
