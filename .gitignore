@@ -70,3 +70,4 @@ ios/SQL_PlayGround.app.dSYM.zip
 
 .env
 artifacts
+keystore.properties

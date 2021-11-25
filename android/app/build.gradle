@@ -1,6 +1,15 @@
 apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+
+if (keystorePropertiesFile.exists()){
+    println 'keystore.properties found, will use the provided keystore to sign the app'
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+} else {
+    println 'keystore.properties not found, will use the debug keystore to sign the app'
+}
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -129,6 +138,26 @@ android {
     ndkVersion rootProject.ext.ndkVersion
 
     compileSdkVersion rootProject.ext.compileSdkVersion
+
+    signingConfigs {
+        release {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
+    if (keystoreProperties['keyAlias']) {
+        signingConfigs {
+           release {
+               keyAlias keystoreProperties['keyAlias']
+               keyPassword keystoreProperties['keyPassword']
+               storeFile file(keystoreProperties['storeFile'])
+               storePassword keystoreProperties['storePassword']
+           }
+        }
+    }
 
     defaultConfig {
         testBuildType System.getProperty('testBuildType', 'debug')
