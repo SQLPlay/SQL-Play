@@ -166,8 +166,8 @@ android {
         applicationId "com.sql_playground"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 43
-        versionName "2.5.12"
+        versionCode 44
+        versionName "2.5.13"
         missingDimensionStrategy 'store', 'play'
     }
     splits {

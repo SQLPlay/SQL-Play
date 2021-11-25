@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.5.12</string>
+	<string>2.5.13</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>20</string>
+	<string>21</string>
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-9677914909567793~6781543261</string>
 	<key>SKAdNetworkItems</key>
