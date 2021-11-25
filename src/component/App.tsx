@@ -102,12 +102,13 @@ const App: React.FC = () => {
     setLoaderVisibility(true);
     await insertUserCommand(inputValue); // store the command in db
     try {
-      // execute the query
-      const res: any = await ExecuteUserQuery(inputValue);
       /** Show add if user is not premium */
       if (!isPremium) {
         showAd();
       }
+      // execute the query
+      const res: any = await ExecuteUserQuery(inputValue);
+
       const len: number = res.rows.length;
 
       // console.log(res.rows);

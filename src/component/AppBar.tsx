@@ -18,6 +18,7 @@ const AppBar: React.FC<Props> = ({
   setPremiumModalOpen,
   premiumModalOpen,
 }) => {
+  // console.log(premiumModalOpen);
   return (
     <View style={styles.appBar}>
       <Text style={styles.appBarTxt}>SQL Play</Text>

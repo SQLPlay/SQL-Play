@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {Menu, MenuItem, MenuDivider} from 'react-native-material-menu';
-import GoPremium from './GoPremium';
 
 import ExportData from './ExportData';
 
@@ -19,16 +18,10 @@ export interface Props {
 const MenuOptions: FC<Props> = ({
   setInputValue,
   isPremium,
-  setIsPremium,
   setPremiumModalOpen,
-  premiumModalOpen,
 }) => {
   const [exportModal, setExportModal] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    console.log('model', premiumModalOpen);
-  }, [premiumModalOpen]);
 
   const showAllTables = (): void => {
     const query: string =
@@ -78,6 +71,7 @@ In future, this app may allow you to create and select different databases.
       <ExportData modalState={exportModal} setModalState={setExportModal} />
       <Menu
         visible={menuOpen}
+        animationDuration={menuOpen ? 300 : 0}
         onRequestClose={() => setMenuOpen(false)}
         style={{maxWidth: 'auto'}}
         anchor={

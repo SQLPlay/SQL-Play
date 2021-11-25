@@ -1,6 +1,7 @@
 {
   "testRunner": "mocha",
   "runnerConfig": "e2e/.mocharc.json",
+  "specs": [],
   "apps": {
     "ios.release": {
       "type": "ios.app",
@@ -18,7 +19,13 @@
         "type": "iPhone 12"
       }
     },
-    "android": {
+    "android.release": {
+      "type": "android.apk",
+      "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
+      "testBinaryPath": "android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk",
+      "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=release && cd .."
+    },
+    "android.debug": {
       "type": "android.apk",
       "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk",
       "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd .."
@@ -47,9 +54,13 @@
       "device": "simulator",
       "app": "ios.debug"
     },
-    "android": {
+    "android.release": {
       "device": "emulator",
-      "app": "android"
+      "app": "android.release"
+    },
+    "android.debug": {
+      "device": "emulator",
+      "app": "android.debug"
     }
   }
 }
