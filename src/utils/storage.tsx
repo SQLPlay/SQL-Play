@@ -33,12 +33,13 @@ export const ExecuteUserQuery = (
   params = [],
   noLimit: boolean = false,
 ): Promise<ResultSet> => {
-  query.replace(/^;/, ''); // remove any semicolon
+  query = query.replace(/;/g, ''); // remove any semicolon
+  query = query.replace(/"/g, "'"); // replace double quotes with single
 
   if (query.search(/select/i) !== -1) {
     // if no limit then no need to add limit
     if (!noLimit) {
-      query = `${query} limit 150`; //limit of 150 if there is a select
+      query = `${query} limit 100`; //limit of 100 if there is a select
     }
   }
 
