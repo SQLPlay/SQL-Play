@@ -1,6 +1,15 @@
 apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+
+if (keystorePropertiesFile.exists()){
+    println 'keystore.properties found, will use the provided keystore to sign the app'
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+} else {
+    println 'keystore.properties not found, will use the debug keystore to sign the app'
+}
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -130,6 +139,26 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    signingConfigs {
+        release {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+
+    if (keystoreProperties['keyAlias']) {
+        signingConfigs {
+           release {
+               keyAlias keystoreProperties['keyAlias']
+               keyPassword keystoreProperties['keyPassword']
+               storeFile file(keystoreProperties['storeFile'])
+               storePassword keystoreProperties['storePassword']
+           }
+        }
+    }
+
     defaultConfig {
         testBuildType System.getProperty('testBuildType', 'debug')
         // This will later be used to control the test apk build type
@@ -137,8 +166,8 @@ android {
         applicationId "com.sql_playground"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 43
-        versionName "2.5.12"
+        versionCode 45
+        versionName "2.5.14"
         missingDimensionStrategy 'store', 'play'
     }
     splits {
@@ -149,22 +178,15 @@ android {
             include "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
     }
-    signingConfigs {
-        debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-        }
-    }
+
     buildTypes {
         debug {
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             // Detox-specific additions to pro-guard
