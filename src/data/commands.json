@@ -12,7 +12,7 @@
     "description": "Create new rows in a table",
     "tag": "Data Manipulation Language (DML))",
     "syntax": "INSERT INTO table_name\nVALUES (value1, value2, value3,....)\n\nor\n\nINSERT INTO table_name\n(column1, column2, column3,...)\nVALUES (value1, value2, value3,....)",
-    "example": ["INSERT INTO cat (Name,Breed,Ability,Years)\nVALUES ('Oreo','Maine Coon','High Jumps',4)","INSERT INTO cat (Name,Breed,Ability,Years)\nVALUES ('Lucy','Siberian','Chasing the laser',4)","INSERT INTO cat (Name,Breed,Ability,Years)\nVALUES ('Jack','Ragdoll','Silence',6)"],
+    "example": ["INSERT INTO cat\nVALUES ('Oreo','Maine Coon','High Jumps',4)","INSERT INTO cat (Name,Breed,Ability,Years)\nVALUES ('Lucy','Siberian','Chasing the laser',4)","INSERT INTO cat (Name,Breed,Ability,Years)\nVALUES ('Jack','Ragdoll','Silence',6)"],
     "id": "2"
   },
   {
