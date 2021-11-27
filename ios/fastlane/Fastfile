@@ -17,9 +17,25 @@ default_platform(:ios)
 
 platform :ios do
   desc "Push a new beta build to TestFlight"
-  lane :beta do
-    increment_build_number(xcodeproj: "SQL_PlayGround.xcodeproj")
+  lane :deploy do
+    sync_code_signing(type: "appstore")
+    
     build_app(workspace: "SQL_PlayGround.xcworkspace", scheme: "SQL_PlayGround")
-    upload_to_testflight
+    
+    changelog_from_git_commits 
+    
+    upload_to_app_store(
+      submit_for_review: true,
+      automatic_release: true,
+      force: true, # Skip HTMl report verification
+      skip_metadata: true,
+      skip_screenshots: true,
+      release_notes: 
+    )
+  end
+
+  lane :upload do
   end
 end
+
+

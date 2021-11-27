@@ -27,13 +27,13 @@ platform :android do
     )
     changelog_from_git_commits
     upload_to_play_store(
-      track: 'beta'
+      track: 'beta',
+      skip_upload_apk: true,
+      skip_upload_metadat true
+      skip_upload_changelog true
+      skip_upload_image true
+      skip_upload_screenshots true
     )
   end
 
-  desc "Deploy a new version to the Google Play"
-  lane :deploy do
-    gradle(task: "clean assembleRelease")
-    upload_to_play_store
-  end
 end
