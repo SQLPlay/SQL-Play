@@ -6,6 +6,7 @@ export const ids = {
   commandListSheet: 'commandListSheet',
   commandListItem: 'commandListItem',
   commandListItemQuery: 'commandListItemQuery',
+  commandListExample: 'commandListExample',
   commandSearchInput: 'commandSearchInput',
   commandSearchClearBtn: 'commandSearchClearBtn',
 };

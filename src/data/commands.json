@@ -3,8 +3,8 @@
     "title": "CREATE TABLE",
     "description": "Define a new table",
     "tag": "Data Definition Language (DDL)",
-    "syntax": "CREATE TABLE table_name\n(\ncolumn_name1 data_type,\ncolumn_name2 data_type,\ncolumn_name3 data_type,\n...\n)",
-    "example": ["CREATE TABLE cat\n(\nID int NOT NULL AUTO_INCREMENT,\nName varchar(50),\nBreed varchar(50),\nAbility varchar(50),\nYears int,\nPRIMARY KEY (CatID)"],
+    "syntax": "CREATE TABLE table_name\n(\ncolumn_name1 data_type,\ncolumn_name2 data_type,\n...\n)",
+    "example": ["CREATE TABLE cat \n(ID int NOT NULL AUTO_INCREMENT,\nName varchar(50),\nBreed varchar(50),\nAbility varchar(50),\nYears int,\nPRIMARY KEY (CatID))"],
     "id": "1"
   },
   {
