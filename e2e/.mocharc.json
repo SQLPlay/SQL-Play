@@ -1,5 +1,5 @@
 {
   "bail": false,
   "timeout": 180000,
-  "spec": ["e2e/init.js", "e2e/1_runCommand.js", "e2e/2_commandList.js"]
+  "spec": ["e2e/init.js", "e2e/3_queryExamples.js"]
 }

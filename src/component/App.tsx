@@ -87,7 +87,9 @@ const App: React.FC = () => {
   const styles = useDynamicValue(dynamicStyles);
 
   const showAd = async () => {
-    if (!__DEV__ && !shouldShowAd() && !isEmulator()) return;
+    if (__DEV__) return;
+
+    if (!shouldShowAd() && !isEmulator()) return;
 
     if (adLoaded) return;
     try {
@@ -196,7 +198,9 @@ const App: React.FC = () => {
                   setInputValue={setInputValue}
                   isPremium={isPremium}
                 />
-                <Table {...tableData} tableWidths={tableWidths} />
+                {!!tableData.header.length && (
+                  <Table {...tableData} tableWidths={tableWidths} />
+                )}
               </View>
 
               <RunButton runQuery={runQuery} />
