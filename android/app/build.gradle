@@ -167,7 +167,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 46
-        versionName "2.5.15"
+        42-feat/examples
+        versionName "2.5.16"
         missingDimensionStrategy 'store', 'play'
     }
     splits {

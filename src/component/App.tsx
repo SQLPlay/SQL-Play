@@ -141,7 +141,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const init = async () => {
       const isPremRes = await getIsPremium();
-      setIsPremium(isPremRes);
+      setIsPremium(__DEV__ || isPremRes);
       // Setup ad only when user is not premium
       if (!isPremRes) {
       }
@@ -196,7 +196,9 @@ const App: React.FC = () => {
                   setInputValue={setInputValue}
                   isPremium={isPremium}
                 />
-                <Table {...tableData} tableWidths={tableWidths} />
+                {!!tableData.header.length && (
+                  <Table {...tableData} tableWidths={tableWidths} />
+                )}
               </View>
 
               <RunButton runQuery={runQuery} />

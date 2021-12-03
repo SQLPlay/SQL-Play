@@ -2,12 +2,12 @@ import React, {useState, FC, RefObject, memo} from 'react';
 import {
   View,
   Text,
-  TouchableHighlight,
   Platform,
   UIManager,
   LayoutAnimation,
   Pressable,
   Keyboard,
+  ScrollView,
 } from 'react-native';
 
 import {
@@ -20,8 +20,12 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 //@ts-ignore
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
-//@ts-ignore
-import {vs2015, defaultStyle} from 'react-syntax-highlighter/styles/hljs';
+import {
+  vs2015,
+  defaultStyle,
+  //@ts-ignore
+} from 'react-syntax-highlighter';
+
 import {BottomSheetFlatList, BottomSheetModal} from '@gorhom/bottom-sheet';
 import {ids} from '../../e2e/ids';
 
@@ -36,6 +40,7 @@ interface LIProps {
   syntax: string;
   index: number;
   id: string;
+  example?: [string];
   setInputValue: (val: string) => void;
   bottomSheetRef: RefObject<BottomSheetModal>;
 }
@@ -79,13 +84,16 @@ const ListItem: FC<LIProps> = props => {
         </View>
 
         <Text style={styles.description}>{description}</Text>
-        <Pressable
-          style={styles.codeSyntaxContainer}
-          onPress={() => onSyntaxPress(syntax)}
-        >
-          <View testID={ids.commandListItemQuery}>
-            {index === currentIndex && (
+        {index === currentIndex && (
+          <>
+            {/* <Text style={styles.syntaxHeader}>Syntax</Text> */}
+            <Pressable
+              style={styles.codeSyntaxContainer}
+              accessibilityLabel={syntax}
+              onPress={() => onSyntaxPress(syntax)}
+            >
               <SyntaxHighlighter
+                PreTag={View}
                 fontSize={14}
                 language="sql"
                 wrapLines={true}
@@ -94,9 +102,40 @@ const ListItem: FC<LIProps> = props => {
               >
                 {syntax}
               </SyntaxHighlighter>
+            </Pressable>
+            {props?.example && (
+              <Text style={styles.syntaxHeader}>Examples</Text>
             )}
-          </View>
-        </Pressable>
+            {props?.example &&
+              props.example.map((eg, i) => (
+                <Pressable
+                  key={i}
+                  accessibilityLabel={eg}
+                  style={styles.codeSyntaxContainer}
+                  testID={ids.commandListExample}
+                  onPress={() => onSyntaxPress(eg)}
+                >
+                  {/* <ScrollView */}
+                  {/*   horizontal */}
+                  {/*   directionalLockEnabled */}
+                  {/*   automaticallyAdjustContentInsets={false} */}
+                  {/*   disableScrollViewPanResponder */}
+                  {/* > */}
+                  <SyntaxHighlighter
+                    fontSize={14}
+                    language="sql"
+                    wrapLines={true}
+                    PreTag={View}
+                    style={isDark ? vs2015 : defaultStyle}
+                    highlighter="hljs"
+                  >
+                    {eg}
+                  </SyntaxHighlighter>
+                  {/* </ScrollView> */}
+                </Pressable>
+              ))}
+          </>
+        )}
       </View>
     </Pressable>
   );
@@ -155,6 +194,10 @@ const dynamicStyles = new DynamicStyleSheet({
     padding: 10,
     marginVertical: 2,
   },
+  syntaxHeader: {
+    marginTop: 5,
+    color: new DynamicValue('black', '#ffffffe7'),
+  },
   header: {
     position: 'relative',
   },
@@ -173,6 +216,6 @@ const dynamicStyles = new DynamicStyleSheet({
   },
 
   codeSyntaxContainer: {
-    marginTop: 10,
+    marginTop: 5,
   },
 });
