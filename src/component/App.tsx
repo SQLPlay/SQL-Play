@@ -87,7 +87,7 @@ const App: React.FC = () => {
   const styles = useDynamicValue(dynamicStyles);
 
   const showAd = async () => {
-    if (!__DEV__ && !shouldShowAd() && !isEmulator()) return;
+    if (!shouldShowAd()) return;
 
     if (adLoaded) return;
     try {
