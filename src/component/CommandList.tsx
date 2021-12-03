@@ -24,7 +24,7 @@ import {
   vs2015,
   defaultStyle,
   //@ts-ignore
-} from 'react-syntax-highlighter/dist/esm/styles/hljs';
+} from 'react-syntax-highlighter';
 
 import {BottomSheetFlatList, BottomSheetModal} from '@gorhom/bottom-sheet';
 import {ids} from '../../e2e/ids';

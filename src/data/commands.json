@@ -4,7 +4,7 @@
     "description": "Define a new table",
     "tag": "Data Definition Language (DDL)",
     "syntax": "CREATE TABLE table_name\n(\ncolumn_name1 data_type,\ncolumn_name2 data_type,\n...\n)",
-    "example": ["CREATE TABLE cat \n(ID INT PRIMARY KEY AUTOINCREMENT,\nName varchar(50),\nBreed varchar(50),\nAbility varchar(50),\nYears int)"],
+    "example": ["CREATE TABLE cat \n(ID INTEGER PRIMARY KEY AUTOINCREMENT,\nName varchar(50),\nBreed varchar(50),\nAbility varchar(50),\nYears int)"],
     "id": "1"
   },
   {
@@ -12,7 +12,7 @@
     "description": "Create new rows in a table",
     "tag": "Data Manipulation Language (DML))",
     "syntax": "INSERT INTO table_name\nVALUES (value1, value2, value3,....)\n\nor\n\nINSERT INTO table_name\n(column1, column2, column3,...)\nVALUES (value1, value2, value3,....)",
-    "example": ["INSERT INTO cat\nVALUES ('Oreo','Maine Coon','High Jumps',4)","INSERT INTO cat (Name,Breed,Ability,Years)\nVALUES ('Lucy','Siberian','Chasing the laser',4)","INSERT INTO cat (Name,Breed,Ability,Years)\nVALUES ('Jack','Ragdoll','Silence',6)"],
+    "example": ["INSERT INTO cat\nVALUES (1,'Oreo','Maine Coon','High Jumps',4)","INSERT INTO cat (Name,Breed,Ability,Years)\nVALUES ('Lucy','Siberian','Chasing the laser',4)","INSERT INTO cat\nVALUES (3,'Jack','Ragdoll','Silence',6)", "INSERT INTO cat\nVALUES (4,'Pussy','Siberian','Silence',10)"],
     "id": "2"
   },
   {
@@ -84,7 +84,7 @@
     "description": "To collect data across multiple records and group the results by a column",
     "tag": "Arguments",
     "syntax": "SELECT column_name, aggregate_function(column_name)\nFROM table_name\nWHERE column_name operator value\nGROUP BY column_name",
-    "example": ["SELECT Breed, COUNT(Name)\nFROM cat\nWHERE Years=4\nGROUP BY Name"],
+    "example": ["SELECT Years, COUNT(*)\nFROM cat\nGROUP BY Years"],
     "id": "11"
   },
   {
@@ -92,7 +92,7 @@
     "description": "To filter data based on the group functions",
     "tag": "Arguments",
     "syntax": "SELECT column_name, aggregate_function(column_name)\nFROM table_name\nWHERE column_name operator value\nGROUP BY column_name\nHAVING aggregate_function(column_name) operator value",
-    "example": ["SELECT Breed, COUNT(Name)\nFROM cat\nWHERE Years=4\nGROUP BY Name\nHAVING COUNT(Name) > 1"],
+    "example": ["SELECT Breed, COUNT(*)\nFROM cat\nGROUP BY Breed\nHAVING COUNT(Breed) > 1"],
     "id": "12"
   },
   {
@@ -140,7 +140,7 @@
     "description": "Returns the number of rows that matches a specified criteria",
     "tag": "Aggregate Functions",
     "syntax": "SELECT COUNT(column_name)\nFROM table_name\nWHERE condition",
-    "example": ["SELECT COUNT(Breed)\nFROM cat"],
+    "example": ["SELECT COUNT(*)\nFROM cat"],
     "id": "18"
   },
   {
@@ -172,7 +172,7 @@
     "description": "Define a new view",
     "tag": "Data Definition Language (DDL)",
     "syntax": "CREATE VIEW view_name AS\nSELECT column_name(s)\nFROM table_name\nWHERE condition",
-    "example": ["CREATE VIEW [Four Years Old Furs] AS\nSELECT *\nFROM cat\nWHERE Years=4"],
+    "example": ["CREATE VIEW Siberian AS\nSELECT *\nFROM cat\nWHERE Breed='Siberian'","SELECT * FROM Siberian"],
     "id": "22"
   },
   {
@@ -180,7 +180,7 @@
     "description": "Remove a view",
     "tag": "Data Definition Language (DDL)",
     "syntax": "DROP VIEW view_name",
-    "example": ["DROP VIEW [Four Years Old Furs]"],
+    "example": ["DROP VIEW Siberian"],
     "id": "23"
   },
   {
@@ -196,7 +196,7 @@
     "description": "Define a new table",
     "tag": "Data Definition Language (DDL)",
     "syntax": "CREATE INDEX index_name\nON table_name (column_name)\n\nor\n\nCREATE UNIQUE INDEX index_name\nON table_name (column_name)",
-    "example": ["CREATE INDEX idx_firstname\nON cat (Name)"],
+    "example": ["CREATE INDEX cat_name_idx\nON cat (Name)"],
     "id": "25"
   },
   {
@@ -208,44 +208,36 @@
     "id": "26"
   },
   {
-    "title": "UCASE()",
+    "title": "UPPER() or UCASE()",
     "description": "Converts a field to upper case",
     "tag": "Scalar Functions",
-    "syntax": "UCASE(text)",
-    "example": ["SELECT UCASE(Name)\nFROM cat"],
+    "syntax": "UPPER(text)\nor\nUCASE(text)",
+    "example": ["SELECT UPPER(Name)\nFROM cat"],
     "id": "27"
   },
   {
-    "title": "LCASE()",
+    "title": "LOWER() or LCASE()",
     "description": "Converts a field to lower case",
     "tag": "Scalar Functions",
-    "syntax": "LCASE(text)",
-    "example": ["SELECT LCASE(Name)\nFROM cat"],
+    "syntax": "LOWER(text)\nor\nLCASE(text)",
+    "example": ["SELECT LOWER(Name)\nFROM cat"],
     "id": "28"
   },
   {
-    "title": "LEN()",
+    "title": "LENGTH() or LEN()",
     "description": "Returns the length of a text field",
     "tag": "Scalar Functions",
-    "syntax": "LEN(text)",
-    "example": ["SELECT LEN('Professor Sherlock Meowington')"],
+    "syntax": "LENGTH(text)\nor\nLEN(text)",
+    "example": ["SELECT LENGTH('Professor Meowington')"],
     "id": "29"
   },
   {
-    "title": "NOW()",
+    "title": "DATE('NOW') or TIME('NOW')",
     "description": "Returns the current system date and time",
     "tag": "Scalar Functions",
-    "syntax": "NOW()",
-    "example": ["SELECT NOW()"],
+    "syntax":  "DATE('NOW')\nor\nTIME('NOW')",
+    "example": ["SELECT DATE('NOW')","SELECT TIME('NOW')"],
     "id": "30"
-  },
-  {
-    "title": "TRUNCATE TABLE",
-    "description": "Empty a table",
-    "tag": "Data Definition Language (DDL)",
-    "syntax": "TRUNCATE TABLE table_name",
-    "example": ["TRUNCATE TABLE cat"],
-    "id": "31"
   },
   {
     "title": "DROP TABLE",

@@ -2,7 +2,7 @@ import ids from './ids.js';
 import {tapOnId} from './utils.js';
 
 describe('Run all the examples one by one', () => {
-  for (let i = 0; i < 33; i++) {
+  for (let i = 28; i < 33; i++) {
     it('Open the search panel', async () => {
       await tapOnId(ids.searchBtn);
       const commandList = element(by.id(ids.bottomSheetHandle));
