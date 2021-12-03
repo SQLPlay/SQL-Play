@@ -16,7 +16,7 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Push a new beta build to TestFlight"
+  desc "Push a new build to Appstore"
   lane :deploy do
     sync_code_signing(type: "appstore")
     
@@ -30,12 +30,9 @@ platform :ios do
       force: true, # Skip HTMl report verification
       skip_metadata: true,
       skip_screenshots: true,
-      release_notes: 
     )
   end
 
-  lane :upload do
-  end
 end
 
 
