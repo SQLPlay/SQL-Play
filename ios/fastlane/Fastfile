@@ -33,6 +33,19 @@ platform :ios do
     )
   end
 
+  desc "Upload to app store"
+  lane :upload do
+    changelog_from_git_commits 
+    
+    upload_to_app_store(
+      submit_for_review: true,
+      automatic_release: true,
+      force: true, # Skip HTMl report verification
+      skip_metadata: true,
+      skip_screenshots: true,
+    )
+  end
+
 end
 
 
