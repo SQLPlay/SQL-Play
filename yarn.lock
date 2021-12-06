@@ -1387,9 +1387,9 @@
     strip-json-comments "^3.1.1"
 
 "@gorhom/bottom-sheet@^4":
-  version "4.1.3"
-  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.1.3.tgz#bd9573a80882f60b116991148d43b8276b01f6c7"
-  integrity sha512-Ajjxf17oNqoAVxHNrl8Mj56pcTjpGBvocpcibYX3D0pm10rdCRUqxZ29uSwywS+V8HhkXVSoLoLswv0JvcDh+Q==
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.1.5.tgz#35341d45799de28082c380db6639537b04fa0b26"
+  integrity sha512-3F5P8jK3NXwT2lGwkAdkdLwDVHaRvMZalUTXjK6Ogf0Tki6idffJ3TNlQZlg8k6+OnXAx0+i80f4XaI+J4GFrA==
   dependencies:
     "@gorhom/portal" "^1.0.11"
     invariant "^2.2.4"
@@ -1816,9 +1816,9 @@
     fastq "^1.6.0"
 
 "@react-native-admob/admob@^1.3.0":
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@react-native-admob/admob/-/admob-1.3.3.tgz#306afab8b1df3af1ca61c0757eacc504e0e3449d"
-  integrity sha512-iRW53vvehz3EJXmQPsV3MILzihuCXxxGMO1UtuLVu7i6UhDOkNP3SLPMR76wVjdhYuPe69nSBZzRUa5sZHOyMA==
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/@react-native-admob/admob/-/admob-1.5.0.tgz#96b6d4f92c31cc1f8fd6c517063084f66fa22e26"
+  integrity sha512-ET81kAtmvKZ/Sj+hFk5taExd6VYRTjLiWamFkAb7QkX8bhueMnb7kkF6Re8pIH4i3O7uasxMutKzMDmJzKqvlA==
   dependencies:
     use-deep-compare-effect "^1.8.1"
 
@@ -7561,9 +7561,9 @@ react-native-gesture-handler@^1.10.3:
     prop-types "^15.7.2"
 
 react-native-iap@^7.3.0:
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-7.5.0.tgz#86d0ccc4cc6a2eabc0470993921a45aec603392c"
-  integrity sha512-3iy+q3m7OAjh2+7LA53151Y+1Jmix76NMWcMXJdax/yw1dB7YWQ47eHkY3PLhShp+LO+XHZxv/iaPVtkkeiPwA==
+  version "7.5.1"
+  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-7.5.1.tgz#ae41084fcf95d775ad84107e654a61d110e1bcb0"
+  integrity sha512-yZroot5Sz6kTCteaHy50+34i1sipWFYp9leP1QojxaTNxmBcMWagQ8ifFHhRhwb6SKaGFBTKoy+A1doalw+FnQ==
   dependencies:
     dooboolab-welcome "1.3.2"
 
@@ -7583,9 +7583,9 @@ react-native-reanimated@2.2.3:
     string-hash-64 "^1.0.3"
 
 react-native-redash@^16.1.1:
-  version "16.2.2"
-  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-16.2.2.tgz#99ecb49810aab8ed778b6d8c8726a29117065d96"
-  integrity sha512-febggvSI93H796DS1ufNNf/8FQMw21UTiMYBRscmhzyIamcC194oNamW1UtbreRSC1OweKBDEbyxPSugiuncmQ==
+  version "16.2.3"
+  resolved "https://registry.yarnpkg.com/react-native-redash/-/react-native-redash-16.2.3.tgz#ee63e100c60f83275116e57d4e8bc79f26349db9"
+  integrity sha512-vSjHA6/mBY3IpDYPish3DlG06PKNLkb/b89hw7nsDM3yxAJ7Db+yMnEL3pp2YsoYblDc3s+0+wBRlvxay4X4vQ==
   dependencies:
     abs-svg-path "^0.1.1"
     normalize-svg-path "^1.0.1"
@@ -7602,9 +7602,9 @@ react-native-sensitive-info@^6.0.0-alpha.9:
   integrity sha512-W2R1gUHgBAmy+wVl0BvA7s01SqqTitnG4Sdj2zmck0OS5a54kq+pTnXRqDljMa2NQs4Mue2IHyvd+Tf0X1ZL6Q==
 
 react-native-share@^7.0.0:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-7.2.1.tgz#cd52e3789d9dc7126f1420c78ee3629405ff97e4"
-  integrity sha512-fZIhwnPDWStjGOEFnbthAMvaldZ4kR1QHNbhr/fNsOcOxrS0gzU6djjg0pqdkPLrpXMl+CeaDU1Rzxl/cJjg2A==
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-7.3.2.tgz#3b61c42b28b034d1662f3aa7514846c609251502"
+  integrity sha512-1E2xxTzHYrV74WMuBz6VLx6Y9slBBNI9s0NxXDEYb0VsFT6DcHnbiaY4ExW5E6vw37s3gfZxm4zsv9/TwFEukA==
 
 react-native-siren@0.0.4:
   version "0.0.4"

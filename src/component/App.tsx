@@ -141,7 +141,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const init = async () => {
       const isPremRes = await getIsPremium();
-      setIsPremium(__DEV__ || isPremRes);
+      setIsPremium(isPremRes);
       // Setup ad only when user is not premium
       if (!isPremRes) {
       }

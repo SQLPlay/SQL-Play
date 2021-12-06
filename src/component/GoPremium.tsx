@@ -45,6 +45,7 @@ const GoPremium: FC<Props> = ({
   isPremium,
 }) => {
   const [purchaseProcessing, setPurchaseProcessing] = useState(false);
+  const [localizedPrice, setlocalizedPrice] = useState('');
 
   const getItems = async (): Promise<void> => {
     try {
@@ -55,13 +56,14 @@ const GoPremium: FC<Props> = ({
         return;
       }
       const products: Product[] = await RNIap.getProducts(itemSkus);
-      console.log('Products', products[0].title);
+      console.log('Products', products);
+      setlocalizedPrice(products[0].localizedPrice);
 
       purchaseUpdate = purchaseUpdatedListener(async purchase => {
         const receipt: string = purchase.transactionReceipt;
         if (receipt) {
           try {
-            const ackResult: string | void = await finishTransaction(purchase);
+            await finishTransaction(purchase);
             Alert.alert(
               'Purchase complete',
               'Thanks for purchasing, Now you can enjoy the premium benefits ',
@@ -199,7 +201,9 @@ const GoPremium: FC<Props> = ({
             >
               {!purchaseProcessing ? (
                 <Text style={styles.buyBtnTxt}>
-                  {isPremium ? 'Sweet! You have Premium' : 'Buy Now'}
+                  {isPremium
+                    ? 'Sweet! You have Premium'
+                    : `Buy Now for ${localizedPrice}`}
                 </Text>
               ) : (
                 <View style={styles.loaderContainer}>
