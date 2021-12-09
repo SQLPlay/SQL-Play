@@ -18,8 +18,6 @@ import {
   ColorSchemeProvider,
 } from 'react-native-dynamic';
 
-import Config from 'react-native-config';
-
 import * as Sentry from '@sentry/react-native';
 
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
@@ -50,11 +48,11 @@ import {
   FullScreenAdOptions,
   useInterstitialAd,
 } from '@react-native-admob/admob';
-import {isEmulator} from 'react-native-device-info';
+import {DNS} from '@env';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
 
 Sentry.init({
-  dsn: Config.DNS,
+  dsn: DNS,
   debug: __DEV__,
 });
 
