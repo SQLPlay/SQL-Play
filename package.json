@@ -1,6 +1,6 @@
 {
   "name": "SQL-Play",
-  "version": "2.5.17",
+  "version": "2.5.18",
   "type": "module",
   "private": false,
   "description": "A simple and beautiful SQL playground",
