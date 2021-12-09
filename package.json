@@ -26,7 +26,6 @@
     "react": "17.0.2",
     "react-native": "0.66.1",
     "react-native-bootsplash": "^3.2.4",
-    "react-native-config": "^1.4.3",
     "react-native-device-info": "^8.3.1",
     "react-native-dialog": "^9.1.2",
     "react-native-dynamic": "^1.0.0",
