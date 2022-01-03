@@ -24,7 +24,7 @@ import {
   vs2015,
   defaultStyle,
   //@ts-ignore
-} from 'react-syntax-highlighter';
+} from 'react-syntax-highlighter/dist/styles/hljs';
 
 import {BottomSheetFlatList, BottomSheetModal} from '@gorhom/bottom-sheet';
 import {ids} from '../../e2e/ids';
@@ -54,6 +54,7 @@ const ListItem: FC<LIProps> = props => {
   const styles = useDynamicValue(dynamicStyles);
 
   const isDark = useDarkMode();
+
   const onItemPress = (index: number | null) => {
     setCurrentIndex(index === currentIndex ? null : index);
     Keyboard.dismiss();
