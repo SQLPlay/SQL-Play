@@ -50,6 +50,8 @@
 			</dict>
 		</dict>
 	</dict>
+  <key>ITSAppUsesNonExemptEncryption</key>
+  <false />
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string />
 	<key>UIAppFonts</key>
