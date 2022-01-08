@@ -72,7 +72,12 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
 
   return (
     <>
-      <TouchableOpacity testID={ids.searchBtn} onPress={openTabSheet}>
+      <TouchableOpacity
+        accessibilityLabel="Search"
+        accessibilityHint="Search for commands"
+        testID={ids.searchBtn}
+        onPress={openTabSheet}
+      >
         <Icon name="search" size={25} />
       </TouchableOpacity>
 
@@ -89,7 +94,10 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
         keyboardBehavior="extend"
         // onChange={handleSheetChanges}
       >
-        <BottomSheetView style={styles.inputContainer}>
+        <BottomSheetView
+          style={styles.inputContainer}
+          accessibilityLabel="commands list panel"
+        >
           <Icon name="search" color="gray" size={24} />
 
           <BottomSheetTextInput
@@ -98,11 +106,15 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
             blurOnSubmit={false}
             testID={ids.commandSearchInput}
             placeholderTextColor="gray"
+            accessibilityLabel="command search"
+            accessibilityHint="Search for SQL commands"
             onChangeText={(val: string) => setSearchInput(val)}
             placeholder="Search Query"
           />
           <Icon
             name="close"
+            accessibilityLabel="clear command"
+            accessibilityHint="clears searched command"
             size={24}
             color="gray"
             testID={ids.commandSearchClearBtn}

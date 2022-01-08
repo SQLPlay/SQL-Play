@@ -20,8 +20,10 @@ const AppBar: React.FC<Props> = ({
 }) => {
   // console.log(premiumModalOpen);
   return (
-    <View style={styles.appBar}>
-      <Text style={styles.appBarTxt}>SQL Play</Text>
+    <View style={styles.appBar} accessibilityLabel="app bar">
+      <Text style={styles.appBarTxt} accessibilityLabel="SQL Play">
+        SQL Play
+      </Text>
       <View style={styles.optionContainer}>
         <SearchBox setInputValue={setInputValue} />
         <MenuOptions
