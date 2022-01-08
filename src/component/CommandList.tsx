@@ -158,6 +158,7 @@ interface Props {
 const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
   return (
     <BottomSheetFlatList
+      accessibilityLabel="Search Result"
       testID={ids.commandListSheet}
       data={listData}
       bounces={false}
