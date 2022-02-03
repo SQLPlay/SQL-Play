@@ -3,47 +3,75 @@
     "title": "CREATE TABLE",
     "description": "Define a new table",
     "tag": "Data Definition Language (DDL)",
-    "syntax": "CREATE TABLE table_name\n(\ncolumn_name1 data_type,\ncolumn_name2 data_type,\n...\n)",
-    "example": ["CREATE TABLE cat \n(ID INTEGER PRIMARY KEY AUTOINCREMENT,\nName varchar(50),\nBreed varchar(50),\nAbility varchar(50),\nYears int)"],
+    "syntax": [
+      "CREATE TABLE table_name\n(\ncolumn_name1 data_type,\ncolumn_name2 data_type,\n...\n)"
+    ],
+    "example": [
+      "CREATE TABLE cat \n(ID INTEGER PRIMARY KEY AUTOINCREMENT,\nName varchar(50),\nBreed varchar(50),\nAbility varchar(50),\nYears int)"
+    ],
     "id": "1"
   },
   {
     "title": "INSERT INTO",
     "description": "Create new rows in a table",
     "tag": "Data Manipulation Language (DML))",
-    "syntax": "INSERT INTO table_name\nVALUES (value1, value2, value3,....)\n\nor\n\nINSERT INTO table_name\n(column1, column2, column3,...)\nVALUES (value1, value2, value3,....)",
-    "example": ["INSERT INTO cat\nVALUES (1,'Oreo','Maine Coon','High Jumps',4)","INSERT INTO cat (Name,Breed,Ability,Years)\nVALUES ('Lucy','Siberian','Chasing the laser',4)","INSERT INTO cat\nVALUES (3,'Jack','Ragdoll','Silence',6)", "INSERT INTO cat\nVALUES (4,'Pussy','Siberian','Silence',10)"],
+    "syntax": [
+      "INSERT INTO table_name\nVALUES (value1, value2, value3,....)",
+      "INSERT INTO table_name\n(column1, column2, column3,...)\nVALUES (value1, value2, value3,....)"
+    ],
+    "example": [
+      "INSERT INTO cat\nVALUES (1,'Oreo','Maine Coon','High Jumps',4)",
+      "INSERT INTO cat (Name,Breed,Ability,Years)\nVALUES ('Lucy','Siberian','Chasing the laser',4)",
+      "INSERT INTO cat\nVALUES (3,'Jack','Ragdoll','Silence',6)",
+      "INSERT INTO cat\nVALUES (4,'Pussy','Siberian','Silence',10)"
+    ],
     "id": "2"
   },
   {
     "title": "ALTER TABLE",
     "description": "Modifies a table definition",
     "tag": "Data Definition Language (DDL)",
-    "syntax": "ALTER TABLE table_name\nADD column_name datatype\n\nor\n\nALTER TABLE table_name\nDROP COLUMN column_name",
-    "example": ["ALTER TABLE cat\nADD Age int","ALTER TABLE cat\nDROP COLUMN Age"],
+    "syntax": [
+      "ALTER TABLE table_name\nADD column_name datatype",
+      "ALTER TABLE table_name\nDROP COLUMN column_name"
+    ],
+    "example": [
+      "ALTER TABLE cat\nADD Age int",
+      "ALTER TABLE cat\nDROP COLUMN Age"
+    ],
     "id": "3"
   },
   {
     "title": "SELECT",
     "description": "Retrieve rows from a table or view",
     "tag": "Data Manipulation Language (DML))",
-    "syntax": "SELECT column_name(s)\nFROM table_name \n\nor SELECT *\nFROM table_name",
-    "example": ["SELECT Name,Breed\nFROM cat","SELECT *\nFROM cat"],
+    "syntax": [
+      "SELECT column_name(s)\nFROM table_name ",
+      " SELECT *\nFROM table_name"
+    ],
+    "example": ["SELECT Name,Breed\nFROM cat", "SELECT *\nFROM cat"],
     "id": "4"
   },
   {
     "title": "WHERE",
     "description": "To retrieve specific information from a table excluding other irrelevant data",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s)\nFROM table_name\nWHERE column_name operator value",
-    "example": ["SELECT *\nFROM cat\nWHERE Name='Jack'","SELECT *\nFROM cat\nWHERE Breed='Siberian'"],
+    "syntax": [
+      "SELECT column_name(s)\nFROM table_name\nWHERE column_name operator value"
+    ],
+    "example": [
+      "SELECT *\nFROM cat\nWHERE Name='Jack'",
+      "SELECT *\nFROM cat\nWHERE Breed='Siberian'"
+    ],
     "id": "5"
   },
   {
     "title": "AND",
     "description": "Select rows that must satisfy all the given conditions",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s)\nFROM table_name\nWHERE condition\nAND condition",
+    "syntax": [
+      "SELECT column_name(s)\nFROM table_name\nWHERE condition\nAND condition"
+    ],
     "example": ["SELECT *\nFROM cat\nWHERE Name='Jack'\nAND Breed='Ragdoll'"],
     "id": "6"
   },
@@ -51,7 +79,9 @@
     "title": "OR",
     "description": "Select rows that satisfy atleast one of the given conditions",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s)\nFROM table_name\nWHERE condition\nOR condition",
+    "syntax": [
+      "SELECT column_name(s)\nFROM table_name\nWHERE condition\nOR condition"
+    ],
     "example": ["SELECT *\nFROM cat\nWHERE Name='Oreo'\nOR Name='Lucy'"],
     "id": "7"
   },
@@ -59,7 +89,7 @@
     "title": "NOT",
     "description": "Select rows that do not satisfy the given condition",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s)\nFROM table_name\nWHERE NOT condition",
+    "syntax": ["SELECT column_name(s)\nFROM table_name\nWHERE NOT condition"],
     "example": ["SELECT *\nFROM cat\nWHERE NOT Ability='Silence'"],
     "id": "8"
   },
@@ -67,15 +97,23 @@
     "title": "AS (alias)",
     "description": "To temporarily rename a table or a column heading",
     "tag": "Arguments",
-    "syntax": "SELECT column_name AS column_alias\nFROM table_name\n\nor\n\nSELECT column_name\nFROM table_name  AS table_alias",
-    "example": ["SELECT Name AS [First Name]\nFROM cat\n","SELECT Ability AS Talent\nFROM cat"],
+    "syntax": [
+      "SELECT column_name AS column_alias\nFROM table_name",
+      "SELECT column_name\nFROM table_name  AS table_alias"
+    ],
+    "example": [
+      "SELECT Name AS [First Name]\nFROM cat\n",
+      "SELECT Ability AS Talent\nFROM cat"
+    ],
     "id": "9"
   },
   {
     "title": "BETWEEN..AND..",
     "description": "To select values within a range",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s)\nFROM table_name\nWHERE column_name\nBETWEEN value1 AND value2",
+    "syntax": [
+      "SELECT column_name(s)\nFROM table_name\nWHERE column_name\nBETWEEN value1 AND value2"
+    ],
     "example": ["SELECT *\nFROM cat\nWHERE Years\nBETWEEN 4 AND 7"],
     "id": "10"
   },
@@ -83,7 +121,9 @@
     "title": "GROUP BY",
     "description": "To collect data across multiple records and group the results by a column",
     "tag": "Arguments",
-    "syntax": "SELECT column_name, aggregate_function(column_name)\nFROM table_name\nWHERE column_name operator value\nGROUP BY column_name",
+    "syntax": [
+      "SELECT column_name, aggregate_function(column_name)\nFROM table_name\nWHERE column_name operator value\nGROUP BY column_name"
+    ],
     "example": ["SELECT Years, COUNT(*)\nFROM cat\nGROUP BY Years"],
     "id": "11"
   },
@@ -91,15 +131,21 @@
     "title": "HAVING",
     "description": "To filter data based on the group functions",
     "tag": "Arguments",
-    "syntax": "SELECT column_name, aggregate_function(column_name)\nFROM table_name\nWHERE column_name operator value\nGROUP BY column_name\nHAVING aggregate_function(column_name) operator value",
-    "example": ["SELECT Breed, COUNT(*)\nFROM cat\nGROUP BY Breed\nHAVING COUNT(Breed) > 1"],
+    "syntax": [
+      "SELECT column_name, aggregate_function(column_name)\nFROM table_name\nWHERE column_name operator value\nGROUP BY column_name\nHAVING aggregate_function(column_name) operator value"
+    ],
+    "example": [
+      "SELECT Breed, COUNT(*)\nFROM cat\nGROUP BY Breed\nHAVING COUNT(Breed) > 1"
+    ],
     "id": "12"
   },
   {
     "title": "IN",
     "description": "To test whether a value is in the list of values provided",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s)\nFROM table_name\nWHERE column_name\nIN (value1,value2,..)",
+    "syntax": [
+      "SELECT column_name(s)\nFROM table_name\nWHERE column_name\nIN (value1,value2,..)"
+    ],
     "example": ["SELECT *\nFROM cat\nWHERE Breed IN ('Maine Coon','Siberian')"],
     "id": "13"
   },
@@ -107,7 +153,9 @@
     "title": "LIKE",
     "description": "To search for a specified pattern in a column",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s)\nFROM table_name\nWHERE column_name LIKE pattern",
+    "syntax": [
+      "SELECT column_name(s)\nFROM table_name\nWHERE column_name LIKE pattern"
+    ],
     "example": ["SELECT *\nFROM cat\nWHERE Name LIKE '%c%'"],
     "id": "14"
   },
@@ -115,7 +163,7 @@
     "title": "DISTINCT",
     "description": "To return only distinct (different) values in a column",
     "tag": "Arguments",
-    "syntax": "SELECT DISTINCT column_name(s)\nFROM table_name",
+    "syntax": ["SELECT DISTINCT column_name(s)\nFROM table_name"],
     "example": ["SELECT DISTINCT Years\nFROM cat"],
     "id": "15"
   },
@@ -123,15 +171,20 @@
     "title": "ORDER BY",
     "description": "To sort the records in the result based on a column",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s)\nFROM table_name\nORDER BY column_name [ASC|DESC]",
-    "example": ["SELECT *\nFROM cat\nORDER BY Name ASC","SELECT *\nFROM cat\nORDER BY Name DESC"],
+    "syntax": [
+      "SELECT column_name(s)\nFROM table_name\nORDER BY column_name [ASC|DESC]"
+    ],
+    "example": [
+      "SELECT *\nFROM cat\nORDER BY Name ASC",
+      "SELECT *\nFROM cat\nORDER BY Name DESC"
+    ],
     "id": "16"
   },
   {
     "title": "AVG()",
     "description": "Returns the average value of a numeric column",
     "tag": "Aggregate Functions",
-    "syntax": "SELECT AVG(column_name)\nFROM table_name\nWHERE condition",
+    "syntax": ["SELECT AVG(column_name)\nFROM table_name\nWHERE condition"],
     "example": ["SELECT AVG(Years)\nFROM cat"],
     "id": "17"
   },
@@ -139,7 +192,7 @@
     "title": "COUNT()",
     "description": "Returns the number of rows that matches a specified criteria",
     "tag": "Aggregate Functions",
-    "syntax": "SELECT COUNT(column_name)\nFROM table_name\nWHERE condition",
+    "syntax": ["SELECT COUNT(column_name)\nFROM table_name\nWHERE condition"],
     "example": ["SELECT COUNT(*)\nFROM cat"],
     "id": "18"
   },
@@ -147,7 +200,7 @@
     "title": "MAX()",
     "description": "Returns the largest value of the selected column",
     "tag": "Aggregate Functions",
-    "syntax": "SELECT MAX(column_name)\nFROM table_name\nWHERE condition",
+    "syntax": ["SELECT MAX(column_name)\nFROM table_name\nWHERE condition"],
     "example": ["SELECT MAX(Years)\nFROM cat"],
     "id": "19"
   },
@@ -155,7 +208,7 @@
     "title": "MIN()",
     "description": "Returns the smallest value of the selected column",
     "tag": "Aggregate Functions",
-    "syntax": "SELECT MIN(column_name)\nFROM table_name\nWHERE condition",
+    "syntax": ["SELECT MIN(column_name)\nFROM table_name\nWHERE condition"],
     "example": ["SELECT MIN(Years)\nFROM cat"],
     "id": "20"
   },
@@ -163,7 +216,7 @@
     "title": "SUM()",
     "description": "Returns the total sum of a numeric column",
     "tag": "Aggregate Functions",
-    "syntax": "SELECT SUM(column_name)\nFROM table_name\nWHERE condition",
+    "syntax": ["SELECT SUM(column_name)\nFROM table_name\nWHERE condition"],
     "example": ["SELECT SUM(Years)\nFROM cat"],
     "id": "21"
   },
@@ -171,15 +224,20 @@
     "title": "CREATE VIEW",
     "description": "Define a new view",
     "tag": "Data Definition Language (DDL)",
-    "syntax": "CREATE VIEW view_name AS\nSELECT column_name(s)\nFROM table_name\nWHERE condition",
-    "example": ["CREATE VIEW Siberian AS\nSELECT *\nFROM cat\nWHERE Breed='Siberian'","SELECT * FROM Siberian"],
+    "syntax": [
+      "CREATE VIEW view_name AS\nSELECT column_name(s)\nFROM table_name\nWHERE condition"
+    ],
+    "example": [
+      "CREATE VIEW Siberian AS\nSELECT *\nFROM cat\nWHERE Breed='Siberian'",
+      "SELECT * FROM Siberian"
+    ],
     "id": "22"
   },
   {
     "title": "DROP VIEW",
     "description": "Remove a view",
     "tag": "Data Definition Language (DDL)",
-    "syntax": "DROP VIEW view_name",
+    "syntax": ["DROP VIEW view_name"],
     "example": ["DROP VIEW Siberian"],
     "id": "23"
   },
@@ -187,7 +245,9 @@
     "title": "UPDATE",
     "description": "Update rows of a table",
     "tag": "Data Manipulation Language (DML))",
-    "syntax": "UPDATE table_name\nSET column1=value, column2=value,...\nWHERE some_column=some_value",
+    "syntax": [
+      "UPDATE table_name\nSET column1=value, column2=value,...\nWHERE some_column=some_value"
+    ],
     "example": ["UPDATE cat\nSET Years=5\nWHERE Name='Lucy'"],
     "id": "24"
   },
@@ -195,7 +255,10 @@
     "title": "CREATE INDEX",
     "description": "Define a new table",
     "tag": "Data Definition Language (DDL)",
-    "syntax": "CREATE INDEX index_name\nON table_name (column_name)\n\nor\n\nCREATE UNIQUE INDEX index_name\nON table_name (column_name)",
+    "syntax": [
+      "CREATE INDEX index_name\nON table_name (column_name)",
+      "CREATE UNIQUE INDEX index_name\nON table_name (column_name)"
+    ],
     "example": ["CREATE INDEX cat_name_idx\nON cat (Name)"],
     "id": "25"
   },
@@ -203,7 +266,10 @@
     "title": "DELETE",
     "description": "Delete rows of a table",
     "tag": "Data Manipulation Language (DML))",
-    "syntax": "DELETE FROM table_name\nWHERE some_column=some_value\n\nor\n\nDELETE FROM table_name\n(Note: Deletes the entire table!!)\n\nDELETE * FROM table_name\n(Note: Deletes the entire table!!)",
+    "syntax": [
+      "DELETE FROM table_name\nWHERE some_column=some_value",
+      "DELETE FROM table_name\n(Note: Deletes the entire table!!)\n\nDELETE * FROM table_name\n(Note: Deletes the entire table!!)"
+    ],
     "example": ["DELETE FROM cat\nWHERE Name='Oreo'"],
     "id": "26"
   },
@@ -211,7 +277,7 @@
     "title": "UPPER() or UCASE()",
     "description": "Converts a field to upper case",
     "tag": "Scalar Functions",
-    "syntax": "UPPER(text)\nor\nUCASE(text)",
+    "syntax": ["UPPER(text)", "UCASE(text)"],
     "example": ["SELECT UPPER(Name)\nFROM cat"],
     "id": "27"
   },
@@ -219,7 +285,7 @@
     "title": "LOWER() or LCASE()",
     "description": "Converts a field to lower case",
     "tag": "Scalar Functions",
-    "syntax": "LOWER(text)\nor\nLCASE(text)",
+    "syntax": ["LOWER(text)", "LCASE(text)"],
     "example": ["SELECT LOWER(Name)\nFROM cat"],
     "id": "28"
   },
@@ -227,7 +293,7 @@
     "title": "LENGTH() or LEN()",
     "description": "Returns the length of a text field",
     "tag": "Scalar Functions",
-    "syntax": "LENGTH(text)\nor\nLEN(text)",
+    "syntax": ["LENGTH(text)", "LEN(text)"],
     "example": ["SELECT LENGTH('Professor Meowington')"],
     "id": "29"
   },
@@ -235,15 +301,15 @@
     "title": "DATE('NOW') or TIME('NOW')",
     "description": "Returns the current system date and time",
     "tag": "Scalar Functions",
-    "syntax":  "DATE('NOW')\nor\nTIME('NOW')",
-    "example": ["SELECT DATE('NOW')","SELECT TIME('NOW')"],
+    "syntax": ["DATE('NOW')", "TIME('NOW')"],
+    "example": ["SELECT DATE('NOW')", "SELECT TIME('NOW')"],
     "id": "30"
   },
   {
     "title": "DROP TABLE",
     "description": "Define a new table",
     "tag": "Data Definition Language (DDL)",
-    "syntax": "DROP TABLE table_name",
+    "syntax": ["DROP TABLE table_name"],
     "example": ["DROP TABLE cat"],
     "id": "32"
   },
@@ -251,114 +317,139 @@
     "title": "NOT NULL",
     "description": "Enforces a column to not accept NULL values",
     "tag": "SQL Constraints",
-    "syntax": "CREATE TABLE table_name\n(\ncolumn_name1 data_type NOT NULL,\ncolumn_name2 data_type NOT NULL,\ncolumn_name3 data_type NOT NULL,\n...\n)",
+    "syntax": [
+      "CREATE TABLE table_name\n(\ncolumn_name1 data_type NOT NULL,\ncolumn_name2 data_type NOT NULL,\ncolumn_name3 data_type NOT NULL,\n...\n)"
+    ],
     "id": "33"
   },
   {
     "title": "EXISTS",
     "description": "Used in combination with a subquery and is considered to be met if the subquery returns at least one row",
     "tag": "Arguments",
-    "syntax": "IF EXISTS (SELECT * FROM table_name WHERE id = ?)\nBEGIN\n--do what needs to be done if exists\nEND\nELSE\nBEGIN\n--do what needs to be done if not\nEND",
+    "syntax": [
+      "IF EXISTS (SELECT * FROM table_name WHERE id = ?)\nBEGIN\n--do what needs to be done if exists\nEND\nELSE\nBEGIN\n--do what needs to be done if not\nEND"
+    ],
     "id": "34"
   },
   {
     "title": "SELECT <columns> INTO",
     "description": "Create a new table from the results of a query",
     "tag": "Data Manipulation Language (DML))",
-    "syntax": "SELECT *\nINTO new_table_name [IN externaldatabase]\nFROM old_table_name\n\nor\n\nSELECT column_name(s)\nINTO new_table_name [IN externaldatabase]\nFROM old_table_name",
+    "syntax": [
+      "SELECT *\nINTO new_table_name [IN externaldatabase]\nFROM old_table_name",
+      "SELECT column_name(s)\nINTO new_table_name [IN externaldatabase]\nFROM old_table_name"
+    ],
     "id": "35"
   },
   {
     "title": "INNER JOIN",
     "description": "Returns all rows from both tables where there is a match",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s)\nFROM table_name\nINNER JOIN other_table ON \nother_table.column_name = table_name.reference_column",
+    "syntax": [
+      "SELECT column_name(s)\nFROM table_name\nINNER JOIN other_table ON \nother_table.column_name = table_name.reference_column"
+    ],
     "id": "36"
   },
   {
     "title": "LEFT JOIN",
     "description": "Returns all the rows from the first table even if there are no matches in the second table",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s)\nFROM table_name\nLEFT JOIN other_table ON \nother_table.column_name = table_name.reference_column",
+    "syntax": [
+      "SELECT column_name(s)\nFROM table_name\nLEFT JOIN other_table ON \nother_table.column_name = table_name.reference_column"
+    ],
     "id": "37"
   },
   {
     "title": "RIGHT JOIN",
     "description": "Returns all the rows from the second table, even if there are no matches in the first table",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s)\nFROM table_name\nRIGHT JOIN other_table ON \nother_table.column_name = table_name.reference_column",
+    "syntax": [
+      "SELECT column_name(s)\nFROM table_name\nRIGHT JOIN other_table ON \nother_table.column_name = table_name.reference_column"
+    ],
     "id": "38"
   },
   {
     "title": "FULL JOIN",
     "description": "Returns all rows from both tables with nulls in place where the join condition is not met",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s)\nFROM table_name\nFull OUTER JOIN other_table ON \nother_table.column_name = table_name.reference_column",
+    "syntax": [
+      "SELECT column_name(s)\nFROM table_name\nFull OUTER JOIN other_table ON \nother_table.column_name = table_name.reference_column"
+    ],
     "id": "39"
   },
   {
     "title": "UNION",
     "description": "Combines the result of two or more SELECT statements and selects only distinct values",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s) FROM table_name1\nUNION\nSELECT column_name(s) FROM table_name2",
+    "syntax": [
+      "SELECT column_name(s) FROM table_name1\nUNION\nSELECT column_name(s) FROM table_name2"
+    ],
     "id": "40"
   },
   {
     "title": "UNION ALL",
     "description": "Combines the result of two or more SELECT statements and also select duplicate values",
     "tag": "Arguments",
-    "syntax": "SELECT column_name(s) FROM table_name1\nUNION ALL\nSELECT column_name(s) FROM table_name2",
+    "syntax": [
+      "SELECT column_name(s) FROM table_name1\nUNION ALL\nSELECT column_name(s) FROM table_name2"
+    ],
     "id": "41"
   },
-  
   {
     "title": "UNIQUE",
     "description": "Ensures that each row for a column must have a unique value",
     "tag": "SQL Constraints",
-    "syntax": "CREATE TABLE table_name\n(\ncolumn_name1 data_type UNIQUE,\ncolumn_name2 data_type,\ncolumn_name3 data_type,\n...\n)",
+    "syntax": [
+      "CREATE TABLE table_name\n(\ncolumn_name1 data_type UNIQUE,\ncolumn_name2 data_type,\ncolumn_name3 data_type,\n...\n)"
+    ],
     "id": "42"
   },
   {
     "title": "PRIMARY KEY",
     "description": "Combination of NOT NULL and UNIQUE.It uniquely identifies each record in a database table",
     "tag": "SQL Constraints",
-    "syntax": "CREATE TABLE table_name\n(\ncolumn_name1 data_type PRIMARY KEY,\ncolumn_name2 data_type,\ncolumn_name3 data_type,\n...\n)",
+    "syntax": [
+      "CREATE TABLE table_name\n(\ncolumn_name1 data_type PRIMARY KEY,\ncolumn_name2 data_type,\ncolumn_name3 data_type,\n...\n)"
+    ],
     "id": "43"
   },
   {
     "title": "FOREIGN KEY",
     "description": "Ensure the referential integrity of the data in one table to match values in another table",
     "tag": "SQL Constraints",
-    "syntax": "CREATE TABLE table_name\n(\ncolumn_name1 data_type PRIMARY KEY,\n FOREIGN KEY(column_name2) \nREFERENCES OtherTable(otherTableColumnID), \ncolumn_name3 data_type,\n...\n)",
+    "syntax": [
+      "CREATE TABLE table_name\n(\ncolumn_name1 data_type PRIMARY KEY,\n FOREIGN KEY(column_name2) \nREFERENCES OtherTable(otherTableColumnID), \ncolumn_name3 data_type,\n...\n)"
+    ],
     "id": "44"
   },
   {
     "title": "DEFAULT",
     "description": "Specifies a default value for a column",
     "tag": "SQL Constraints",
-    "syntax": "CREATE TABLE table_name\n(\ncolumn_name1 data_type DEFAULT defaultValue,\ncolumn_name2 data_type,\ncolumn_name3 data_type,\n...\n)",
+    "syntax": [
+      "CREATE TABLE table_name\n(\ncolumn_name1 data_type DEFAULT defaultValue,\ncolumn_name2 data_type,\ncolumn_name3 data_type,\n...\n)"
+    ],
     "id": "45"
   },
   {
     "title": "MID()",
     "description": "Extract characters from a text field",
     "tag": "Scalar Functions",
-    "syntax": "MID(text)",
+    "syntax": ["MID(text)"],
     "id": "46"
   },
   {
     "title": "ROUND()",
     "description": "Rounds a numeric field to the number of decimals specified",
     "tag": "Scalar Functions",
-    "syntax": "ROUND(integer)",
+    "syntax": ["ROUND(integer)"],
     "id": "47"
   },
   {
     "title": "FORMAT()",
     "description": "Formats how a field is to be displayed",
     "tag": "Scalar Functions",
-    "syntax": "FORMAT(value, format, culture)",
+    "syntax": ["FORMAT(value, format, culture)"],
     "id": "48"
   }
 ]
-
