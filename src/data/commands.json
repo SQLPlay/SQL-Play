@@ -47,7 +47,7 @@
     "tag": "Data Manipulation Language (DML))",
     "syntax": [
       "SELECT column_name(s)\nFROM table_name ",
-      " SELECT *\nFROM table_name"
+      "SELECT *\nFROM table_name"
     ],
     "example": ["SELECT Name,Breed\nFROM cat", "SELECT *\nFROM cat"],
     "id": "4"
