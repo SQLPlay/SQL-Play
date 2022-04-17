@@ -18,7 +18,11 @@ const WINDOW_WIDTH = Dimensions.get('window').width;
 export const CustomHandle: FC<BottomSheetHandleProps> = () => {
   const styles = useDynamicValue(dynamicStyles);
   return (
-    <View testID={ids.bottomSheetHandle} style={styles.container}>
+    <View
+      testID={ids.bottomSheetHandle}
+      accessibilityLabel="expand or collapse search drawer"
+      style={styles.container}
+    >
       <View style={styles.indicator} />
     </View>
   );

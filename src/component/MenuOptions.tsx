@@ -76,6 +76,8 @@ In future, this app may allow you to create and select different databases.
         style={{maxWidth: 'auto'}}
         anchor={
           <Icon
+            accessibilityLabel="Menu Options"
+            accessibilityHint="Shows additional options like export, list table & premium"
             name="more-vert"
             onPress={() => {
               setMenuOpen(true);

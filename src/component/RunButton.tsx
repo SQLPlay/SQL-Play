@@ -17,6 +17,7 @@ const RunButton: FC<Props> = ({runQuery}) => {
     <TouchableOpacity
       testID={ids.runBtn}
       accessibilityLabel="run button"
+      accessibilityHint="runs the command which is typed in input box"
       onPress={runQuery}
       style={styles.runBtn}
     >
