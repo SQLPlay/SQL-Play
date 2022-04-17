@@ -49,6 +49,7 @@ import {
   useInterstitialAd,
 } from '@react-native-admob/admob';
 import {DNS} from '@env';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
 
 Sentry.init({
@@ -150,61 +151,63 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <ColorSchemeProvider>
-      <BottomSheetModalProvider>
-        <SafeAreaProvider>
-          <StatusBar
-            barStyle="dark-content"
-            backgroundColor="#c8b900"
-            translucent
-          />
-          <GoPremium
-            modalState={premiumModalOpen}
-            setModalState={setPremiumModalOpen}
-            isPremium={isPremium}
-            setIsPremium={setIsPremium}
-          />
-          <KeyboardAvoidingView
-            style={{flex: 1}}
-            {...(Platform.OS === 'ios' && {behavior: 'padding'})}
-            keyboardVerticalOffset={Platform.select({
-              ios: 0,
-              android: 500,
-            })}
-          >
-            <View style={styles.statusBar} />
+    <GestureHandlerRootView style={{flex: 1}}>
+      <ColorSchemeProvider>
+        <BottomSheetModalProvider>
+          <SafeAreaProvider>
+            <StatusBar
+              barStyle="dark-content"
+              backgroundColor="#c8b900"
+              translucent
+            />
+            <GoPremium
+              modalState={premiumModalOpen}
+              setModalState={setPremiumModalOpen}
+              isPremium={isPremium}
+              setIsPremium={setIsPremium}
+            />
+            <KeyboardAvoidingView
+              style={{flex: 1}}
+              {...(Platform.OS === 'ios' && {behavior: 'padding'})}
+              keyboardVerticalOffset={Platform.select({
+                ios: 0,
+                android: 500,
+              })}
+            >
+              <View style={styles.statusBar} />
 
-            <Modal visible={loaderVisibility} transparent={true}>
-              <View style={styles.modalStyle}>
-                <ActivityIndicator size={50} color="gold" />
-              </View>
-            </Modal>
-            <View testID="query-runner" style={styles.outerContainer}>
-              <AppBar
-                premiumModalOpen={premiumModalOpen}
-                setPremiumModalOpen={setPremiumModalOpen}
-                setInputValue={setInputValue}
-                isPremium={isPremium}
-                setIsPremium={setIsPremium}
-              />
-              <View style={styles.innercontainer}>
-                <InputContainer
+              <Modal visible={loaderVisibility} transparent={true}>
+                <View style={styles.modalStyle}>
+                  <ActivityIndicator size={50} color="gold" />
+                </View>
+              </Modal>
+              <View testID="query-runner" style={styles.outerContainer}>
+                <AppBar
+                  premiumModalOpen={premiumModalOpen}
                   setPremiumModalOpen={setPremiumModalOpen}
-                  inputValue={inputValue}
                   setInputValue={setInputValue}
                   isPremium={isPremium}
+                  setIsPremium={setIsPremium}
                 />
-                {!!tableData.header.length && (
-                  <Table {...tableData} tableWidths={tableWidths} />
-                )}
-              </View>
+                <View style={styles.innercontainer}>
+                  <InputContainer
+                    setPremiumModalOpen={setPremiumModalOpen}
+                    inputValue={inputValue}
+                    setInputValue={setInputValue}
+                    isPremium={isPremium}
+                  />
+                  {!!tableData.header.length && (
+                    <Table {...tableData} tableWidths={tableWidths} />
+                  )}
+                </View>
 
-              <RunButton runQuery={runQuery} />
-            </View>
-          </KeyboardAvoidingView>
-        </SafeAreaProvider>
-      </BottomSheetModalProvider>
-    </ColorSchemeProvider>
+                <RunButton runQuery={runQuery} />
+              </View>
+            </KeyboardAvoidingView>
+          </SafeAreaProvider>
+        </BottomSheetModalProvider>
+      </ColorSchemeProvider>
+    </GestureHandlerRootView>
   );
 };
 

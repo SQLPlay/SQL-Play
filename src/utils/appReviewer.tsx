@@ -1,5 +1,5 @@
 // @ts-ignore
-import RnInAppReview from 'rn-in-app-review';
+// import RnInAppReview from 'rn-in-app-review';
 import {getAppData, setAppData} from './storage';
 import {Alert} from 'react-native';
 import Snackbar from 'react-native-snackbar';
@@ -27,12 +27,12 @@ const showReviewAlert = () => {
 };
 
 const launchReview = () => {
-  RnInAppReview.launchReviewFlow(async (isSuccessful: boolean) => {
-    if (isSuccessful) {
-      Snackbar.show({text: 'Thank You!'});
-      await setAppData(userActionId, 'given');
-    }
-  });
+  // RnInAppReview.launchReviewFlow(async (isSuccessful: boolean) => {
+  //   if (isSuccessful) {
+  //     Snackbar.show({text: 'Thank You!'});
+  //     await setAppData(userActionId, 'given');
+  //   }
+  // });
 };
 
 const run = async () => {
