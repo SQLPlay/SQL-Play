@@ -91,6 +91,7 @@ const ListItem: FC<LIProps> = props => {
             <Pressable
               style={styles.codeSyntaxContainer}
               accessibilityLabel={syntax}
+              accessibilityHint="copy syntax to command input"
               onPress={() => onSyntaxPress(syntax)}
             >
               <SyntaxHighlighter
@@ -111,6 +112,7 @@ const ListItem: FC<LIProps> = props => {
               props.example.map((eg, i) => (
                 <Pressable
                   key={i}
+                  accessibilityHint="copy example to the command input"
                   accessibilityLabel={eg}
                   style={styles.codeSyntaxContainer}
                   testID={ids.commandListExample}
@@ -158,6 +160,7 @@ interface Props {
 const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
   return (
     <BottomSheetFlatList
+      accessibilityHint="search examples and syntaxes"
       accessibilityLabel="Search Result"
       testID={ids.commandListSheet}
       data={listData}

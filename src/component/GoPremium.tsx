@@ -161,6 +161,7 @@ const GoPremium: FC<Props> = ({
             <View style={styles.header}>
               <Image
                 style={styles.logo}
+                accessibilityLabel="SQL Play premium logo"
                 source={require('../images/sqlpro.png')}
               />
               <Text style={styles.title}>
@@ -170,6 +171,7 @@ const GoPremium: FC<Props> = ({
             <Image
               style={styles.image}
               source={require('../images/autocomplete.png')}
+              accessibilityLabel="Image of showing autocomplete"
               resizeMode="contain"
             />
             <View style={styles.featureTxtContainer}>

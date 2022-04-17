@@ -188,13 +188,26 @@ const InputContainer: FC<Props> = ({
         </Text>
       </View>
       <View style={styles.sideButtonContainer}>
-        <TouchableOpacity onPress={onUpArrowPress}>
+        <TouchableOpacity
+          accessibilityLabel="Up Button"
+          accessibilityHint="gets the previous command from history"
+          onPress={onUpArrowPress}
+        >
           <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.downArrow} onPress={onDownArrowPress}>
+        <TouchableOpacity
+          style={styles.downArrow}
+          accessibilityLabel="Down Button"
+          accessibilityHint="gets the next command from history"
+          onPress={onDownArrowPress}
+        >
           <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={clearInput}>
+        <TouchableOpacity
+          onPress={clearInput}
+          accessibilityLabel="Clear command button"
+          accessibilityHint="clear the command input"
+        >
           <Icon size={30} name="text-box-remove" color={sideButton} />
         </TouchableOpacity>
       </View>
