@@ -8,16 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* SQL_PlayGroundTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SQL_PlayGroundTests.m */; };
-		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		26189AC10ED41C4E6B4419DA /* libPods-SQL_PlayGround-SQL_PlayGroundTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38F5402F6F7843931679762E /* libPods-SQL_PlayGround-SQL_PlayGroundTests.a */; };
-		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* SQL_PlayGroundTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SQL_PlayGroundTests.m */; };
 		4013C091259743F2004DBA4D /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4013C090259743F2004DBA4D /* Launch Screen.storyboard */; };
 		402A0F0125985F480052688F /* www in Resources */ = {isa = PBXBuildFile; fileRef = 402A0F0025985F480052688F /* www */; };
 		406EA36A2665560D008575A7 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 406EA3692665560D008575A7 /* File.swift */; };
+		406EB3CB280DB751004EFBED /* libswiftWebKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 406EB3CA280DB751004EFBED /* libswiftWebKit.tbd */; };
+		4077F8DC280DD4A000DE82A7 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4077F8DB280DD4A000DE82A7 /* AppDelegate.mm */; };
 		40AEDB2C275E89FB00BB9C76 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40AEDB2B275E89FB00BB9C76 /* StoreKit.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		BC39C4491EBCA6E7008DB76C /* libPods-SQL_PlayGround.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 41907F14D35117DF570A29A1 /* libPods-SQL_PlayGround.a */; };
@@ -48,7 +48,6 @@
 		12ACFE39F14489D12A3E6AFC /* Pods-SQL_PlayGround.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQL_PlayGround.release.xcconfig"; path = "Target Support Files/Pods-SQL_PlayGround/Pods-SQL_PlayGround.release.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* SQL_PlayGround.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SQL_PlayGround.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = SQL_PlayGround/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = SQL_PlayGround/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SQL_PlayGround/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SQL_PlayGround/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SQL_PlayGround/main.m; sourceTree = "<group>"; };
@@ -61,6 +60,8 @@
 		404EE5E32597B58A00FADAB9 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = ../android/app/src/main/assets/fonts/MaterialCommunityIcons.ttf; sourceTree = "<group>"; };
 		406EA366266555D0008575A7 /* SQL_PlayGround-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SQL_PlayGround-Bridging-Header.h"; sourceTree = "<group>"; };
 		406EA3692665560D008575A7 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		406EB3CA280DB751004EFBED /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
+		4077F8DB280DD4A000DE82A7 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = SQL_PlayGround/AppDelegate.mm; sourceTree = "<group>"; };
 		40AEDB2B275E89FB00BB9C76 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		41907F14D35117DF570A29A1 /* libPods-SQL_PlayGround.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SQL_PlayGround.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		743D7E35FD74C4F6FF135827 /* Pods-SQL_PlayGround.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SQL_PlayGround.debug.xcconfig"; path = "Target Support Files/Pods-SQL_PlayGround/Pods-SQL_PlayGround.debug.xcconfig"; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				406EB3CB280DB751004EFBED /* libswiftWebKit.tbd in Frameworks */,
 				BC39C4491EBCA6E7008DB76C /* libPods-SQL_PlayGround.a in Frameworks */,
 				40AEDB2C275E89FB00BB9C76 /* StoreKit.framework in Frameworks */,
 			);
@@ -127,7 +129,6 @@
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
-				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
@@ -149,6 +150,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				406EB3CA280DB751004EFBED /* libswiftWebKit.tbd */,
 				40AEDB2B275E89FB00BB9C76 /* StoreKit.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				41907F14D35117DF570A29A1 /* libPods-SQL_PlayGround.a */,
@@ -167,6 +169,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				4077F8DB280DD4A000DE82A7 /* AppDelegate.mm */,
 				402A0F0025985F480052688F /* www */,
 				4013C090259743F2004DBA4D /* Launch Screen.storyboard */,
 				13B07FAE1A68108700A75B9A /* SQL_PlayGround */,
@@ -580,7 +583,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				4077F8DC280DD4A000DE82A7 /* AppDelegate.mm in Sources */,
 				406EA36A2665560D008575A7 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -591,7 +594,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */,
-				2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -903,7 +905,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -925,8 +927,8 @@
 					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
+					"$(SDKROOT)/usr/lib/swift",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -969,7 +971,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 i386";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = i386;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -984,8 +986,8 @@
 					"$(inherited)",
 				);
 				LIBRARY_SEARCH_PATHS = (
+					"$(SDKROOT)/usr/lib/swift",
 					"\"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)\"",
-					"\"$(TOOLCHAIN_DIR)/usr/lib/swift-5.0/$(PLATFORM_NAME)\"",
 					"\"$(inherited)\"",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
