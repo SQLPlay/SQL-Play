@@ -7,7 +7,6 @@ import {
   LayoutAnimation,
   Pressable,
   Keyboard,
-  ScrollView,
 } from 'react-native';
 
 import {
@@ -34,13 +33,8 @@ if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 }
-interface LIProps {
-  title: string;
-  description: string;
-  syntax: string;
+interface LIProps extends CommandItem {
   index: number;
-  id: string;
-  example?: [string];
   setInputValue: (val: string) => void;
   bottomSheetRef: RefObject<BottomSheetModal>;
 }
@@ -88,23 +82,28 @@ const ListItem: FC<LIProps> = props => {
         {index === currentIndex && (
           <>
             {/* <Text style={styles.syntaxHeader}>Syntax</Text> */}
-            <Pressable
-              style={styles.codeSyntaxContainer}
-              accessibilityLabel={syntax}
-              accessibilityHint="copy syntax to command input"
-              onPress={() => onSyntaxPress(syntax)}
-            >
-              <SyntaxHighlighter
-                PreTag={View}
-                fontSize={14}
-                language="sql"
-                wrapLines={true}
-                style={isDark ? vs2015 : defaultStyle}
-                highlighter="hljs"
-              >
-                {syntax}
-              </SyntaxHighlighter>
-            </Pressable>
+            {syntax.map((item, idx) => {
+              return (
+                <Pressable
+                  key={idx}
+                  style={styles.codeSyntaxContainer}
+                  accessibilityLabel={item}
+                  accessibilityHint="copy syntax to command input"
+                  onPress={() => onSyntaxPress(item)}
+                >
+                  <SyntaxHighlighter
+                    PreTag={View}
+                    fontSize={14}
+                    language="sql"
+                    wrapLines={true}
+                    style={isDark ? vs2015 : defaultStyle}
+                    highlighter="hljs"
+                  >
+                    {syntax}
+                  </SyntaxHighlighter>
+                </Pressable>
+              );
+            })}
             {props?.example && (
               <Text style={styles.syntaxHeader}>Examples</Text>
             )}
@@ -146,14 +145,16 @@ const ListItem: FC<LIProps> = props => {
 
 const MemoizedLI = memo(ListItem);
 
+interface CommandItem {
+  id: string;
+  title: string;
+  description: string;
+  syntax: string[];
+  example?: string[];
+}
+
 interface Props {
-  listData: {
-    id: string;
-    title: string;
-    description: string;
-    syntax: string;
-    index?: number;
-  }[];
+  listData: CommandItem[];
   setInputValue: (val: string) => void;
   bottomSheetRef: RefObject<BottomSheetModal>;
 }
