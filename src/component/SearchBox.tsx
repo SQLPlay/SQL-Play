@@ -15,7 +15,8 @@ import {
   useDynamicValue,
 } from 'react-native-dynamic';
 
-import commandsList from '../data/commands.json';
+import commandsJSON from '../data/commands.json';
+
 import {debounce} from '../utils/utils';
 import fil from '../utils/fil';
 import CommandList from './CommandList';
@@ -27,14 +28,8 @@ interface Props {
 }
 
 const SearchBox: React.FC<Props> = ({setInputValue}) => {
-  interface listDataProps {
-    id: string;
-    title: string;
-    description: string;
-    syntax: string;
-  }
   const bottomSheetRef = useRef<BottomSheetModal>(null);
-  const [listData, setListData] = useState<listDataProps[]>(commandsList);
+  const [listData, setListData] = useState(commandsJSON);
   const [searchInput, setSearchInput] = useState<string>('');
 
   const {top: topSafeArea, bottom: bottomSafeArea} = useSafeAreaInsets();
@@ -61,7 +56,7 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
         const index = keywords.toLowerCase().indexOf(query);
 
         return index !== -1;
-      }, commandsList);
+      }, commandsJSON);
     };
 
     const filteredArr = filterData();
@@ -122,7 +117,7 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
           />
         </BottomSheetView>
         <CommandList
-          listData={listData}
+          listData={commandsJSON}
           setInputValue={setInputValue}
           bottomSheetRef={bottomSheetRef}
         />
