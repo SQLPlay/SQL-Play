@@ -1,2 +1,2 @@
-json_key_file("/Users/shivam/Library/Mobile Documents/com~apple~CloudDocs/Keystore/android-fastlane-key.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
+json_key_file("/home/shivam/Documents/mobile-dev-keys/android-fastlane-key.json") # Path to the json secret file - Follow https://docs.fastlane.tools/actions/supply/#setup to get one
 package_name("com.sql_playground") # e.g. com.krausefx.app
