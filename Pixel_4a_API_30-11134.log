@@ -1,0 +1,255 @@
+WARNING | unexpected system image feature string, emulator might not function correctly, please try updating the emulator.
+Fontconfig warning: "/usr/share/fontconfig/conf.avail/05-reset-dirs-sample.conf", line 6: unknown element "reset-dirs"
+WARNING | cannot add library /home/shivam/Android/Sdk/emulator/qemu/linux-x86_64/lib64/vulkan/libvulkan.so: failed
+VERBOSE | autoconfig: -skin pixel_4a
+VERBOSE | autoconfig: -skindir /home/shivam/Android/Sdk/skins/
+VERBOSE | autoconfig: -kernel /home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//kernel-ranchu-64
+VERBOSE | Target arch = 'x86'
+VERBOSE | Auto-config: -qemu -cpu qemu32
+VERBOSE | Auto-detect: Kernel image requires new device naming scheme.
+VERBOSE | Auto-detect: Kernel does not support YAFFS2 partitions.
+VERBOSE | autoconfig: -ramdisk /home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//ramdisk.img
+VERBOSE | Using initial system image: /home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//system.img
+VERBOSE | Using initial vendor image: /home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//vendor.img
+VERBOSE | autoconfig: -data /home/shivam/.android/avd/Pixel_4a_API_30.avd/userdata-qemu.img
+VERBOSE | autoconfig: -initdata /home/shivam/.android/avd/Pixel_4a_API_30.avd/userdata.img
+VERBOSE | autoconfig: -cache /home/shivam/.android/avd/Pixel_4a_API_30.avd/cache.img
+VERBOSE | autoconfig: -sdcard /home/shivam/.android/avd/Pixel_4a_API_30.avd/sdcard.img
+VERBOSE | Increasing RAM size to 2048MB
+VERBOSE | VM heap size 256MB is below hardware specified minimum of 512MB,setting it to that value
+VERBOSE | System image is read only
+VERBOSE | Found 1 DNS servers:
+VERBOSE | 	192.168.31.1
+VERBOSE | Unexpected feature list:
+VERBOSE | Vulkan
+VERBOSE | trying to load skin file '/home/shivam/Android/Sdk/skins//pixel_4a/layout'
+VERBOSE | Requested console port 11134: Inferring adb port 11135.
+VERBOSE | CPU Acceleration: working
+VERBOSE | CPU Acceleration status: KVM (version 12) is installed and usable.
+VERBOSE | handleCpuAcceleration: feature check for hvf
+VERBOSE | registered 'boot-properties' qemud service
+VERBOSE | Adding boot property: 'qemu.cmdline' = 'androidboot.logcat=*:V androidboot.consolepipe=qemu_pipe,pipe:logcat'
+VERBOSE | Adding boot property: 'qemu.logcat' = 'start'
+VERBOSE | GPU emulation enabled using 'host' mode
+VERBOSE | Initializing hardware OpenGLES emulation support
+VERBOSE | create display 0
+VERBOSE | setDisplayPose 0 x 0 y 0 w 1080 h 2340 dpi 0
+INFO    | added library /home/shivam/Android/Sdk/emulator/lib64/vulkan/libvulkan.so
+INFO    | configAndStartRenderer: setting vsync to 60 hz
+VERBOSE | Found 1 DNS servers:
+VERBOSE | 	192.168.31.1
+INFO    | Content of hardware configuration file:
+INFO    | 	hw.cpu.arch = x86
+INFO    | 	hw.cpu.model = qemu32
+INFO    | 	hw.cpu.ncore = 4
+INFO    | 	hw.ramSize = 2048
+INFO    | 	hw.screen = multi-touch
+INFO    | 	hw.mainKeys = false
+INFO    | 	hw.trackBall = false
+INFO    | 	hw.keyboard = true
+INFO    | 	hw.keyboard.lid = false
+INFO    | 	hw.keyboard.charmap = qwerty2
+INFO    | 	hw.dPad = false
+INFO    | 	hw.rotaryInput = false
+INFO    | 	hw.gsmModem = true
+INFO    | 	hw.gps = true
+INFO    | 	hw.battery = true
+INFO    | 	hw.accelerometer = true
+INFO    | 	hw.gyroscope = true
+INFO    | 	hw.audioInput = true
+INFO    | 	hw.audioOutput = true
+INFO    | 	hw.sdCard = true
+INFO    | 	hw.sdCard.path = /home/shivam/.android/avd/Pixel_4a_API_30.avd/sdcard.img
+INFO    | 	disk.cachePartition = true
+INFO    | 	disk.cachePartition.path = /home/shivam/.android/avd/Pixel_4a_API_30.avd/cache.img
+INFO    | 	disk.cachePartition.size = 66m
+INFO    | 	test.quitAfterBootTimeOut = -1
+INFO    | 	test.delayAdbTillBootComplete = 0
+INFO    | 	test.monitorAdb = 0
+INFO    | 	hw.lcd.width = 1080
+INFO    | 	hw.lcd.height = 2340
+INFO    | 	hw.lcd.depth = 16
+INFO    | 	hw.lcd.density = 440
+INFO    | 	hw.lcd.backlight = true
+INFO    | 	hw.lcd.vsync = 60
+INFO    | 	hw.gltransport = pipe
+INFO    | 	hw.gltransport.asg.writeBufferSize = 1048576
+INFO    | 	hw.gltransport.asg.writeStepSize = 4096
+INFO    | 	hw.gltransport.asg.dataRingSize = 32768
+INFO    | 	hw.gltransport.drawFlushInterval = 800
+INFO    | 	hw.displayRegion.0.1.xOffset = -1
+INFO    | 	hw.displayRegion.0.1.yOffset = -1
+INFO    | 	hw.displayRegion.0.1.width = 0
+INFO    | 	hw.displayRegion.0.1.height = 0
+INFO    | 	hw.displayRegion.0.2.xOffset = -1
+INFO    | 	hw.displayRegion.0.2.yOffset = -1
+INFO    | 	hw.displayRegion.0.2.width = 0
+INFO    | 	hw.displayRegion.0.2.height = 0
+INFO    | 	hw.displayRegion.0.3.xOffset = -1
+INFO    | 	hw.displayRegion.0.3.yOffset = -1
+INFO    | 	hw.displayRegion.0.3.width = 0
+INFO    | 	hw.displayRegion.0.3.height = 0
+INFO    | 	hw.display1.width = 0
+INFO    | 	hw.display1.height = 0
+INFO    | 	hw.display1.density = 0
+INFO    | 	hw.display1.xOffset = -1
+INFO    | 	hw.display1.yOffset = -1
+INFO    | 	hw.display1.flag = 0
+INFO    | 	hw.display2.width = 0
+INFO    | 	hw.display2.height = 0
+INFO    | 	hw.display2.density = 0
+INFO    | 	hw.display2.xOffset = -1
+INFO    | 	hw.display2.yOffset = -1
+INFO    | 	hw.display2.flag = 0
+INFO    | 	hw.display3.width = 0
+INFO    | 	hw.display3.height = 0
+INFO    | 	hw.display3.density = 0
+INFO    | 	hw.display3.xOffset = -1
+INFO    | 	hw.display3.yOffset = -1
+INFO    | 	hw.display3.flag = 0
+INFO    | 	hw.gpu.enabled = true
+INFO    | 	hw.gpu.mode = host
+INFO    | 	hw.initialOrientation = Portrait
+INFO    | 	hw.camera.back = virtualscene
+INFO    | 	hw.camera.front = emulated
+INFO    | 	vm.heapSize = 512
+INFO    | 	hw.sensors.light = true
+INFO    | 	hw.sensors.pressure = true
+INFO    | 	hw.sensors.humidity = true
+INFO    | 	hw.sensors.proximity = true
+INFO    | 	hw.sensors.magnetic_field = true
+INFO    | 	hw.sensors.magnetic_field_uncalibrated = true
+INFO    | 	hw.sensors.gyroscope_uncalibrated = true
+INFO    | 	hw.sensors.orientation = true
+INFO    | 	hw.sensors.temperature = true
+INFO    | 	hw.sensors.rgbclight = false
+INFO    | 	hw.sensor.hinge = false
+INFO    | 	hw.sensor.hinge.count = 0
+INFO    | 	hw.sensor.hinge.type = 0
+INFO    | 	hw.sensor.hinge.sub_type = 0
+INFO    | 	hw.sensor.hinge.fold_to_displayRegion.0.1_at_posture = 1
+INFO    | 	hw.sensor.roll = false
+INFO    | 	hw.sensor.roll.count = 0
+INFO    | 	hw.sensor.roll.resize_to_displayRegion.0.1_at_posture = 6
+INFO    | 	hw.sensor.roll.resize_to_displayRegion.0.2_at_posture = 6
+INFO    | 	hw.sensor.roll.resize_to_displayRegion.0.3_at_posture = 6
+INFO    | 	hw.sensors.heart_rate = false
+INFO    | 	hw.sensors.wrist_tilt = false
+INFO    | 	hw.useext4 = true
+INFO    | 	hw.arc = false
+INFO    | 	hw.arc.autologin = false
+INFO    | 	hw.device.name = pixel_4a
+INFO    | 	kernel.path = /home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//kernel-ranchu-64
+INFO    | 	kernel.newDeviceNaming = yes
+INFO    | 	kernel.supportsYaffs2 = no
+INFO    | 	disk.ramdisk.path = /home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//ramdisk.img
+INFO    | 	disk.systemPartition.initPath = /home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//system.img
+INFO    | 	disk.systemPartition.size = 3083m
+INFO    | 	disk.vendorPartition.initPath = /home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//vendor.img
+INFO    | 	disk.vendorPartition.size = 800m
+INFO    | 	disk.dataPartition.path = /home/shivam/.android/avd/Pixel_4a_API_30.avd/userdata-qemu.img
+INFO    | 	disk.dataPartition.size = 6g
+INFO    | 	disk.encryptionKeyPartition.path = /home/shivam/.android/avd/Pixel_4a_API_30.avd/encryptionkey.img
+INFO    | 	PlayStore.enabled = false
+INFO    | 	avd.name = Pixel_4a_API_30
+INFO    | 	avd.id = Pixel_4a_API_30
+INFO    | 	fastboot.forceColdBoot = false
+INFO    | 	android.sdk.root = /home/shivam/Android/Sdk
+INFO    | 	android.avd.home = /home/shivam/.android/avd
+INFO    | .
+INFO    | QEMU options list:
+INFO    | 	 argv[00] = "/home/shivam/Android/Sdk/emulator/qemu/linux-x86_64/qemu-system-x86_64"
+INFO    | 	 argv[01] = "-dns-server"
+INFO    | 	 argv[02] = "192.168.31.1"
+INFO    | 	 argv[03] = "-no-audio"
+INFO    | 	 argv[04] = "-mem-path"
+INFO    | 	 argv[05] = "/home/shivam/.android/avd/Pixel_4a_API_30.avd/snapshots/default_boot/ram.img"
+INFO    | 	 argv[06] = "-mem-file-shared"
+INFO    | 	 argv[07] = "-serial"
+INFO    | 	 argv[08] = "null"
+INFO    | 	 argv[09] = "-android-ports"
+INFO    | 	 argv[10] = "11134,11135"
+INFO    | 	 argv[11] = "-device"
+INFO    | 	 argv[12] = "goldfish_pstore,addr=0xff018000,size=0x10000,file=/home/shivam/.android/avd/Pixel_4a_API_30.avd/data/misc/pstore/pstore.bin"
+INFO    | 	 argv[13] = "-cpu"
+INFO    | 	 argv[14] = "android64"
+INFO    | 	 argv[15] = "-enable-kvm"
+INFO    | 	 argv[16] = "-smp"
+INFO    | 	 argv[17] = "cores=4"
+INFO    | 	 argv[18] = "-m"
+INFO    | 	 argv[19] = "2048"
+INFO    | 	 argv[20] = "-lcd-density"
+INFO    | 	 argv[21] = "440"
+INFO    | 	 argv[22] = "-object"
+INFO    | 	 argv[23] = "iothread,id=disk-iothread"
+INFO    | 	 argv[24] = "-nodefaults"
+INFO    | 	 argv[25] = "-kernel"
+INFO    | 	 argv[26] = "/home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//kernel-ranchu-64"
+INFO    | 	 argv[27] = "-initrd"
+INFO    | 	 argv[28] = "/home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//ramdisk.img"
+INFO    | 	 argv[29] = "-drive"
+INFO    | 	 argv[30] = "if=none,index=0,id=system,if=none,file=/home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//system.img,read-only"
+INFO    | 	 argv[31] = "-device"
+INFO    | 	 argv[32] = "virtio-blk-pci,drive=system,iothread=disk-iothread,modern-pio-notify"
+INFO    | 	 argv[33] = "-drive"
+INFO    | 	 argv[34] = "if=none,index=1,id=cache,if=none,file=/home/shivam/.android/avd/Pixel_4a_API_30.avd/cache.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576"
+INFO    | 	 argv[35] = "-device"
+INFO    | 	 argv[36] = "virtio-blk-pci,drive=cache,iothread=disk-iothread,modern-pio-notify"
+INFO    | 	 argv[37] = "-drive"
+INFO    | 	 argv[38] = "if=none,index=2,id=userdata,if=none,file=/home/shivam/.android/avd/Pixel_4a_API_30.avd/userdata-qemu.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576"
+INFO    | 	 argv[39] = "-device"
+INFO    | 	 argv[40] = "virtio-blk-pci,drive=userdata,iothread=disk-iothread,modern-pio-notify"
+INFO    | 	 argv[41] = "-drive"
+INFO    | 	 argv[42] = "if=none,index=3,id=encrypt,if=none,file=/home/shivam/.android/avd/Pixel_4a_API_30.avd/encryptionkey.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576"
+INFO    | 	 argv[43] = "-device"
+INFO    | 	 argv[44] = "virtio-blk-pci,drive=encrypt,iothread=disk-iothread,modern-pio-notify"
+INFO    | 	 argv[45] = "-drive"
+INFO    | 	 argv[46] = "if=none,index=4,id=vendor,if=none,file=/home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//vendor.img,read-only"
+INFO    | 	 argv[47] = "-device"
+INFO    | 	 argv[48] = "virtio-blk-pci,drive=vendor,iothread=disk-iothread,modern-pio-notify"
+INFO    | 	 argv[49] = "-drive"
+INFO    | 	 argv[50] = "if=none,index=5,id=sdcard,if=none,file=/home/shivam/.android/avd/Pixel_4a_API_30.avd/sdcard.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576"
+INFO    | 	 argv[51] = "-device"
+INFO    | 	 argv[52] = "virtio-blk-pci,drive=sdcard,iothread=disk-iothread,modern-pio-notify"
+INFO    | 	 argv[53] = "-netdev"
+INFO    | 	 argv[54] = "user,id=mynet"
+INFO    | 	 argv[55] = "-device"
+INFO    | 	 argv[56] = "virtio-net-pci,netdev=mynet"
+INFO    | 	 argv[57] = "-device"
+INFO    | 	 argv[58] = "virtio-rng-pci"
+INFO    | 	 argv[59] = "-show-cursor"
+INFO    | 	 argv[60] = "-device"
+INFO    | 	 argv[61] = "virtio_input_multi_touch_pci_1"
+INFO    | 	 argv[62] = "-device"
+INFO    | 	 argv[63] = "virtio_input_multi_touch_pci_2"
+INFO    | 	 argv[64] = "-device"
+INFO    | 	 argv[65] = "virtio_input_multi_touch_pci_3"
+INFO    | 	 argv[66] = "-device"
+INFO    | 	 argv[67] = "virtio_input_multi_touch_pci_4"
+INFO    | 	 argv[68] = "-device"
+INFO    | 	 argv[69] = "virtio_input_multi_touch_pci_5"
+INFO    | 	 argv[70] = "-device"
+INFO    | 	 argv[71] = "virtio_input_multi_touch_pci_6"
+INFO    | 	 argv[72] = "-device"
+INFO    | 	 argv[73] = "virtio_input_multi_touch_pci_7"
+INFO    | 	 argv[74] = "-device"
+INFO    | 	 argv[75] = "virtio_input_multi_touch_pci_8"
+INFO    | 	 argv[76] = "-device"
+INFO    | 	 argv[77] = "virtio_input_multi_touch_pci_9"
+INFO    | 	 argv[78] = "-device"
+INFO    | 	 argv[79] = "virtio_input_multi_touch_pci_10"
+INFO    | 	 argv[80] = "-device"
+INFO    | 	 argv[81] = "virtio_input_multi_touch_pci_11"
+INFO    | 	 argv[82] = "-device"
+INFO    | 	 argv[83] = "virtio-keyboard-pci"
+INFO    | 	 argv[84] = "-L"
+INFO    | 	 argv[85] = "/home/shivam/Android/Sdk/emulator/lib/pc-bios"
+INFO    | 	 argv[86] = "-soundhw"
+INFO    | 	 argv[87] = "hda"
+INFO    | 	 argv[88] = "-vga"
+INFO    | 	 argv[89] = "none"
+INFO    | 	 argv[90] = "-append"
+INFO    | 	 argv[91] = "no_timer_check clocksource=pit console=0 cma=296M@0-4G mac80211_hwsim.channels=2 loop.max_part=7 ramoops.mem_address=0xff018000 ramoops.mem_size=0x10000 memmap=0x10000$0xff018000 printk.devkmsg=on qemu=1 androidboot.hardware=ranchu androidboot.serialno=EMULATOR31X2X9X0 android.bootanim=0 qemu.gles=1 qemu.settings.system.screen_off_timeout=2147483647 qemu.encrypt=1 qemu.vsync=60 qemu.gltransport=pipe qemu.gltransport.drawFlushInterval=800 qemu.opengles.version=196608 qemu.uirenderer=skiagl qemu.dalvik.vm.heapsize=512m qemu.camera_protocol_ver=1 qemu.camera_hq_edge_processing=0 androidboot.vbmeta.size=6144 androidboot.vbmeta.hash_alg=sha256 androidboot.vbmeta.digest=ea5843921b6671f2d851ebf15e7b55f71e73fc36967778bca3be3e3cf4e15f28 androidboot.boot_devices=pci0000:00/0000:00:03.0 qemu.wifi=1 qemu.hwcodec.avcdec=2 qemu.hwcodec.vpxdec=2 android.qemud=1 qemu.avd_name=Pixel_4a_API_30"
+INFO    | 	 argv[92] = "-android-hw"
+INFO    | 	 argv[93] = "/home/shivam/.android/avd/Pixel_4a_API_30.avd/hardware-qemu.ini"
+INFO    | Concatenated QEMU options: /home/shivam/Android/Sdk/emulator/qemu/linux-x86_64/qemu-system-x86_64 -dns-server 192.168.31.1 -no-audio -mem-path /home/shivam/.android/avd/Pixel_4a_API_30.avd/snapshots/default_boot/ram.img -mem-file-shared -serial null -android-ports 11134,11135 -device goldfish_pstore,addr=0xff018000,size=0x10000,file=/home/shivam/.android/avd/Pixel_4a_API_30.avd/data/misc/pstore/pstore.bin -cpu android64 -enable-kvm -smp cores=4 -m 2048 -lcd-density 440 -object iothread,id=disk-iothread -nodefaults -kernel /home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//kernel-ranchu-64 -initrd /home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//ramdisk.img -drive if=none,index=0,id=system,if=none,file=/home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//system.img,read-only -device virtio-blk-pci,drive=system,iothread=disk-iothread,modern-pio-notify -drive if=none,index=1,id=cache,if=none,file=/home/shivam/.android/avd/Pixel_4a_API_30.avd/cache.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576 -device virtio-blk-pci,drive=cache,iothread=disk-iothread,modern-pio-notify -drive if=none,index=2,id=userdata,if=none,file=/home/shivam/.android/avd/Pixel_4a_API_30.avd/userdata-qemu.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576 -device virtio-blk-pci,drive=userdata,iothread=disk-iothread,modern-pio-notify -drive if=none,index=3,id=encrypt,if=none,file=/home/shivam/.android/avd/Pixel_4a_API_30.avd/encryptionkey.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576 -device virtio-blk-pci,drive=encrypt,iothread=disk-iothread,modern-pio-notify -drive if=none,index=4,id=vendor,if=none,file=/home/shivam/Android/Sdk/system-images/android-30/google_apis/x86//vendor.img,read-only -device virtio-blk-pci,drive=vendor,iothread=disk-iothread,modern-pio-notify -drive if=none,index=5,id=sdcard,if=none,file=/home/shivam/.android/avd/Pixel_4a_API_30.avd/sdcard.img.qcow2,overlap-check=none,cache=unsafe,l2-cache-size=1048576 -device virtio-blk-pci,drive=sdcard,iothread=disk-iothread,modern-pio-notify -netdev user,id=mynet -device virtio-net-pci,netdev=mynet -device virtio-rng-pci -show-cursor -device virtio_input_multi_touch_pci_1 -device virtio_input_multi_touch_pci_2 -device virtio_input_multi_touch_pci_3 -device virtio_input_multi_touch_pci_4 -device virtio_input_multi_touch_pci_5 -device virtio_input_multi_touch_pci_6 -device virtio_input_multi_touch_pci_7 -device virtio_input_multi_touch_pci_8 -device virtio_input_multi_touch_pci_9 -device virtio_input_multi_touch_pci_10 -device virtio_input_multi_touch_pci_11 -device virtio-keyboard-pci -L /home/shivam/Android/Sdk/emulator/lib/pc-bios -soundhw hda -vga none -append 'no_timer_check clocksource=pit console=0 cma=296M@0-4G mac80211_hwsim.channels=2 loop.max_part=7 ramoops.mem_address=0xff018000 ramoopWARNING | Requested adb port (11135) is outside the recommended range [5555,5586]. ADB may not function properly for the emulator. See -help-port for details.
