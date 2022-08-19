@@ -1,4 +1,6 @@
+// import {QuickSQLite} from 'react-native-quick-sqlite';
 import SQLite, {ResultSet, SQLError} from 'react-native-sqlite-storage';
+// import {Dirs, FileSystem} from 'react-native-file-access';
 
 const errorCB = (err: SQLError) => {
   console.warn('SQL Error: ' + err);
@@ -7,6 +9,36 @@ const errorCB = (err: SQLError) => {
 const openCB = () => {
   console.log('Database OPENED');
 };
+
+// FileSystem.ls(`${Dirs.MainBundleDir}`).then(l => console.log(l));
+
+const init = async () => {
+  // await FileSystem.cp(
+  //   `${Dirs.MainBundleDir}/www/prepop.db`,
+  //   Dirs.DocumentDir + '/prepop.db',
+  // ).catch(err => console.log(err));
+  //
+  // const stat = await FileSystem.statDir(Dirs.MainBundleDir);
+  // stat.forEach(i => console.log(i.path));
+  // const db = QuickSQLite.open('prepop.db', '../databases');
+  // //
+  // console.log('db', db);
+  // //
+  // const res = QuickSQLite.executeSql(
+  //   'prepop.db',
+  //   "SELECT * FROM sqlite_master WHERE type='table'",
+  //   undefined,
+  // );
+  //
+  // console.log(res.rows);
+};
+
+// init();
+// if (!status) {
+//   rows.forEach(row => {
+//     console.log(row);
+//   });
+// }
 
 const userDb = SQLite.openDatabase(
   {
@@ -165,8 +197,3 @@ createAppDataTable();
 createUserCommandsTable();
 
 // insertUserCommand('Select yoyo from empylohre');
-
-const testCommands = async () => {
-  console.log(await getLastUserCommand(4));
-};
-// testCommands();
