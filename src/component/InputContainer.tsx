@@ -28,7 +28,6 @@ import {
 import {lightDark, sideButton} from '../data/colors.json';
 import {findUserCommands, getLastUserCommand} from '../utils/storage';
 import {debounce} from '../utils/utils';
-import GestureRecognizer from 'react-native-swipe-gestures';
 import {ids} from '../../e2e/ids';
 
 interface Props {
@@ -150,35 +149,30 @@ const InputContainer: FC<Props> = ({
     <View>
       <Text style={styles.inputHeader}>Type your SQL Query</Text>
       <View style={styles.inputContainer}>
-        <GestureRecognizer
-          onSwipeRight={setAutoInput}
-          onSwipeLeft={() => isPremium && clearInput()}
+        <FlingGestureHandler
+          direction={Directions.RIGHT}
+          onHandlerStateChange={handleSwipeRight}
         >
           <FlingGestureHandler
-            direction={Directions.RIGHT}
-            onHandlerStateChange={handleSwipeRight}
+            direction={Directions.LEFT}
+            onHandlerStateChange={handleSwipeLeft}
           >
-            <FlingGestureHandler
-              direction={Directions.LEFT}
-              onHandlerStateChange={handleSwipeLeft}
-            >
-              <TextInput
-                style={styles.input}
-                autoFocus={true}
-                testID={ids.queryTextInput}
-                onChangeText={text => setInputValue(text)}
-                multiline
-                placeholderTextColor="gray"
-                textAlignVertical="top"
-                defaultValue={inputValue}
-                keyboardType="ascii-capable"
-                autoCorrect={false}
-                numberOfLines={4}
-                placeholder="Type your SQL query"
-              />
-            </FlingGestureHandler>
+            <TextInput
+              style={styles.input}
+              autoFocus={true}
+              testID={ids.queryTextInput}
+              onChangeText={text => setInputValue(text)}
+              multiline
+              placeholderTextColor="gray"
+              textAlignVertical="top"
+              defaultValue={inputValue}
+              keyboardType="ascii-capable"
+              autoCorrect={false}
+              numberOfLines={4}
+              placeholder="Type your SQL query"
+            />
           </FlingGestureHandler>
-        </GestureRecognizer>
+        </FlingGestureHandler>
         <Text
           suppressHighlighting={true}
           onLongPress={setAutoInput}

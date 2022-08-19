@@ -50,13 +50,11 @@ const GoPremium: FC<Props> = ({
   const getItems = async (): Promise<void> => {
     try {
       const result: boolean = await RNIap.initConnection();
-      console.log('connection initialised', result);
       /** If there is no skus return here */
       if (!itemSkus) {
         return;
       }
       const products: Product[] = await RNIap.getProducts(itemSkus);
-      console.log('Products', products);
       setlocalizedPrice(products[0].localizedPrice);
 
       purchaseUpdate = purchaseUpdatedListener(async purchase => {
@@ -105,6 +103,8 @@ const GoPremium: FC<Props> = ({
         RNIap.endConnection();
       };
     };
+
+    setIsPremium(true);
   }, []);
 
   const buyPremium = async (): Promise<void> => {

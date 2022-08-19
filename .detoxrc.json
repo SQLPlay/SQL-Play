@@ -23,7 +23,7 @@
       "type": "android.apk",
       "binaryPath": "android/app/build/outputs/apk/release/app-release.apk",
       "testBinaryPath": "android/app/build/outputs/apk/androidTest/release/app-release-androidTest.apk",
-      "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd .."
+      "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=release && cd .."
     },
     "android.debug": {
       "type": "android.apk",
