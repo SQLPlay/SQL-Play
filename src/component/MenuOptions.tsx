@@ -62,6 +62,15 @@ In future, this app may allow you to create and select different databases.
     }
   };
 
+  const openPrivacy = (): void => {
+    try {
+      Linking.openURL(
+        'mailto:hi@creativeshi.com?subject=SQL%20Playground%20Feedback',
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
   const openPremiumModal = async () => {
     setMenuOpen(false);
     setPremiumModalOpen(true);
@@ -99,6 +108,7 @@ In future, this app may allow you to create and select different databases.
         <MenuItem onPress={showAllTables}>List all tables</MenuItem>
         <MenuItem onPress={showSupportedQuery}>Query Support</MenuItem>
         <MenuItem onPress={sendMailFeedback}>Send Feedback</MenuItem>
+        <MenuItem onPress={openPrivacy}>Privacy Policy</MenuItem>
         <MenuDivider />
         <MenuItem onPress={openPremiumModal}>
           <MCIcon name="crown" size={16} />
