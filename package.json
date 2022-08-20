@@ -17,7 +17,8 @@
     "test": "jest",
     "lint": "eslint .",
     "e2e:build": "detox build --configuration",
-    "e2e:test": "detox test --configuration"
+    "e2e:test": "detox test --configuration",
+    "test:examples": "vitest run tests/examples.spec.ts"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4",
@@ -61,6 +62,7 @@
     "@react-native-community/eslint-config": "^3.0.3",
     "@testing-library/jest-native": "^4.0.5",
     "@testing-library/react-native": "^11.0.0",
+    "@types/better-sqlite3": "^7.6.0",
     "@types/jest": "^28.1.6",
     "@types/react": "18.0.15",
     "@types/react-native": "^0.69.3",
@@ -71,6 +73,7 @@
     "babel-jest": "^28.1.3",
     "babel-plugin-transform-inline-environment-variables": "^0.4.4",
     "babel-plugin-transform-remove-console": "^6.9.4",
+    "better-sqlite3": "^7.6.2",
     "detox": "19.8.2",
     "eslint": "^8.20.0",
     "metro-react-native-babel-preset": "^0.70.3",
@@ -82,6 +85,7 @@
     "react-native-version": "^4.0.0",
     "react-test-renderer": "18.0.0",
     "typescript": "^4.7.4",
+    "vitest": "^0.22.1",
     "webdriverio": "^7.20.7"
   },
   "jest": {
