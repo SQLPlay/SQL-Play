@@ -406,7 +406,7 @@
   },
   {
     "title": "PRIMARY KEY",
-    "description": "Combination of NOT NULL and UNIQUE.It uniquely identifies each record in a database table",
+    "description": "Combination of NOT NULL and UNIQUE. It uniquely identifies each record in a database table",
     "tag": "SQL Constraints",
     "syntax": [
       "CREATE TABLE table_name\n(\ncolumn_name1 data_type PRIMARY KEY,\ncolumn_name2 data_type,\ncolumn_name3 data_type,\n...\n)"
