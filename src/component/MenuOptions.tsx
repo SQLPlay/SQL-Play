@@ -64,9 +64,7 @@ In future, this app may allow you to create and select different databases.
 
   const openPrivacy = (): void => {
     try {
-      Linking.openURL(
-        'mailto:hi@creativeshi.com?subject=SQL%20Playground%20Feedback',
-      );
+      Linking.openURL('https://sqlplay.net/privacy');
     } catch (e) {
       console.error(e);
     }
