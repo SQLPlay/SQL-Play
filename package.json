@@ -50,7 +50,7 @@
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-syntax-highlighter": "^2.1.0",
     "react-native-table-component": "^1.2.2",
-    "react-native-text-size": "^4.0.0-rc.1",
+    "react-native-text-size": "git+https://github.com/Naturalclar/react-native-text-size/#fix/podInstall",
     "react-native-vector-icons": "^9.2.0",
     "sp-react-native-in-app-updates": "^1.1.7"
   },

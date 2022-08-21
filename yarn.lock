@@ -8201,10 +8201,9 @@ react-native-table-component@^1.2.2:
   resolved "https://registry.yarnpkg.com/react-native-table-component/-/react-native-table-component-1.2.2.tgz#1c9bdcd8f1fd7edf10d1e93ebc3b7877ecd74def"
   integrity sha512-7bbsi5431iWcjj3toASh8lFHGi6AG/+MTd4M7GuksXKxx/CFs/Qwv1Ys7D2wgyuYKe3hxWNfSVrteFj0tOYXYw==
 
-react-native-text-size@^4.0.0-rc.1:
+"react-native-text-size@git+https://github.com/Naturalclar/react-native-text-size/#fix/podInstall":
   version "4.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/react-native-text-size/-/react-native-text-size-4.0.0-rc.1.tgz#1e048d345dd6a5a8e1269e0585c1a5948c478da5"
-  integrity sha512-CysqjU2jK6Yc+a+kEI222pUyTY2ywcU2HqbFqf1KHymW6OPTdvBBHqbEJKL0QiLhQaFYDbqicM+h990s9TP00g==
+  resolved "git+https://github.com/Naturalclar/react-native-text-size/#893356b8520ffd29dad4bce6f3e5d47689381bc9"
 
 react-native-typescript-transformer@^1.2.13:
   version "1.2.13"
