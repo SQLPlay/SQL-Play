@@ -8,7 +8,7 @@
       "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/SQL_PlayGround.app",
       "build": "xcodebuild -workspace ios/Sql_Playground.xcworkspace -scheme SQL_PlayGround -configuration Release -sdk iphonesimulator -derivedDataPath ios/build",
       "device": {
-        "type": "iPhone 12"
+        "type": "iPhone 13"
       }
     },
     "ios.debug": {
@@ -16,7 +16,7 @@
       "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/SQL_PlayGround.app",
       "build": "xcodebuild -workspace ios/Sql_Playground.xcworkspace -scheme SQL_PlayGround -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
       "device": {
-        "type": "iPhone 12"
+        "type": "iPhone 13"
       }
     },
     "android.release": {
@@ -35,7 +35,7 @@
     "simulator": {
       "type": "ios.simulator",
       "device": {
-        "type": "iPhone 12"
+        "type": "iPhone 13"
       }
     },
     "emulator": {
