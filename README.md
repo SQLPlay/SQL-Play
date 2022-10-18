@@ -1,5 +1,5 @@
 # SQL-Play
-Simple app to practice and learn SQL in React Native using SQLite
+Simple app to practice and [learn SQL](https://www.scaler.com/topics/sql/) in React Native using SQLite
 
 ![app banner](https://images-ext-1.discordapp.net/external/gOHjs-tzPnexy5Jb6i3LW6HaS2TMFDKTaCKfZkegwjk/https/lh3.googleusercontent.com/AiTtPMBZGW1Xaunamgerhi89sbvkKu3N93HcQnCwBTAJU_ndr01QTLwIwdg0bl3u1Q?width=400&height=195)
 
