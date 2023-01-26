@@ -12,7 +12,7 @@ Simple app to practice and learn SQL in React Native using SQLite
 |<img src="https://user-images.githubusercontent.com/23727670/148730013-8dabb36c-9918-45dd-bd6b-10f5239a884f.png" width="200"/>|
 |:---:|
 |[Ishwar Rimal](https://www.linkedin.com/in/ishwar-rimal-319647b3/)|
-| Sponsored 50% of Apple fee|
+| Sponsored 50% of Apple fee (2022)|
 
 
 
