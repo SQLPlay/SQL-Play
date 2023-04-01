@@ -1,8 +1,10 @@
 // import {QuickSQLite} from 'react-native-quick-sqlite';
-import SQLite, {ResultSet, SQLError} from 'react-native-sqlite-storage';
-// import {Dirs, FileSystem} from 'react-native-file-access';
+import {QuickSQLite as SQLite} from 'react-native-quick-sqlite';
+import {Dirs, FileSystem} from 'react-native-file-access';
 
-const errorCB = (err: SQLError) => {
+// Get the path to the assets folder
+
+const errorCB = (err: Error) => {
   console.warn('SQL Error: ' + err);
 };
 
@@ -18,53 +20,53 @@ const init = async () => {
   //   Dirs.DocumentDir + '/prepop.db',
   // ).catch(err => console.log(err));
   //
-  // const stat = await FileSystem.statDir(Dirs.MainBundleDir);
+
+  const assetList = await FileSystem.ls(Dirs.DocumentDir);
+  console.log(assetList);
+  const dbPath = `${Dirs.DocumentDir}/default.db`;
+  const dbAlreadyInPlace = await FileSystem.exists(dbPath);
+  if (!dbAlreadyInPlace) {
+    await FileSystem.cpAsset('www/prepop.db', dbPath).catch(err =>
+      console.log(err),
+    );
+  }
+
+  const list = await FileSystem.ls(`${Dirs.DocumentDir}/www`);
+  console.log(list);
+
+  // await FileSystem.unlink()
   // stat.forEach(i => console.log(i.path));
-  // const db = QuickSQLite.open('prepop.db', '../databases');
-  // //
-  // console.log('db', db);
-  // //
-  // const res = QuickSQLite.executeSql(
-  //   'prepop.db',
-  //   "SELECT * FROM sqlite_master WHERE type='table'",
-  //   undefined,
-  // );
-  //
-  // console.log(res.rows);
+  const db = SQLite.open('default.db');
+  try {
+    const res = await SQLite.executeAsync(
+      'default.db',
+      'SELECT firstName FROM employees',
+      undefined,
+    );
+    //
+    console.log(res.rows?.length);
+  } catch (err) {
+    let msg = 'Unkown error while executing the command.';
+    if (err instanceof Error) {
+      msg = err.message.replace('[react-native-quick-sqlite]', '').trim();
+    }
+    console.log(msg);
+  }
 };
 
-// init();
+init();
 // if (!status) {
 //   rows.forEach(row => {
 //     console.log(row);
 //   });
 // }
 
-const userDb = SQLite.openDatabase(
-  {
-    name: 'prepop.db',
-    createFromLocation: 1,
-    location: 'Library',
-  },
-  openCB,
-  errorCB,
-);
-
-const appDb = SQLite.openDatabase(
-  {
-    name: 'app.db',
-    location: 'Library',
-  },
-  openCB,
-  errorCB,
-);
-
 //query execution function with promise
 export const ExecuteUserQuery = (
   query: string,
   params = [],
   noLimit: boolean = false,
-): Promise<ResultSet> => {
+) => {
   query = query.replace(/;/g, ''); // remove any semicolon
   query = query.replace(/"/g, "'"); // replace double quotes with single
 
@@ -74,63 +76,30 @@ export const ExecuteUserQuery = (
       query = `${query} limit 100`; //limit of 100 if there is a select
     }
   }
-
-  return new Promise<ResultSet>((resolve, reject) => {
-    userDb.transaction(trans => {
-      trans.executeSql(
-        query,
-        params,
-        (tx, results) => {
-          resolve(results);
-        },
-        error => {
-          reject(error);
-        },
-      );
-    });
-  });
 };
 
 //query execution function with promise
-export const ExecuteAppQuery = (
-  query: string,
-  params = [],
-): Promise<ResultSet> => {
-  return new Promise<ResultSet>((resolve, reject) => {
-    appDb.transaction(trans => {
-      trans.executeSql(
-        query,
-        params,
-        (tx, results) => {
-          resolve(results);
-        },
-        error => {
-          reject(error);
-        },
-      );
-    });
-  });
-};
+export const ExecuteAppQuery = (query: string, params = []) => {};
 
 //add functions for basic value and string storage
 const createAppDataTable = async () => {
-  await ExecuteAppQuery(
+  /* await ExecuteAppQuery(
     'CREATE TABLE IF NOT EXISTS appData(id String Primary KEY, value string);',
-  );
+  ); */
 };
 
 // setAppDataVal
 export const setAppData = async (id: string, val: string | number) => {
-  return await ExecuteAppQuery(
+  /* return await ExecuteAppQuery(
     `INSERT OR REPLACE INTO appData(id, value) VALUES ("${id}", "${val}");`,
-  );
+  ); */
 };
 
 // this will get the string data
 export const getAppData = async (id: string): Promise<string | null> => {
   // destructre it
-
-  const res: ResultSet = await ExecuteAppQuery(
+  /*
+  const res = await ExecuteAppQuery(
     `SELECT value from appData where id = "${id}"`,
   );
 
@@ -139,7 +108,7 @@ export const getAppData = async (id: string): Promise<string | null> => {
     return res.rows.item(0).value;
   } else {
     return null;
-  }
+  } */
 };
 
 //add functions for storing user commands
@@ -160,7 +129,7 @@ export const insertUserCommand = async (val: string) => {
 
 // will be used for autocomplete
 export const findUserCommands = async (val: string) => {
-  const res: ResultSet = await ExecuteAppQuery(
+  const res = await ExecuteAppQuery(
     `SELECT * from userCommands 
     WHERE command LIKE "${val}%"
     ORDER BY id desc
@@ -177,7 +146,7 @@ export const findUserCommands = async (val: string) => {
 
 // will get the last command from user db
 export const getLastUserCommand = async (offset: number) => {
-  const res: ResultSet = await ExecuteAppQuery(
+  const res = await ExecuteAppQuery(
     `SELECT * from userCommands 
     ORDER BY id desc
     LIMIT 1
@@ -192,8 +161,8 @@ export const getLastUserCommand = async (offset: number) => {
   }
 };
 
-createAppDataTable();
+// createAppDataTable();
 
-createUserCommandsTable();
+// createUserCommandsTable();
 
 // insertUserCommand('Select yoyo from empylohre');

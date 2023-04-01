@@ -1,8 +1,6 @@
 import {Platform} from 'react-native';
-import rnTextSize from 'react-native-text-size';
 import SInfo from 'react-native-sensitive-info';
-import RNIap, {ProductPurchase, Subscription} from 'react-native-iap';
-import {GAD_IOS, GAD_ANDROID} from '@env';
+// import RNIap, {ProductPurchase, Subscription} from 'react-native-iap';
 
 export const itemSkus: string[] | undefined = Platform.select({
   android: ['premium'],
@@ -36,8 +34,8 @@ export const getLargestWidths = async (
   // console.log('largest values', largestValues);
   const widths: Array<number> = await Promise.all(
     largestValues.map(async (item: string) => {
-      const val = await rnTextSize.measure({text: item, width: 220});
-      return val.width + 18;
+      const val = 10;
+      return val + 18;
     }),
   );
 
@@ -53,15 +51,6 @@ export const debounce = (callback: any, delay = 250) => {
       callback(...args);
     }, delay);
   };
-};
-
-export const getInterstitialId = (): string => {
-  const testAdId = 'ca-app-pub-3940256099942544/8691691433';
-  return Platform.select({
-    ios: GAD_IOS,
-    android: GAD_ANDROID,
-    default: testAdId,
-  });
 };
 
 // returns 75/50 true false
@@ -84,7 +73,7 @@ export const savePremium = async (): Promise<void> => {
 };
 
 export const restorePremium = async (): Promise<boolean> => {
-  try {
+  /*   try {
     const restore: Array<ProductPurchase | Subscription> =
       await RNIap.getAvailablePurchases();
     // console.log('your item was', restore);
@@ -97,7 +86,7 @@ export const restorePremium = async (): Promise<boolean> => {
   } catch (error) {
     console.log(error);
     return false;
-  }
+  } */
 };
 
 export const getIsPremium = async (): Promise<boolean> => {

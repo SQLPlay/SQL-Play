@@ -16,7 +16,6 @@ import {
   useDarkMode,
 } from 'react-native-dynamic';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
 //@ts-ignore
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import {
@@ -70,12 +69,6 @@ const ListItem: FC<LIProps> = props => {
       <View style={styles.item}>
         <View style={styles.header}>
           <Text style={styles.title}>{title}</Text>
-          <Icon
-            name="arrow-drop-down"
-            color={'gray'}
-            size={36}
-            style={styles.dropDownIcon}
-          />
         </View>
 
         <Text style={styles.description}>{description}</Text>
@@ -89,16 +82,14 @@ const ListItem: FC<LIProps> = props => {
                   style={styles.codeSyntaxContainer}
                   accessibilityLabel={item}
                   accessibilityHint="copy syntax to command input"
-                  onPress={() => onSyntaxPress(item)}
-                >
+                  onPress={() => onSyntaxPress(item)}>
                   <SyntaxHighlighter
                     PreTag={View}
                     fontSize={14}
                     language="sql"
                     wrapLines={true}
                     style={isDark ? vs2015 : defaultStyle}
-                    highlighter="hljs"
-                  >
+                    highlighter="hljs">
                     {syntax}
                   </SyntaxHighlighter>
                 </Pressable>
@@ -115,8 +106,7 @@ const ListItem: FC<LIProps> = props => {
                   accessibilityLabel={eg}
                   style={styles.codeSyntaxContainer}
                   testID={ids.commandListExample}
-                  onPress={() => onSyntaxPress(eg)}
-                >
+                  onPress={() => onSyntaxPress(eg)}>
                   {/* <ScrollView */}
                   {/*   horizontal */}
                   {/*   directionalLockEnabled */}
@@ -129,8 +119,7 @@ const ListItem: FC<LIProps> = props => {
                     wrapLines={true}
                     PreTag={View}
                     style={isDark ? vs2015 : defaultStyle}
-                    highlighter="hljs"
-                  >
+                    highlighter="hljs">
                     {eg}
                   </SyntaxHighlighter>
                   {/* </ScrollView> */}

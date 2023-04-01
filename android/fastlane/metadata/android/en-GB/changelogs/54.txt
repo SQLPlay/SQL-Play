@@ -1,2 +1,0 @@
-Add privacy link
-Upgrade React Native fore better performance

@@ -8,7 +8,6 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
   StatusBar,
-  LogBox,
 } from 'react-native';
 
 import {
@@ -18,17 +17,10 @@ import {
   ColorSchemeProvider,
 } from 'react-native-dynamic';
 
-import * as Sentry from '@sentry/react-native';
-
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
 import SplashScreen from 'react-native-bootsplash';
 
-import {
-  getLargestWidths,
-  shouldShowAd,
-  getIsPremium,
-  getInterstitialId,
-} from '../utils/utils';
+import {getLargestWidths, shouldShowAd, getIsPremium} from '../utils/utils';
 import AppBar from './AppBar';
 import Table from './Table';
 import RunButton from './RunButton';
@@ -37,38 +29,19 @@ import InputContainer from './InputContainer';
 import '../utils/appReviewer';
 import '../utils/updateChecker';
 import {darkBGColor} from '../data/colors.json';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
-import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Snackbar from 'react-native-snackbar';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import GoPremium from './GoPremium';
-import {
-  FullScreenAdOptions,
-  useInterstitialAd,
-} from '@react-native-admob/admob';
-import {DNS} from '@env';
+// import GoPremium from './GoPremium';
+
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
-
-Sentry.init({
-  dsn: DNS,
-  debug: __DEV__,
-});
-
-MCIcon.loadFont();
-MIcon.loadFont();
 
 interface tableDataNode {
   header: Array<string>;
   rows: Array<Array<any>>;
 }
 
-const adConfig: FullScreenAdOptions = {
-  showOnLoaded: true,
-  loadOnMounted: false,
-};
 const App: React.FC = () => {
   const [tableData, setTableData] = useState<tableDataNode>({
     header: [],
@@ -82,18 +55,10 @@ const App: React.FC = () => {
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(false);
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
-  const {load, adLoaded} = useInterstitialAd(getInterstitialId(), adConfig);
   const styles = useDynamicValue(dynamicStyles);
 
   const showAd = async () => {
     if (!shouldShowAd()) return;
-
-    if (adLoaded) return;
-    try {
-      load();
-    } catch (error) {
-      console.log('failed to load ad', error);
-    }
   };
 
   const runQuery = async () => {
@@ -113,7 +78,7 @@ const App: React.FC = () => {
       // console.log(res.rows);
       if (len === 0) {
         setLoaderVisibility(false);
-        Snackbar.show({text: 'Query Executed!'});
+        // Snackbar.show({text: 'Query Executed!'});
         return;
       }
       const header: string[] = Object.keys(res.rows.item(0)).reverse();
@@ -132,8 +97,10 @@ const App: React.FC = () => {
 
       setTableData({header: header, rows: rowsArr});
     } catch (error) {
-      setLoaderVisibility(false);
-      Alert.alert('Error in DB', error?.message);
+      if (error instanceof Error) {
+        setLoaderVisibility(false);
+        Alert.alert('Error in DB', error?.message);
+      }
     }
   };
 
@@ -160,20 +127,19 @@ const App: React.FC = () => {
               backgroundColor="#c8b900"
               translucent
             />
-            <GoPremium
+            {/* <GoPremium
               modalState={premiumModalOpen}
               setModalState={setPremiumModalOpen}
               isPremium={isPremium}
               setIsPremium={setIsPremium}
-            />
+            /> */}
             <KeyboardAvoidingView
               style={{flex: 1}}
               {...(Platform.OS === 'ios' && {behavior: 'padding'})}
               keyboardVerticalOffset={Platform.select({
                 ios: 0,
                 android: 500,
-              })}
-            >
+              })}>
               <View style={styles.statusBar} />
 
               <Modal visible={loaderVisibility} transparent={true}>

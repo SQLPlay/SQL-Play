@@ -1,8 +1,0 @@
-app_identifier("com.SqlPlayground") # The bundle identifier of your app
-apple_id("singhshivamkr@gmail.com") # Your Apple email address
-
-itc_team_id("122509297") # App Store Connect Team ID
-team_id("S5R9TLLYK9") # Developer Portal Team ID
-
-# For more information about the Appfile, see:
-#     https://docs.fastlane.tools/advanced/#appfile

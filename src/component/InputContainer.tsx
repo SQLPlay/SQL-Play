@@ -1,15 +1,6 @@
 import React, {useState, FC, useEffect, useRef, useCallback} from 'react';
 
-import {
-  Text,
-  View,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-  Alert,
-  Platform,
-} from 'react-native';
-
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Text, View, TouchableOpacity, Alert, Platform} from 'react-native';
 
 import {
   DynamicStyleSheet,
@@ -151,12 +142,10 @@ const InputContainer: FC<Props> = ({
       <View style={styles.inputContainer}>
         <FlingGestureHandler
           direction={Directions.RIGHT}
-          onHandlerStateChange={handleSwipeRight}
-        >
+          onHandlerStateChange={handleSwipeRight}>
           <FlingGestureHandler
             direction={Directions.LEFT}
-            onHandlerStateChange={handleSwipeLeft}
-          >
+            onHandlerStateChange={handleSwipeLeft}>
             <TextInput
               style={styles.input}
               autoFocus={true}
@@ -176,8 +165,7 @@ const InputContainer: FC<Props> = ({
         <Text
           suppressHighlighting={true}
           onLongPress={setAutoInput}
-          style={styles.autoCompleteTxt}
-        >
+          style={styles.autoCompleteTxt}>
           {autoCompleteTxt}
         </Text>
       </View>
@@ -185,24 +173,21 @@ const InputContainer: FC<Props> = ({
         <TouchableOpacity
           accessibilityLabel="Up Button"
           accessibilityHint="gets the previous command from history"
-          onPress={onUpArrowPress}
-        >
-          <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
+          onPress={onUpArrowPress}>
+          <Text>^</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.downArrow}
           accessibilityLabel="Down Button"
           accessibilityHint="gets the next command from history"
-          onPress={onDownArrowPress}
-        >
-          <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
+          onPress={onDownArrowPress}>
+          <Text>^</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={clearInput}
           accessibilityLabel="Clear command button"
-          accessibilityHint="clear the command input"
-        >
-          <Icon size={30} name="text-box-remove" color={sideButton} />
+          accessibilityHint="clear the command input">
+          <Text>^</Text>
         </TouchableOpacity>
       </View>
     </View>
