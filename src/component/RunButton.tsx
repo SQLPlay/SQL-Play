@@ -7,6 +7,7 @@ import {
   GestureResponderEvent,
 } from 'react-native';
 import {ids} from '../../e2e/ids';
+import BaseIcon from './Icons/BaseIcon';
 
 interface Props {
   runQuery: (event: GestureResponderEvent) => void;
@@ -19,7 +20,7 @@ const RunButton: FC<Props> = ({runQuery}) => {
       accessibilityHint="runs the command which is typed in input box"
       onPress={runQuery}
       style={styles.runBtn}>
-      <Text>Run</Text>
+      <BaseIcon name="PaperPlaneRight" fill="#ffffff" />
     </TouchableOpacity>
   );
 };
