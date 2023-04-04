@@ -16,10 +16,11 @@ import {
   TextInput,
 } from 'react-native-gesture-handler';
 
-import {lightDark, sideButton} from '../data/colors.json';
+import {lightDark} from '../data/colors.json';
 import {findUserCommands, getLastUserCommand} from '../utils/storage';
 import {debounce} from '../utils/utils';
 import {ids} from '../../e2e/ids';
+import BaseIcon from './Icons/BaseIcon';
 
 interface Props {
   inputValue: string;
@@ -137,8 +138,38 @@ const InputContainer: FC<Props> = ({
   };
   const styles = useDynamicValue(dynamicStyles);
   return (
-    <View>
-      <Text style={styles.inputHeader}>Type your SQL Query</Text>
+    <View style={{padding: 5}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          minHeight: 24,
+          flex: 1,
+        }}>
+        <Text style={styles.inputHeader}>Type your SQL Query</Text>
+        <View style={styles.sideButtonContainer}>
+          <TouchableOpacity
+            accessibilityLabel="Up Button"
+            accessibilityHint="gets the previous command from history"
+            onPress={onUpArrowPress}>
+            <BaseIcon size={30} name="CaretUp" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.downArrow}
+            accessibilityLabel="Down Button"
+            accessibilityHint="gets the next command from history"
+            onPress={onDownArrowPress}>
+            <BaseIcon size={30} name="CaretUp" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={clearInput}
+            accessibilityLabel="Clear command button"
+            accessibilityHint="clear the command input">
+            <BaseIcon name="Trash" />
+          </TouchableOpacity>
+        </View>
+      </View>
       <View style={styles.inputContainer}>
         <FlingGestureHandler
           direction={Directions.RIGHT}
@@ -169,27 +200,6 @@ const InputContainer: FC<Props> = ({
           {autoCompleteTxt}
         </Text>
       </View>
-      <View style={styles.sideButtonContainer}>
-        <TouchableOpacity
-          accessibilityLabel="Up Button"
-          accessibilityHint="gets the previous command from history"
-          onPress={onUpArrowPress}>
-          <Text>^</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.downArrow}
-          accessibilityLabel="Down Button"
-          accessibilityHint="gets the next command from history"
-          onPress={onDownArrowPress}>
-          <Text>^</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={clearInput}
-          accessibilityLabel="Clear command button"
-          accessibilityHint="clear the command input">
-          <Text>^</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
@@ -203,16 +213,18 @@ const dynamicStyles = new DynamicStyleSheet({
   },
   inputContainer: {
     position: 'relative',
-    borderColor: 'gray',
+    borderColor: '#353b48',
     marginBottom: 10,
     marginTop: 10,
     borderWidth: 1,
+    borderRadius: 4,
     backgroundColor: new DynamicValue('white', lightDark),
   },
   input: {
     fontSize: 16,
     fontFamily: codeFont,
-    padding: 5,
+    paddingHorizontal: 5,
+    paddingRight: 18,
     // position: 'relative',
     zIndex: 2,
     opacity: 1,
@@ -233,14 +245,13 @@ const dynamicStyles = new DynamicStyleSheet({
     opacity: 0.8,
   },
   sideButtonContainer: {
-    position: 'absolute',
-    bottom: 12,
-    right: 3,
+    flexDirection: 'row',
+    // position: 'absolute',
+    // gap: 3,
   },
   downArrow: {
     transform: [{rotate: '180deg'}],
-    marginTop: -5,
-    marginBottom: -5,
+    // marginTop: -5,
   },
   deleteBtn: {
     // position: 'absolute',
