@@ -21,6 +21,7 @@ import fil from '../utils/fil';
 import CommandList from './CommandList';
 import {CustomHandle, CustomBG, CustomBackdrop} from './CustomHandle';
 import {ids} from '../../e2e/ids';
+import BaseIcon from './Icons/BaseIcon';
 
 interface Props {
   setInputValue: (query: string) => void;
@@ -71,7 +72,7 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
         accessibilityHint="Search for commands"
         testID={ids.searchBtn}
         onPress={openTabSheet}>
-        <Text>Search</Text>
+        <BaseIcon name="MagnifyingGlass" fill="#2f3542" />
       </TouchableOpacity>
 
       <BottomSheetModal
