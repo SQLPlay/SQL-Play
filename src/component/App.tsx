@@ -16,7 +16,7 @@ import {
   useDynamicValue,
   ColorSchemeProvider,
 } from 'react-native-dynamic';
-
+import {NotifierWrapper} from 'react-native-notifier';
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
 import SplashScreen from 'react-native-bootsplash';
 
@@ -35,11 +35,13 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 // import GoPremium from './GoPremium';
 
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {showErrorNotif, showSuccessNotif} from '../utils/notif';
+import {calculateWidths} from '../utils/measureTextSize';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
 
 interface tableDataNode {
   header: Array<string>;
-  rows: Array<Array<any>>;
+  rows: Array<Array<string>>;
 }
 
 const App: React.FC = () => {
@@ -62,44 +64,44 @@ const App: React.FC = () => {
   };
 
   const runQuery = async () => {
-    Keyboard.dismiss();
     setLoaderVisibility(true);
-    await insertUserCommand(inputValue); // store the command in db
+    // await insertUserCommand(inputValue); // store the command in db
     try {
       /** Show add if user is not premium */
       if (!isPremium) {
         showAd();
       }
       // execute the query
-      const res: any = await ExecuteUserQuery(inputValue);
+      const res = await ExecuteUserQuery(inputValue);
 
-      const len: number = res.rows.length;
-
-      // console.log(res.rows);
-      if (len === 0) {
+      // console.log(res);
+      if (!res?.rows || !res.header) {
         setLoaderVisibility(false);
-        // Snackbar.show({text: 'Query Executed!'});
+        showSuccessNotif(
+          'Command Executed Successfully',
+          'There was nothing  to show',
+        );
         return;
       }
-      const header: string[] = Object.keys(res.rows.item(0)).reverse();
-      const rowsArr: any[] = [];
 
-      for (let i = 0; i < len; i++) {
-        let row = res.rows.item(i);
-        rowsArr.push(Object.values(row).reverse());
-      }
+      console.log('got data');
+      const rowWidths = await calculateWidths(res?.header, res.rows);
+      tableWidths.current = rowWidths;
+      console.log('got widths');
+      setTableData(res);
       // pass the header and result arr to get the largest widths of their respective column
-      tableWidths.current = await getLargestWidths([header, ...rowsArr]);
+      // tableWidths.current = await getLargestWidths([header, ...rowsArr]);
       // console.log(([header, ...rowsArr]));
 
       setLoaderVisibility(false);
       // console.log(rowsArr);
 
-      setTableData({header: header, rows: rowsArr});
+      // setTableData({header: header, rows: rowsArr});
     } catch (error) {
       if (error instanceof Error) {
         setLoaderVisibility(false);
-        Alert.alert('Error in DB', error?.message);
+        console.log(error);
+        showErrorNotif(error?.message);
       }
     }
   };
@@ -123,24 +125,18 @@ const App: React.FC = () => {
         <BottomSheetModalProvider>
           <SafeAreaProvider>
             <StatusBar
-              barStyle="dark-content"
-              backgroundColor="#c8b900"
-              translucent
+            // barStyle="dark-content"
+            // backgroundColor="#c8b900"
+            // translucent
             />
-            {/* <GoPremium
+
+            <NotifierWrapper>
+              {/* <GoPremium
               modalState={premiumModalOpen}
               setModalState={setPremiumModalOpen}
               isPremium={isPremium}
               setIsPremium={setIsPremium}
             /> */}
-            <KeyboardAvoidingView
-              style={{flex: 1}}
-              {...(Platform.OS === 'ios' && {behavior: 'padding'})}
-              keyboardVerticalOffset={Platform.select({
-                ios: 0,
-                android: 500,
-              })}>
-              <View style={styles.statusBar} />
 
               <Modal visible={loaderVisibility} transparent={true}>
                 <View style={styles.modalStyle}>
@@ -162,14 +158,14 @@ const App: React.FC = () => {
                     setInputValue={setInputValue}
                     isPremium={isPremium}
                   />
-                  {!!tableData.header.length && (
-                    <Table {...tableData} tableWidths={tableWidths} />
-                  )}
+                  {tableData.header.length ? (
+                    <Table {...tableData} columnWidths={tableWidths.current} />
+                  ) : null}
                 </View>
 
                 <RunButton runQuery={runQuery} />
               </View>
-            </KeyboardAvoidingView>
+            </NotifierWrapper>
           </SafeAreaProvider>
         </BottomSheetModalProvider>
       </ColorSchemeProvider>
@@ -187,7 +183,7 @@ const dynamicStyles = new DynamicStyleSheet({
     flex: 1,
   },
   innercontainer: {
-    padding: 5,
+    flex: 1,
     paddingBottom: 10,
   },
   modalStyle: {
