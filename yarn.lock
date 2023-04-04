@@ -6448,6 +6448,11 @@ react-native-material-menu@^2.0.0:
   resolved "https://registry.yarnpkg.com/react-native-material-menu/-/react-native-material-menu-2.0.0.tgz#139f407a52fbc0d47e5351d50ac769e05812da5c"
   integrity sha512-SmO9PLE3E469EPbVWZqvdu6JGPPZIm7YjqDcWs2PPoY0k7w2V9tFo3BmmLXNzNZDCVCAi+PPSsL7h/5WkfHcSg==
 
+react-native-notifier@^1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/react-native-notifier/-/react-native-notifier-1.9.0.tgz#22351619063620af0371e8fb5583fee47edf0836"
+  integrity sha512-p9NpDCCSNNpfiJTRSu2rtSGGxekejDWSh3mX5rvjMllGCPyoJS3d36x9O+roYcH8qSqLf4QDcmwCMSUuaGTgXg==
+
 react-native-quick-sqlite@^8.0.2:
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/react-native-quick-sqlite/-/react-native-quick-sqlite-8.0.2.tgz#67ad0a330ede647f9cd02c83115810722d5bd828"
@@ -7085,6 +7090,11 @@ snapdragon@^0.8.1:
     source-map "^0.5.6"
     source-map-resolve "^0.5.0"
     use "^3.1.0"
+
+sonic-memoize@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/sonic-memoize/-/sonic-memoize-1.1.3.tgz#850c308fb15042f8c2679668b3d34aa6dbe21e4e"
+  integrity sha512-dpKe+Mjd/kii/LznKTcacMNdYq9t5DJpg6NcbuFuRgilv39DjPII7hi/+ojB0hH3XbC4Sa//8YrmAeIDIvRn5A==
 
 source-map-resolve@^0.5.0:
   version "0.5.3"
