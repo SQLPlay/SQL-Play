@@ -30,12 +30,11 @@ public class MeasureSize extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void measureSize(String text, Integer size, Promise promise) {
-        Log.d("MeasureSize", "text" + text
-                + " and location: " + size);
-        // Perform some operation to get the result
-        float width = getWidthOfString(text, "Arial", size);
-        // Resolve the promise with the result
-        promise.resolve(width);
-    }
-}
+    public void measureSize(String text, String font, Integer size, Promise promise) {
+        try {
+            float width = getWidthOfString(text, font, size);
+            promise.resolve(width);
+        } catch (Exception e) {
+            promise.reject(e);
+        }
+    }}
