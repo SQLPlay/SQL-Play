@@ -4,14 +4,6 @@ import {Dirs, FileSystem} from 'react-native-file-access';
 
 // Get the path to the assets folder
 
-const errorCB = (err: Error) => {
-  console.warn('SQL Error: ' + err);
-};
-
-const openCB = () => {
-  console.log('Database OPENED');
-};
-
 // FileSystem.ls(`${Dirs.MainBundleDir}`).then(l => console.log(l));
 
 const init = async () => {
@@ -31,27 +23,9 @@ const init = async () => {
     );
   }
 
-  const list = await FileSystem.ls(`${Dirs.DocumentDir}/www`);
-  console.log(list);
-
   // await FileSystem.unlink()
   // stat.forEach(i => console.log(i.path));
-  const db = SQLite.open('default.db');
-  try {
-    const res = await SQLite.executeAsync(
-      'default.db',
-      'SELECT firstName FROM employees',
-      undefined,
-    );
-    //
-    console.log(res.rows?.length);
-  } catch (err) {
-    let msg = 'Unkown error while executing the command.';
-    if (err instanceof Error) {
-      msg = err.message.replace('[react-native-quick-sqlite]', '').trim();
-    }
-    console.log(msg);
-  }
+  SQLite.open('default.db');
 };
 
 init();
@@ -60,21 +34,34 @@ init();
 //     console.log(row);
 //   });
 // }
+//
+const parseSqlOutput = (sqlData: unknown) => {
+  if (!sqlData || !Array.isArray(sqlData) || sqlData.length === 0) {
+    throw Error('SQL data output is not a non-empty array');
+  }
+  const headerRow = Object.keys(sqlData[0]);
+  const dataRows = sqlData.map(row => Object.values(row).reverse());
+  return {header: headerRow.reverse(), rows: dataRows as string[][]};
+};
 
 //query execution function with promise
-export const ExecuteUserQuery = (
-  query: string,
-  params = [],
-  noLimit: boolean = false,
-) => {
+export const ExecuteUserQuery = async (query: string) => {
   query = query.replace(/;/g, ''); // remove any semicolon
   query = query.replace(/"/g, "'"); // replace double quotes with single
-
-  if (query.search(/select/i) !== -1) {
-    // if no limit then no need to add limit
-    if (!noLimit) {
-      query = `${query} limit 100`; //limit of 100 if there is a select
+  try {
+    const res = await SQLite.executeAsync('default.db', query, undefined);
+    //
+    const hasRows = Boolean(res.rows?.length);
+    if (hasRows) {
+      return parseSqlOutput(res.rows?._array);
     }
+    return null;
+  } catch (err) {
+    let msg = 'Unkown error while executing the command.';
+    if (err instanceof Error) {
+      msg = err.message.replace('[react-native-quick-sqlite]', '').trim();
+    }
+    throw Error(msg);
   }
 };
 
