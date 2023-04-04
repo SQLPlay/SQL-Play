@@ -1,5 +1,12 @@
-import React, {FC, RefObject, memo, useEffect, useState} from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import React, {
+  FC,
+  RefObject,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import {View, Text, ScrollView, StyleSheet, FlatList} from 'react-native';
 //@ts-ignore
 
 import {
@@ -10,117 +17,129 @@ import {
 } from 'react-native-dynamic';
 
 interface Props {
-  header: any[];
-  rows: any[];
-  tableWidths: RefObject<number[]>;
+  header: string[];
+  rows: string[][];
+  columnWidths: number[];
 }
-const data = [
-  ['name', 'age', 'job'],
-  ['ritika', 19, 'milking'],
-  ['lufushivma', 909, 'developer pepe'],
-  // add more data here...
-];
-const DataTable: FC<Props> = ({header, rows, tableWidths}) => {
-  const styles = useDynamicValue(dynamicStyles);
 
-  const [columnWidths, setColumnWidths] = useState<number[]>([]);
-  useEffect(() => {
-    // calculate the maximum width of each column
-    const widths = data[0].map((text, index) => {
-      let maxWidth = Math.ceil(text.toString().length * 10) + 30; // estimate the width of the header based on the length of the text
-      for (let i = 1; i < data.length; i++) {
-        const cellText = data[i][index].toString();
-        const cellWidth = Math.ceil(cellText.length * 10) + 30; // estimate the width of the cell based on the length of the text
-        maxWidth = Math.max(maxWidth, cellWidth);
-      }
-      return maxWidth;
-    });
-    setColumnWidths(widths);
-  }, []);
+const DataTable: FC<Props> = ({header, rows, columnWidths}) => {
+  // const styles = useDynamicValue(dynamicStyles);
+
+  const renderItem = ({item, index}: {item: string[]; index: number}) => {
+    return (
+      <View key={index} style={styles.row}>
+        {item.map((cell, cellIndex) => (
+          <View
+            key={cellIndex}
+            style={[
+              styles.cell,
+              {width: columnWidths[cellIndex]},
+              {borderRightWidth: item.length === cellIndex + 1 ? 0 : 1},
+            ]}>
+            <Text>{cell}</Text>
+          </View>
+        ))}
+      </View>
+    );
+  };
+
+  const renderHeader = () => {
+    return (
+      <View style={styles.headerRow}>
+        {header.map((cell, index) => (
+          <View
+            key={index}
+            style={[
+              styles.headerCell,
+              {width: columnWidths[index]},
+              {borderRightWidth: header.length === index + 1 ? 0 : 1},
+            ]}>
+            <Text style={styles.headerText}>{cell}</Text>
+          </View>
+        ))}
+      </View>
+    );
+  };
 
   return (
     <ScrollView horizontal={true}>
       <View style={styles.container}>
-        <View style={styles.table}>
-          <View style={styles.headerRow}>
-            {data[0].map((cell, index) => (
-              <View
-                key={index}
-                style={[styles.headerCell, {minWidth: columnWidths[index]}]}>
-                <Text>{cell.toString()}</Text>
-              </View>
-            ))}
-          </View>
-          {data.slice(1).map((row, rowIndex) => (
-            <View key={rowIndex} style={styles.row}>
-              {row.map((cell, cellIndex) => (
-                <View
-                  key={cellIndex}
-                  style={[styles.cell, {minWidth: columnWidths[cellIndex]}]}>
-                  <Text>{cell.toString()}</Text>
-                </View>
-              ))}
-            </View>
-          ))}
-        </View>
+        <FlatList
+          showsVerticalScrollIndicator={true}
+          nestedScrollEnabled={true}
+          data={rows}
+          scrollEnabled={true}
+          stickyHeaderIndices={[0]}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={renderItem}
+          ListHeaderComponent={renderHeader}
+          stickyHeaderHiddenOnScroll={false}
+        />
       </View>
     </ScrollView>
   );
 };
 export default memo(DataTable);
 
-const dynamicStyles = new DynamicStyleSheet({
+const borderColor = '#e5e7eb';
+const styles = StyleSheet.create({
   table: {
     flexDirection: 'column',
     flex: 1,
+    paddingHorizontal: 4,
   },
   headerRow: {
     flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
+    borderBottomWidth: 0.5,
+    borderColor,
+    backgroundColor: '#fff',
   },
   row: {
     flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderColor: '#ccc',
+    borderTopWidth: 1,
+    borderColor: borderColor,
   },
   headerCell: {
-    fontWeight: 'bold',
-    fontSize: 16,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    backgroundColor: '#f2f2f2',
+    fontFamily: 'Roboto',
+    borderRightWidth: 1,
+    borderColor,
   },
   cell: {
     fontSize: 16,
+    borderRightWidth: 1,
+    borderColor: borderColor,
     paddingVertical: 8,
     paddingHorizontal: 16,
-    backgroundColor: '#fff',
-    borderLeftWidth: 2,
   },
   outputText: {
-    color: new DynamicValue('black', 'white'),
+    // color: new DynamicValue('black', 'white'),
   },
   tableBorder: {
-    borderWidth: 2,
-    borderColor: '#fdd835',
+    // borderWidth: 2,
+    // borderColor: '#fdd835',
   },
   head: {
     height: 40,
-    backgroundColor: '#ffea00',
+    // backgroundColor: '#ffea00',
   },
   headerText: {
-    margin: 6,
     textTransform: 'capitalize',
+    color: '#353b48',
+    fontWeight: '500',
+    // fontFamily: 'DroidSans-Bold',
+    fontSize: 16,
   },
   rowTxt: {
     margin: 6,
-    color: new DynamicValue('black', 'white'),
+    // color: new DynamicValue('black', 'white'),
   },
   container: {
-    // flex: 1,
+    flex: 1,
     // marginBottom: 235,
-    marginTop: 10,
+    marginTop: 18,
+    marginHorizontal: 8,
     width: '100%',
   },
 });
