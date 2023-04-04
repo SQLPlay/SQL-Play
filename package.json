@@ -3,11 +3,19 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "test": "jest",
+    "postversion": "react-native-version",
+    "detox-setup": "detox clean-framework-cache && detox build-framework-cache",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "clean": "react-native-clean-project",
+    "check-dependencies": "rnx-dep-check",
+    "fix-dependencies": "rnx-dep-check --write",
+    "deploy:android": "cd android && bundle exec fastlane beta && cd ..",
+    "e2e:build": "detox build --configuration",
+    "e2e:test": "detox test --configuration",
+    "test:examples": "vitest run tests/examples.spec.ts"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4",

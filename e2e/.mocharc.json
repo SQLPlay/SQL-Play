@@ -1,5 +1,0 @@
-{
-  "bail": false,
-  "timeout": 180000,
-  "spec": ["e2e/init.js", "e2e/3_queryExamples.js"]
-}
