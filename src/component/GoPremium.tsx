@@ -15,14 +15,15 @@ import {
   ScrollView,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {darkYellow} from '../data/colors.json';
 
-/* import RNIap, {
+import RNIap, {
   purchaseErrorListener,
   purchaseUpdatedListener,
   finishTransaction,
   Product,
-} from 'react-native-iap'; */
+} from 'react-native-iap';
 
 import {itemSkus, restorePremium, savePremium} from '../utils/utils';
 

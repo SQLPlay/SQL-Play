@@ -1,5 +1,5 @@
 import React, {useRef, useEffect, useState, useMemo} from 'react';
-import {TouchableOpacity, Keyboard, Platform, Text} from 'react-native';
+import {TouchableOpacity, Keyboard, Platform} from 'react-native';
 
 import {
   BottomSheetModal,
@@ -7,6 +7,7 @@ import {
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
   DynamicStyleSheet,
@@ -21,7 +22,6 @@ import fil from '../utils/fil';
 import CommandList from './CommandList';
 import {CustomHandle, CustomBG, CustomBackdrop} from './CustomHandle';
 import {ids} from '../../e2e/ids';
-import BaseIcon from './Icons/BaseIcon';
 
 interface Props {
   setInputValue: (query: string) => void;
@@ -71,8 +71,9 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
         accessibilityLabel="Search"
         accessibilityHint="Search for commands"
         testID={ids.searchBtn}
-        onPress={openTabSheet}>
-        <BaseIcon name="MagnifyingGlass" fill="#2f3542" />
+        onPress={openTabSheet}
+      >
+        <Icon name="search" size={25} />
       </TouchableOpacity>
 
       <BottomSheetModal
@@ -90,7 +91,10 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
       >
         <BottomSheetView
           style={styles.inputContainer}
-          accessibilityLabel="commands list panel">
+          accessibilityLabel="commands list panel"
+        >
+          <Icon name="search" color="gray" size={24} />
+
           <BottomSheetTextInput
             style={styles.searchInput}
             value={searchInput}
@@ -102,14 +106,15 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
             onChangeText={(val: string) => setSearchInput(val)}
             placeholder="Search Query"
           />
-          {/* <Icon
+          <Icon
             name="close"
             accessibilityLabel="clear command"
             accessibilityHint="clears searched command"
             size={24}
             color="gray"
             testID={ids.commandSearchClearBtn}
-            onPress={() => setSearchInput('')} */}
+            onPress={() => setSearchInput('')}
+          />
         </BottomSheetView>
         <CommandList
           listData={commandsJSON}

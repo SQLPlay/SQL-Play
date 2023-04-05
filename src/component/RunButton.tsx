@@ -6,8 +6,8 @@ import {
   StyleSheet,
   GestureResponderEvent,
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {ids} from '../../e2e/ids';
-import BaseIcon from './Icons/BaseIcon';
 
 interface Props {
   runQuery: (event: GestureResponderEvent) => void;
@@ -19,8 +19,14 @@ const RunButton: FC<Props> = ({runQuery}) => {
       accessibilityLabel="run button"
       accessibilityHint="runs the command which is typed in input box"
       onPress={runQuery}
-      style={styles.runBtn}>
-      <BaseIcon name="PaperPlaneRight" fill="#ffffff" />
+      style={styles.runBtn}
+    >
+      <Icon
+        name="send"
+        size={25}
+        style={{transform: [{translateX: 2}]}}
+        color="#Fff"
+      />
     </TouchableOpacity>
   );
 };

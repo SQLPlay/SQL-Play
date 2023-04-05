@@ -1,0 +1,39 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+
+  desc "Submit a new Beta Build to Play Store"
+  lane :beta do
+    gradle(task: 'clean')
+    gradle(
+      task: 'bundle',
+      build_type: 'Release',
+      print_command: false,
+    )
+    changelog_from_git_commits
+    upload_to_play_store(
+      track: 'beta',
+      skip_upload_apk: true,
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+    )
+  end
+
+end

@@ -8,6 +8,42 @@ module.exports = {
     jest: {
       setupTimeout: 120000,
     },
+    skipLegacyWorkersInjection: true,
+    behavior: {
+      init: {
+        reinstallApp: true,
+        exposeGlobals: true,
+        keepLockFile: true,
+      },
+      launchApp: 'auto',
+      cleanup: {
+        shutdownDevice: true,
+      },
+    },
+    artifacts: {
+      rootDir: 'artifacts',
+      plugins: {
+        instruments: {enabled: false},
+        log: {enabled: true},
+        uiHierarchy: 'enabled',
+        screenshot: {
+          shouldTakeAutomaticSnapshots: true,
+          keepOnlyFailedTestsArtifacts: true,
+          takeWhen: {
+            testStart: false,
+            testDone: true,
+          },
+        },
+        video: {
+          android: {
+            bitRate: 4000000,
+          },
+          simulator: {
+            codec: 'hevc',
+          },
+        },
+      },
+    },
   },
   apps: {
     'ios.debug': {

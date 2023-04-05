@@ -1,6 +1,15 @@
 import React, {useState, FC, useEffect, useRef, useCallback} from 'react';
 
-import {Text, View, TouchableOpacity, Alert, Platform} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+  Alert,
+  Platform,
+} from 'react-native';
+
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
   DynamicStyleSheet,
@@ -16,11 +25,10 @@ import {
   TextInput,
 } from 'react-native-gesture-handler';
 
-import {lightDark} from '../data/colors.json';
+import {lightDark, sideButton} from '../data/colors.json';
 import {findUserCommands, getLastUserCommand} from '../utils/storage';
 import {debounce} from '../utils/utils';
 import {ids} from '../../e2e/ids';
-import BaseIcon from './Icons/BaseIcon';
 
 interface Props {
   inputValue: string;
@@ -138,45 +146,17 @@ const InputContainer: FC<Props> = ({
   };
   const styles = useDynamicValue(dynamicStyles);
   return (
-    <View style={{padding: 5}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          minHeight: 24,
-          flex: 1,
-        }}>
-        <Text style={styles.inputHeader}>Type your SQL Query</Text>
-        <View style={styles.sideButtonContainer}>
-          <TouchableOpacity
-            accessibilityLabel="Up Button"
-            accessibilityHint="gets the previous command from history"
-            onPress={onUpArrowPress}>
-            <BaseIcon size={30} name="CaretUp" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.downArrow}
-            accessibilityLabel="Down Button"
-            accessibilityHint="gets the next command from history"
-            onPress={onDownArrowPress}>
-            <BaseIcon size={30} name="CaretUp" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={clearInput}
-            accessibilityLabel="Clear command button"
-            accessibilityHint="clear the command input">
-            <BaseIcon name="Trash" />
-          </TouchableOpacity>
-        </View>
-      </View>
+    <View>
+      <Text style={styles.inputHeader}>Type your SQL Query</Text>
       <View style={styles.inputContainer}>
         <FlingGestureHandler
           direction={Directions.RIGHT}
-          onHandlerStateChange={handleSwipeRight}>
+          onHandlerStateChange={handleSwipeRight}
+        >
           <FlingGestureHandler
             direction={Directions.LEFT}
-            onHandlerStateChange={handleSwipeLeft}>
+            onHandlerStateChange={handleSwipeLeft}
+          >
             <TextInput
               style={styles.input}
               autoFocus={true}
@@ -196,9 +176,34 @@ const InputContainer: FC<Props> = ({
         <Text
           suppressHighlighting={true}
           onLongPress={setAutoInput}
-          style={styles.autoCompleteTxt}>
+          style={styles.autoCompleteTxt}
+        >
           {autoCompleteTxt}
         </Text>
+      </View>
+      <View style={styles.sideButtonContainer}>
+        <TouchableOpacity
+          accessibilityLabel="Up Button"
+          accessibilityHint="gets the previous command from history"
+          onPress={onUpArrowPress}
+        >
+          <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.downArrow}
+          accessibilityLabel="Down Button"
+          accessibilityHint="gets the next command from history"
+          onPress={onDownArrowPress}
+        >
+          <Icon size={30} name="arrow-up-bold-box" color={sideButton} />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={clearInput}
+          accessibilityLabel="Clear command button"
+          accessibilityHint="clear the command input"
+        >
+          <Icon size={30} name="text-box-remove" color={sideButton} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -213,18 +218,16 @@ const dynamicStyles = new DynamicStyleSheet({
   },
   inputContainer: {
     position: 'relative',
-    borderColor: '#353b48',
+    borderColor: 'gray',
     marginBottom: 10,
     marginTop: 10,
     borderWidth: 1,
-    borderRadius: 4,
     backgroundColor: new DynamicValue('white', lightDark),
   },
   input: {
     fontSize: 16,
     fontFamily: codeFont,
-    paddingHorizontal: 5,
-    paddingRight: 18,
+    padding: 5,
     // position: 'relative',
     zIndex: 2,
     opacity: 1,
@@ -245,13 +248,14 @@ const dynamicStyles = new DynamicStyleSheet({
     opacity: 0.8,
   },
   sideButtonContainer: {
-    flexDirection: 'row',
-    // position: 'absolute',
-    // gap: 3,
+    position: 'absolute',
+    bottom: 12,
+    right: 3,
   },
   downArrow: {
     transform: [{rotate: '180deg'}],
-    // marginTop: -5,
+    marginTop: -5,
+    marginBottom: -5,
   },
   deleteBtn: {
     // position: 'absolute',

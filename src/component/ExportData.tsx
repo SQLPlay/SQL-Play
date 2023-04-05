@@ -6,6 +6,8 @@ import Dialog from 'react-native-dialog';
 //@ts-ignore
 import Share from 'react-native-share';
 
+import RNFS from 'react-native-fs';
+
 import {ExecuteUserQuery} from '../utils/storage';
 import {ActivityIndicator, StyleSheet, Text} from 'react-native';
 
@@ -78,12 +80,12 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
 
     try {
       /** Path of saving the csv file */
-      /* const randomNum: number = Math.floor(Math.random() * 899 + 100);
+      const randomNum: number = Math.floor(Math.random() * 899 + 100);
       path = `${RNFS.TemporaryDirectoryPath}/${fieldValue}_${randomNum}.csv`;
       console.log(path);
 
       await RNFS.writeFile(path, csvString, 'utf8');
-      setIsExported(true); */
+      setIsExported(true);
     } catch (error) {
       console.log(error.message);
     }

@@ -1,9 +1,7 @@
-/** @type {import('@jest/types').Config.InitialOptions} */
-const e2ePattern = '**/e2e/*.e2e.js';
+const e2ePattern = '**/*.e2e.js';
 
 module.exports = {
   rootDir: '..',
-  testMatch: ['<rootDir>/e2e/**/*.test.js'],
   testTimeout: 120000,
   testMatch: [e2ePattern],
   maxWorkers: 1,

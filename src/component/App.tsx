@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
   StatusBar,
+  LogBox,
 } from 'react-native';
 
 import {
@@ -16,34 +17,55 @@ import {
   useDynamicValue,
   ColorSchemeProvider,
 } from 'react-native-dynamic';
-import {NotifierWrapper} from 'react-native-notifier';
+
+import * as Sentry from '@sentry/react-native';
+
 import {ExecuteUserQuery, insertUserCommand} from '../utils/storage';
 import SplashScreen from 'react-native-bootsplash';
 
-import {getLargestWidths, shouldShowAd, getIsPremium} from '../utils/utils';
+import {
+  getLargestWidths,
+  shouldShowAd,
+  getIsPremium,
+  getInterstitialId,
+} from '../utils/utils';
 import AppBar from './AppBar';
 import Table from './Table';
 import RunButton from './RunButton';
 import InputContainer from './InputContainer';
-
 import '../utils/appReviewer';
-import '../utils/updateChecker';
 import {darkBGColor} from '../data/colors.json';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-// import GoPremium from './GoPremium';
-
+import GoPremium from './GoPremium';
+import {
+  FullScreenAdOptions,
+  useInterstitialAd,
+} from '@react-native-admob/admob';
+import {DNS} from '@env';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {showErrorNotif, showSuccessNotif} from '../utils/notif';
-import {calculateWidths} from '../utils/measureTextSize';
 // import {AppTour, AppTourView} from 'react-native-app-tour';
+
+Sentry.init({
+  dsn: DNS,
+  debug: __DEV__,
+});
+
+MCIcon.loadFont();
+MIcon.loadFont();
 
 interface tableDataNode {
   header: Array<string>;
-  rows: Array<Array<string>>;
+  rows: Array<Array<any>>;
 }
 
+const adConfig: FullScreenAdOptions = {
+  showOnLoaded: true,
+  loadOnMounted: false,
+};
 const App: React.FC = () => {
   const [tableData, setTableData] = useState<tableDataNode>({
     header: [],
@@ -57,52 +79,57 @@ const App: React.FC = () => {
   const [loaderVisibility, setLoaderVisibility] = useState<boolean>(false);
   const [isPremium, setIsPremium] = useState<boolean>(false);
   const [premiumModalOpen, setPremiumModalOpen] = useState<boolean>(false);
+  const {load, adLoaded} = useInterstitialAd(getInterstitialId(), adConfig);
   const styles = useDynamicValue(dynamicStyles);
 
   const showAd = async () => {
     if (!shouldShowAd()) return;
+
+    if (adLoaded) return;
+    try {
+      load();
+    } catch (error) {
+      console.log('failed to load ad', error);
+    }
   };
 
   const runQuery = async () => {
+    Keyboard.dismiss();
     setLoaderVisibility(true);
-    // await insertUserCommand(inputValue); // store the command in db
+    await insertUserCommand(inputValue); // store the command in db
     try {
       /** Show add if user is not premium */
       if (!isPremium) {
         showAd();
       }
       // execute the query
-      const res = await ExecuteUserQuery(inputValue);
+      const res: any = await ExecuteUserQuery(inputValue);
 
-      // console.log(res);
-      if (!res?.rows || !res.header) {
+      const len: number = res.rows.length;
+
+      // console.log(res.rows);
+      if (len === 0) {
         setLoaderVisibility(false);
-        showSuccessNotif(
-          'Command Executed Successfully',
-          'There was nothing  to show',
-        );
         return;
       }
+      const header: string[] = Object.keys(res.rows.item(0)).reverse();
+      const rowsArr: any[] = [];
 
-      console.log('got data');
-      const rowWidths = await calculateWidths(res?.header, res.rows);
-      tableWidths.current = rowWidths;
-      console.log('got widths');
-      setTableData(res);
+      for (let i = 0; i < len; i++) {
+        let row = res.rows.item(i);
+        rowsArr.push(Object.values(row).reverse());
+      }
       // pass the header and result arr to get the largest widths of their respective column
-      // tableWidths.current = await getLargestWidths([header, ...rowsArr]);
+      tableWidths.current = await getLargestWidths([header, ...rowsArr]);
       // console.log(([header, ...rowsArr]));
 
       setLoaderVisibility(false);
       // console.log(rowsArr);
 
-      // setTableData({header: header, rows: rowsArr});
+      setTableData({header: header, rows: rowsArr});
     } catch (error) {
-      if (error instanceof Error) {
-        setLoaderVisibility(false);
-        console.log(error);
-        showErrorNotif(error?.message);
-      }
+      setLoaderVisibility(false);
+      Alert.alert('Error in DB', error?.message);
     }
   };
 
@@ -125,18 +152,25 @@ const App: React.FC = () => {
         <BottomSheetModalProvider>
           <SafeAreaProvider>
             <StatusBar
-            // barStyle="dark-content"
-            // backgroundColor="#c8b900"
-            // translucent
+              barStyle="dark-content"
+              backgroundColor="#c8b900"
+              translucent
             />
-
-            <NotifierWrapper>
-              {/* <GoPremium
+            <GoPremium
               modalState={premiumModalOpen}
               setModalState={setPremiumModalOpen}
               isPremium={isPremium}
               setIsPremium={setIsPremium}
-            /> */}
+            />
+            <KeyboardAvoidingView
+              style={{flex: 1}}
+              {...(Platform.OS === 'ios' && {behavior: 'padding'})}
+              keyboardVerticalOffset={Platform.select({
+                ios: 0,
+                android: 500,
+              })}
+            >
+              <View style={styles.statusBar} />
 
               <Modal visible={loaderVisibility} transparent={true}>
                 <View style={styles.modalStyle}>
@@ -158,14 +192,14 @@ const App: React.FC = () => {
                     setInputValue={setInputValue}
                     isPremium={isPremium}
                   />
-                  {tableData.header.length ? (
-                    <Table {...tableData} columnWidths={tableWidths.current} />
-                  ) : null}
+                  {!!tableData.header.length && (
+                    <Table {...tableData} tableWidths={tableWidths} />
+                  )}
                 </View>
 
                 <RunButton runQuery={runQuery} />
               </View>
-            </NotifierWrapper>
+            </KeyboardAvoidingView>
           </SafeAreaProvider>
         </BottomSheetModalProvider>
       </ColorSchemeProvider>
@@ -183,7 +217,7 @@ const dynamicStyles = new DynamicStyleSheet({
     flex: 1,
   },
   innercontainer: {
-    flex: 1,
+    padding: 5,
     paddingBottom: 10,
   },
   modalStyle: {

@@ -5,6 +5,10 @@ import {tapOnId} from './utils.js';
 const expect = detox.expect;
 
 describe('Test Basic Query Execution', () => {
+  beforeAll(async () => {
+    await device.launchApp();
+  });
+
   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   it('Show the input to run queries', async () => {

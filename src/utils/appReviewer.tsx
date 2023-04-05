@@ -2,6 +2,7 @@
 // import RnInAppReview from 'rn-in-app-review';
 import {getAppData, setAppData} from './storage';
 import {Alert} from 'react-native';
+import Snackbar from 'react-native-snackbar';
 
 const timesOpenedId = 'noOfTimesOpened';
 const userActionId = 'userActionOnReview';
