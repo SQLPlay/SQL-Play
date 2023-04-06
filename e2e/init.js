@@ -1,19 +1,8 @@
-import detox from 'detox';
-import adapter from 'detox/runners/mocha/adapter.js';
 
-before(async () => {
-  await detox.init();
+beforeAll(async () => {
   await device.launchApp();
 });
 
-beforeEach(async function () {
-  await adapter.beforeEach(this);
-});
-
-afterEach(async function () {
-  await adapter.afterEach(this);
-});
-
-after(async () => {
+afterAll(async () => {
   await detox.cleanup();
 });
