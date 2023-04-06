@@ -9,41 +9,6 @@ module.exports = {
       setupTimeout: 120000,
     },
     skipLegacyWorkersInjection: true,
-    behavior: {
-      init: {
-        reinstallApp: true,
-        exposeGlobals: true,
-        keepLockFile: true,
-      },
-      launchApp: 'auto',
-      cleanup: {
-        shutdownDevice: true,
-      },
-    },
-    artifacts: {
-      rootDir: 'artifacts',
-      plugins: {
-        instruments: {enabled: false},
-        log: {enabled: true},
-        uiHierarchy: 'enabled',
-        screenshot: {
-          shouldTakeAutomaticSnapshots: true,
-          keepOnlyFailedTestsArtifacts: true,
-          takeWhen: {
-            testStart: false,
-            testDone: true,
-          },
-        },
-        video: {
-          android: {
-            bitRate: 4000000,
-          },
-          simulator: {
-            codec: 'hevc',
-          },
-        },
-      },
-    },
   },
   apps: {
     'ios.debug': {
@@ -96,8 +61,7 @@ module.exports = {
     emulator: {
       type: 'android.emulator',
       device: {
-        avdName: 'Pixel_5_API_30',
-        avdName: 'Pixel_4_API_32',
+        avdName: 'Pixel_API_28_AOSP',
       },
     },
   },
