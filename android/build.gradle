@@ -13,9 +13,6 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-        maven { 
-        url("$rootDir/../node_modules/detox/Detox-android")
-        }
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.3.1")
@@ -23,3 +20,12 @@ buildscript {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
     }
 }
+
+allprojects { // (4)
+    repositories {
+        maven {
+          url("$rootDir/../node_modules/detox/Detox-android")
+        }
+    }
+}
+
