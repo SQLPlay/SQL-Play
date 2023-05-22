@@ -112,6 +112,10 @@ const App: React.FC = () => {
 
       // console.log(res.rows);
       if (len === 0) {
+        setTableData({
+          header: ['no data'],
+          rows: [[]],
+        });
         setLoaderVisibility(false);
         Snackbar.show({text: 'Query Executed!'});
         return;
