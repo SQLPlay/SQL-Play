@@ -18,6 +18,15 @@ interface Props {
 
 const DataTable: FC<Props> = ({header, rows, tableWidths}) => {
   const styles = useDynamicValue(dynamicStyles);
+
+  if (header[0] === 'no data') {
+    return (
+      <Text style={styles.noResultsMessage}>
+        Your query returned zero results
+      </Text>
+    );
+  }
+
   return (
     <>
       <Text style={styles.outputText}>Output</Text>
@@ -26,8 +35,7 @@ const DataTable: FC<Props> = ({header, rows, tableWidths}) => {
         testID="table"
         accessibilityLabel="output table"
         horizontal={true}
-        bounces={false}
-      >
+        bounces={false}>
         <View style={styles.outPutContainer}>
           <ScrollView bounces={false}>
             <Table borderStyle={styles.tableBorder}>
@@ -76,5 +84,14 @@ const dynamicStyles = new DynamicStyleSheet({
     // marginBottom: 235,
     marginTop: 10,
     width: '100%',
+  },
+  noResultsMessage: {
+    textAlign: 'center',
+    fontSize: 18,
+    marginTop: 100,
+    color: 'black',
+    backgroundColor: '#ffea00',
+    fontWeight: 'bold',
+    padding: 10,
   },
 });
