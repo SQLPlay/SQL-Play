@@ -17,12 +17,12 @@ import {
 
 import {darkYellow} from '../data/colors.json';
 
-/* import RNIap, {
+import RNIap, {
   purchaseErrorListener,
   purchaseUpdatedListener,
   finishTransaction,
   Product,
-} from 'react-native-iap'; */
+} from 'react-native-iap';
 
 import {itemSkus, restorePremium, savePremium} from '../utils/utils';
 
@@ -145,8 +145,7 @@ const GoPremium: FC<Props> = ({
       visible={modalState}
       animationType="slide"
       presentationStyle="fullScreen"
-      onRequestClose={() => setModalState(false)}
-    >
+      onRequestClose={() => setModalState(false)}>
       <ScrollView contentContainerStyle={{height: height}}>
         <SafeAreaView style={styles.container}>
           <View>
@@ -198,8 +197,7 @@ const GoPremium: FC<Props> = ({
             <TouchableOpacity
               style={styles.buyBtn}
               onPress={buyPremium}
-              disabled={isPremium}
-            >
+              disabled={isPremium}>
               {!purchaseProcessing ? (
                 <Text style={styles.buyBtnTxt}>
                   {isPremium

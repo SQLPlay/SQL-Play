@@ -1,18 +1,10 @@
-import React, {FC} from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  GestureResponderEvent,
-} from 'react-native';
+import React from 'react';
+import {TouchableOpacity, StyleSheet} from 'react-native';
 import {ids} from '../../e2e/ids';
 import BaseIcon from './Icons/BaseIcon';
+import {runQuery} from '~/utils/run-query';
 
-interface Props {
-  runQuery: (event: GestureResponderEvent) => void;
-}
-const RunButton: FC<Props> = ({runQuery}) => {
+const RunButton = () => {
   return (
     <TouchableOpacity
       testID={ids.runBtn}

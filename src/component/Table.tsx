@@ -4,17 +4,11 @@ import React, {
   memo,
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from 'react';
-import {View, Text, ScrollView, StyleSheet, FlatList} from 'react-native';
-//@ts-ignore
-
-import {
-  DynamicStyleSheet,
-  DynamicValue,
-  useDynamicValue,
-  ColorSchemeProvider,
-} from 'react-native-dynamic';
+import {View, Text, ScrollView, StyleSheet, Dimensions} from 'react-native';
+import {FlashList} from '@shopify/flash-list';
 
 interface Props {
   header: string[];
@@ -25,6 +19,7 @@ interface Props {
 const DataTable: FC<Props> = ({header, rows, columnWidths}) => {
   // const styles = useDynamicValue(dynamicStyles);
 
+  const ref = useRef<FlashList<any>>(null);
   const renderItem = ({item, index}: {item: string[]; index: number}) => {
     return (
       <View key={index} style={styles.row}>
@@ -36,7 +31,9 @@ const DataTable: FC<Props> = ({header, rows, columnWidths}) => {
               {width: columnWidths[cellIndex]},
               {borderRightWidth: item.length === cellIndex + 1 ? 0 : 1},
             ]}>
-            <Text>{cell}</Text>
+            <Text selectable={true} style={styles.outputText}>
+              {cell}
+            </Text>
           </View>
         ))}
       </View>
@@ -54,32 +51,44 @@ const DataTable: FC<Props> = ({header, rows, columnWidths}) => {
               {width: columnWidths[index]},
               {borderRightWidth: header.length === index + 1 ? 0 : 1},
             ]}>
-            <Text style={styles.headerText}>{cell}</Text>
+            <Text selectable={true} style={styles.headerText}>
+              {cell}
+            </Text>
           </View>
         ))}
       </View>
     );
   };
 
+  const totalColumnWidth = columnWidths.reduce((prv, cur) => prv + cur, 0);
   return (
     <ScrollView horizontal={true}>
-      <View style={styles.container}>
-        <FlatList
+      <View
+        style={{
+          ...styles.container,
+          maxWidth: totalColumnWidth,
+        }}>
+        {renderHeader()}
+        <FlashList
+          ref={ref}
+          estimatedItemSize={35}
+          estimatedListSize={{
+            height: 35,
+            width: totalColumnWidth,
+          }}
           showsVerticalScrollIndicator={true}
           nestedScrollEnabled={true}
           data={rows}
           scrollEnabled={true}
-          stickyHeaderIndices={[0]}
-          keyExtractor={(item, index) => index.toString()}
           renderItem={renderItem}
-          ListHeaderComponent={renderHeader}
           stickyHeaderHiddenOnScroll={false}
         />
       </View>
     </ScrollView>
   );
 };
-export default memo(DataTable);
+
+export default DataTable;
 
 const borderColor = '#e5e7eb';
 const styles = StyleSheet.create({
@@ -114,7 +123,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   outputText: {
-    // color: new DynamicValue('black', 'white'),
+    color: '#000000',
   },
   tableBorder: {
     // borderWidth: 2,
@@ -137,9 +146,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    flexGrow: 1,
     // marginBottom: 235,
-    marginTop: 18,
+    // marginTop: 18,
     marginHorizontal: 8,
-    width: '100%',
+    minWidth: Dimensions.get('window').width,
+    minHeight: 200,
   },
 });

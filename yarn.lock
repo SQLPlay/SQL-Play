@@ -6859,6 +6859,11 @@ react-native-gradle-plugin@^0.71.17:
   resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.71.17.tgz#cf780a27270f0a32dca8184eff91555d7627dd00"
   integrity sha512-OXXYgpISEqERwjSlaCiaQY6cTY5CH6j73gdkWpK0hedxtiWMWgH+i5TOi4hIGYitm9kQBeyDu+wim9fA8ROFJA==
 
+react-native-iap@^11.0.0-rc.7:
+  version "11.0.0-rc.7"
+  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-11.0.0-rc.7.tgz#26a7d12b9f9768dc3bdeb6fe489dccca13e8ac44"
+  integrity sha512-Yxuf/RwVu3hurwDXgTvKe9gD7Lz1J5skTEnlLJZUi0DU1qh79j9kcSKBRjhjGslGGIRZokc7frvTY6AksEIWFQ==
+
 react-native-material-menu@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-material-menu/-/react-native-material-menu-2.0.0.tgz#139f407a52fbc0d47e5351d50ac769e05812da5c"

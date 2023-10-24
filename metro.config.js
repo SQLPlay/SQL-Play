@@ -2,6 +2,7 @@ const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
 
 const defaultConfig = getDefaultConfig(__dirname);
 const {assetExts, sourceExts} = defaultConfig.resolver;
+const nonSvgAssetExts = assetExts.filter(ext => ext !== 'svg');
 /**
  * Metro configuration
  * https://facebook.github.io/metro/docs/configuration
@@ -16,7 +17,7 @@ const config = {
   },
 
   resolver: {
-    assetExts: assetExts.filter(ext => ext !== 'svg'),
+    assetExts: [...nonSvgAssetExts, 'md'],
     sourceExts: [...sourceExts, 'svg'],
   },
 };

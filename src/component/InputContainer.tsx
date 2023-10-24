@@ -21,70 +21,14 @@ import {findUserCommands, getLastUserCommand} from '../utils/storage';
 import {debounce} from '../utils/utils';
 import {ids} from '../../e2e/ids';
 import BaseIcon from './Icons/BaseIcon';
-
-interface Props {
-  inputValue: string;
-  setInputValue: (val: string) => void;
-  isPremium: boolean;
-  setPremiumModalOpen: (isOpen: boolean) => void;
-}
+import {useStore} from '@nanostores/react';
+import {$inputQuery, $inputSelection} from '~/store/input';
 
 const codeFont = Platform.OS === 'ios' ? 'courier' : 'monospace';
 
-const InputContainer: FC<Props> = ({
-  inputValue,
-  setInputValue,
-  isPremium,
-  setPremiumModalOpen,
-}) => {
+const InputContainer = ({}) => {
   const historyOffset = useRef<number>(-1);
   const [autoCompleteTxt, setAutoCompleteTxt] = useState<string>('');
-
-  const showPremiumAlert = (): void => {
-    Alert.alert(
-      'Go premium to unlock query history',
-      'By going premium, you can unlock history with autocomplete and many more',
-      [
-        {text: 'Go Premium', onPress: () => setPremiumModalOpen(true)},
-        {text: 'Close', style: 'cancel'},
-      ],
-    );
-  };
-
-  const onUpArrowPress = async (): Promise<void> => {
-    /** show premium alert when user is not premium */
-    if (!isPremium) {
-      showPremiumAlert();
-      return;
-    }
-    const lastCommand = await getLastUserCommand(historyOffset.current + 1);
-    // console.log(historyOffset.current + 1, lastCommand);
-
-    // only set if command is there
-    if (lastCommand) {
-      setInputValue(lastCommand);
-      historyOffset.current++;
-    }
-  };
-  const onDownArrowPress = async (): Promise<void> => {
-    /** show premium alert when user is not premium */
-    if (!isPremium) {
-      showPremiumAlert();
-      return;
-    }
-
-    if (historyOffset.current === 0) {
-      return;
-    } // do nothing if offset it 0
-
-    const lastCommand = await getLastUserCommand(historyOffset.current - 1);
-    // console.log(historyOffset.current - 1, lastCommand);
-    // only set if command is there
-    if (lastCommand) {
-      setInputValue(lastCommand);
-      historyOffset.current--;
-    }
-  };
 
   type CallbackType = (...args: string[]) => void;
 
@@ -101,31 +45,11 @@ const InputContainer: FC<Props> = ({
     [],
   );
 
-  useEffect(() => {
-    // console.log(inputValue);
-    if (!isPremium) {
-      return;
-    }
-    if (inputValue !== '') {
-      getAutoComplete(inputValue);
-    } else {
-      setAutoCompleteTxt('');
-    }
-  }, [getAutoComplete, inputValue, isPremium]);
-
-  const clearInput = () => {
-    setInputValue('');
-  };
-
-  const setAutoInput = () => {
-    isPremium && setInputValue(autoCompleteTxt);
-  };
-
   const handleSwipeLeft = ({
     nativeEvent,
   }: FlingGestureHandlerStateChangeEvent) => {
     if (nativeEvent.state === State.ACTIVE) {
-      isPremium && clearInput();
+      // isPremium && clearInput();
     }
   };
 
@@ -133,43 +57,14 @@ const InputContainer: FC<Props> = ({
     nativeEvent,
   }: FlingGestureHandlerStateChangeEvent) => {
     if (nativeEvent.oldState === State.ACTIVE) {
-      setAutoInput();
+      // setAutoInput();
     }
   };
+  const inputValue = useStore($inputQuery);
   const styles = useDynamicValue(dynamicStyles);
+  console.log(inputValue.replaceAll('\n', '<br/>'));
   return (
     <View style={{padding: 5}}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          minHeight: 24,
-          flex: 1,
-        }}>
-        <Text style={styles.inputHeader}>Type your SQL Query</Text>
-        <View style={styles.sideButtonContainer}>
-          <TouchableOpacity
-            accessibilityLabel="Up Button"
-            accessibilityHint="gets the previous command from history"
-            onPress={onUpArrowPress}>
-            <BaseIcon size={30} name="CaretUp" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.downArrow}
-            accessibilityLabel="Down Button"
-            accessibilityHint="gets the next command from history"
-            onPress={onDownArrowPress}>
-            <BaseIcon size={30} name="CaretUp" />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={clearInput}
-            accessibilityLabel="Clear command button"
-            accessibilityHint="clear the command input">
-            <BaseIcon name="Trash" />
-          </TouchableOpacity>
-        </View>
-      </View>
       <View style={styles.inputContainer}>
         <FlingGestureHandler
           direction={Directions.RIGHT}
@@ -181,7 +76,10 @@ const InputContainer: FC<Props> = ({
               style={styles.input}
               autoFocus={true}
               testID={ids.queryTextInput}
-              onChangeText={text => setInputValue(text)}
+              onChangeText={text => $inputQuery.set(text)}
+              onSelectionChange={e =>
+                $inputSelection.set(e.nativeEvent.selection)
+              }
               multiline
               placeholderTextColor="gray"
               textAlignVertical="top"
@@ -193,12 +91,6 @@ const InputContainer: FC<Props> = ({
             />
           </FlingGestureHandler>
         </FlingGestureHandler>
-        <Text
-          suppressHighlighting={true}
-          onLongPress={setAutoInput}
-          style={styles.autoCompleteTxt}>
-          {autoCompleteTxt}
-        </Text>
       </View>
     </View>
   );
@@ -243,19 +135,5 @@ const dynamicStyles = new DynamicStyleSheet({
     top: 4.8,
     left: 4.8,
     opacity: 0.8,
-  },
-  sideButtonContainer: {
-    flexDirection: 'row',
-    // position: 'absolute',
-    // gap: 3,
-  },
-  downArrow: {
-    transform: [{rotate: '180deg'}],
-    // marginTop: -5,
-  },
-  deleteBtn: {
-    // position: 'absolute',
-    // bottom: 12,
-    // right: 3,
   },
 });

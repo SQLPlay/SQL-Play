@@ -6,15 +6,18 @@ import {Dirs, FileSystem} from 'react-native-file-access';
 
 // FileSystem.ls(`${Dirs.MainBundleDir}`).then(l => console.log(l));
 
-const init = async () => {
+export const initDb = async () => {
   // await FileSystem.cp(
   //   `${Dirs.MainBundleDir}/www/prepop.db`,
   //   Dirs.DocumentDir + '/prepop.db',
   // ).catch(err => console.log(err));
   //
 
-  const assetList = await FileSystem.ls(Dirs.DocumentDir);
-  console.log(assetList);
+  // console.log(Dirs.MainBundleDir);
+  // const assetList = await FileSystem.ls(`${Dirs.DocumentDir}`);
+  // console.log(assetList);
+  const time = performance.now();
+  /**
   const dbPath = `${Dirs.DocumentDir}/default.db`;
   const dbAlreadyInPlace = await FileSystem.exists(dbPath);
   if (!dbAlreadyInPlace) {
@@ -23,12 +26,15 @@ const init = async () => {
     );
   }
 
+**/
+  console.log('init db');
   // await FileSystem.unlink()
   // stat.forEach(i => console.log(i.path));
   SQLite.open('default.db');
+
+  console.log('took:', performance.now() - time);
 };
 
-init();
 // if (!status) {
 //   rows.forEach(row => {
 //     console.log(row);

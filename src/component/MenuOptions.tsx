@@ -27,28 +27,6 @@ const MenuOptions: FC<Props> = ({
     setMenuOpen(false);
     setInputValue(query);
   };
-  const showSupportedQuery = (): void => {
-    setMenuOpen(false);
-    Alert.alert(
-      'Supported Queries',
-
-      `
-This app has been built on top of SQLite, so most of the SQL queries are supported.
-
-You can create, delete, modify and join the tables.
-
-The select query works mostly the same as SQL.
-
-There are no user roles or authentication here.
-
-All your queries are run for a single database, so all your tables are in a single database.
-
-In future, this app may allow you to create and select different databases.
-      `,
-      [{text: 'OK', style: 'cancel'}],
-      {cancelable: true},
-    );
-  };
 
   const sendMailFeedback = (): void => {
     try {
