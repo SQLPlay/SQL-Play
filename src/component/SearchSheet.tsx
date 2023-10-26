@@ -1,5 +1,12 @@
-import React, {useRef, useEffect, useState, useMemo} from 'react';
-import {TouchableOpacity, Keyboard, Platform, Text} from 'react-native';
+import React, {useRef, useEffect, useState, useMemo, createRef} from 'react';
+import {
+  TouchableOpacity,
+  Keyboard,
+  Platform,
+  Text,
+  StyleSheet,
+  View,
+} from 'react-native';
 
 import {
   BottomSheetModal,
@@ -7,12 +14,6 @@ import {
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-
-import {
-  DynamicStyleSheet,
-  DynamicValue,
-  useDynamicValue,
-} from 'react-native-dynamic';
 
 import commandsJSON from '../data/commands.json';
 
@@ -22,13 +23,11 @@ import CommandList from './CommandList';
 import {CustomHandle, CustomBG, CustomBackdrop} from './CustomHandle';
 import {ids} from '../../e2e/ids';
 import BaseIcon from './Icons/BaseIcon';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-interface Props {
-  setInputValue: (query: string) => void;
-}
+export const searchSheetRef = createRef<BottomSheetModal>();
 
-const SearchBox: React.FC<Props> = ({setInputValue}) => {
-  const bottomSheetRef = useRef<BottomSheetModal>(null);
+const SearchSheet = () => {
   const [listData, setListData] = useState(commandsJSON);
   const [searchInput, setSearchInput] = useState<string>('');
 
@@ -39,9 +38,8 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
   //   console.log('handleSheetChanges', index);
   // }, []);
 
-  const styles = useDynamicValue(dynamicStyles);
   const openTabSheet = () => {
-    bottomSheetRef.current?.present();
+    searchSheetRef.current?.present();
     if (Platform.OS === 'ios') {
       Keyboard.dismiss();
     }
@@ -66,31 +64,24 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
   }, [searchInput]);
 
   return (
-    <>
-      <TouchableOpacity
-        accessibilityLabel="Search"
-        accessibilityHint="Search for commands"
-        testID={ids.searchBtn}
-        onPress={openTabSheet}>
-        <BaseIcon name="MagnifyingGlass" fill="#2f3542" />
-      </TouchableOpacity>
-
-      <BottomSheetModal
-        ref={bottomSheetRef}
-        index={0}
-        snapPoints={snapPoints}
-        topInset={topSafeArea}
-        style={styles.container}
-        handleComponent={CustomHandle}
-        backgroundComponent={CustomBG}
-        backdropComponent={CustomBackdrop}
-        android_keyboardInputMode="adjustResize"
-        keyboardBehavior="extend"
-        // onChange={handleSheetChanges}
-      >
-        <BottomSheetView
-          style={styles.inputContainer}
-          accessibilityLabel="commands list panel">
+    <BottomSheetModal
+      ref={searchSheetRef}
+      index={0}
+      snapPoints={snapPoints}
+      topInset={topSafeArea}
+      style={styles.container}
+      handleComponent={CustomHandle}
+      backgroundComponent={CustomBG}
+      backdropComponent={CustomBackdrop}
+      enableOverDrag={false}
+      android_keyboardInputMode="adjustResize"
+      // keyboardBehavior="extend"
+      // onChange={handleSheetChanges}
+    >
+      <BottomSheetView
+        style={{flex: 1}}
+        accessibilityLabel="commands list panel">
+        <View style={styles.inputContainer}>
           <BottomSheetTextInput
             style={styles.searchInput}
             value={searchInput}
@@ -102,28 +93,25 @@ const SearchBox: React.FC<Props> = ({setInputValue}) => {
             onChangeText={(val: string) => setSearchInput(val)}
             placeholder="Search Query"
           />
-          {/* <Icon
+          <Icon
             name="close"
             accessibilityLabel="clear command"
             accessibilityHint="clears searched command"
             size={24}
             color="gray"
             testID={ids.commandSearchClearBtn}
-            onPress={() => setSearchInput('')} */}
-        </BottomSheetView>
-        <CommandList
-          listData={commandsJSON}
-          setInputValue={setInputValue}
-          bottomSheetRef={bottomSheetRef}
-        />
-      </BottomSheetModal>
-    </>
+            onPress={() => setSearchInput('')}
+          />
+        </View>
+        <CommandList listData={commandsJSON} />
+      </BottomSheetView>
+    </BottomSheetModal>
   );
 };
 
-export default SearchBox;
+export default SearchSheet;
 
-const dynamicStyles = new DynamicStyleSheet({
+const styles = StyleSheet.create({
   sheetContainer: {
     // backgroundColor: new DynamicValue('white', darkBGColor),
   },
@@ -145,11 +133,10 @@ const dynamicStyles = new DynamicStyleSheet({
   },
   searchInput: {
     height: 42,
-    flex: 1,
     paddingLeft: 5,
     paddingRight: 5,
     fontSize: 16,
-    color: new DynamicValue('black', 'white'),
+    color: 'black',
     // textAlign: 'center',
   },
   codeSyntaxContainer: {

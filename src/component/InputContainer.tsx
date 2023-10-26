@@ -64,7 +64,7 @@ const InputContainer = ({}) => {
   const styles = useDynamicValue(dynamicStyles);
   console.log(inputValue.replaceAll('\n', '<br/>'));
   return (
-    <View style={{padding: 5}}>
+    <View style={{paddingHorizontal: 5}}>
       <View style={styles.inputContainer}>
         <FlingGestureHandler
           direction={Directions.RIGHT}
@@ -107,7 +107,6 @@ const dynamicStyles = new DynamicStyleSheet({
     position: 'relative',
     borderColor: '#353b48',
     marginBottom: 10,
-    marginTop: 10,
     borderWidth: 1,
     borderRadius: 4,
     backgroundColor: new DynamicValue('white', lightDark),

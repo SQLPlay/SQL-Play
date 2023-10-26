@@ -7,6 +7,7 @@ import {
   LayoutAnimation,
   Pressable,
   Keyboard,
+  StyleSheet,
 } from 'react-native';
 
 import {
@@ -26,6 +27,8 @@ import {
 
 import {BottomSheetFlatList, BottomSheetModal} from '@gorhom/bottom-sheet';
 import {ids} from '../../e2e/ids';
+import {$inputQuery} from '~/store/input';
+import {searchSheetRef} from './SearchSheet';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -34,17 +37,13 @@ if (Platform.OS === 'android') {
 }
 interface LIProps extends CommandItem {
   index: number;
-  setInputValue: (val: string) => void;
-  bottomSheetRef: RefObject<BottomSheetModal>;
 }
 const ListItem: FC<LIProps> = props => {
   // console.log('props', props);
 
-  const {title, description, syntax, index, setInputValue, bottomSheetRef} =
-    props;
+  const {title, description, syntax, index} = props;
 
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
-  const styles = useDynamicValue(dynamicStyles);
 
   const isDark = useDarkMode();
 
@@ -61,9 +60,10 @@ const ListItem: FC<LIProps> = props => {
   };
 
   const onSyntaxPress = (syntax: string) => {
-    setInputValue(syntax);
-    bottomSheetRef.current?.close();
+    $inputQuery.set(syntax);
+    searchSheetRef.current?.close();
   };
+
   return (
     <Pressable testID={ids.commandListItem} onPress={() => onItemPress(index)}>
       <View style={styles.item}>
@@ -144,10 +144,8 @@ interface CommandItem {
 
 interface Props {
   listData: CommandItem[];
-  setInputValue: (val: string) => void;
-  bottomSheetRef: RefObject<BottomSheetModal>;
 }
-const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
+const CommandList = ({listData}: Props) => {
   return (
     <BottomSheetFlatList
       accessibilityHint="search examples and syntaxes"
@@ -158,16 +156,10 @@ const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
       maxToRenderPerBatch={5}
       // scrollEventThrottle={30}
       contentContainerStyle={{paddingVertical: 5}}
+      style={{flex: 1}}
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
-      renderItem={({item, index}) => (
-        <MemoizedLI
-          {...item}
-          index={index}
-          setInputValue={setInputValue}
-          bottomSheetRef={bottomSheetRef}
-        />
-      )}
+      renderItem={({item, index}) => <MemoizedLI {...item} index={index} />}
       initialNumToRender={5}
       windowSize={30}
       keyExtractor={item => item.id}
@@ -176,13 +168,14 @@ const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
 };
 export default CommandList;
 
-const dynamicStyles = new DynamicStyleSheet({
+const styles = StyleSheet.create({
   container: {
     padding: 5,
-    height: '100%',
+    flex: 1,
+    // height: '100%',
   },
   item: {
-    flex: 1,
+    // flex: 1,
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 5,
@@ -191,7 +184,7 @@ const dynamicStyles = new DynamicStyleSheet({
   },
   syntaxHeader: {
     marginTop: 5,
-    color: new DynamicValue('black', '#ffffffe7'),
+    color: 'black',
   },
   header: {
     position: 'relative',
@@ -203,11 +196,11 @@ const dynamicStyles = new DynamicStyleSheet({
   },
   title: {
     fontSize: 18,
-    color: new DynamicValue('black', '#ffffffe7'),
+    color: 'black',
   },
   description: {
     fontSize: 16,
-    color: new DynamicValue('black', '#ffffffe7'),
+    color: 'black',
   },
 
   codeSyntaxContainer: {

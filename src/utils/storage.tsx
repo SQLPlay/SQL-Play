@@ -1,5 +1,5 @@
 // import {QuickSQLite} from 'react-native-quick-sqlite';
-import {QuickSQLite as SQLite} from 'react-native-quick-sqlite';
+// import {QuickSQLite as SQLite} from 'react-native-quick-sqlite';
 import {Dirs, FileSystem} from 'react-native-file-access';
 
 // Get the path to the assets folder
@@ -30,7 +30,7 @@ export const initDb = async () => {
   console.log('init db');
   // await FileSystem.unlink()
   // stat.forEach(i => console.log(i.path));
-  SQLite.open('default.db');
+  // SQLite.open('default.db');
 
   console.log('took:', performance.now() - time);
 };

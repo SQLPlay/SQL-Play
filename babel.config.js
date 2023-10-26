@@ -11,9 +11,11 @@ module.exports = {
           '~/component': './src/component',
           '~/utils': './src/utils',
           '~/store': './src/store',
+          '~/api': './src/api',
         },
       },
     ],
+    ['nativewind/babel'],
     ['react-native-reanimated/plugin'],
   ],
 };

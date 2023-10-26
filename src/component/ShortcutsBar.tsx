@@ -13,7 +13,7 @@ import {
 import {cutAllAndPasteToClipboard, pasteFromClipboard} from '~/utils/clipboard';
 import {useStore} from '@nanostores/react';
 import {$isKeyboardVisible} from '~/utils/keyboard-status';
-
+import {format as formatSqlQuery} from 'sql-formatter';
 export default function ShortcutsBar() {
   const onUpArrowPress = async (): Promise<void> => {
     /** show premium alert when user is not premium */
@@ -98,8 +98,8 @@ export default function ShortcutsBar() {
     $inputQuery.set(newText);
   };
 
-  const addWhereCaluse = () => {
-    // $inputQuery.set($inputQuery.get() + ' WHERE');
+  const formatSQL = () => {
+    // $inputQuery.set(query);
   };
 
   const isKeyboardVisible = useStore($isKeyboardVisible);

@@ -1,6 +1,10 @@
 import {MaterialTopTabBarProps} from '@react-navigation/material-top-tabs';
 import {useTheme} from '@react-navigation/native';
 import {Animated, View, TouchableOpacity, Pressable} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import OptionsMenu from './RightHeader';
+import ids from '../../e2e/ids';
+import {searchSheetRef} from './SearchSheet';
 
 const TabBar = ({
   state,
@@ -17,15 +21,18 @@ const TabBar = ({
   return (
     <View
       style={{
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        flexDirection: 'row',
         paddingVertical: 8,
+        paddingHorizontal: 18,
         backgroundColor: colors.background,
       }}>
+      <OptionsMenu />
       <View
         style={{
           flexDirection: 'row',
-          backgroundColor: 'gold',
+          backgroundColor: '#e7e5e4',
           paddingVertical: 6,
           borderRadius: 8,
           position: 'relative',
@@ -98,6 +105,13 @@ const TabBar = ({
           );
         })}
       </View>
+      <TouchableOpacity
+        accessibilityLabel="Search"
+        accessibilityHint="Search for commands"
+        testID={ids.searchBtn}
+        onPress={() => searchSheetRef.current?.present()}>
+        <Icon name="search" size={24} color="#000" />
+      </TouchableOpacity>
     </View>
   );
 };

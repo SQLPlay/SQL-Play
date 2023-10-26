@@ -1,9 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, Platform, Pressable} from 'react-native';
-import MenuOptions from './MenuOptions';
-import SearchBox from './SearchBox';
-import ContextMenu from 'react-native-context-menu-view';
-import BaseIcon from './Icons/BaseIcon';
+import {StyleSheet, Platform, Pressable} from 'react-native';
 import {MenuView} from '@react-native-menu/menu';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -15,42 +11,39 @@ export interface Props {
   premiumModalOpen: boolean;
 }
 
-const RightHeader = () => {
+const OptionsMenu = () => {
   return (
-    <View style={{flexDirection: 'row', gap: 8}}>
-      <SearchBox setInputValue={() => null} />
-      <MenuView
-        title="Menu Title"
-        onPressAction={({nativeEvent}) => {
-          console.log(JSON.stringify(nativeEvent));
-        }}
-        actions={[
-          {
-            id: 'share',
-            title: 'Export',
-            subtitle: 'Export table in CSV',
-            imageColor: 'green',
-            image: Platform.select({
-              ios: 'square.and.arrow.up',
-              android: 'baseline_unarchive_24',
-            }),
-            state: 'on',
+    <MenuView
+      title="Menu Title"
+      onPressAction={({nativeEvent}) => {
+        console.log(JSON.stringify(nativeEvent));
+      }}
+      actions={[
+        {
+          id: 'share',
+          title: 'Export',
+          subtitle: 'Export table in CSV',
+          imageColor: 'green',
+          image: Platform.select({
+            ios: 'square.and.arrow.up',
+            android: 'baseline_unarchive_24',
+          }),
+          state: 'on',
+        },
+        {
+          id: 'destructive',
+          title: 'Help',
+          attributes: {
+            destructive: true,
           },
-          {
-            id: 'destructive',
-            title: 'Help',
-            attributes: {
-              destructive: true,
-            },
-            image: Platform.select({
-              ios: 'trash',
-              android: 'baseline_help_center_24',
-            }),
-          },
-        ]}>
-        <BaseIcon name="DotsThreeVertical" />
-      </MenuView>
-    </View>
+          image: Platform.select({
+            ios: 'trash',
+            android: 'baseline_help_center_24',
+          }),
+        },
+      ]}>
+      <Icon name="menu" color="#000" size={24} />
+    </MenuView>
   );
 };
 
@@ -77,4 +70,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RightHeader;
+export default OptionsMenu;

@@ -24,9 +24,10 @@ import Home from '~/screens/Home';
 import {initDb} from '~/utils/storage';
 import SupportedQuery from '~/screens/SupportedQuery';
 import {setupKeyboardListener} from '~/utils/keyboard-status';
-import RightHeader from './component/RightHeader';
+import OptionMenu from './component/RightHeader';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import TabBar from './component/TabBar';
+import Learn from './screens/Learn';
 
 initDb();
 setupKeyboardListener();
@@ -53,7 +54,7 @@ const HomeStackNav = () => (
       options={{
         title: 'SQL Play',
         headerStyle: {backgroundColor: 'gold'},
-        headerRight: RightHeader,
+        headerRight: OptionMenu,
       }}
       name="Code Runner"
       component={Home}
@@ -99,6 +100,10 @@ const App = () => {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <NavigationContainer theme={scheme === 'dark' ? DarkTheme : LightTheme}>
+        <StatusBar
+          barStyle="dark-content"
+          backgroundColor={LightTheme.colors.background}
+        />
         <BottomSheetModalProvider>
           <SafeAreaProvider>
             <NotifierWrapper>
@@ -106,7 +111,7 @@ const App = () => {
                 tabBar={props => <TabBar {...props} />}
                 screenOptions={{}}>
                 <Tab.Screen name="SQL Play" component={HomeStackNav} />
-                <Tab.Screen name="Learn" component={SupportedQuery} />
+                <Tab.Screen name="Learn" component={Learn} />
               </Tab.Navigator>
             </NotifierWrapper>
           </SafeAreaProvider>
