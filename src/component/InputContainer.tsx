@@ -1,6 +1,13 @@
 import React, {useState, FC, useEffect, useRef, useCallback} from 'react';
 
-import {Text, View, TouchableOpacity, Alert, Platform} from 'react-native';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Alert,
+  Platform,
+  StyleSheet,
+} from 'react-native';
 
 import {
   DynamicStyleSheet,
@@ -61,10 +68,9 @@ const InputContainer = ({}) => {
     }
   };
   const inputValue = useStore($inputQuery);
-  const styles = useDynamicValue(dynamicStyles);
-  console.log(inputValue.replaceAll('\n', '<br/>'));
+
   return (
-    <View style={{paddingHorizontal: 5}}>
+    <View style={{marginHorizontal: 5}}>
       <View style={styles.inputContainer}>
         <FlingGestureHandler
           direction={Directions.RIGHT}
@@ -86,7 +92,7 @@ const InputContainer = ({}) => {
               defaultValue={inputValue}
               keyboardType="ascii-capable"
               autoCorrect={false}
-              numberOfLines={4}
+              numberOfLines={6}
               placeholder="Type your SQL query"
             />
           </FlingGestureHandler>
@@ -98,7 +104,7 @@ const InputContainer = ({}) => {
 
 export default InputContainer;
 
-const dynamicStyles = new DynamicStyleSheet({
+const styles = StyleSheet.create({
   inputHeader: {
     fontSize: 16,
     color: new DynamicValue('black', 'white'),
@@ -113,26 +119,18 @@ const dynamicStyles = new DynamicStyleSheet({
   },
   input: {
     fontSize: 16,
+    paddingVertical: 0,
+    paddingBottom: 3,
     fontFamily: codeFont,
-    paddingHorizontal: 5,
-    paddingRight: 18,
+    // paddingHorizontal: 5,
     // position: 'relative',
-    zIndex: 2,
+    // zIndex: 2,
     opacity: 1,
-    height: 120,
+    minHeight: 80,
+    maxHeight: 200,
     color: new DynamicValue('black', 'white'),
   },
   autoCompleteTxtContainer: {
     position: 'absolute',
-  },
-  autoCompleteTxt: {
-    position: 'absolute',
-    zIndex: 1,
-    fontFamily: codeFont,
-    fontSize: 16,
-    color: 'gray',
-    top: 4.8,
-    left: 4.8,
-    opacity: 0.8,
   },
 });

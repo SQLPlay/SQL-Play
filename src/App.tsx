@@ -9,6 +9,7 @@ import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {
   setup,
   initConnection,
@@ -22,17 +23,18 @@ import {
 } from '@react-navigation/native';
 import Home from '~/screens/Home';
 import {initDb} from '~/utils/storage';
-import SupportedQuery from '~/screens/SupportedQuery';
+import Lesson from '~/screens/Lesson';
 import {setupKeyboardListener} from '~/utils/keyboard-status';
 import OptionMenu from './component/RightHeader';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import TabBar from './component/TabBar';
 import Learn from './screens/Learn';
+import {RootStackParamList} from '~/types/nav';
+import Purchase from './screens/Purchase';
 
 initDb();
 setupKeyboardListener();
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const LightTheme = {
   ...DefaultTheme,
@@ -49,21 +51,36 @@ const DarkTheme = {
 };
 
 const HomeStackNav = () => (
-  <Stack.Navigator screenOptions={{headerShown: false}} initialRouteName="Home">
+  <Stack.Navigator
+    screenOptions={{headerShown: false}}
+    initialRouteName="CodeRunner">
     <Stack.Screen
       options={{
         title: 'SQL Play',
         headerStyle: {backgroundColor: 'gold'},
         headerRight: OptionMenu,
       }}
-      name="Code Runner"
+      name="CodeRunner"
       component={Home}
     />
+    <Stack.Group
+      screenOptions={{presentation: 'transparentModal', headerShown: false}}>
+      <Stack.Screen name="Purchase" component={Purchase} />
+    </Stack.Group>
+  </Stack.Navigator>
+);
+
+const LearnStackNav = () => (
+  <Stack.Navigator
+    screenOptions={{headerShown: false}}
+    initialRouteName="Learn">
     <Stack.Screen
       options={{title: 'SQL Compatibility'}}
       name="SupportedQuery"
-      component={SupportedQuery}
+      component={Lesson}
     />
+    <Stack.Screen options={{}} name="Learn" component={Learn} />
+    <Stack.Screen options={{}} name="Lesson" component={Lesson} />
   </Stack.Navigator>
 );
 
@@ -111,7 +128,11 @@ const App = () => {
                 tabBar={props => <TabBar {...props} />}
                 screenOptions={{}}>
                 <Tab.Screen name="SQL Play" component={HomeStackNav} />
-                <Tab.Screen name="Learn" component={Learn} />
+                <Tab.Screen
+                  options={{title: 'Learn'}}
+                  name="Learn Stack"
+                  component={LearnStackNav}
+                />
               </Tab.Navigator>
             </NotifierWrapper>
           </SafeAreaProvider>

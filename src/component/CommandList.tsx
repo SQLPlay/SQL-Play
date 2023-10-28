@@ -22,8 +22,7 @@ import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import {
   vs2015,
   defaultStyle,
-  //@ts-ignore
-} from 'react-syntax-highlighter/dist/styles/hljs';
+} from 'react-syntax-highlighter/dist/esm/highlight';
 
 import {BottomSheetFlatList, BottomSheetModal} from '@gorhom/bottom-sheet';
 import {ids} from '../../e2e/ids';

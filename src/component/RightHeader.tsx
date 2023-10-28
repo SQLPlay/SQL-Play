@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Platform, Pressable} from 'react-native';
 import {MenuView} from '@react-native-menu/menu';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useNavigation} from '@react-navigation/native';
 
 export interface Props {
   setInputValue: (query: string) => void;
@@ -12,13 +13,21 @@ export interface Props {
 }
 
 const OptionsMenu = () => {
+  const navigation = useNavigation();
   return (
     <MenuView
       title="Menu Title"
       onPressAction={({nativeEvent}) => {
         console.log(JSON.stringify(nativeEvent));
+        if (nativeEvent.event === 'go_premium') {
+          navigation.navigate('Purchase');
+        }
       }}
       actions={[
+        {
+          id: 'go_premium',
+          title: 'Go Premium',
+        },
         {
           id: 'share',
           title: 'Export',

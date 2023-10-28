@@ -107,7 +107,7 @@ android {
         }
     }
     defaultConfig {
-        applicationId "com.sqlplay"
+        applicationId "com.sql_playground"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

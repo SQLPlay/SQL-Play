@@ -2,10 +2,10 @@ import {Platform} from 'react-native';
 import SInfo from 'react-native-sensitive-info';
 // import RNIap, {ProductPurchase, Subscription} from 'react-native-iap';
 
-export const itemSkus: string[] | undefined = Platform.select({
+export const itemSkus = Platform.select({
   android: ['premium'],
   ios: ['premium'],
-});
+}) ?? ['premium'];
 
 export const getLargestWidths = async (
   arr: Array<Array<any>>,

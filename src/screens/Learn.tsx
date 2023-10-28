@@ -3,10 +3,13 @@ import React from 'react';
 import {FlatList} from 'react-native-gesture-handler';
 import TopicCard from '~/component/TopicCard';
 import {useGetLessonsList} from '~/api/lessons-api';
+import {RootStackParamList} from '~/types/nav';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {showErrorNotif} from '~/utils/notif';
 
-const Learn = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Learn'>;
+const Learn = ({navigation}: Props) => {
   const {data, isLoading} = useGetLessonsList();
-  console.log('data', data);
   return (
     <View className="mt-4">
       {isLoading || !data ? (
@@ -14,15 +17,28 @@ const Learn = () => {
       ) : (
         <FlatList
           data={data}
-          contentContainerStyle={{rowGap: 8, marginHorizontal: 16}}
+          contentContainerStyle={{
+            rowGap: 8,
+            marginHorizontal: 16,
+            paddingBottom: 12,
+          }}
           keyExtractor={item => item.path}
-          renderItem={({item}) => (
-            <TopicCard
-              onPress={() => null}
-              {...item}
-              description={item.short_description}
-            />
-          )}
+          renderItem={({item, index}) => {
+            const isLocked = index > 4;
+            return (
+              <TopicCard
+                {...item}
+                index={index}
+                isLocked={isLocked}
+                onPress={() =>
+                  isLocked
+                    ? showErrorNotif('Get SQL Play Pro')
+                    : navigation.navigate('Lesson', item)
+                }
+                description={item.short_description}
+              />
+            );
+          }}
         />
       )}
     </View>

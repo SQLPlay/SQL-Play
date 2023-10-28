@@ -1,15 +1,22 @@
 import {View, Text, Pressable} from 'react-native';
 import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
-
-type Props = {
-  title: string;
-  description: string;
-  reading_time: string;
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {LessonItem} from '~/types/lesson-type';
+import colors from 'tailwindcss/colors';
+type Props = LessonItem & {
   onPress: () => void;
+  isLocked: boolean;
+  index: number;
 };
 
-const TopicCard = ({reading_time, title, description, onPress}: Props) => {
+const TopicCard = ({
+  reading_time,
+  index,
+  title,
+  description,
+  isLocked,
+  onPress,
+}: Props) => {
   return (
     <Pressable onPress={onPress}>
       {({pressed}) => (
@@ -27,9 +34,31 @@ const TopicCard = ({reading_time, title, description, onPress}: Props) => {
           <Text className="" numberOfLines={3}>
             {description}
           </Text>
-          <Text className="text-xs mt-1.5 text-right">
-            {Math.ceil(reading_time)} min to learn
-          </Text>
+          <View className="flex-row justify-between mt-2">
+            <View
+              className="flex-row items-center px-2.5 py-0.5  rounded-2xl"
+              style={{
+                backgroundColor: isLocked
+                  ? colors.gray['100']
+                  : colors.green['50'],
+              }}>
+              <Icon
+                name={isLocked ? 'lock' : 'lock-open'}
+                size={15}
+                color={isLocked ? colors.gray['600'] : colors.green['700']}
+              />
+              <Text
+                style={{
+                  color: isLocked ? colors.gray['600'] : colors.green['700'],
+                }}
+                className="ml-1">
+                {isLocked ? 'Pro unlocks this' : 'Free'}
+              </Text>
+            </View>
+            <Text className="text-xs text-right">
+              {Math.ceil(reading_time)} min to learn
+            </Text>
+          </View>
         </View>
       )}
     </Pressable>

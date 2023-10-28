@@ -6,7 +6,7 @@ import ShortcutsBar from '~/component/ShortcutsBar';
 import RunButton from '~/component/RunButton';
 import {useStore} from '@nanostores/react';
 import {$tableData, $tableWidths} from '~/utils/run-query';
-import SearchSheet from '~/component/SearchSheet';
+// import SearchSheet from '~/component/SearchSheet';
 
 export default function Home() {
   const tableData = useStore($tableData);
@@ -19,7 +19,9 @@ export default function Home() {
           <Table {...tableData} columnWidths={$tableWidths.get()} />
         ) : null}
       </View>
-      <SearchSheet />
+      {
+        // <SearchSheet />
+      }
       <ShortcutsBar />
       <RunButton />
     </View>
