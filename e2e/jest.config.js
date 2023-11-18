@@ -1,10 +1,9 @@
-const e2ePattern = '**/*.e2e.js';
-
 /** @type {import('@jest/types').Config.InitialOptions} */
 module.exports = {
   rootDir: '..',
+  preset: 'ts-jest',
   testTimeout: 120000,
-  testMatch: [e2ePattern],
+  testMatch: ['<rootDir>/e2e/**/*.e2e.ts'],
   maxWorkers: 1,
   globalSetup: 'detox/runners/jest/globalSetup',
   globalTeardown: 'detox/runners/jest/globalTeardown',
