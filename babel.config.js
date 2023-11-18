@@ -12,6 +12,7 @@ module.exports = {
           '~/utils': './src/utils',
           '~/store': './src/store',
           '~/api': './src/api',
+          '~/types': './src/types',
         },
       },
     ],

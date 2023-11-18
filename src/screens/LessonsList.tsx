@@ -6,12 +6,13 @@ import {useGetLessonsList} from '~/api/lessons-api';
 import {RootStackParamList} from '~/types/nav';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {showErrorNotif} from '~/utils/notif';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Learn'>;
-const Learn = ({navigation}: Props) => {
+const LessonsList = ({navigation}: Props) => {
   const {data, isLoading} = useGetLessonsList();
   return (
-    <View className="mt-4">
+    <SafeAreaView className="mt-4">
       {isLoading || !data ? (
         <ActivityIndicator size="large" color="#000" />
       ) : (
@@ -22,6 +23,7 @@ const Learn = ({navigation}: Props) => {
             marginHorizontal: 16,
             paddingBottom: 12,
           }}
+          testID="scroll-container"
           keyExtractor={item => item.path}
           renderItem={({item, index}) => {
             const isLocked = index > 4;
@@ -41,8 +43,8 @@ const Learn = ({navigation}: Props) => {
           }}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
-export default Learn;
+export default LessonsList;

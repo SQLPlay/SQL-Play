@@ -6,4 +6,8 @@ export type RootStackParamList = {
   Learn: undefined;
   SupportedQuery: undefined;
   Purchase: undefined;
+  Main: undefined;
+  Export: undefined;
+  SupportTicket: undefined;
+  TicketsList: undefined;
 };

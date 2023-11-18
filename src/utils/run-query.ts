@@ -1,7 +1,7 @@
 import {$inputQuery} from '~/store/input';
 import {calculateWidths} from './measureTextSize';
 import {showErrorNotif, showSuccessNotif} from './notif';
-import {ExecuteUserQuery} from './storage';
+import {executeDbQuery} from './storage';
 import {atom} from 'nanostores';
 
 type TableDataNode = {
@@ -25,7 +25,7 @@ export const runQuery = async () => {
     //   showAd();
     // }
     // execute the query
-    const res = await ExecuteUserQuery($inputQuery.get());
+    const res = await executeDbQuery($inputQuery.get());
 
     // console.log(res);
     if (!res?.rows || !res.header) {

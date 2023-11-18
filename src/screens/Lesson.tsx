@@ -14,7 +14,6 @@ import Markdown, {
   RendererInterface,
 } from 'react-native-marked';
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
-import SupportedQueryMd from '../../md-pages/supported-query';
 import {RootStackParamList} from '~/types/nav';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CodeHighlighter from 'react-native-code-highlighter';

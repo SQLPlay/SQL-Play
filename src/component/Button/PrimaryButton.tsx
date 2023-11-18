@@ -10,22 +10,22 @@ import {
 
 interface BtnProps extends PressableProps {
   title: string;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 const PrimaryButton = ({title, isLoading, ...rest}: BtnProps) => {
   return (
-    <Pressable {...rest}>
+    <Pressable disabled={isLoading} {...rest}>
       {({pressed}) => (
         <View
           style={[
             styles.container,
             {
-              transform: [{scale: pressed ? 0.98 : 1}],
+              opacity: pressed ? 0.7 : 1,
               backgroundColor: rest.disabled ? 'grey' : '#007AFF',
             },
           ]}>
           {isLoading ? (
-            <ActivityIndicator />
+            <ActivityIndicator color="#fff" />
           ) : (
             <Text style={styles.text}>{title}</Text>
           )}
@@ -46,10 +46,12 @@ const styles = StyleSheet.create({
   },
   container: {
     height: 44,
-    width: 295,
+    maxWidth: 500,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
     marginVertical: 12,
+    marginHorizontal: 'auto',
   },
 });

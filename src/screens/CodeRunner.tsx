@@ -8,7 +8,7 @@ import {useStore} from '@nanostores/react';
 import {$tableData, $tableWidths} from '~/utils/run-query';
 // import SearchSheet from '~/component/SearchSheet';
 
-export default function Home() {
+export default function CodeRunner() {
   const tableData = useStore($tableData);
 
   return (

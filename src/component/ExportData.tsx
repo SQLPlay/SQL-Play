@@ -6,7 +6,7 @@ import Dialog from 'react-native-dialog';
 //@ts-ignore
 import Share from 'react-native-share';
 
-import {ExecuteUserQuery} from '../utils/storage';
+import {executeDbQuery} from '../utils/storage';
 import {ActivityIndicator, StyleSheet, Text} from 'react-native';
 
 interface Props {
@@ -28,78 +28,6 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
     }
   }, [fieldValue]);
 
-  const exportCSV = async (): Promise<void> => {
-    let csvString: string = '';
-
-    try {
-      setIsLoading(true);
-
-      /** Fetch rows from database and make it csv */
-      const res: any = await ExecuteUserQuery(
-        `SELECT * FROM ${fieldValue}`,
-        [],
-        true,
-      );
-      const len: number = res.rows.length;
-      setIsLoading(false);
-      // console.log(res.rows);
-      if (len === 0) {
-        setExportErr('Table is empty');
-        return;
-      } else {
-        setExportErr('');
-      }
-
-      const header: string[] = Object.keys(res.rows.item(0)).reverse();
-      const rowsArr: any[] = [];
-
-      for (let i = 0; i < len; i++) {
-        let row = res.rows.item(i);
-        rowsArr.push(Object.values(row).reverse());
-      }
-      // console.log(header);
-      const tableData: [][] = [header, ...rowsArr];
-
-      // console.log(tableData);
-
-      const CSVArray: string[] = [];
-      tableData.forEach(row => {
-        const line = row.join(',');
-        CSVArray.push(line);
-      });
-
-      csvString = CSVArray.join('\n');
-    } catch (error) {
-      setIsLoading(false);
-      setExportErr('Error in finding table');
-      // console.error(error.message);
-      return;
-    }
-
-    try {
-      /** Path of saving the csv file */
-      /* const randomNum: number = Math.floor(Math.random() * 899 + 100);
-      path = `${RNFS.TemporaryDirectoryPath}/${fieldValue}_${randomNum}.csv`;
-      console.log(path);
-
-      await RNFS.writeFile(path, csvString, 'utf8');
-      setIsExported(true); */
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const shareCSV = async (): Promise<void> => {
-    try {
-      const shareResponse = await Share.open({
-        url: `file://${path}`,
-        title: 'Table Exported',
-        message: 'Share the CSV file',
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
   useEffect(() => {
     console.log(modalState);
   }, [modalState]);
@@ -117,7 +45,7 @@ const ExportData: FC<Props> = ({modalState, setModalState}) => {
     if (isExported) {
       shareCSV();
     } else {
-      exportCSV();
+      // exportCSV();
     }
   };
 

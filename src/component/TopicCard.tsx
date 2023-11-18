@@ -18,7 +18,7 @@ const TopicCard = ({
   onPress,
 }: Props) => {
   return (
-    <Pressable onPress={onPress}>
+    <Pressable testID={`topic_card_${index}`} onPress={onPress}>
       {({pressed}) => (
         <View
           // eslint-disable-next-line react-native/no-inline-styles
@@ -51,6 +51,7 @@ const TopicCard = ({
                 style={{
                   color: isLocked ? colors.gray['600'] : colors.green['700'],
                 }}
+                testID={`lock_label_${index}`}
                 className="ml-1">
                 {isLocked ? 'Pro unlocks this' : 'Free'}
               </Text>

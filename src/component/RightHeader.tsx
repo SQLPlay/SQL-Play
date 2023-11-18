@@ -3,6 +3,8 @@ import {StyleSheet, Platform, Pressable} from 'react-native';
 import {MenuView} from '@react-native-menu/menu';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useNavigation} from '@react-navigation/native';
+import {createXlsx} from '~/utils/xlsx';
+import {getAllTablesName} from '~/utils/db';
 
 export interface Props {
   setInputValue: (query: string) => void;
@@ -19,8 +21,16 @@ const OptionsMenu = () => {
       title="Menu Title"
       onPressAction={({nativeEvent}) => {
         console.log(JSON.stringify(nativeEvent));
-        if (nativeEvent.event === 'go_premium') {
-          navigation.navigate('Purchase');
+        switch (nativeEvent.event) {
+          case 'go_premium':
+            navigation.navigate('Purchase');
+            break;
+          case 'export':
+            navigation.navigate('Export');
+            break;
+          case 'support':
+            navigation.navigate('TicketsList');
+            break;
         }
       }}
       actions={[
@@ -29,10 +39,14 @@ const OptionsMenu = () => {
           title: 'Go Premium',
         },
         {
-          id: 'share',
+          id: 'list_all_tables',
+          title: 'List all tables',
+        },
+        {
+          id: 'export',
           title: 'Export',
           subtitle: 'Export table in CSV',
-          imageColor: 'green',
+          imageColor: '#000',
           image: Platform.select({
             ios: 'square.and.arrow.up',
             android: 'baseline_unarchive_24',
@@ -40,18 +54,15 @@ const OptionsMenu = () => {
           state: 'on',
         },
         {
-          id: 'destructive',
-          title: 'Help',
-          attributes: {
-            destructive: true,
-          },
+          id: 'support',
+          title: 'Get Help',
           image: Platform.select({
             ios: 'trash',
             android: 'baseline_help_center_24',
           }),
         },
       ]}>
-      <Icon name="menu" color="#000" size={24} />
+      <Icon testID="menu" name="menu" color="#000" size={24} />
     </MenuView>
   );
 };

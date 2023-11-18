@@ -1,40 +1,40 @@
 import React, {useState, useRef, useEffect} from 'react';
-import {StatusBar, StyleSheet, useColorScheme} from 'react-native';
+import {StatusBar, StyleSheet, Text, useColorScheme} from 'react-native';
 
 import {NotifierWrapper} from 'react-native-notifier';
-import SplashScreen from 'react-native-bootsplash';
+// import SplashScreen from 'react-native-bootsplash';
 
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
+// import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {
-  setup,
-  initConnection,
-  getAvailablePurchases,
-  getProducts,
-} from 'react-native-iap';
+// import messaging from '@react-native-firebase/messaging';
 import {
   DefaultTheme,
   DarkTheme as DefaultDarkTheme,
   NavigationContainer,
 } from '@react-navigation/native';
-import Home from '~/screens/Home';
-import {initDb} from '~/utils/storage';
-import Lesson from '~/screens/Lesson';
-import {setupKeyboardListener} from '~/utils/keyboard-status';
-import OptionMenu from './component/RightHeader';
-import TabBar from './component/TabBar';
-import Learn from './screens/Learn';
+// import {initDb} from '~/utils/storage';
+// import SupportedQuery from '~/screens/Lesson';
+// import {setupKeyboardListener} from '~/utils/keyboard-status';
 import {RootStackParamList} from '~/types/nav';
-import Purchase from './screens/Purchase';
+// import Purchase from './screens/Purchase';
+import {isCached, preload, register} from 'react-native-bundle-splitter';
+import CodeRunner from '~/screens/CodeRunner';
+import TabNav from '~/screens/TabNav';
+// import Export from './screens/Export';
+// import SupportTicket from './screens/SupportTicket';
+// import SupportTicketsList from './screens/SupportTicketsList';
+// import {secureStore} from './store/mmkv';
 
-initDb();
-setupKeyboardListener();
+const IS_DEV = process.env.NODE_ENV === 'development';
+import {StartupTime, getTimeSinceStartup} from 'react-native-startup-time';
+if (IS_DEV) {
+  // secureStore.setBoolAsync('hasPro', true);
+}
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 
 const LightTheme = {
   ...DefaultTheme,
@@ -50,68 +50,65 @@ const DarkTheme = {
   },
 };
 
-const HomeStackNav = () => (
-  <Stack.Navigator
-    screenOptions={{headerShown: false}}
-    initialRouteName="CodeRunner">
+const setupMsg = async () => {
+  // await messaging().registerDeviceForRemoteMessages();
+  // await messaging().subscribeToTopic('alerts');
+};
+
+const LazyTab = register({
+  loader: () => import('./screens/TabNav'),
+  placeholder: () => <Text>Wait up bro</Text>,
+});
+
+const LazyCodeRunner = register({
+  loader: () => import('./screens/CodeRunner'),
+  placeholder: () => <Text>Wait up bro</Text>,
+  name: 'CodeRunner',
+});
+
+const RootStackNav = () => (
+  <Stack.Navigator screenOptions={{}} initialRouteName="Main">
     <Stack.Screen
-      options={{
-        title: 'SQL Play',
-        headerStyle: {backgroundColor: 'gold'},
-        headerRight: OptionMenu,
-      }}
-      name="CodeRunner"
-      component={Home}
+      name="Main"
+      options={{headerShown: false}}
+      component={TabNav}
+    />
+    {/**
+    <Stack.Screen
+      options={{title: 'SQL Compatibility'}}
+      //@ts-ignore
+      name="SupportedQuery"
+      component={SupportedQuery}
+    />
+    <Stack.Screen name="Export" component={Export} />
+    <Stack.Screen
+      //@ts-ignore
+      name="TicketsList"
+      options={{title: 'Your support tickets'}}
+      component={SupportTicketsList}
+    />
+    <Stack.Screen
+      name="SupportTicket"
+      options={{title: 'Create support ticket'}}
+      component={SupportTicket}
     />
     <Stack.Group
       screenOptions={{presentation: 'transparentModal', headerShown: false}}>
       <Stack.Screen name="Purchase" component={Purchase} />
     </Stack.Group>
+
+    **/}
   </Stack.Navigator>
 );
 
-const LearnStackNav = () => (
-  <Stack.Navigator
-    screenOptions={{headerShown: false}}
-    initialRouteName="Learn">
-    <Stack.Screen
-      options={{title: 'SQL Compatibility'}}
-      name="SupportedQuery"
-      component={Lesson}
-    />
-    <Stack.Screen options={{}} name="Learn" component={Learn} />
-    <Stack.Screen options={{}} name="Lesson" component={Lesson} />
-  </Stack.Navigator>
-);
-
-const Tab = createMaterialTopTabNavigator();
 const App = () => {
-  const [isPremium, setIsPremium] = useState<boolean>(false);
-
-  const setupIAp = async () => {
-    const res = await initConnection();
-    console.log('connected', res);
-    const products = await getProducts({skus: ['premium']});
-    console.log(products);
-    getAvailablePurchases().then(res => console.log('got', res));
-  };
-
   useEffect(() => {
-    setupIAp();
+    // isCached('CodeRunner') ? null : preload().component('CodeRunner');
+    // initDb();
+    // setupKeyboardListener();
+    setupMsg();
   }, []);
 
-  useEffect(() => {
-    // const init = async () => {
-    //   const isPremRes = await getIsPremium();
-    //   setIsPremium(isPremRes);
-    //   // Setup ad only when user is not premium
-    //   if (!isPremRes) {
-    //   }
-    //   await SplashScreen.hide({fade: true});
-    // };
-    // init();
-    // return () => {};
-  }, []);
   const scheme = useColorScheme();
 
   return (
@@ -121,22 +118,12 @@ const App = () => {
           barStyle="dark-content"
           backgroundColor={LightTheme.colors.background}
         />
-        <BottomSheetModalProvider>
-          <SafeAreaProvider>
-            <NotifierWrapper>
-              <Tab.Navigator
-                tabBar={props => <TabBar {...props} />}
-                screenOptions={{}}>
-                <Tab.Screen name="SQL Play" component={HomeStackNav} />
-                <Tab.Screen
-                  options={{title: 'Learn'}}
-                  name="Learn Stack"
-                  component={LearnStackNav}
-                />
-              </Tab.Navigator>
-            </NotifierWrapper>
-          </SafeAreaProvider>
-        </BottomSheetModalProvider>
+        <SafeAreaProvider>
+          <NotifierWrapper>
+            <RootStackNav />
+            <StartupTime />
+          </NotifierWrapper>
+        </SafeAreaProvider>
       </NavigationContainer>
     </GestureHandlerRootView>
   );

@@ -21,7 +21,7 @@ export const useGetLessonsList = () => {
       const res = await wretch.get('/learn/lessons.json').json();
       setState({...state, data: res as LessonItem[]});
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setState(prv => ({...prv, error: error?.message}));
     } finally {
       setState(prv => ({...prv, isLoading: false}));
@@ -42,13 +42,11 @@ export const useGetLessonMd = (path: string) => {
 
   const fetch = async () => {
     try {
-      console.log(path);
       const res = await wretch.get(`/${path}`).text();
-      const md = res.split('---\n')[2];
-      console.log(md);
+      const md = res.split('---\n', 3)[2];
       setState({...state, data: md});
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setState(prv => ({...prv, error: error?.message}));
     } finally {
       setState(prv => ({...prv, isLoading: false}));
