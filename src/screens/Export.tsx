@@ -29,6 +29,10 @@ import {useFloating, shift, autoPlacement} from '@floating-ui/react-native';
 import RNReactNativeHapticFeedback, {
   HapticFeedbackTypes,
 } from 'react-native-haptic-feedback';
+import {useMMKVStorage} from 'react-native-mmkv-storage';
+import {secureStore} from '~/store/mmkv';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '~/types/nav';
 
 type Format = {title: string; description: string; icon: string};
 const formats: Format[] = [
@@ -72,7 +76,9 @@ const SelectItem = ({
           style={{borderBottomWidth: isLast ? 0 : 1}}
           className="ml-3 pb-2 flex-row items-center border-gray-600/30 flex-1">
           <View className="flex-1 pr-2" collapsable={false}>
-            <Text className="text-black text-[16px]">{format.title}</Text>
+            <Text className="text-black dark:text-gray-100 text-[16px]">
+              {format.title}
+            </Text>
             <Text>{format.description}</Text>
           </View>
           <IonIcon
@@ -106,13 +112,15 @@ const layoutAnimConfig = {
   },
 };
 
-const Export = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Export'>;
+const Export = ({navigation}: Props) => {
   const [tableNames, setTableNames] = useState<string[]>([]);
   const [selectedTable, setSelectedTable] = useState(tableNames[0]);
   const [selectedFormatIdx, setSelectedFormatIdx] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
   const {colors} = useTheme();
+  const [hasPro] = useMMKVStorage('hasPro', secureStore, false);
 
   useEffect(() => {
     setIsLoading(false);
@@ -124,7 +132,13 @@ const Export = () => {
   }, [selectedFormatIdx]);
 
   const handleExport = async () => {
+    if (!hasPro) {
+      navigation.navigate('Purchase');
+      return;
+    }
+
     setIsLoading(true);
+
     switch (selectedFormatIdx) {
       case 0: // CSV
         await exportCSV(selectedTable);
@@ -138,7 +152,6 @@ const Export = () => {
     setIsLoading(false);
   };
 
-  console.log(isLoading);
   const hasSelectedSqlite = selectedFormatIdx === 2;
 
   return (
@@ -146,7 +159,9 @@ const Export = () => {
       <View collapsable={false}>
         <Text className="text-sm">Select format</Text>
       </View>
-      <View className="bg-white rounded-xl py-1 my-2">
+      <View
+        style={{backgroundColor: colors.card}}
+        className="rounded-xl py-1 my-2">
         {formats.map((format, idx) => (
           <SelectItem
             colors={colors}
