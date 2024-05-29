@@ -1,13 +1,13 @@
 import {NativeModules} from 'react-native';
 import {memoizeWithLimit} from 'sonic-memoize';
-const {MeasureSizeModule} = NativeModules;
+const {MeasureSize} = NativeModules;
 
 export const measureTextSize = (text: string, font = 'Roboto', size = 16) => {
-  return MeasureSizeModule.measureSize(text, font, size) as Promise<number>;
+  return MeasureSize.measureSize(text, font, size) as Promise<number>;
 };
 
 const _calculateWidths = async (header: string[], rows?: string[][]) => {
-  if (!rows || !rows.length) {
+  if (!rows || !rows.length || !header || !header.length) {
     throw Error('Empty rows received');
   }
 
