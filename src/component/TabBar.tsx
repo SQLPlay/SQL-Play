@@ -2,9 +2,9 @@ import {MaterialTopTabBarProps} from '@react-navigation/material-top-tabs';
 import {useTheme} from '@react-navigation/native';
 import {Animated, View, TouchableOpacity, Pressable} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import OptionsMenu from './RightHeader';
 import ids from '../../e2e/ids';
 import {searchSheetRef} from './SearchSheet';
+import OptionsMenu from './OptionsMenu';
 
 const TabBar = ({
   state,
@@ -32,7 +32,7 @@ const TabBar = ({
       <View
         style={{
           flexDirection: 'row',
-          backgroundColor: '#e7e5e4',
+          backgroundColor: colors.card,
           paddingVertical: 6,
           borderRadius: 8,
           position: 'relative',
@@ -46,7 +46,7 @@ const TabBar = ({
             height: 26,
             width: 92,
             transform: [{translateX}],
-            backgroundColor: 'rgba(255,255,255, 0.8)',
+            backgroundColor: colors.background,
           }}
         />
         {state.routes.map((route, index) => {
@@ -55,8 +55,8 @@ const TabBar = ({
             options.tabBarLabel !== undefined
               ? options.tabBarLabel
               : options.title !== undefined
-              ? options.title
-              : route.name;
+                ? options.title
+                : route.name;
 
           const isFocused = state.index === index;
 
@@ -94,7 +94,7 @@ const TabBar = ({
               }}>
               <Animated.Text
                 style={{
-                  color: '#000',
+                  color: colors.text,
                   textAlign: 'center',
                   fontSize: 16,
                   fontWeight: '500',

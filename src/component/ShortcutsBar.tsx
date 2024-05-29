@@ -2,6 +2,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import BaseIcon from './Icons/BaseIcon';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 import {
   $cameFromUndoRedo,
   $inputQuery,
@@ -13,46 +14,13 @@ import {
 import {cutAllAndPasteToClipboard, pasteFromClipboard} from '~/utils/clipboard';
 import {useStore} from '@nanostores/react';
 import {$isKeyboardVisible} from '~/utils/keyboard-status';
-import {format as formatSqlQuery} from 'sql-formatter';
+import {useMMKVStorage} from 'react-native-mmkv-storage';
+import {secureStore} from '~/store/mmkv';
+import {useNavigation} from '@react-navigation/native';
+// import {format as formatSqlQuery} from 'sql-formatter';
 export default function ShortcutsBar() {
-  const onUpArrowPress = async (): Promise<void> => {
-    /** show premium alert when user is not premium */
-    /**
-    if (!isPremium) {
-      showPremiumAlert();
-      return;
-    }
-    const lastCommand = await getLastUserCommand(historyOffset.current + 1);
-    // console.log(historyOffset.current + 1, lastCommand);
-
-    // only set if command is there
-    if (lastCommand) {
-      setInputValue(lastCommand);
-      historyOffset.current++;
-    }
-    **/
-  };
-  const onDownArrowPress = async (): Promise<void> => {
-    /** show premium alert when user is not premium */
-    /**
-    if (!isPremium) {
-      showPremiumAlert();
-      return;
-    }
-
-    if (historyOffset.current === 0) {
-      return;
-    } // do nothing if offset it 0
-
-    const lastCommand = await getLastUserCommand(historyOffset.current - 1);
-    // console.log(historyOffset.current - 1, lastCommand);
-    // only set if command is there
-    if (lastCommand) {
-      setInputValue(lastCommand);
-      historyOffset.current--;
-    }
-    **/
-  };
+  const [hasPro] = useMMKVStorage('hasPro', secureStore, false);
+  const navigation = useNavigation();
 
   const undo = () => {
     const queryEdits = $queryEdits.get();
@@ -104,27 +72,13 @@ export default function ShortcutsBar() {
 
   const isKeyboardVisible = useStore($isKeyboardVisible);
   if (!isKeyboardVisible) return null;
+
   return (
     <View style={styles.sideButtonContainer}>
-      {/**
       <TouchableOpacity
-        accessibilityLabel="Up Button"
-        accessibilityHint="gets the previous command from history"
-        onPress={onUpArrowPress}>
-        <Icon name="chevron-up" size={28} color="#fff" />
-      </TouchableOpacity>
-      <TouchableOpacity
+        disabled={!hasPro}
         style={styles.downArrow}
-        accessibilityLabel="Down Button"
-        accessibilityHint="gets the next command from history"
-        onPress={onDownArrowPress}>
-        <Icon name="chevron-down" size={28} color="#fff" />
-      </TouchableOpacity>
-      **/}
-      <TouchableOpacity
-        style={styles.downArrow}
-        accessibilityLabel="Down Button"
-        accessibilityHint="gets the next command from history"
+        accessibilityLabel="Add braces around the selected text"
         onPress={() => surroundWithChar('(', ')')}>
         <Text
           style={{
@@ -138,38 +92,64 @@ export default function ShortcutsBar() {
       </TouchableOpacity>
 
       <TouchableOpacity
+        disabled={!hasPro}
         onPress={() => surroundWithChar('"', '"')}
-        accessibilityLabel="Clear command button"
-        accessibilityHint="clear the command input">
+        accessibilityLabel="Add quotes around the selected text">
         <Text style={{fontSize: 18, color: '#fff', fontWeight: '800'}}>
           “ ”
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
+        disabled={!hasPro}
         onPress={undo}
-        accessibilityLabel="Clear command button"
-        accessibilityHint="clear the command input">
+        accessibilityLabel="Undo the last edit">
         <Icon name="arrow-undo-outline" size={20} color="#fff" />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={redo}
-        accessibilityLabel="Clear command button"
-        accessibilityHint="clear the command input">
+        disabled={!hasPro}
+        accessibilityLabel="Redo the last operation">
         <Icon name="arrow-redo-outline" size={20} color="#fff" />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={cutAllAndPasteToClipboard}
-        accessibilityLabel="Clear command button"
-        accessibilityHint="clear the command input">
+        disabled={!hasPro}
+        accessibilityLabel="Cut the entire command">
         <Icon name="cut-outline" size={20} color="#fff" />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={pasteFromClipboard}
-        accessibilityLabel="Clear command button"
-        accessibilityHint="clear the command input">
+        disabled={!hasPro}
+        accessibilityLabel="Paste from clipboard">
         <Icon name="clipboard-outline" size={18} color="#fff" />
       </TouchableOpacity>
+
+      {!hasPro ? (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Purchase')}
+          style={{
+            borderColor: '#fff',
+            backgroundColor: 'rgba(255,255,255, 0.1)',
+            borderWidth: 1,
+            paddingHorizontal: 10,
+            paddingVertical: 2,
+            borderRadius: 12,
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 4,
+          }}
+          accessibilityLabel="Add quotes around the selected text">
+          <MIcon name="lock" size={13} color="#fff" />
+          <Text
+            style={{
+              fontSize: 12,
+              color: '#fff',
+            }}>
+            Unlock with Pro
+          </Text>
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 }

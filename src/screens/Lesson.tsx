@@ -1,13 +1,16 @@
 import {
   ActivityIndicator,
+  Image,
+  ImageStyle,
   Pressable,
   StyleSheet,
   Text,
   TextStyle,
   Vibration,
   View,
+  ViewStyle,
 } from 'react-native';
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useRef, useState} from 'react';
 import Markdown, {
   MarkdownProps,
   Renderer,
@@ -25,6 +28,7 @@ import {
 import Clipboard from '@react-native-clipboard/clipboard';
 import {$inputQuery} from '~/store/input';
 import {showSuccessNotif} from '~/utils/notif';
+import {useTheme} from '@react-navigation/native';
 
 const mdStyle: MarkdownProps['styles'] = {
   text: {
@@ -53,24 +57,46 @@ const mdStyle: MarkdownProps['styles'] = {
   },
 };
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Lesson'>;
+const AutoHeightImage = ({uri}: {uri: string}) => {
+  const [height, setHeight] = useState(0);
+  return (
+    <Image
+      style={{flex: 1, width: '100%', minHeight: 100, height}}
+      source={{uri: uri}}
+      onLoad={({
+        nativeEvent: {
+          source: {width, height},
+        },
+      }) => setHeight(height)}
+      resizeMode="contain"
+    />
+  );
+};
 
 class CustomRenderer extends Renderer implements RendererInterface {
   constructor() {
     super();
   }
+
   codespan(text: string, _styles?: TextStyle): ReactNode {
     return (
       <Text
         key={this.getKey()}
-        className="text-gray-700 font-bold"
+        className="text-gray-700 dark:text-gray-200 font-bold"
         style={{fontFamily: 'monospace'}}>
         `{text}`
       </Text>
     );
   }
+  // image(uri: string, _alt?: string, _style?: ImageStyle): ReactNode {
+  //   return <AutoHeightImage uri={uri} key={this.getKey()} />;
+  // }
   //@ts-ignore
-  code(text: string, _styles?: TextStyle): ReactNode {
+  code(
+    text: string,
+    _styles: TextStyle,
+    _containerStyle: ViewStyle,
+  ): ReactNode {
     return (
       <Pressable
         onLongPress={() => {
@@ -81,7 +107,8 @@ class CustomRenderer extends Renderer implements RendererInterface {
           $inputQuery.set(text);
           ReactNativeHapticFeedback.trigger('impactMedium');
           showSuccessNotif('Code copied in editor');
-        }}>
+        }}
+        style={{paddingBottom: 8}}>
         <CodeHighlighter
           key={this.getKey()}
           wrapLongLines={true}
@@ -90,10 +117,15 @@ class CustomRenderer extends Renderer implements RendererInterface {
               flex: 1,
               paddingVertical: 4,
               paddingHorizontal: 6,
-              marginBottom: 8,
+              backgroundColor: _containerStyle.backgroundColor,
+              // marginBottom: 8,
             },
           }}
-          hljsStyle={defaultStyle}
+          hljsStyle={
+            _containerStyle?.backgroundColor === 'rgb(18, 18, 18)'
+              ? vs2015
+              : defaultStyle
+          }
           textStyle={{fontFamily: 'monospace'}}
           language="sql">
           {text}
@@ -105,8 +137,14 @@ class CustomRenderer extends Renderer implements RendererInterface {
 
 const renderer = new CustomRenderer();
 
+type Props = NativeStackScreenProps<
+  RootStackParamList,
+  'Lesson' | 'SupportedQuery'
+>;
 const Lesson = ({navigation, route}: Props) => {
   const {path, title} = route.params;
+
+  const {colors} = useTheme();
 
   const {data, isLoading} = useGetLessonMd(path);
   if (isLoading || !data) {
@@ -118,7 +156,7 @@ const Lesson = ({navigation, route}: Props) => {
         flatListProps={{
           contentContainerStyle: {marginHorizontal: 10, paddingBottom: 20},
         }}
-        styles={mdStyle}
+        styles={{...mdStyle, code: {backgroundColor: colors.card}}}
         //@ts-ignore
         renderer={renderer}
         value={`# ${title}\n${data}`}

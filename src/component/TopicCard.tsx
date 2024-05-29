@@ -1,8 +1,9 @@
 import {View, Text, Pressable} from 'react-native';
-import React from 'react';
+import React, {useCallback} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {LessonItem} from '~/types/lesson-type';
 import colors from 'tailwindcss/colors';
+import {useTheme} from '@react-navigation/native';
 type Props = LessonItem & {
   onPress: () => void;
   isLocked: boolean;
@@ -17,6 +18,20 @@ const TopicCard = ({
   isLocked,
   onPress,
 }: Props) => {
+  const {colors: themeColors, dark} = useTheme();
+
+  const lockedColor = useCallback(
+    () => (dark ? colors.gray['200'] : colors.gray['600']),
+    [dark],
+  );
+  const unlockedColor = useCallback(
+    () => (dark ? colors.green['200'] : colors.green['700']),
+    [dark],
+  );
+  const chipColor = useCallback(
+    () => (isLocked ? lockedColor() : unlockedColor()),
+    [isLocked],
+  );
   return (
     <Pressable testID={`topic_card_${index}`} onPress={onPress}>
       {({pressed}) => (
@@ -28,9 +43,14 @@ const TopicCard = ({
               {translateY: pressed ? 2 : 0},
             ],
             opacity: pressed ? 0.7 : 1,
+            backgroundColor: themeColors.card,
           }}
-          className="p-4 border-b-4 border-b-gray-300 shadow-black shadow-lg bg-white rounded-xl">
-          <Text className="text-black mb-1 text-lg font-semibold">{title}</Text>
+          className="p-4 border-b-4  rounded-xl">
+          <Text
+            style={{color: themeColors.text}}
+            className="mb-1 text-lg font-semibold">
+            {title}
+          </Text>
           <Text className="" numberOfLines={3}>
             {description}
           </Text>
@@ -39,18 +59,16 @@ const TopicCard = ({
               className="flex-row items-center px-2.5 py-0.5  rounded-2xl"
               style={{
                 backgroundColor: isLocked
-                  ? colors.gray['100']
-                  : colors.green['50'],
+                  ? 'rgba(127, 140, 141, 0.3)'
+                  : 'rgba(39, 174, 96, 0.3)',
               }}>
               <Icon
                 name={isLocked ? 'lock' : 'lock-open'}
                 size={15}
-                color={isLocked ? colors.gray['600'] : colors.green['700']}
+                color={chipColor()}
               />
               <Text
-                style={{
-                  color: isLocked ? colors.gray['600'] : colors.green['700'],
-                }}
+                style={{color: chipColor()}}
                 testID={`lock_label_${index}`}
                 className="ml-1">
                 {isLocked ? 'Pro unlocks this' : 'Free'}

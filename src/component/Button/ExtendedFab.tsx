@@ -9,7 +9,7 @@ type Props = PressableProps & {
 
 const ExtendedFab = ({label, icon, ...pressableProps}: Props) => {
   return (
-    <Pressable className="bottom-4 w-full relative" {...pressableProps}>
+    <Pressable className="bottom-4 w-full px-4 absolute" {...pressableProps}>
       {({pressed}) => (
         <View
           style={{
@@ -19,9 +19,9 @@ const ExtendedFab = ({label, icon, ...pressableProps}: Props) => {
             ],
             opacity: pressed ? 0.7 : 1,
           }}
-          className="p-4 shadow shadow-black rounded-2xl bg-blue-200 flex-row justify-center items-center">
-          <MIcon name="add" size={24} color={colors.blue[950]} />
-          <Text className="ml-2 font-semibold text-blue-950">{label}</Text>
+          className="p-4 shadow shadow-black rounded-2xl bg-[#007AFF] flex-row justify-center items-center">
+          <MIcon name="add" size={24} color={colors.white} />
+          <Text className="ml-2 font-semibold text-white">{label}</Text>
         </View>
       )}
     </Pressable>

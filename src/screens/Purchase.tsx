@@ -25,15 +25,14 @@ import {RootStackParamList} from '~/types/nav';
 // import { Container } from './styles';
 
 const featureList = [
+  'Unlock shortcuts bar',
   'Keep it ad free forever!',
-  'No SQL knowledge? No problem.',
+  'Always-offline articles.',
+  'Time travel with Undo / Redo.',
+  'Export SQL database (.db) file.',
   'Unlock 15+ SQL lessons for Data Analysts.',
   '24/7 email support to nail your SQL queries.',
   'Export your tables on the fly in CSV / XLSX.',
-  'Time travel with Undo / Redo (mistakes happen).',
-  'No internet? No problem. Always-offline articles.',
-  'Export SQL database (.db) file to use it on the hills.',
-  'Give those fingers a break with (brackets) / "quotes" surrounds.',
 ];
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Purchase'>;
@@ -55,8 +54,12 @@ const Purchase = ({navigation}: Props) => {
     null,
   );
   const setupIAp = async () => {
-    await initConnection();
-    await getProducts({skus: [productId]});
+    try {
+      await initConnection();
+      await getProducts({skus: [productId]});
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -71,21 +74,24 @@ const Purchase = ({navigation}: Props) => {
     setHasPro(false);
   }, []);
 
-  useEffect(() => {
-    availablePurchases.forEach(purchase => {
-      console.log('pt', purchase.purchaseToken);
-      if (purchase.productId !== productId) return;
-      if (!purchase.transactionId) return;
-
-      setTransactionId(purchase.transactionId);
-      setHasPro(true);
-      showSuccessNotif('Yay! Your SQL Play Pro has been restored');
-    });
-  }, [availablePurchases, setHasPro]);
-
   const restorePurchase = async () => {
     try {
       await getAvailablePurchases();
+      if (!availablePurchases?.length) {
+        return showErrorNotif(
+          'Failed to restore purchase',
+          'No previous purchase found on this account.',
+        );
+      }
+
+      availablePurchases.forEach(purchase => {
+        if (purchase.productId !== productId) return;
+        if (!purchase.transactionId) return;
+
+        setTransactionId(purchase.transactionId);
+        setHasPro(true);
+        showSuccessNotif('Yay! Your SQL Play Pro has been restored');
+      });
     } catch (error) {
       let msg = error as string;
       if (error instanceof Error) {
@@ -98,7 +104,9 @@ const Purchase = ({navigation}: Props) => {
 
   // get product ID once app is connected to store
 
-  const btnBuyTxt = `Buy Now For ${products[0]?.localizedPrice}`;
+  const btnBuyTxt = connected
+    ? `Buy Now For ${products[0]?.localizedPrice}`
+    : 'Not available on this platform';
 
   const btnBoughtTxt = 'Sweet! You have SQL Play Pro';
 

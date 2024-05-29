@@ -10,12 +10,6 @@ import {
 } from 'react-native';
 
 import {
-  DynamicStyleSheet,
-  DynamicValue,
-  useDynamicValue,
-} from 'react-native-dynamic';
-
-import {
   Directions,
   FlingGestureHandler,
   FlingGestureHandlerStateChangeEvent,
@@ -88,6 +82,7 @@ const InputContainer = ({}) => {
               }
               multiline
               placeholderTextColor="gray"
+              className="text-black dark:text-gray-100"
               textAlignVertical="top"
               defaultValue={inputValue}
               keyboardType="ascii-capable"
@@ -107,7 +102,6 @@ export default InputContainer;
 const styles = StyleSheet.create({
   inputHeader: {
     fontSize: 16,
-    color: new DynamicValue('black', 'white'),
   },
   inputContainer: {
     position: 'relative',
@@ -115,7 +109,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderWidth: 1,
     borderRadius: 4,
-    backgroundColor: new DynamicValue('white', lightDark),
   },
   input: {
     fontSize: 16,
@@ -128,7 +121,6 @@ const styles = StyleSheet.create({
     opacity: 1,
     minHeight: 80,
     maxHeight: 200,
-    color: new DynamicValue('black', 'white'),
   },
   autoCompleteTxtContainer: {
     position: 'absolute',

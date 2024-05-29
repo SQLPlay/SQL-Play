@@ -9,6 +9,8 @@ import React, {
 } from 'react';
 import {View, Text, ScrollView, StyleSheet, Dimensions} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
+import {useTheme} from '@react-navigation/native';
+import colors from 'tailwindcss/colors';
 
 interface Props {
   header: string[];
@@ -19,6 +21,7 @@ interface Props {
 const DataTable: FC<Props> = ({header, rows, columnWidths}) => {
   // const styles = useDynamicValue(dynamicStyles);
 
+  const {colors} = useTheme();
   const ref = useRef<FlashList<any>>(null);
   const renderItem = ({item, index}: {item: string[]; index: number}) => {
     return (
@@ -26,12 +29,8 @@ const DataTable: FC<Props> = ({header, rows, columnWidths}) => {
         {item.map((cell, cellIndex) => (
           <View
             key={cellIndex}
-            style={[
-              styles.cell,
-              {width: columnWidths[cellIndex]},
-              {borderRightWidth: item.length === cellIndex + 1 ? 0 : 1},
-            ]}>
-            <Text selectable={true} style={styles.outputText}>
+            style={[styles.cell, {width: columnWidths[cellIndex]}]}>
+            <Text selectable={true} style={{color: colors.text}}>
               {cell}
             </Text>
           </View>
@@ -46,12 +45,10 @@ const DataTable: FC<Props> = ({header, rows, columnWidths}) => {
         {header.map((cell, index) => (
           <View
             key={index}
-            style={[
-              styles.headerCell,
-              {width: columnWidths[index]},
-              {borderRightWidth: header.length === index + 1 ? 0 : 1},
-            ]}>
-            <Text selectable={true} style={styles.headerText}>
+            style={[styles.headerCell, {width: columnWidths[index]}]}>
+            <Text
+              selectable={true}
+              style={[styles.headerText, {color: colors.text}]}>
               {cell}
             </Text>
           </View>
@@ -90,7 +87,8 @@ const DataTable: FC<Props> = ({header, rows, columnWidths}) => {
 
 export default DataTable;
 
-const borderColor = '#e5e7eb';
+const borderColor = colors.gray['300'];
+
 const styles = StyleSheet.create({
   table: {
     flexDirection: 'column',
@@ -99,9 +97,8 @@ const styles = StyleSheet.create({
   },
   headerRow: {
     flexDirection: 'row',
-    borderBottomWidth: 0.5,
+    borderBottomWidth: 1,
     borderColor,
-    backgroundColor: '#fff',
   },
   row: {
     flexDirection: 'row',
@@ -111,44 +108,25 @@ const styles = StyleSheet.create({
   headerCell: {
     paddingVertical: 8,
     paddingHorizontal: 16,
-    fontFamily: 'Roboto',
-    borderRightWidth: 1,
-    borderColor,
   },
   cell: {
     fontSize: 16,
-    borderRightWidth: 1,
-    borderColor: borderColor,
+    borderRightWidth: 0,
     paddingVertical: 8,
     paddingHorizontal: 16,
   },
-  outputText: {
-    color: '#000000',
-  },
-  tableBorder: {
-    // borderWidth: 2,
-    // borderColor: '#fdd835',
-  },
-  head: {
-    height: 40,
-    // backgroundColor: '#ffea00',
-  },
+
   headerText: {
     textTransform: 'capitalize',
-    color: '#353b48',
     fontWeight: '500',
-    // fontFamily: 'DroidSans-Bold',
     fontSize: 16,
   },
   rowTxt: {
     margin: 6,
-    // color: new DynamicValue('black', 'white'),
   },
   container: {
     flex: 1,
     flexGrow: 1,
-    // marginBottom: 235,
-    // marginTop: 18,
     marginHorizontal: 8,
     minWidth: Dimensions.get('window').width,
     minHeight: 200,
