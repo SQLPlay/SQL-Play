@@ -8,7 +8,8 @@ export const getLast20Commands = async () => {
 
   for (let i = 0; i < commandsWithKey.length; i++) {
     commands.push(commandsWithKey[i][1]);
-    if (i >= 20) break;
+    if (i >= 19) break;
   }
+
   return commands;
 };
