@@ -34,7 +34,7 @@ const LessonsList = ({navigation}: Props) => {
                 isLocked={isLocked}
                 onPress={() =>
                   isLocked
-                    ? showErrorNotif('Get SQL Play Pro')
+                    ? navigation.navigate('Purchase')
                     : navigation.navigate('Lesson', item)
                 }
                 description={item.short_description}

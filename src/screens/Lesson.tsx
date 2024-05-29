@@ -1,12 +1,10 @@
 import {
   ActivityIndicator,
   Image,
-  ImageStyle,
   Pressable,
   StyleSheet,
   Text,
   TextStyle,
-  Vibration,
   View,
   ViewStyle,
 } from 'react-native';

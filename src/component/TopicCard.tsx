@@ -21,16 +21,16 @@ const TopicCard = ({
   const {colors: themeColors, dark} = useTheme();
 
   const lockedColor = useCallback(
-    () => (dark ? colors.gray['200'] : colors.gray['600']),
+    () => (dark ? colors.gray['100'] : colors.gray['600']),
     [dark],
   );
   const unlockedColor = useCallback(
-    () => (dark ? colors.green['200'] : colors.green['700']),
+    () => (dark ? colors.green['100'] : colors.green['700']),
     [dark],
   );
   const chipColor = useCallback(
     () => (isLocked ? lockedColor() : unlockedColor()),
-    [isLocked],
+    [isLocked, dark],
   );
   return (
     <Pressable testID={`topic_card_${index}`} onPress={onPress}>
@@ -45,16 +45,16 @@ const TopicCard = ({
             opacity: pressed ? 0.7 : 1,
             backgroundColor: themeColors.card,
           }}
-          className="p-4 border-b-4  rounded-xl">
+          className="p-4 rounded-xl">
           <Text
             style={{color: themeColors.text}}
             className="mb-1 text-lg font-semibold">
             {title}
           </Text>
-          <Text className="" numberOfLines={3}>
+          <Text style={{color: themeColors.text}} numberOfLines={3}>
             {description}
           </Text>
-          <View className="flex-row justify-between mt-2">
+          <View className="flex-row justify-between mt-4">
             <View
               className="flex-row items-center px-2.5 py-0.5  rounded-2xl"
               style={{
@@ -74,7 +74,9 @@ const TopicCard = ({
                 {isLocked ? 'Pro unlocks this' : 'Free'}
               </Text>
             </View>
-            <Text className="text-xs text-right">
+            <Text
+              style={{color: themeColors.text}}
+              className="text-sm text-right">
               {Math.ceil(reading_time)} min to learn
             </Text>
           </View>
