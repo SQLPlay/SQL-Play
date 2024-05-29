@@ -10,7 +10,7 @@ import {
 
 const TicketFormSchema = object({
   email: string([email()]),
-  name: string([minLength(2), maxLength(50)]),
+  // name: string([minLength(2), maxLength(50)]),
   message: string([minLength(20), maxLength(500)]),
 });
 

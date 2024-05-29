@@ -6,6 +6,7 @@ export type Ticket = {
   timeZone: string;
   transactionId: string;
   deviceToken: string;
+  createdAt: string;
   deviceInfo: Record<string, string | number>;
   commandHistory?: string[] | undefined;
 };
