@@ -1,5 +1,5 @@
 const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
-
+const {withNativeWind} = require('nativewind/metro');
 const defaultConfig = getDefaultConfig(__dirname);
 const {assetExts, sourceExts} = defaultConfig.resolver;
 const nonSvgAssetExts = assetExts.filter(ext => ext !== 'svg');
@@ -21,5 +21,6 @@ const config = {
     sourceExts: [...sourceExts, 'svg'],
   },
 };
+const mergedConfig = mergeConfig(defaultConfig, config);
 
-module.exports = mergeConfig(defaultConfig, config);
+module.exports = withNativeWind(mergedConfig, {input: './global.css'});
