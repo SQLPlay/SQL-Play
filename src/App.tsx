@@ -1,40 +1,39 @@
-import React, {useState, useRef, useEffect} from 'react';
-import {StatusBar, StyleSheet, Text, useColorScheme} from 'react-native';
+import '../global.css';
+
+import React, {useState, useRef, useEffect, Suspense, lazy} from 'react';
+import {
+  Button,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+} from 'react-native';
 
 import {NotifierWrapper} from 'react-native-notifier';
-// import SplashScreen from 'react-native-bootsplash';
-
 import {getStatusBarHeight} from 'react-native-status-bar-height';
-// import {BottomSheetModalProvider} from '@gorhom/bottom-sheet/';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {createStackNavigator} from '@react-navigation/stack';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
-// import messaging from '@react-native-firebase/messaging';
+import messaging, {
+  FirebaseMessagingTypes,
+} from '@react-native-firebase/messaging';
 import {
   DefaultTheme,
   DarkTheme as DefaultDarkTheme,
   NavigationContainer,
+  createNavigationContainerRef,
 } from '@react-navigation/native';
-// import {initDb} from '~/utils/storage';
-// import SupportedQuery from '~/screens/Lesson';
-// import {setupKeyboardListener} from '~/utils/keyboard-status';
+
+import {setupKeyboardListener} from '~/utils/keyboard-status';
+
 import {RootStackParamList} from '~/types/nav';
-// import Purchase from './screens/Purchase';
-import {isCached, preload, register} from 'react-native-bundle-splitter';
-import CodeRunner from '~/screens/CodeRunner';
-import TabNav from '~/screens/TabNav';
-// import Export from './screens/Export';
-// import SupportTicket from './screens/SupportTicket';
-// import SupportTicketsList from './screens/SupportTicketsList';
-// import {secureStore} from './store/mmkv';
+
+import {secureStore} from './store/mmkv';
 
 const IS_DEV = process.env.NODE_ENV === 'development';
-import {StartupTime, getTimeSinceStartup} from 'react-native-startup-time';
 if (IS_DEV) {
-  // secureStore.setBoolAsync('hasPro', true);
+  secureStore.setBoolAsync('hasPro', true);
+  secureStore.setStringAsync('transactionId', 'TEST123DFSDFSDFSDFSDFDS');
 }
-
-const Stack = createStackNavigator<RootStackParamList>();
 
 const LightTheme = {
   ...DefaultTheme,
@@ -50,78 +49,89 @@ const DarkTheme = {
   },
 };
 
-const setupMsg = async () => {
-  // await messaging().registerDeviceForRemoteMessages();
-  // await messaging().subscribeToTopic('alerts');
+import {PermissionsAndroid} from 'react-native';
+import HomePageSkeleton from './component/Skeletons/HomePageSkeleton';
+import {useStore} from '@nanostores/react';
+import {$isAppLoading} from './store';
+
+export const navigationRef = createNavigationContainerRef();
+
+const navigateToSupportTicketDetails = (
+  msg: FirebaseMessagingTypes.RemoteMessage,
+) => {
+  if (msg.data?.event_type !== 'new_ticket_response') return;
+  const ticketId = msg.data?.ticketId as string;
+  if (!ticketId) return;
+
+  navigationRef.navigate('SupportTicketDetails', {ticketId});
 };
 
-const LazyTab = register({
-  loader: () => import('./screens/TabNav'),
-  placeholder: () => <Text>Wait up bro</Text>,
-});
+const setupMsg = async () => {
+  const hasNotificationPermissions = await PermissionsAndroid.check(
+    PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+  );
 
-const LazyCodeRunner = register({
-  loader: () => import('./screens/CodeRunner'),
-  placeholder: () => <Text>Wait up bro</Text>,
-  name: 'CodeRunner',
-});
+  if (!hasNotificationPermissions) {
+    const status = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    );
+  }
 
-const RootStackNav = () => (
-  <Stack.Navigator screenOptions={{}} initialRouteName="Main">
-    <Stack.Screen
-      name="Main"
-      options={{headerShown: false}}
-      component={TabNav}
-    />
-    {/**
-    <Stack.Screen
-      options={{title: 'SQL Compatibility'}}
-      //@ts-ignore
-      name="SupportedQuery"
-      component={SupportedQuery}
-    />
-    <Stack.Screen name="Export" component={Export} />
-    <Stack.Screen
-      //@ts-ignore
-      name="TicketsList"
-      options={{title: 'Your support tickets'}}
-      component={SupportTicketsList}
-    />
-    <Stack.Screen
-      name="SupportTicket"
-      options={{title: 'Create support ticket'}}
-      component={SupportTicket}
-    />
-    <Stack.Group
-      screenOptions={{presentation: 'transparentModal', headerShown: false}}>
-      <Stack.Screen name="Purchase" component={Purchase} />
-    </Stack.Group>
+  await messaging().registerDeviceForRemoteMessages();
+  await messaging().subscribeToTopic('alerts');
 
-    **/}
-  </Stack.Navigator>
-);
+  const initialMessage = await messaging().getInitialNotification();
+
+  if (initialMessage) {
+    navigateToSupportTicketDetails(initialMessage);
+  }
+  messaging().onNotificationOpenedApp(navigateToSupportTicketDetails);
+};
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+  }
+}
+
+let RootStackNav: null | React.JSX.Element = null;
 
 const App = () => {
+  const [hasLoadedStack, setHasLoadedStack] = useState(false);
   useEffect(() => {
-    // isCached('CodeRunner') ? null : preload().component('CodeRunner');
-    // initDb();
-    // setupKeyboardListener();
+    import('./utils/storage').then(res => res.initDb());
+    setupKeyboardListener();
     setupMsg();
   }, []);
 
+  const isAppLoading = useStore($isAppLoading);
   const scheme = useColorScheme();
 
   return (
     <GestureHandlerRootView style={{flex: 1}}>
-      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : LightTheme}>
+      <NavigationContainer
+        ref={navigationRef}
+        theme={scheme === 'dark' ? DarkTheme : LightTheme}>
         <StatusBar
           barStyle="dark-content"
           backgroundColor={LightTheme.colors.background}
         />
         <SafeAreaProvider>
           <NotifierWrapper>
-            <RootStackNav />
-            <StartupTime />
+            {isAppLoading ? (
+              <HomePageSkeleton
+                onMounted={() => {
+                  RootStackNav = require('./RootStackNav.tsx').default;
+                  setHasLoadedStack(true);
+                }}
+              />
+            ) : null}
+
+            {
+              //@ts-ignore
+              hasLoadedStack ? <RootStackNav /> : null
+            }
           </NotifierWrapper>
         </SafeAreaProvider>
       </NavigationContainer>
