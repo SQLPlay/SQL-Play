@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import InputContainer from '~/component/InputContainer';
 import Table from '~/component/Table';
@@ -6,7 +6,10 @@ import ShortcutsBar from '~/component/ShortcutsBar';
 import RunButton from '~/component/RunButton';
 import {useStore} from '@nanostores/react';
 import {$tableData, $tableWidths} from '~/utils/run-query';
-// import SearchSheet from '~/component/SearchSheet';
+import SearchSheet from '~/component/SearchSheet';
+
+// import {StartupTime, getTimeSinceStartup} from 'react-native-startup-time';
+import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 export default function CodeRunner() {
   const tableData = useStore($tableData);
@@ -19,9 +22,9 @@ export default function CodeRunner() {
           <Table {...tableData} columnWidths={$tableWidths.get()} />
         ) : null}
       </View>
-      {
-        // <SearchSheet />
-      }
+      <BottomSheetModalProvider>
+        <SearchSheet />
+      </BottomSheetModalProvider>
       <ShortcutsBar />
       <RunButton />
     </View>
