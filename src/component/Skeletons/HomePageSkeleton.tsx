@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View, Text, useColorScheme} from 'react-native';
 import React, {useEffect} from 'react';
 import Animated, {
   useSharedValue,
@@ -6,10 +6,12 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-const backgroundColor = '#d4d4d4';
 const HomePageSkeleton = ({onMounted}: {onMounted: () => void}) => {
   const opacity = useSharedValue(1);
+  const scheme = useColorScheme();
 
+  const isDark = scheme === 'dark';
+  const backgroundColor = isDark ? '#fefefe44' : '#d4d4d4';
   useEffect(() => {
     opacity.value = withRepeat(withTiming(0.1, {duration: 865}), -1, true);
     setTimeout(onMounted, 30);
@@ -19,7 +21,8 @@ const HomePageSkeleton = ({onMounted}: {onMounted: () => void}) => {
   }, []);
 
   return (
-    <View style={{flex: 1, padding: 4, backgroundColor: '#fff'}}>
+    <View
+      style={{flex: 1, padding: 4, backgroundColor: isDark ? '#000' : '#fff'}}>
       <View style={{flexDirection: 'row'}}>
         <Animated.View
           style={{

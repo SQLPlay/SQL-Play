@@ -7,6 +7,7 @@ import {useTheme} from '@react-navigation/native';
 type Props = LessonItem & {
   onPress: () => void;
   isLocked: boolean;
+  hasPro: boolean;
   index: number;
 };
 
@@ -16,6 +17,7 @@ const TopicCard = ({
   title,
   description,
   isLocked,
+  hasPro,
   onPress,
 }: Props) => {
   const {colors: themeColors, dark} = useTheme();
@@ -29,8 +31,8 @@ const TopicCard = ({
     [dark],
   );
   const chipColor = useCallback(
-    () => (isLocked ? lockedColor() : unlockedColor()),
-    [isLocked, dark],
+    () => (isLocked && !hasPro ? lockedColor() : unlockedColor()),
+    [isLocked, dark, hasPro],
   );
   return (
     <Pressable testID={`topic_card_${index}`} onPress={onPress}>
@@ -58,12 +60,13 @@ const TopicCard = ({
             <View
               className="flex-row items-center px-2.5 py-0.5  rounded-2xl"
               style={{
-                backgroundColor: isLocked
-                  ? 'rgba(127, 140, 141, 0.3)'
-                  : 'rgba(39, 174, 96, 0.3)',
+                backgroundColor:
+                  isLocked && !hasPro
+                    ? 'rgba(127, 140, 141, 0.3)'
+                    : 'rgba(39, 174, 96, 0.3)',
               }}>
               <Icon
-                name={isLocked ? 'lock' : 'lock-open'}
+                name={isLocked && !hasPro ? 'lock' : 'lock-open'}
                 size={15}
                 color={chipColor()}
               />
@@ -71,7 +74,7 @@ const TopicCard = ({
                 style={{color: chipColor()}}
                 testID={`lock_label_${index}`}
                 className="ml-1">
-                {isLocked ? 'Pro unlocks this' : 'Free'}
+                {isLocked ? (hasPro ? 'Unlocked' : 'Pro unlocks this') : 'Free'}
               </Text>
             </View>
             <Text

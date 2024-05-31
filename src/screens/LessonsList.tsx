@@ -5,16 +5,21 @@ import TopicCard from '~/component/TopicCard';
 import {useGetLessonsList} from '~/api/lessons-api';
 import {RootStackParamList} from '~/types/nav';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {showErrorNotif} from '~/utils/notif';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {useTheme} from '@react-navigation/native';
+import {useMMKVStorage} from 'react-native-mmkv-storage';
+import {secureStore} from '~/store/mmkv';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Learn'>;
 const LessonsList = ({navigation}: Props) => {
   const {data, isLoading} = useGetLessonsList();
+  const {colors} = useTheme();
+  const [hasPro] = useMMKVStorage('hasPro', secureStore, false);
+
   return (
     <SafeAreaView className="mt-4">
       {isLoading || !data ? (
-        <ActivityIndicator size="large" color="#000" />
+        <ActivityIndicator size="large" color={colors.text} />
       ) : (
         <FlatList
           data={data}
@@ -32,8 +37,9 @@ const LessonsList = ({navigation}: Props) => {
                 {...item}
                 index={index}
                 isLocked={isLocked}
+                hasPro={hasPro}
                 onPress={() =>
-                  isLocked
+                  isLocked && !hasPro
                     ? navigation.navigate('Purchase')
                     : navigation.navigate('Lesson', item)
                 }

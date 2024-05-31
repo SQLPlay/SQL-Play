@@ -1,10 +1,11 @@
 import {MaterialTopTabBarProps} from '@react-navigation/material-top-tabs';
 import {useTheme} from '@react-navigation/native';
-import {Animated, View, TouchableOpacity, Pressable} from 'react-native';
+import {Animated, Pressable, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ids from '../../e2e/ids';
 import {searchSheetRef} from './SearchSheet';
 import OptionsMenu from './OptionsMenu';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const TabBar = ({
   state,
@@ -12,7 +13,7 @@ const TabBar = ({
   navigation,
   position,
 }: MaterialTopTabBarProps) => {
-  const {colors} = useTheme();
+  const {colors, dark} = useTheme();
   const inputRange = state.routes.map((_, i) => i);
   const translateX = position.interpolate({
     inputRange,
@@ -45,8 +46,8 @@ const TabBar = ({
             marginHorizontal: 3.5,
             height: 26,
             width: 92,
-            transform: [{translateX}],
-            backgroundColor: colors.background,
+            transform: [{translateX: translateX}],
+            backgroundColor: dark ? '#fcfcfc22' : '#f2f2f2',
           }}
         />
         {state.routes.map((route, index) => {
@@ -110,7 +111,7 @@ const TabBar = ({
         accessibilityHint="Search for commands"
         testID={ids.searchBtn}
         onPress={() => searchSheetRef.current?.present()}>
-        <Icon name="search" size={24} color="#000" />
+        <Icon name="search" size={24} color={colors.text} />
       </TouchableOpacity>
     </View>
   );

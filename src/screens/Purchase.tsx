@@ -45,7 +45,9 @@ const Purchase = ({navigation}: Props) => {
     getProducts,
     getAvailablePurchases,
     requestPurchase,
+    currentPurchase,
     currentPurchaseError,
+    finishTransaction,
   } = useIAP();
   const [hasPro, setHasPro] = useMMKVStorage('hasPro', secureStore, false);
   const [transactionId, setTransactionId] = useMMKVStorage<string | null>(
@@ -70,8 +72,9 @@ const Purchase = ({navigation}: Props) => {
   }, [currentPurchaseError]);
 
   useEffect(() => {
-    setupIAp();
-    setHasPro(false);
+    if (!hasPro) {
+      setupIAp();
+    }
   }, []);
 
   const restorePurchase = async () => {
@@ -144,11 +147,11 @@ const Purchase = ({navigation}: Props) => {
             focusable={true}
             disabled={!connected || hasPro}
             title={hasPro ? btnBoughtTxt : btnBuyTxt}
-            onPress={() =>
-              requestPurchase({sku: productId, skus: [productId]}).catch(
-                err => null,
-              )
-            }
+            onPress={() => {
+              requestPurchase({
+                sku: productId,
+              });
+            }}
           />
           {!hasPro ? (
             <SecondaryButton

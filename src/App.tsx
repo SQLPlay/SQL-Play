@@ -13,9 +13,11 @@ import {NotifierWrapper} from 'react-native-notifier';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+
 import messaging, {
   FirebaseMessagingTypes,
 } from '@react-native-firebase/messaging';
+
 import {
   DefaultTheme,
   DarkTheme as DefaultDarkTheme,
@@ -27,7 +29,7 @@ import {setupKeyboardListener} from '~/utils/keyboard-status';
 
 import {RootStackParamList} from '~/types/nav';
 
-import {secureStore} from './store/mmkv';
+import {secureStore} from '~/store/mmkv';
 
 const IS_DEV = process.env.NODE_ENV === 'development';
 if (IS_DEV) {
@@ -100,7 +102,6 @@ let RootStackNav: null | React.JSX.Element = null;
 const App = () => {
   const [hasLoadedStack, setHasLoadedStack] = useState(false);
   useEffect(() => {
-    import('./utils/storage').then(res => res.initDb());
     setupKeyboardListener();
     setupMsg();
   }, []);
@@ -113,10 +114,6 @@ const App = () => {
       <NavigationContainer
         ref={navigationRef}
         theme={scheme === 'dark' ? DarkTheme : LightTheme}>
-        <StatusBar
-          barStyle="dark-content"
-          backgroundColor={LightTheme.colors.background}
-        />
         <SafeAreaProvider>
           <NotifierWrapper>
             {isAppLoading ? (
