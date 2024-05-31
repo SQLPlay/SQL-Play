@@ -65,3 +65,4 @@ yarn-error.log
 # testing
 /coverage
 html-report
+android/app/release
