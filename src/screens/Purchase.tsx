@@ -80,7 +80,7 @@ const Purchase = ({navigation}: Props) => {
   const restorePurchase = async () => {
     try {
       await getAvailablePurchases();
-      if (!availablePurchases?.length) {
+      if (availablePurchases?.length === 0) {
         return showErrorNotif(
           'Failed to restore purchase',
           'No previous purchase found on this account.',
@@ -107,9 +107,12 @@ const Purchase = ({navigation}: Props) => {
 
   // get product ID once app is connected to store
 
+  const localisedPrice = products[0]?.localizedPrice;
   const btnBuyTxt = connected
-    ? `Buy Now For ${products[0]?.localizedPrice}`
-    : 'Not available on this platform';
+    ? localisedPrice
+      ? `Buy Now For ${localisedPrice}`
+      : 'Getting the price ...'
+    : 'Not available';
 
   const btnBoughtTxt = 'Sweet! You have SQL Play Pro';
 
@@ -147,9 +150,10 @@ const Purchase = ({navigation}: Props) => {
             focusable={true}
             disabled={!connected || hasPro}
             title={hasPro ? btnBoughtTxt : btnBuyTxt}
-            onPress={() => {
-              requestPurchase({
+            onPress={async () => {
+              await requestPurchase({
                 sku: productId,
+                skus: [productId],
               });
             }}
           />
