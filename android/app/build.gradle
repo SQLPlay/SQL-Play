@@ -4,7 +4,7 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: "org.jetbrains.kotlin.android"
 
 project.ext.vectoricons = [
-    iconFontNames: [ 'MaterialIcons.ttf', 'Ionicons.ttf' ] // Name of the font files you want to copy
+        iconFontNames: ['MaterialIcons.ttf', 'Ionicons.ttf'] // Name of the font files you want to copy
 ]
 
 apply from: file("../../node_modules/react-native-vector-icons/fonts.gradle")
@@ -67,7 +67,7 @@ react {
  * use App Bundles (https://developer.android.com/guide/app-bundle/)
  * and want to have separate APKs to upload to the Play Store.
  */
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = true
 
 /**
  * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
@@ -113,7 +113,7 @@ android {
         applicationId "com.sql_playground"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
+        versionCode 40
         versionName "3.0.0"
         testBuildType System.getProperty('testBuildType', 'debug')
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -125,7 +125,7 @@ android {
             reset()
             enable enableSeparateBuildPerCPUArchitecture
             universalApk false  // If true, also generate a universal APK
-            include (*reactNativeArchitectures())
+            include(*reactNativeArchitectures())
         }
     }
     signingConfigs {
@@ -144,7 +144,7 @@ android {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.debug
-            minifyEnabled enableProguardInReleaseBuilds
+            minifyEnabled true
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             proguardFile "${rootProject.projectDir}/../node_modules/detox/android/detox/proguard-rules-app.pro"
         }
@@ -179,7 +179,7 @@ dependencies {
     implementation 'com.facebook.fresco:webpsupport:2.5.0'
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
-        exclude group:'com.squareup.okhttp3', module:'okhttp'
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     }
 
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}")
