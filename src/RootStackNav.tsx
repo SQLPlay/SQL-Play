@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {RootStackParamList} from './types/nav';
 
 import Export from './screens/Export';
@@ -8,10 +8,10 @@ import SupportTicketsList from './screens/SupportTickets/SupportTicketsList';
 import SupportTicketDetails from './screens/SupportTickets/SupportTicketDetails';
 
 import SupportedQuery from '~/screens/Lesson';
-import Purchase from './screens/Purchase';
-import TabNav from './screens/TabNav';
+import Purchase from '~/screens/Purchase';
+import TabNav from '~/screens/TabNav';
 
-const RootStack = createStackNavigator<RootStackParamList>();
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 export default function RootStackNav() {
   return (
