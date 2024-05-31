@@ -77,6 +77,17 @@ const Purchase = ({navigation}: Props) => {
     }
   }, []);
 
+  useEffect(() => {
+    availablePurchases.forEach(purchase => {
+      if (purchase.productId !== productId) return;
+      if (!purchase.transactionId) return;
+
+      setTransactionId(purchase.transactionId);
+      setHasPro(true);
+      showSuccessNotif('Yay! Your SQL Play Pro has been restored');
+    });
+  }, [availablePurchases]);
+
   const restorePurchase = async () => {
     try {
       await getAvailablePurchases();
@@ -86,15 +97,6 @@ const Purchase = ({navigation}: Props) => {
           'No previous purchase found on this account.',
         );
       }
-
-      availablePurchases.forEach(purchase => {
-        if (purchase.productId !== productId) return;
-        if (!purchase.transactionId) return;
-
-        setTransactionId(purchase.transactionId);
-        setHasPro(true);
-        showSuccessNotif('Yay! Your SQL Play Pro has been restored');
-      });
     } catch (error) {
       let msg = error as string;
       if (error instanceof Error) {
