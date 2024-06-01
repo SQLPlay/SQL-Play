@@ -149,7 +149,7 @@ const Lesson = ({navigation, route}: Props) => {
     return <ActivityIndicator size="large" color="#000" />;
   }
   return (
-    <View style={{backgroundColor: '#fff'}}>
+    <View>
       <Markdown
         flatListProps={{
           contentContainerStyle: {marginHorizontal: 10, paddingBottom: 20},
@@ -157,7 +157,7 @@ const Lesson = ({navigation, route}: Props) => {
         styles={{...mdStyle, code: {backgroundColor: colors.card}}}
         //@ts-ignore
         renderer={renderer}
-        value={`# ${title}\n${data}`}
+        value={data}
       />
     </View>
   );
