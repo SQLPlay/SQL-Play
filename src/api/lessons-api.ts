@@ -10,15 +10,19 @@ type HookState<DataT> = {
   isLoading: boolean;
   data?: DataT;
 };
+
+let data: LessonItem[];
 export const useGetLessonsList = () => {
   const [state, setState] = useState<HookState<LessonItem[]>>({
     error: null,
-    isLoading: true,
+    isLoading: data ? false : true,
+    data,
   });
 
   const fetch = async () => {
     try {
       const res = await wretch.get('/learn/lessons.json').json();
+      data = res as LessonItem[];
       setState({...state, data: res as LessonItem[]});
     } catch (error) {
       // console.log(error);
@@ -28,10 +32,12 @@ export const useGetLessonsList = () => {
     }
   };
   useEffect(() => {
+    if (data) return;
     fetch();
+    console.log('fetched again', state.isLoading);
   }, []);
 
-  return {...state};
+  return state;
 };
 
 export const useGetLessonMd = (path: string) => {
