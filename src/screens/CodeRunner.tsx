@@ -8,7 +8,7 @@ import {useStore} from '@nanostores/react';
 import {$tableData, $tableWidths} from '~/utils/run-query';
 import SearchSheet from '~/component/SearchSheet';
 
-// import {StartupTime, getTimeSinceStartup} from 'react-native-startup-time';
+// import { StartupTime } from 'react-native-startup-time';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
 
 export default function CodeRunner() {
@@ -26,7 +26,11 @@ export default function CodeRunner() {
         <SearchSheet />
       </BottomSheetModalProvider>
       <ShortcutsBar />
+
       <RunButton />
+      {/*
+      <StartupTime style={{top: 130, left: 10}} />
+      */}
     </View>
   );
 }
@@ -38,6 +42,6 @@ const styles = StyleSheet.create({
   },
   innercontainer: {
     flex: 1,
-    paddingBottom: 10,
+    paddingVertical: 4,
   },
 });
