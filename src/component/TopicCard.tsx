@@ -4,10 +4,11 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {LessonItem} from '~/types/lesson-type';
 import colors from 'tailwindcss/colors';
 import {useTheme} from '@react-navigation/native';
+import {useMMKVStorage} from 'react-native-mmkv-storage';
+import {secureStore} from '~/store/mmkv';
 type Props = LessonItem & {
   onPress: () => void;
   isLocked: boolean;
-  hasPro: boolean;
   index: number;
 };
 
@@ -17,10 +18,11 @@ const TopicCard = ({
   title,
   description,
   isLocked,
-  hasPro,
   onPress,
 }: Props) => {
   const {colors: themeColors, dark} = useTheme();
+
+  const [hasPro] = useMMKVStorage('hasPro', secureStore, false);
 
   const lockedColor = useCallback(
     () => (dark ? colors.gray['100'] : colors.gray['600']),
@@ -30,10 +32,12 @@ const TopicCard = ({
     () => (dark ? colors.green['100'] : colors.green['700']),
     [dark],
   );
+
   const chipColor = useCallback(
     () => (isLocked && !hasPro ? lockedColor() : unlockedColor()),
     [isLocked, dark, hasPro],
   );
+
   return (
     <Pressable testID={`topic_card_${index}`} onPress={onPress}>
       {({pressed}) => (
@@ -47,7 +51,7 @@ const TopicCard = ({
             opacity: pressed ? 0.7 : 1,
             backgroundColor: themeColors.card,
           }}
-          className="p-4 rounded-xl">
+          className="p-4 mb-4 rounded-xl">
           <Text
             style={{color: themeColors.text}}
             className="mb-1 text-lg font-semibold">
