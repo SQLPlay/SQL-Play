@@ -1,6 +1,5 @@
 import {View, Text, ActivityIndicator} from 'react-native';
-import React from 'react';
-import {FlatList} from 'react-native-gesture-handler';
+import React, {useCallback, useEffect} from 'react';
 import TopicCard from '~/component/TopicCard';
 import {useGetLessonsList} from '~/api/lessons-api';
 import {RootStackParamList} from '~/types/nav';
@@ -9,44 +8,70 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTheme} from '@react-navigation/native';
 import {useMMKVStorage} from 'react-native-mmkv-storage';
 import {secureStore} from '~/store/mmkv';
+import {FlashList} from '@shopify/flash-list';
+import {LessonItem} from '~/types/lesson-type';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Learn'>;
+
+type RenderItemProp = {
+  item: LessonItem;
+  index: number;
+};
+
+let hasLessonPageLoaded = false;
+
 const LessonsList = ({navigation}: Props) => {
   const {data, isLoading} = useGetLessonsList();
   const {colors} = useTheme();
-  const [hasPro] = useMMKVStorage('hasPro', secureStore, false);
+  const [hasPro, setHasPro] = useMMKVStorage('hasPro', secureStore, false);
+
+  const onCardPress = useCallback(
+    (item: LessonItem, isLocked: boolean) => {
+      if (isLocked && !hasPro) {
+        navigation.navigate('Purchase');
+        return;
+      }
+      navigation.navigate('Lesson', item);
+    },
+    [hasPro],
+  );
+
+  const renderListItem = useCallback(({item, index}: RenderItemProp) => {
+    const isLocked = index > 4;
+    return (
+      <TopicCard
+        {...item}
+        index={index}
+        isLocked={isLocked}
+        onPress={() => onCardPress(item, isLocked)}
+        description={item.short_description}
+      />
+    );
+  }, []);
+
+  useEffect(() => {
+    if (hasLessonPageLoaded) return;
+    setTimeout(() => {
+      import('./Lesson').then(() => {
+        hasLessonPageLoaded = true;
+      });
+    }, 300);
+  }, []);
 
   return (
-    <SafeAreaView className="mt-4">
+    <SafeAreaView style={{flex: 1}}>
       {isLoading || !data ? (
         <ActivityIndicator size="large" color={colors.text} />
       ) : (
-        <FlatList
+        <FlashList
           data={data}
           contentContainerStyle={{
-            rowGap: 8,
-            marginHorizontal: 16,
-            paddingBottom: 12,
+            paddingVertical: 4,
+            paddingHorizontal: 8,
           }}
           testID="scroll-container"
-          keyExtractor={item => item.path}
-          renderItem={({item, index}) => {
-            const isLocked = index > 4;
-            return (
-              <TopicCard
-                {...item}
-                index={index}
-                isLocked={isLocked}
-                hasPro={hasPro}
-                onPress={() =>
-                  isLocked && !hasPro
-                    ? navigation.navigate('Purchase')
-                    : navigation.navigate('Lesson', item)
-                }
-                description={item.short_description}
-              />
-            );
-          }}
+          estimatedItemSize={129}
+          renderItem={renderListItem}
         />
       )}
     </SafeAreaView>
