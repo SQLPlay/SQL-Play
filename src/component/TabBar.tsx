@@ -1,24 +1,22 @@
-import {MaterialTopTabBarProps} from '@react-navigation/material-top-tabs';
-import {useTheme} from '@react-navigation/native';
-import {Animated, Pressable, View} from 'react-native';
+import {getFocusedRouteNameFromRoute, useTheme} from '@react-navigation/native';
+
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ids from '../../e2e/ids';
 import {searchSheetRef} from './SearchSheet';
 import OptionsMenu from './OptionsMenu';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {NativeStackHeaderProps} from '@react-navigation/native-stack';
 
-const TabBar = ({
-  state,
-  descriptors,
-  navigation,
-  position,
-}: MaterialTopTabBarProps) => {
+const TabBar = ({route, navigation, options}: NativeStackHeaderProps) => {
+  const routeName = getFocusedRouteNameFromRoute(route) ?? 'Main';
   const {colors, dark} = useTheme();
-  const inputRange = state.routes.map((_, i) => i);
-  const translateX = position.interpolate({
-    inputRange,
-    outputRange: [0, 101],
-  });
+  const isRouteOnSqlPlay = routeName === 'Main' || routeName === 'CodeRunner';
   return (
     <View
       style={{
@@ -34,77 +32,56 @@ const TabBar = ({
         style={{
           flexDirection: 'row',
           backgroundColor: colors.card,
-          paddingVertical: 6,
+          paddingVertical: 2,
+          paddingHorizontal: 2,
           borderRadius: 8,
+          // gap: 16,
           position: 'relative',
           alignItems: 'center',
         }}>
-        <Animated.View
-          style={{
-            position: 'absolute',
-            borderRadius: 8,
-            marginHorizontal: 3.5,
-            height: 26,
-            width: 92,
-            transform: [{translateX: translateX}],
-            backgroundColor: dark ? '#fcfcfc22' : '#f2f2f2',
-          }}
-        />
-        {state.routes.map((route, index) => {
-          const {options} = descriptors[route.key];
-          const label =
-            options.tabBarLabel !== undefined
-              ? options.tabBarLabel
-              : options.title !== undefined
-                ? options.title
-                : route.name;
+        <Pressable
+          accessibilityRole="button"
+          disabled={isRouteOnSqlPlay}
+          onPress={() => {
+            navigation.navigate('CodeRunner');
+          }}>
+          <Text
+            style={[
+              styles.tabText,
+              {
+                color: colors.text,
+                backgroundColor: isRouteOnSqlPlay
+                  ? dark
+                    ? '#fefefe33'
+                    : '#0c0c0c22'
+                  : 'transparent',
+              },
+            ]}>
+            SQL Play
+          </Text>
+        </Pressable>
 
-          const isFocused = state.index === index;
-
-          const onPress = () => {
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            });
-
-            if (!isFocused && !event.defaultPrevented) {
-              navigation.navigate(route.name, route.params);
-            }
-          };
-
-          const onLongPress = () => {
-            navigation.emit({
-              type: 'tabLongPress',
-              target: route.key,
-            });
-          };
-
-          return (
-            <Pressable
-              accessibilityRole="button"
-              accessibilityState={isFocused ? {selected: true} : {}}
-              accessibilityLabel={options.tabBarAccessibilityLabel}
-              testID={options.tabBarTestID}
-              onPress={onPress}
-              key={label.toString()}
-              onLongPress={onLongPress}
-              style={{
-                flex: 1,
-                maxWidth: 100,
-              }}>
-              <Animated.Text
-                style={{
-                  color: colors.text,
-                  textAlign: 'center',
-                  fontSize: 16,
-                  fontWeight: '500',
-                }}>
-                {label.toString()}
-              </Animated.Text>
-            </Pressable>
-          );
-        })}
+        <Pressable
+          accessibilityRole="button"
+          disabled={!isRouteOnSqlPlay}
+          onPress={() => {
+            navigation.navigate('Learn');
+          }}>
+          <Text
+            style={[
+              styles.tabText,
+              {
+                color: colors.text,
+                backgroundColor: !isRouteOnSqlPlay
+                  ? dark
+                    ? '#fefefe33'
+                    : '#0c0c0c22'
+                  : 'transparent',
+              },
+            ]}>
+            Learn
+          </Text>
+        </Pressable>
       </View>
       <TouchableOpacity
         accessibilityLabel="Search"
@@ -118,3 +95,15 @@ const TabBar = ({
 };
 
 export default TabBar;
+
+const styles = StyleSheet.create({
+  tabText: {
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: '500',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 5,
+    width: 90,
+  },
+});
