@@ -3,6 +3,7 @@ import '../global.css';
 import React, {useState, useRef, useEffect, Suspense, lazy} from 'react';
 import {
   Button,
+  InteractionManager,
   StatusBar,
   StyleSheet,
   Text,
@@ -31,11 +32,14 @@ import {RootStackParamList} from '~/types/nav';
 
 import {secureStore} from '~/store/mmkv';
 
-const IS_DEV = process.env.NODE_ENV === 'development';
-if (IS_DEV) {
-  secureStore.setBoolAsync('hasPro', true);
-  secureStore.setStringAsync('transactionId', 'TEST123DFSDFSDFSDFSDFDS');
-}
+// const IS_DEV = process.env.NODE_ENV === 'development';
+// if (IS_DEV) {
+//   secureStore.setBoolAsync('hasPro', false);
+//   setTimeout(() => {
+//     secureStore.setBoolAsync('hasPro', true);
+//   }, 9000);
+//   secureStore.setStringAsync('transactionId', 'TEST123DFSDFSDFSDFSDFDS');
+// }
 
 const LightTheme = {
   ...DefaultTheme,
@@ -52,9 +56,7 @@ const DarkTheme = {
 };
 
 import {PermissionsAndroid} from 'react-native';
-import HomePageSkeleton from './component/Skeletons/HomePageSkeleton';
-import {useStore} from '@nanostores/react';
-import {$isAppLoading} from './store';
+import RootStackNav from './RootStackNav';
 
 export const navigationRef = createNavigationContainerRef();
 
@@ -97,16 +99,14 @@ declare global {
   }
 }
 
-let RootStackNav: null | React.JSX.Element = null;
+// let RootStackNav: null | React.JSX.Element = null;
+
+InteractionManager.runAfterInteractions(() => {
+  setupKeyboardListener();
+  setupMsg();
+});
 
 const App = () => {
-  const [hasLoadedStack, setHasLoadedStack] = useState(false);
-  useEffect(() => {
-    setupKeyboardListener();
-    setupMsg();
-  }, []);
-
-  const isAppLoading = useStore($isAppLoading);
   const scheme = useColorScheme();
 
   return (
@@ -116,19 +116,7 @@ const App = () => {
         theme={scheme === 'dark' ? DarkTheme : LightTheme}>
         <SafeAreaProvider>
           <NotifierWrapper>
-            {isAppLoading ? (
-              <HomePageSkeleton
-                onMounted={() => {
-                  RootStackNav = require('./RootStackNav.tsx').default;
-                  setHasLoadedStack(true);
-                }}
-              />
-            ) : null}
-
-            {
-              //@ts-ignore
-              hasLoadedStack ? <RootStackNav /> : null
-            }
+            <RootStackNav />
           </NotifierWrapper>
         </SafeAreaProvider>
       </NavigationContainer>
