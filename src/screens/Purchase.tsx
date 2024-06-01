@@ -45,24 +45,22 @@ const Purchase = ({navigation}: Props) => {
     getProducts,
     getAvailablePurchases,
     requestPurchase,
-    currentPurchase,
     currentPurchaseError,
+    purchaseHistory,
+    getPurchaseHistory,
     finishTransaction,
   } = useIAP();
+
   const [hasPro, setHasPro] = useMMKVStorage('hasPro', secureStore, false);
   const [transactionId, setTransactionId] = useMMKVStorage<string | null>(
     'transactionId',
     secureStore,
     null,
   );
-  const setupIAp = async () => {
-    try {
-      await initConnection();
-      await getProducts({skus: [productId]});
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    // setHasPro(false);
+    getProducts({skus: [productId]});
+  }, []);
 
   useEffect(() => {
     if (!currentPurchaseError) return;
@@ -72,26 +70,27 @@ const Purchase = ({navigation}: Props) => {
   }, [currentPurchaseError]);
 
   useEffect(() => {
-    if (!hasPro) {
-      setupIAp();
-    }
-  }, []);
+    purchaseHistory.forEach(purchase => {
+      if (purchase.productId !== productId) {
+        return showErrorNotif('Previous product id do not match');
+      }
 
-  useEffect(() => {
-    availablePurchases.forEach(purchase => {
-      if (purchase.productId !== productId) return;
-      if (!purchase.transactionId) return;
+      if (purchase.transactionId) {
+        setTransactionId(purchase.transactionId);
+      } else {
+        setTransactionId(purchase.purchaseToken ?? 'unkown');
+      }
 
-      setTransactionId(purchase.transactionId);
+      // finishTransaction({purchase, isConsumable: true});
       setHasPro(true);
       showSuccessNotif('Yay! Your SQL Play Pro has been restored');
     });
-  }, [availablePurchases]);
+  }, [purchaseHistory]);
 
   const restorePurchase = async () => {
     try {
-      await getAvailablePurchases();
-      if (availablePurchases?.length === 0) {
+      await getPurchaseHistory();
+      if (purchaseHistory?.length === 0) {
         return showErrorNotif(
           'Failed to restore purchase',
           'No previous purchase found on this account.',
