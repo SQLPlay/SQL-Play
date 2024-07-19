@@ -1,19 +1,31 @@
-import React from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  TouchableOpacity,
+  StyleSheet,
+  Keyboard,
+  KeyboardAvoidingView,
+} from 'react-native';
+import {useReanimatedKeyboardAnimation} from 'react-native-keyboard-controller';
 import {ids} from '../../e2e/ids';
 import BaseIcon from './Icons/BaseIcon';
 import {runQuery} from '~/utils/run-query';
+import Animated from 'react-native-reanimated';
 
 const RunButton = () => {
+  const {height, progress} = useReanimatedKeyboardAnimation();
+
   return (
-    <TouchableOpacity
-      testID={ids.runBtn}
-      accessibilityLabel="run button"
-      accessibilityHint="runs the command which is typed in input box"
-      onPress={runQuery}
-      style={styles.runBtn}>
-      <BaseIcon name="PaperPlaneRight" fill="#ffffff" />
-    </TouchableOpacity>
+    <Animated.View
+      style={{transform: [{translateY: height}], position: 'relative'}}>
+      <TouchableOpacity
+        testID={ids.runBtn}
+        accessibilityLabel="run button"
+        accessibilityHint="runs the command which is typed in input box"
+        onPress={runQuery}
+        style={[styles.runBtn]}>
+        <BaseIcon name="PaperPlaneRight" fill="#ffffff" />
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 

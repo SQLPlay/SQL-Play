@@ -2,6 +2,7 @@ import {Dirs, FileSystem} from 'react-native-file-access';
 import {Buffer} from '@craftzdog/react-native-buffer';
 //@ts-ignore
 import zipcelx from 'zipcelx-on-steroids/lib/module/';
+import {Platform} from 'react-native';
 
 export type TCell = {
   value: string;
@@ -11,7 +12,7 @@ export type TCell = {
 export const createXlsx = async (data: TCell[][], table_name: string) => {
   const buffer = (await zipcelx(
     {
-      filename: 'general-ledger-Q1',
+      filename: 'exported_table',
       sheet: {
         data,
       },
@@ -27,6 +28,8 @@ export const createXlsx = async (data: TCell[][], table_name: string) => {
   // const base64WithType = `data:${fileType};base64,${base64}`;
 
   await FileSystem.writeFile(path, base64, 'base64');
-  await FileSystem.cpExternal(path, `${table_name}.xlsx`, 'downloads');
+  if (Platform.OS === 'android') {
+    await FileSystem.cpExternal(path, `${table_name}.xlsx`, 'downloads');
+  }
   return path;
 };

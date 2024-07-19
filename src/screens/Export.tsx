@@ -18,13 +18,11 @@ import React, {
 import {exportCSV, exportDb, exportXlsx, getAllTablesName} from '~/utils/db';
 import PrimaryButton from '~/component/Button/PrimaryButton';
 
-import _IonIcon from 'react-native-vector-icons/Ionicons';
-
-const IonIcon = _IonIcon as ElementType;
+import IonIcon from '@react-native-vector-icons/ionicons';
 
 import {Theme, useTheme} from '@react-navigation/native';
 
-import {useFloating, shift, autoPlacement} from '@floating-ui/react-native';
+// import {useFloating, shift, autoPlacement} from '@floating-ui/react-native';
 
 import RNReactNativeHapticFeedback, {
   HapticFeedbackTypes,
@@ -115,8 +113,8 @@ const layoutAnimConfig = {
 type Props = NativeStackScreenProps<RootStackParamList, 'Export'>;
 const Export = ({navigation}: Props) => {
   const [tableNames, setTableNames] = useState<string[]>([]);
-  const [selectedTable, setSelectedTable] = useState(tableNames[0]);
-  const [selectedFormatIdx, setSelectedFormatIdx] = useState(1);
+  const [selectedTable, setSelectedTable] = useState('');
+  const [selectedFormatIdx, setSelectedFormatIdx] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const {colors} = useTheme();
@@ -124,7 +122,11 @@ const Export = ({navigation}: Props) => {
 
   useEffect(() => {
     setIsLoading(false);
-    getAllTablesName().then(names => setTableNames(names ?? []));
+    getAllTablesName().then(names => {
+      setTableNames(names ?? []);
+      if (!names) return;
+      setSelectedTable(names[0]);
+    });
   }, []);
 
   useLayoutEffect(() => {

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {initConnection, useIAP, withIAPContext} from 'react-native-iap';
 import {useMMKVStorage} from 'react-native-mmkv-storage';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
+import MIcon from '@react-native-vector-icons/material-icons';
 import sqlplay_crown from '../images/sqlpro.png';
 import FeatureListItem from '~/component/FeatureListItem';
 import PrimaryButton from '~/component/Button/PrimaryButton';

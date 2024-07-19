@@ -13,7 +13,7 @@ import {Ticket} from '~/types/ticket';
 import ExtendedFab from '~/component/Button/ExtendedFab';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '~/types/nav';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@react-native-vector-icons/material-icons';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {FlashList} from '@shopify/flash-list';
 
@@ -68,7 +68,7 @@ const SupportTicketsList = ({route, navigation}: Props) => {
   return (
     <View className="flex-1 py-2 relative bg-gray-50 dark:bg-gray-900">
       {!isLoading && tickets?.length === 0 ? (
-        <View className="rounded border-2 border-dashed border-gray-300 bg-gray-50 px-4 py-12 items-center mt-4">
+        <View className="rounded border-2 border-dashed border-gray-300 bg-gray-50  px-4 py-12 items-center mt-4">
           <Icon name="task" size={34} />
           <Text className="text-black font-bold mt-4 mb-2">No tickets yet</Text>
           <Text className="text-center">

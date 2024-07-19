@@ -1,6 +1,6 @@
 import {View, Text, Pressable} from 'react-native';
 import React, {useCallback} from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@react-native-vector-icons/material-icons';
 import {LessonItem} from '~/types/lesson-type';
 import colors from 'tailwindcss/colors';
 import {useTheme} from '@react-navigation/native';

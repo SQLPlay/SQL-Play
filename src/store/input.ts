@@ -10,13 +10,11 @@ export const $cameFromUndoRedo = atom(false);
 
 const debouncedQueryUpdate = debounce((val: string) => {
   $queryEdits.set([...$queryEdits.get(), val]);
-  console.log($queryEdits.get());
 }, 200);
 
 $inputQuery.subscribe(val => {
   // don't do anything if undo is pressed
   if ($pressedUndoRedo.get()) {
-    console.log('undo was pressed');
     setTimeout(() => $pressedUndoRedo.set(false), 60);
     return;
   }

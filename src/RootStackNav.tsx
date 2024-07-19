@@ -17,6 +17,7 @@ import TabBar from './component/TabBar';
 import {secureStore} from './store/mmkv';
 import {showSuccessNotif} from './utils/notif';
 import Purchase from './screens/Purchase';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -123,10 +124,12 @@ const MainStack = () => {
 };
 export default function RootStackNav() {
   return (
+    // <SafeAreaView style={{ flex: 1 }}>
     <RootStack.Navigator screenOptions={{}} initialRouteName="Main">
       <RootStack.Screen
         name="Main"
         options={{
+          title: 'Home',
           header: TabBar,
         }}
         component={MainStack}
@@ -135,7 +138,10 @@ export default function RootStackNav() {
       <RootStack.Screen
         name="Lesson"
         component={Lesson}
-        options={({route}) => ({title: route.params.title})}
+        options={({route}) => ({
+          title: route.params.title,
+          headerBackTitleVisible: false,
+        })}
       />
 
       <RootStack.Screen name="Export" component={ExportPage} />
@@ -147,12 +153,12 @@ export default function RootStackNav() {
 
       <RootStack.Screen
         name="SupportTicketDetails"
-        options={{title: 'Ticket Details'}}
+        options={{title: 'Ticket Details', headerBackTitle: 'Tickets'}}
         component={SupportTicketDetails}
       />
       <RootStack.Screen
         name="NewSupportTicket"
-        options={{title: 'Create support ticket'}}
+        options={{title: 'Create support ticket', headerBackTitle: 'Tickets'}}
         component={NewSupportTicket}
       />
       <RootStack.Screen
@@ -169,5 +175,6 @@ export default function RootStackNav() {
       {/*
        */}
     </RootStack.Navigator>
+    // </SafeAreaView>
   );
 }

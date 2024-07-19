@@ -58,23 +58,19 @@ const LessonsList = ({navigation}: Props) => {
     }, 300);
   }, []);
 
-  return (
-    <SafeAreaView style={{flex: 1}}>
-      {isLoading || !data ? (
-        <ActivityIndicator size="large" color={colors.text} />
-      ) : (
-        <FlashList
-          data={data}
-          contentContainerStyle={{
-            paddingVertical: 4,
-            paddingHorizontal: 8,
-          }}
-          testID="scroll-container"
-          estimatedItemSize={129}
-          renderItem={renderListItem}
-        />
-      )}
-    </SafeAreaView>
+  return isLoading || !data ? (
+    <ActivityIndicator size="large" color={colors.text} />
+  ) : (
+    <FlashList
+      data={data}
+      contentContainerStyle={{
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+      }}
+      testID="scroll-container"
+      estimatedItemSize={129}
+      renderItem={renderListItem}
+    />
   );
 };
 

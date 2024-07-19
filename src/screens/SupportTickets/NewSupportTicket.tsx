@@ -109,15 +109,22 @@ const SupportTicket = ({navigation}: Props) => {
           value={inputVals.message}
           onChangeText={txt => setInputVals({...inputVals, message: txt})}
         />
-        <View className="flex-row items-center my-2">
+        <View className="flex-row items-center my-4 gap-3">
           <CheckBox
+            boxType="circle"
+            // hideBox={true}
             testID="checkbox"
-            tintColors={{true: colors.blue[500]}}
+            tintColors={{true: colors.blue['500']}}
+            onFillColor={colors.blue['100']}
+            lineWidth={2}
             disabled={false}
+            onAnimationType="fill"
+            offAnimationType="fill"
+            // animationDuration={300}
             value={isShareCommandsChecked}
             onValueChange={isChecked => setIsShareCommandsChecked(isChecked)}
           />
-          <Text className="text-sm font-medium leading-6 text-gray-800 dark:text-gray-200">
+          <Text className="text-base font-medium leading-6 text-gray-800 dark:text-gray-200">
             Share last 20 commands{' '}
             <Text className="font-normal text-gray-600 dark:text-gray-200">
               to help you faster.

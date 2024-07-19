@@ -4,7 +4,7 @@ import {parseSqlOutput} from './storage';
 import {Dirs, FileSystem} from 'react-native-file-access';
 import analytics from '@react-native-firebase/analytics';
 import {showErrorNotif, showSuccessNotif} from './notif';
-import {Alert} from 'react-native';
+import {Alert, Platform} from 'react-native';
 import Share from 'react-native-share';
 import {capitalizeWord} from './formatter';
 
@@ -23,6 +23,8 @@ const runQuery = async (query: string) => {
 
 type Format = 'CSV' | 'XLSX' | 'SQLITE';
 
+const isIos = Platform.OS === 'ios';
+
 const shareFile = async (
   tableName: string | null,
   format: Format,
@@ -35,9 +37,11 @@ const shareFile = async (
       // failOnCancel: false,
       url: `file://${path}`,
       title: `Share ${tableName} file via`,
-      message: `Check out this ${format} ${
-        tableName ?? 'database'
-      } file, which I exported from SQL Play App.`,
+      message: isIos
+        ? undefined
+        : `Check out this ${format} ${
+            tableName ?? 'database'
+          } file, which I exported from SQL Play App.`,
     });
     if (success) {
       showSuccessNotif('File shared successfully!');
@@ -60,6 +64,10 @@ export const getAllTablesName = async () => {
 };
 
 const showAlert = (tableName: string | null, format: Format, path: string) => {
+  if (isIos) {
+    shareFile(tableName, format, path);
+    return;
+  }
   Alert.alert(
     `Yay! ${
       tableName ? capitalizeWord(tableName) : 'Database'

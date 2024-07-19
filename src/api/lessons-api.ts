@@ -25,7 +25,7 @@ export const useGetLessonsList = () => {
       data = res as LessonItem[];
       setState({...state, data: res as LessonItem[]});
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       setState(prv => ({...prv, error: error?.message}));
     } finally {
       setState(prv => ({...prv, isLoading: false}));
@@ -34,7 +34,6 @@ export const useGetLessonsList = () => {
   useEffect(() => {
     if (data) return;
     fetch();
-    console.log('fetched again', state.isLoading);
   }, []);
 
   return state;

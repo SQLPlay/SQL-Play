@@ -1,12 +1,10 @@
 import '../global.css';
 
-import React, {useState, useRef, useEffect, Suspense, lazy} from 'react';
+import React from 'react';
 import {
-  Button,
   InteractionManager,
-  StatusBar,
+  Platform,
   StyleSheet,
-  Text,
   useColorScheme,
 } from 'react-native';
 
@@ -14,6 +12,7 @@ import {NotifierWrapper} from 'react-native-notifier';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {KeyboardProvider} from 'react-native-keyboard-controller';
 
 import messaging, {
   FirebaseMessagingTypes,
@@ -32,14 +31,14 @@ import {RootStackParamList} from '~/types/nav';
 
 import {secureStore} from '~/store/mmkv';
 
-// const IS_DEV = process.env.NODE_ENV === 'development';
-// if (IS_DEV) {
-//   secureStore.setBoolAsync('hasPro', false);
-//   setTimeout(() => {
-//     secureStore.setBoolAsync('hasPro', true);
-//   }, 9000);
-//   secureStore.setStringAsync('transactionId', 'TEST123DFSDFSDFSDFSDFDS');
-// }
+const IS_DEV = process.env.NODE_ENV === 'development';
+if (IS_DEV) {
+  secureStore.setBoolAsync('hasPro', false);
+  setTimeout(() => {
+    secureStore.setBoolAsync('hasPro', true);
+  }, 9000);
+  secureStore.setStringAsync('transactionId', 'TEST123DFSDFSDFSDFSDFDS');
+}
 
 const LightTheme = {
   ...DefaultTheme,
@@ -57,6 +56,7 @@ const DarkTheme = {
 
 import {PermissionsAndroid} from 'react-native';
 import RootStackNav from './RootStackNav';
+import {showErrorNotif} from './utils/notif';
 
 export const navigationRef = createNavigationContainerRef();
 
@@ -70,18 +70,23 @@ const navigateToSupportTicketDetails = (
   navigationRef.navigate('SupportTicketDetails', {ticketId});
 };
 
-const setupMsg = async () => {
-  const hasNotificationPermissions = await PermissionsAndroid.check(
-    PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-  );
+const isIos = Platform.OS === 'ios';
 
-  if (!hasNotificationPermissions) {
-    const status = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
-    );
+const setupMsg = async () => {
+  // if (isIos) return;
+  const notificationPermissions = await messaging().hasPermission();
+
+  const AUTHORIZED_STATUS = 1;
+
+  if (notificationPermissions !== AUTHORIZED_STATUS) {
+    const status = await messaging().requestPermission();
+    if (status !== AUTHORIZED_STATUS) {
+      showErrorNotif('Failed to get notification permission');
+      return;
+    }
   }
 
-  await messaging().registerDeviceForRemoteMessages();
+  // await messaging().registerDeviceForRemoteMessages();
   await messaging().subscribeToTopic('alerts');
 
   const initialMessage = await messaging().getInitialNotification();
@@ -115,9 +120,11 @@ const App = () => {
         ref={navigationRef}
         theme={scheme === 'dark' ? DarkTheme : LightTheme}>
         <SafeAreaProvider>
-          <NotifierWrapper>
-            <RootStackNav />
-          </NotifierWrapper>
+          <KeyboardProvider>
+            <NotifierWrapper>
+              <RootStackNav />
+            </NotifierWrapper>
+          </KeyboardProvider>
         </SafeAreaProvider>
       </NavigationContainer>
     </GestureHandlerRootView>

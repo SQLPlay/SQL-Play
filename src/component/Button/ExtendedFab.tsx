@@ -1,6 +1,6 @@
 import {View, Text, Pressable, PressableProps} from 'react-native';
 import React from 'react';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
+import MIcon from '@react-native-vector-icons/material-icons';
 import colors from 'tailwindcss/colors';
 type Props = PressableProps & {
   label: string;

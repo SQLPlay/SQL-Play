@@ -1,8 +1,8 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import BaseIcon from './Icons/BaseIcon';
-import Icon from 'react-native-vector-icons/Ionicons';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
+import Icon from '@react-native-vector-icons/ionicons';
+import MIcon from '@react-native-vector-icons/material-icons';
 import {
   $cameFromUndoRedo,
   $inputQuery,
@@ -17,6 +17,16 @@ import {$isKeyboardVisible} from '~/utils/keyboard-status';
 import {useMMKVStorage} from 'react-native-mmkv-storage';
 import {secureStore} from '~/store/mmkv';
 import {useNavigation} from '@react-navigation/native';
+import {useReanimatedKeyboardAnimation} from 'react-native-keyboard-controller';
+import Animated, {
+  SlideInDown,
+  SlideOutDown,
+  useDerivedValue,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+
+import {KeyboardEvents} from 'react-native-keyboard-controller';
 // import {format as formatSqlQuery} from 'sql-formatter';
 export default function ShortcutsBar() {
   const [hasPro] = useMMKVStorage('hasPro', secureStore, false);
@@ -26,15 +36,14 @@ export default function ShortcutsBar() {
     const queryEdits = $queryEdits.get();
     $pressedUndoRedo.set(true);
 
+    // reached end
     if (queryEdits.length + $undoRedoPosition.get() <= 0) {
-      console.log('reached end');
       return;
     }
 
     $undoRedoPosition.set($undoRedoPosition.get() - 1);
     const query = queryEdits.at($undoRedoPosition.get());
 
-    console.log('undoRedoPosition', $undoRedoPosition.get());
     if (!query) return;
     $inputQuery.set(query);
   };
@@ -43,15 +52,14 @@ export default function ShortcutsBar() {
     const queryEdits = $queryEdits.get();
     $pressedUndoRedo.set(true);
 
+    // reached start
     if ($undoRedoPosition.get() === -1) {
-      console.log('reached start');
       return;
     }
 
     $undoRedoPosition.set($undoRedoPosition.get() + 1);
     const query = queryEdits.at($undoRedoPosition.get());
 
-    console.log('undoRedoPosition', $undoRedoPosition.get());
     if (!query) return;
     $inputQuery.set(query);
   };
@@ -70,11 +78,26 @@ export default function ShortcutsBar() {
     // $inputQuery.set(query);
   };
 
-  const isKeyboardVisible = useStore($isKeyboardVisible);
-  if (!isKeyboardVisible) return null;
+  const kbdHeight = useSharedValue(30);
+
+  useEffect(() => {
+    const show = KeyboardEvents.addListener('keyboardWillShow', e => {
+      kbdHeight.value = withTiming(-e.height, {duration: e.duration});
+    });
+
+    const hide = KeyboardEvents.addListener('keyboardWillHide', e => {
+      kbdHeight.value = withTiming(30, {duration: e.duration});
+    });
+
+    return () => {
+      show.remove();
+      hide.remove();
+    };
+  }, []);
 
   return (
-    <View style={styles.sideButtonContainer}>
+    <Animated.View
+      style={[styles.container, {transform: [{translateY: kbdHeight}]}]}>
       <TouchableOpacity
         disabled={!hasPro}
         style={styles.downArrow}
@@ -85,7 +108,7 @@ export default function ShortcutsBar() {
             fontSize: 18,
             color: '#fff',
             fontFamily: 'monospace',
-            fontWeight: '800',
+            fontWeight: '600',
           }}>
           ()
         </Text>
@@ -95,7 +118,7 @@ export default function ShortcutsBar() {
         disabled={!hasPro}
         onPress={() => surroundWithChar('"', '"')}
         accessibilityLabel="Add quotes around the selected text">
-        <Text style={{fontSize: 18, color: '#fff', fontWeight: '800'}}>
+        <Text style={{fontSize: 18, color: '#fff', fontWeight: '600'}}>
           “ ”
         </Text>
       </TouchableOpacity>
@@ -109,13 +132,13 @@ export default function ShortcutsBar() {
         onPress={redo}
         disabled={!hasPro}
         accessibilityLabel="Redo the last operation">
-        <Icon name="arrow-redo-outline" size={20} color="#fff" />
+        <Icon name="arrow-redo" size={20} color="#fff" />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={cutAllAndPasteToClipboard}
         disabled={!hasPro}
         accessibilityLabel="Cut the entire command">
-        <Icon name="cut-outline" size={20} color="#fff" />
+        <Icon name="cut" size={20} color="#fff" />
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -150,7 +173,7 @@ export default function ShortcutsBar() {
           </Text>
         </TouchableOpacity>
       ) : null}
-    </View>
+    </Animated.View>
   );
 }
 
@@ -163,7 +186,7 @@ const styles = StyleSheet.create({
     // bottom: 12,
     // right: 3,
   },
-  sideButtonContainer: {
+  container: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 16,

@@ -24,7 +24,6 @@ const _calculateWidths = async (header: string[], rows?: string[][]) => {
     const charWidth = await measureTextSize(longestText);
     const headerCharWidth = await measureTextSize(header[i]);
     maxWidth = Math.max(charWidth, headerCharWidth);
-    console.log(longestText, header[i]);
     maxWidth = Math.min(maxWidth, 250);
     headerWidths.push(maxWidth + 50);
   }

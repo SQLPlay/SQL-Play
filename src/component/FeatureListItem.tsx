@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import MIcon from 'react-native-vector-icons/MaterialIcons';
+import MIcon from '@react-native-vector-icons/material-icons';
 import colors from 'tailwindcss/colors';
 
 interface FeatureListItemProps {

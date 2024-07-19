@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     borderColor: '#353b48',
     marginHorizontal: 10,
+    padding: 5,
     marginBottom: 10,
     borderWidth: 1,
     borderRadius: 4,
@@ -53,14 +54,11 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     paddingBottom: 3,
     fontFamily: codeFont,
-    // paddingHorizontal: 5,
+    paddingHorizontal: 5,
     // position: 'relative',
     // zIndex: 2,
     opacity: 1,
     minHeight: 80,
     maxHeight: 200,
-  },
-  autoCompleteTxtContainer: {
-    position: 'absolute',
   },
 });

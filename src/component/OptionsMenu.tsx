@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {StyleSheet, Platform, Pressable, useColorScheme} from 'react-native';
 import {MenuAction, MenuView} from '@react-native-menu/menu';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from '@react-native-vector-icons/ionicons';
 import {useNavigation} from '@react-navigation/native';
 import {createXlsx} from '~/utils/xlsx';
 import {getAllTablesName} from '~/utils/db';
@@ -50,7 +50,7 @@ const OptionsMenu = () => {
       title: 'Go Premium',
       imageColor,
       image: Platform.select({
-        ios: 'square.and.arrow.up',
+        ios: 'flame',
         android: 'baseline_auto_awesome_24',
       }),
     },
@@ -59,15 +59,14 @@ const OptionsMenu = () => {
       title: 'List all tables',
       imageColor,
       image: Platform.select({
-        ios: 'square.and.arrow.up',
+        ios: 'list.bullet',
         android: 'baseline_dataset_24',
       }),
     },
     {
       id: 'export',
       title: 'Export',
-      subtitle: 'Export table in CSV',
-      imageColor,
+            imageColor,
       image: Platform.select({
         ios: 'square.and.arrow.up',
         android: 'baseline_unarchive_24',
@@ -78,7 +77,7 @@ const OptionsMenu = () => {
       title: 'Get Help',
       imageColor,
       image: Platform.select({
-        ios: 'trash',
+        ios: 'text.bubble',
         android: 'baseline_3p_24',
       }),
     },
@@ -86,7 +85,7 @@ const OptionsMenu = () => {
 
   return (
     <MenuView
-      title="Menu Title"
+      title=""
       onPressAction={({nativeEvent}) => handlePressAction(nativeEvent.event)}
       actions={menuActions}>
       <Icon
