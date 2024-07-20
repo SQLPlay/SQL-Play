@@ -26,7 +26,6 @@ import Purchase from './screens/Purchase';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
-
 const LazyCodeRunner = lazy(() => import('./screens/CodeRunner'));
 const LazyLesson = lazy(() => import('./screens/Lesson'));
 const LazyLessonList = lazy(() => import('./screens/LessonsList'));
@@ -95,6 +94,13 @@ InteractionManager.runAfterInteractions(async () => {
       // TODO: Call backend server to validate the transaction
       await finishTransaction({purchase, isConsumable: false});
       await secureStore.setBoolAsync('hasPro', true);
+
+      secureStore.setStringAsync(
+        'transactionId',
+        purchase.transactionId ??
+          purchase.purchaseToken ??
+          purchase.transactionReceipt,
+      );
       showSuccessNotif(
         'Wow! Did you just get SQL pro?',
         'You made my day. Enjoy the pro features.',
@@ -172,7 +178,6 @@ export default function RootStackNav() {
         name="Purchase"
         component={Purchase}
       />
-
     </RootStack.Navigator>
   );
 }

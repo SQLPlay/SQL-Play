@@ -41,14 +41,11 @@ const Purchase = ({navigation}: Props) => {
   const {
     connected,
     products,
-    availablePurchases,
     getProducts,
-    getAvailablePurchases,
     requestPurchase,
     currentPurchaseError,
     purchaseHistory,
     getPurchaseHistory,
-    finishTransaction,
   } = useIAP();
 
   const [hasPro, setHasPro] = useMMKVStorage('hasPro', secureStore, false);
@@ -78,7 +75,7 @@ const Purchase = ({navigation}: Props) => {
       if (purchase.transactionId) {
         setTransactionId(purchase.transactionId);
       } else {
-        setTransactionId(purchase.purchaseToken ?? 'unkown');
+        setTransactionId(purchase.purchaseToken ?? purchase.transactionReceipt);
       }
 
       // finishTransaction({purchase, isConsumable: true});
