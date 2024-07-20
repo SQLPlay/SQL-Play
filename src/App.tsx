@@ -33,11 +33,11 @@ import {secureStore} from '~/store/mmkv';
 
 const IS_DEV = process.env.NODE_ENV === 'development';
 if (IS_DEV) {
-  secureStore.setBoolAsync('hasPro', false);
-  setTimeout(() => {
-    secureStore.setBoolAsync('hasPro', true);
-  }, 9000);
-  secureStore.setStringAsync('transactionId', 'TEST123DFSDFSDFSDFSDFDS');
+  // secureStore.setBoolAsync('hasPro', false);
+  // setTimeout(() => {
+  //   secureStore.setBoolAsync('hasPro', true);
+  // }, 9000);
+  // secureStore.setStringAsync('transactionId', 'IOS_IPHONE_SE_TXNID_001');
 }
 
 const LightTheme = {
