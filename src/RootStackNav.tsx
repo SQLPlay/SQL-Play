@@ -5,7 +5,13 @@ import {
 } from '@react-navigation/native-stack';
 import {RootStackParamList} from './types/nav';
 
-import {ActivityIndicator, InteractionManager, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Platform,
+  InteractionManager,
+  Text,
+  View,
+} from 'react-native';
 import HomePageSkeleton from './component/Skeletons/HomePageSkeleton';
 import {
   finishTransaction,
@@ -17,15 +23,9 @@ import TabBar from './component/TabBar';
 import {secureStore} from './store/mmkv';
 import {showSuccessNotif} from './utils/notif';
 import Purchase from './screens/Purchase';
-import {SafeAreaView} from 'react-native-safe-area-context';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
-const SimpleComp = () => (
-  <View>
-    <Text>Hello there, I am here</Text>
-  </View>
-);
 
 const LazyCodeRunner = lazy(() => import('./screens/CodeRunner'));
 const LazyLesson = lazy(() => import('./screens/Lesson'));
@@ -88,7 +88,9 @@ InteractionManager.runAfterInteractions(async () => {
   try {
     import('./utils/storage').then(module => module.initDb());
     await initConnection();
-    await flushFailedPurchasesCachedAsPendingAndroid();
+    if (Platform.OS === 'android') {
+      await flushFailedPurchasesCachedAsPendingAndroid();
+    }
     purchaseUpdatedListener(async purchase => {
       // TODO: Call backend server to validate the transaction
       await finishTransaction({purchase, isConsumable: false});
@@ -124,7 +126,6 @@ const MainStack = () => {
 };
 export default function RootStackNav() {
   return (
-    // <SafeAreaView style={{ flex: 1 }}>
     <RootStack.Navigator screenOptions={{}} initialRouteName="Main">
       <RootStack.Screen
         name="Main"
@@ -172,9 +173,6 @@ export default function RootStackNav() {
         component={Purchase}
       />
 
-      {/*
-       */}
     </RootStack.Navigator>
-    // </SafeAreaView>
   );
 }
