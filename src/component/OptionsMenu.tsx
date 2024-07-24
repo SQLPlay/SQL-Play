@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {StyleSheet, Platform, Pressable, useColorScheme} from 'react-native';
 import {MenuAction, MenuView} from '@react-native-menu/menu';
-import Icon from '@react-native-vector-icons/ionicons';
+import Icon from '@react-native-vector-icons/material-icons';
 import {useNavigation} from '@react-navigation/native';
 import {createXlsx} from '~/utils/xlsx';
 import {getAllTablesName} from '~/utils/db';
@@ -66,7 +66,7 @@ const OptionsMenu = () => {
     {
       id: 'export',
       title: 'Export',
-            imageColor,
+      imageColor,
       image: Platform.select({
         ios: 'square.and.arrow.up',
         android: 'baseline_unarchive_24',
@@ -93,32 +93,10 @@ const OptionsMenu = () => {
         name="menu"
         color={scheme === 'dark' ? '#fff' : '#000'}
         size={24}
+        style={{padding: 12}}
       />
     </MenuView>
   );
 };
-
-const styles = StyleSheet.create({
-  appBar: {
-    width: '100%',
-    paddingHorizontal: 20,
-    height: 45,
-    backgroundColor: '#ffea00',
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  appBarTxt: {
-    textAlign: 'center',
-    fontSize: 22,
-    color: '#2f3542',
-    marginLeft: 15,
-  },
-  optionContainer: {
-    flexDirection: 'row',
-    width: 70,
-    justifyContent: 'space-between',
-  },
-});
 
 export default OptionsMenu;
