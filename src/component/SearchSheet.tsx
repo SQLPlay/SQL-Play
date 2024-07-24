@@ -14,10 +14,12 @@ const SearchSheet = () => {
     <TrueSheet
       ref={searchSheetRef}
       style={styles.container}
-      dimmed={false}
+      contentContainerStyle={{height: '100%'}}
+      dimmed={true}
       sizes={['75%', 'large']}
-      keyboardMode="pan"
-      onDismiss={() => $isSearchOpen.set(false)}
+      // keyboardMode="pan"
+      cornerRadius={15}
+      // onDismiss={() => $isSearchOpen.set(false)}
       scrollRef={searchFlatListRef}>
       <CommandList flatListRef={searchFlatListRef} />
     </TrueSheet>
@@ -33,7 +35,7 @@ const styles = StyleSheet.create({
   container: {
     // padding: 5,
     // backgroundColor: new DynamicValue('white', darkBGColor),
-    flex: 1,
+    // flex: 1,
   },
   codeSyntaxContainer: {
     // marginTop: 10,
