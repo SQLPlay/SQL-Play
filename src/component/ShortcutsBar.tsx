@@ -1,8 +1,8 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import BaseIcon from './Icons/BaseIcon';
-import Icon from '@react-native-vector-icons/ionicons';
-import MIcon from '@react-native-vector-icons/material-icons';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {ComponentProps, useEffect, useState} from 'react';
+import IonIcon from '@react-native-vector-icons/ionicons';
+import MaterialIcon from '@react-native-vector-icons/material-icons';
+
 import {
   $cameFromUndoRedo,
   $inputQuery,
@@ -27,6 +27,20 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import {KeyboardEvents} from 'react-native-keyboard-controller';
+
+const isIos = Platform.OS === 'ios';
+type IconProps = {
+  ios: ComponentProps<typeof IonIcon>['name'];
+  android: ComponentProps<typeof MaterialIcon>['name'];
+};
+
+const Icon = ({ios, android}: IconProps) => {
+  if (isIos) {
+    return <IonIcon name={ios} size={16} color="#fff" />;
+  }
+  return <MaterialIcon name={android} size={16} color="#fff" />;
+};
+
 // import {format as formatSqlQuery} from 'sql-formatter';
 export default function ShortcutsBar() {
   const [hasPro] = useMMKVStorage('hasPro', secureStore, false);
@@ -100,7 +114,7 @@ export default function ShortcutsBar() {
       style={[styles.container, {transform: [{translateY: kbdHeight}]}]}>
       <TouchableOpacity
         disabled={!hasPro}
-        style={styles.downArrow}
+        style={styles.shortcutBtn}
         accessibilityLabel="Add braces around the selected text"
         onPress={() => surroundWithChar('(', ')')}>
         <Text
@@ -116,6 +130,7 @@ export default function ShortcutsBar() {
 
       <TouchableOpacity
         disabled={!hasPro}
+        style={styles.shortcutBtn}
         onPress={() => surroundWithChar('"', '"')}
         accessibilityLabel="Add quotes around the selected text">
         <Text style={{fontSize: 18, color: '#fff', fontWeight: '600'}}>
@@ -124,28 +139,32 @@ export default function ShortcutsBar() {
       </TouchableOpacity>
       <TouchableOpacity
         disabled={!hasPro}
+        style={styles.shortcutBtn}
         onPress={undo}
         accessibilityLabel="Undo the last edit">
-        <Icon name="arrow-undo-outline" size={20} color="#fff" />
+        <Icon ios="arrow-undo-outline" android="undo" />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={redo}
+        style={styles.shortcutBtn}
         disabled={!hasPro}
         accessibilityLabel="Redo the last operation">
-        <Icon name="arrow-redo" size={20} color="#fff" />
+        <Icon ios="arrow-redo-outline" android="redo" />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={cutAllAndPasteToClipboard}
+        style={styles.shortcutBtn}
         disabled={!hasPro}
         accessibilityLabel="Cut the entire command">
-        <Icon name="cut" size={20} color="#fff" />
+        <Icon ios="cut" android="content-cut" />
       </TouchableOpacity>
 
       <TouchableOpacity
         onPress={pasteFromClipboard}
+        style={styles.shortcutBtn}
         disabled={!hasPro}
         accessibilityLabel="Paste from clipboard">
-        <Icon name="clipboard-outline" size={18} color="#fff" />
+        <Icon ios="clipboard-outline" android="content-paste" />
       </TouchableOpacity>
 
       {!hasPro ? (
@@ -163,7 +182,7 @@ export default function ShortcutsBar() {
             gap: 4,
           }}
           accessibilityLabel="Add quotes around the selected text">
-          <MIcon name="lock" size={13} color="#fff" />
+          <MaterialIcon name="lock" size={13} color="#fff" />
           <Text
             style={{
               fontSize: 12,
@@ -178,22 +197,17 @@ export default function ShortcutsBar() {
 }
 
 const styles = StyleSheet.create({
-  downArrow: {
-    // marginTop: -5,
-  },
-  deleteBtn: {
-    // position: 'absolute',
-    // bottom: 12,
-    // right: 3,
+  shortcutBtn: {
+    height: 30,
+    width: 30,
+    justifyContent: 'center',
   },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
+    gap: 6,
     paddingVertical: 4,
     paddingLeft: 8,
     backgroundColor: '#292d32',
-    // position: 'absolute',
-    // gap: 3,
   },
 });
