@@ -28,6 +28,7 @@ import Icon from '@react-native-vector-icons/ionicons';
 import colors from 'tailwindcss/colors';
 import {useStore} from '@nanostores/react';
 import {$searchedCommandsResult} from '~/store';
+import SearchBox from '~/component/Inputs/SearchBox';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -151,7 +152,9 @@ const CommandList = ({flatListRef}: Props) => {
       accessibilityLabel="Search Result"
       testID={ids.commandListSheet}
       data={searchedCommandsResult}
+      ListHeaderComponent={<SearchBox />}
       bounces={false}
+      stickyHeaderIndices={[0]}
       // estimatedItemSize={40}
       // scrollEventThrottle={30}
       contentContainerStyle={{paddingVertical: 15}}
