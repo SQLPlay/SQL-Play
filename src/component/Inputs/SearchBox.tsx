@@ -1,18 +1,17 @@
 import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import Animated, {FadeInUp, FadeOutUp} from 'react-native-reanimated';
-import Icon from '@react-native-vector-icons/ionicons';
+import Icon from '@react-native-vector-icons/material-icons';
 import {useTheme} from '@react-navigation/native';
 import {useStore} from '@nanostores/react';
 
-import {$isSearchOpen, $searchText, $searchedCommandsResult} from '~/store';
-import {searchSheetRef} from '~/component/SearchSheet';
+import {$searchText, $searchedCommandsResult} from '~/store';
 import commandsJson from '../../data/commands.json';
 import ids from '../../../e2e/ids';
 import filter from '~/utils/fil';
+import colors from 'tailwindcss/colors';
 
-type Props = {
-  // setIsSearchOpen: (val: boolean) => void;
-};
+type Props = {};
+
 const SearchBox = ({}: Props) => {
   const {colors} = useTheme();
   const searchText = useStore($searchText);
@@ -30,53 +29,46 @@ const SearchBox = ({}: Props) => {
   };
 
   return (
-    <Animated.View
-      style={styles.inputContainer}
-      exiting={FadeOutUp}
-      entering={FadeInUp.duration(180)}>
-      <TouchableOpacity
-        onPress={() => {
-          $isSearchOpen.set(false);
-          searchSheetRef.current?.dismiss();
-        }}>
+    <View style={{backgroundColor: colors.card, flex: 1}}>
+      <View style={styles.inputContainer}>
         <Icon
-          name="arrow-back"
+          name="search"
           accessibilityLabel="clear command"
           accessibilityHint="clears searched command"
           size={24}
           color={colors.text}
           testID={ids.commandSearchClearBtn}
         />
-      </TouchableOpacity>
-      <TextInput
-        style={styles.searchInput}
-        blurOnSubmit={false}
-        testID={ids.commandSearchInput}
-        placeholderTextColor="gray"
-        accessibilityLabel="command search"
-        accessibilityHint="Search for SQL commands"
-        value={searchText}
-        onChangeText={(val: string) => {
-          $searchText.set(val);
-          filterData(val);
-        }}
-        placeholder="Search Query"
-      />
-      {searchText.length ? (
-        <Icon
-          name="close"
-          accessibilityLabel="clear command"
-          accessibilityHint="clears searched command"
-          size={24}
-          color={colors.text}
-          testID={ids.commandSearchClearBtn}
-          onPress={() => {
-            $searchText.set('');
-            $searchedCommandsResult.set(commandsJson);
+        <TextInput
+          style={styles.searchInput}
+          blurOnSubmit={false}
+          testID={ids.commandSearchInput}
+          placeholderTextColor="gray"
+          accessibilityLabel="command search"
+          accessibilityHint="Search for SQL commands"
+          value={searchText}
+          onChangeText={(val: string) => {
+            $searchText.set(val);
+            filterData(val);
           }}
+          placeholder="Search Query"
         />
-      ) : null}
-    </Animated.View>
+        {searchText.length ? (
+          <Icon
+            name="close"
+            accessibilityLabel="clear command"
+            accessibilityHint="clears searched command"
+            size={24}
+            color={colors.text}
+            testID={ids.commandSearchClearBtn}
+            onPress={() => {
+              $searchText.set('');
+              $searchedCommandsResult.set(commandsJson);
+            }}
+          />
+        ) : null}
+      </View>
+    </View>
   );
 };
 
@@ -89,11 +81,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 16,
     justifyContent: 'space-between',
-    backgroundColor: '#fff',
+    backgroundColor: colors.gray[100],
     borderRadius: 50,
     paddingHorizontal: 16,
-    paddingVertical: 8,
-    minHeight: 56,
+    marginHorizontal: 12,
+    marginVertical: 8,
   },
   searchInput: {
     // height: 42,
