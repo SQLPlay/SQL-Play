@@ -6,6 +6,8 @@ import {
   Platform,
   StyleSheet,
   useColorScheme,
+  PermissionsAndroid,
+  Permission,
 } from 'react-native';
 
 import {NotifierWrapper} from 'react-native-notifier';
@@ -54,7 +56,6 @@ const DarkTheme = {
   },
 };
 
-import {PermissionsAndroid} from 'react-native';
 import RootStackNav from './RootStackNav';
 import {showErrorNotif} from './utils/notif';
 
@@ -73,14 +74,23 @@ const navigateToSupportTicketDetails = (
 const isIos = Platform.OS === 'ios';
 
 const setupMsg = async () => {
-  // if (isIos) return;
-  const notificationPermissions = await messaging().hasPermission();
+  const NOTIF_PERMISSION = await messaging().hasPermission();
 
   const AUTHORIZED_STATUS = 1;
 
-  if (notificationPermissions !== AUTHORIZED_STATUS) {
-    const status = await messaging().requestPermission();
-    if (status !== AUTHORIZED_STATUS) {
+  if (NOTIF_PERMISSION !== AUTHORIZED_STATUS) {
+    let hasPermission = false;
+    if (isIos) {
+      hasPermission =
+        (await messaging().requestPermission()) === AUTHORIZED_STATUS;
+    } else {
+      const status = await PermissionsAndroid.request(
+        'android.permission.POST_NOTIFICATIONS',
+      );
+      hasPermission = status === 'granted';
+    }
+
+    if (!hasPermission) {
       showErrorNotif('Failed to get notification permission');
       return;
     }
