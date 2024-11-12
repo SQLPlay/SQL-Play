@@ -151,7 +151,10 @@ export const exportCSV = async (tableName: string) => {
     /** Path of saving the csv file */
     const path = `${Dirs.CacheDir}/${tableName}_${Date.now()}.csv`;
     await FileSystem.writeFile(path, csvString, 'utf8');
-    await FileSystem.cpExternal(path, `${tableName}.csv`, 'downloads');
+    // only copy in Android
+    if (!isIos) {
+      await FileSystem.cpExternal(path, `${tableName}.csv`, 'downloads');
+    }
     showAlert(tableName, 'CSV', path);
     // console.log(csvString);
   } catch (error) {
@@ -163,7 +166,11 @@ export const exportCSV = async (tableName: string) => {
 export const exportDb = async () => {
   try {
     const path = `${Dirs.DocumentDir}/default.db`;
-    await FileSystem.cpExternal(path, `sqlplay_db.sqlite`, 'downloads');
+
+    // only copy in Android
+    if (!isIos) {
+      await FileSystem.cpExternal(path, `sqlplay_db.sqlite`, 'downloads');
+    }
     showAlert(null, 'SQLITE', 'downloads/sqlplay_db.sqlite');
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
