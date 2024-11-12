@@ -37,18 +37,17 @@ const formats: Format[] = [
   {
     title: 'CSV',
     icon: 'grid-outline',
-    description:
-      'Text file with comma separated values, universally supported.',
+    description: 'Tabular data in a text file (Recommended).',
   },
   {
     title: 'XLSX',
     icon: 'duplicate-outline',
-    description: 'MS Excel file, works with Google Sheets, Calc, Numbers etc.',
+    description: 'MS Excel file, works with Sheets, Numbers etc.',
   },
   {
     icon: 'server-outline',
     title: 'SQLite File',
-    description: 'RAW database file (.sqlite) with all the tables and schema.',
+    description: 'RAW database file (.sqlite) for advance users.',
   },
 ];
 
@@ -69,7 +68,12 @@ const SelectItem = ({
   return (
     <Pressable {...props} aria-checked={isSelected}>
       <View className="flex-row items-center pt-2 pl-3">
-        <IonIcon name={format.icon} size={24} color={colors.primary} />
+        <IonIcon
+          name={format.icon}
+          style={{paddingHorizontal: 10}}
+          size={24}
+          color={colors.primary}
+        />
         <View
           style={{borderBottomWidth: isLast ? 0 : 1}}
           className="ml-3 pb-2 flex-row items-center border-gray-600/30 flex-1">
@@ -77,7 +81,7 @@ const SelectItem = ({
             <Text className="text-black dark:text-gray-100 text-[16px]">
               {format.title}
             </Text>
-            <Text>{format.description}</Text>
+            <Text className="dark:text-gray-300">{format.description}</Text>
           </View>
           <IonIcon
             style={{marginRight: 12, opacity: isSelected ? 1 : 0}}
@@ -157,7 +161,7 @@ const Export = ({navigation}: Props) => {
   const hasSelectedSqlite = selectedFormatIdx === 2;
 
   return (
-    <View className="flex-1 m-4">
+    <View className="mx-auto flex-1 w-full m-4 max-w-xl">
       <View collapsable={false}>
         <Text className="text-sm">Select format</Text>
       </View>
@@ -182,14 +186,20 @@ const Export = ({navigation}: Props) => {
       </View>
       {hasSelectedSqlite ? null : (
         <>
-          <Text className="">Select your table</Text>
+          <Text className="dark:text-gray-100">Select your table</Text>
           <Picker
             selectedValue={selectedTable}
+            itemStyle={{color: colors.text}}
             onValueChange={(itemValue, itemIndex) =>
               setSelectedTable(itemValue)
             }>
             {tableNames.map(name => (
-              <Picker.Item label={name} value={name} key={name} />
+              <Picker.Item
+                color={colors.text}
+                label={name}
+                value={name}
+                key={name}
+              />
             ))}
           </Picker>
         </>

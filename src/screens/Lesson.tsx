@@ -146,15 +146,23 @@ const Lesson = ({navigation, route}: Props) => {
 
   const {data, isLoading} = useGetLessonMd(path);
   if (isLoading || !data) {
-    return <ActivityIndicator size="large" color="#000" />;
+    return <ActivityIndicator size="large" color={colors.text} />;
   }
   return (
     <View>
       <Markdown
         flatListProps={{
-          contentContainerStyle: {marginHorizontal: 10, paddingBottom: 20},
+          contentContainerStyle: {
+            paddingBottom: 20,
+            maxWidth: 700,
+            marginHorizontal: 'auto',
+          },
         }}
-        styles={{...mdStyle, code: {backgroundColor: colors.card}}}
+        styles={{
+          ...mdStyle,
+          code: {backgroundColor: colors.card},
+          image: {maxWidth: 500},
+        }}
         //@ts-ignore
         renderer={renderer}
         value={data}

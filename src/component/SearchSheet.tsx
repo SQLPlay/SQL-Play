@@ -5,15 +5,17 @@ import {TrueSheet} from '@lodev09/react-native-true-sheet';
 
 import CommandList from './CommandList';
 import {$isSearchOpen} from '~/store';
+import {useTheme} from '@react-navigation/native';
 export const searchSheetRef = createRef<TrueSheet>();
 
 const SearchSheet = () => {
   const searchFlatListRef = useRef<FlatList>(null);
 
+  const {colors} = useTheme();
   return (
     <TrueSheet
       ref={searchSheetRef}
-      style={styles.container}
+      // style={{backgroundColor: colors.card}}
       contentContainerStyle={{height: '100%'}}
       dimmed={true}
       sizes={['75%', 'large']}

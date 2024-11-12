@@ -29,7 +29,7 @@ const SearchBox = ({}: Props) => {
   };
 
   return (
-    <View style={{backgroundColor: colors.card, flex: 1}}>
+    <View style={{backgroundColor: '#fcfcfc', flex: 1, paddingBottom: 12}}>
       <View style={styles.inputContainer}>
         <Icon
           name="search"
@@ -77,7 +77,7 @@ export default SearchBox;
 const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
-    // flex: 1,
+    height: '100%',
     alignItems: 'center',
     gap: 16,
     justifyContent: 'space-between',

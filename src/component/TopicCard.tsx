@@ -51,7 +51,7 @@ const TopicCard = ({
             opacity: pressed ? 0.7 : 1,
             backgroundColor: themeColors.card,
           }}
-          className="p-4 mb-4 rounded-xl">
+          className="p-4 mb-4 rounded-xl max-w-2xl mx-auto w-full">
           <Text
             style={{color: themeColors.text}}
             className="mb-1 text-lg font-semibold">

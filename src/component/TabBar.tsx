@@ -96,11 +96,11 @@ const TabBar = ({route, navigation, options}: NativeStackHeaderProps) => {
         accessibilityLabel="Search"
         accessibilityHint="Search for commands"
         testID={ids.searchBtn}
-        onPress={() => {
+        onPress={async () => {
           if (Platform.OS === 'ios') {
             Keyboard.dismiss();
           }
-          searchSheetRef.current?.present();
+          await searchSheetRef.current?.present();
         }}>
         <Icon
           name="search"

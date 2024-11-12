@@ -27,8 +27,12 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import {KeyboardEvents} from 'react-native-keyboard-controller';
+import DeviceInfo from 'react-native-device-info';
 
 const isIos = Platform.OS === 'ios';
+
+const isTab = DeviceInfo.isTablet();
+
 type IconProps = {
   ios: ComponentProps<typeof IonIcon>['name'];
   android: ComponentProps<typeof MaterialIcon>['name'];
@@ -36,9 +40,9 @@ type IconProps = {
 
 const Icon = ({ios, android}: IconProps) => {
   if (isIos) {
-    return <IonIcon name={ios} size={16} color="#fff" />;
+    return <IonIcon name={ios} size={isTab ? 19 : 16} color="#fff" />;
   }
-  return <MaterialIcon name={android} size={16} color="#fff" />;
+  return <MaterialIcon name={android} size={isTab ? 19 : 16} color="#fff" />;
 };
 
 // import {format as formatSqlQuery} from 'sql-formatter';
@@ -92,7 +96,7 @@ export default function ShortcutsBar() {
     // $inputQuery.set(query);
   };
 
-  const kbdHeight = useSharedValue(30);
+  const kbdHeight = useSharedValue(38);
 
   useEffect(() => {
     const show = KeyboardEvents.addListener('keyboardWillShow', e => {
@@ -100,7 +104,7 @@ export default function ShortcutsBar() {
     });
 
     const hide = KeyboardEvents.addListener('keyboardWillHide', e => {
-      kbdHeight.value = withTiming(30, {duration: e.duration});
+      kbdHeight.value = withTiming(38, {duration: e.duration});
     });
 
     return () => {
@@ -121,7 +125,7 @@ export default function ShortcutsBar() {
           style={{
             fontSize: 18,
             color: '#fff',
-            fontFamily: 'monospace',
+            fontFamily: isIos ? 'menlo' : 'monospace',
             fontWeight: '600',
           }}>
           ()
@@ -201,6 +205,7 @@ const styles = StyleSheet.create({
     height: 30,
     width: 30,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   container: {
     flexDirection: 'row',
