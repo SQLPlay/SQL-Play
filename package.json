@@ -125,5 +125,8 @@
   },
   "engines": {
     "node": ">=16"
+  },
+  "patchedDependencies": {
+    "zipcelx-on-steroids@1.0.4": "patches/zipcelx-on-steroids@1.0.4.patch"
   }
 }

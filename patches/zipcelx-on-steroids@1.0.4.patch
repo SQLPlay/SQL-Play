@@ -1,0 +1,183 @@
+diff --git a/lib/module.js b/lib/module.js
+index 7c3e95911f0cb678923a21688bfc31f2f10dce57..380a96ab9d365e51dd0ec0745d8481c21ace148e 100644
+--- a/lib/module.js
++++ b/lib/module.js
+@@ -1,19 +1,23 @@
+ import escape from 'lodash.escape';
+-import { strToU8, zip } from 'fflate';
+-import FileSaver from 'file-saver';
++import {strToU8, zipSync} from 'fflate';
++import {Buffer} from '@craftzdog/react-native-buffer';
++// import FileSaver from 'file-saver';
+ 
+ const CELL_TYPE_STRING = 'string';
+ const CELL_TYPE_NUMBER = 'number';
+ const validTypes = [CELL_TYPE_STRING, CELL_TYPE_NUMBER];
+ const INVALID_TYPE_FILENAME = 'Zipclex filename can only be of type string';
+ const INVALID_TYPE_SHEET = 'Zipcelx sheet data is not of type array';
+-const INVALID_TYPE_SHEET_DATA = 'Zipclex sheet data childs is not of type array';
++const INVALID_TYPE_SHEET_DATA =
++  'Zipclex sheet data childs is not of type array';
+ 
+-const WARNING_INVALID_TYPE = 'Invalid type supplied in cell config, falling back to "string"';
++const WARNING_INVALID_TYPE =
++  'Invalid type supplied in cell config, falling back to "string"';
+ 
+-const INVALID_ACTION = 'Zipclex unrecognized action (should be export" or "blob")';
++const INVALID_ACTION =
++  'Zipclex unrecognized action (should be export" or "blob")';
+ 
+-const childValidator = (array) => {
++const childValidator = array => {
+   return array.every(item => Array.isArray(item));
+ };
+ 
+@@ -43,7 +47,7 @@ var validator = (config, action) => {
+   return '';
+ };
+ 
+-const generateColumnLetter = (colIndex) => {
++const generateColumnLetter = colIndex => {
+   if (typeof colIndex !== 'number') {
+     return '';
+   }
+@@ -56,13 +60,14 @@ const generateColumnLetter = (colIndex) => {
+   return generateColumnLetter(prefix - 1) + letter;
+ };
+ 
+-var generatorCellNumber = (index, rowNumber) => (
+-  `${generateColumnLetter(index)}${rowNumber}`
+-);
++var generatorCellNumber = (index, rowNumber) =>
++  `${generateColumnLetter(index)}${rowNumber}`;
+ 
+-var generatorStringCell = (index, value, rowIndex) => (`<c r="${generatorCellNumber(index, rowIndex)}" t="inlineStr"><is><t>${escape(value)}</t></is></c>`);
++var generatorStringCell = (index, value, rowIndex) =>
++  `<c r="${generatorCellNumber(index, rowIndex)}" t="inlineStr"><is><t>${escape(value)}</t></is></c>`;
+ 
+-var generatorNumberCell = (index, value, rowIndex) => (`<c r="${generatorCellNumber(index, rowIndex)}"><v>${value}</v></c>`);
++var generatorNumberCell = (index, value, rowIndex) =>
++  `<c r="${generatorCellNumber(index, rowIndex)}"><v>${value}</v></c>`;
+ 
+ var formatCell = (cell, index, rowIndex) => {
+   if (validTypes.indexOf(cell.type) === -1) {
+@@ -70,32 +75,27 @@ var formatCell = (cell, index, rowIndex) => {
+     cell.type = CELL_TYPE_STRING;
+   }
+ 
+-  return (
+-    cell.type === CELL_TYPE_STRING
++  return cell.type === CELL_TYPE_STRING
+     ? generatorStringCell(index, cell.value, rowIndex)
+-    : generatorNumberCell(index, cell.value, rowIndex)
+-  );
++    : generatorNumberCell(index, cell.value, rowIndex);
+ };
+ 
+ var formatRow = (row, index) => {
+   // To ensure the row number starts as in excel.
+   const rowIndex = index + 1;
+   const rowCells = row
+-  .map((cell, cellIndex) => formatCell(cell, cellIndex, rowIndex))
+-  .join('');
++    .map((cell, cellIndex) => formatCell(cell, cellIndex, rowIndex))
++    .join('');
+ 
+   return `<row r="${rowIndex}">${rowCells}</row>`;
+ };
+ 
+-var generatorRows = rows => (
+-  rows
+-  .map((row, index) => formatRow(row, index))
+-  .join('')
+-);
++var generatorRows = rows =>
++  rows.map((row, index) => formatRow(row, index)).join('');
+ 
+ // Math.trunc is not supported by IE11
+ // https://stackoverflow.com/questions/44576098
+-var Truncate = (x) => {
++var Truncate = x => {
+   if (Math.trunc) {
+     return Math.trunc(x);
+   }
+@@ -123,11 +123,15 @@ var formatCol = (col, index) => {
+ 
+   // To translate from pixels to character width, use this calculation:
+   // =Truncate(({pixels}-5)/{Maximum Digit Width} * 100+0.5)/100
+-  const characterWidth = Truncate((((col.width - 5) / maximumDigitWidth) * 100) + 0.5) / 100;
++  const characterWidth =
++    Truncate(((col.width - 5) / maximumDigitWidth) * 100 + 0.5) / 100;
+ 
+   // To translate from character width to real width, use this calculation:
+   // =Truncate([{Number of Characters} * {Maximum Digit Width} + {5 pixel padding}]/{Maximum Digit Width}*256)/256
+-  const colWidth = Truncate((((characterWidth * maximumDigitWidth) + 5) / maximumDigitWidth) * 256) / 256;
++  const colWidth =
++    Truncate(
++      ((characterWidth * maximumDigitWidth + 5) / maximumDigitWidth) * 256,
++    ) / 256;
+ 
+   const style = col.style ? col.style : 1;
+ 
+@@ -135,8 +139,9 @@ var formatCol = (col, index) => {
+   return `<col min="${colIndex}" max="${colIndex}" width="${colWidth}" style="${style}" />`;
+ };
+ 
+-var generatorCols = (cols) => {
+-  const result = cols && cols.map((col, index) => formatCol(col, index)).join('');
++var generatorCols = cols => {
++  const result =
++    cols && cols.map((col, index) => formatCol(col, index)).join('');
+   // `cols` format is described here: https://msdn.microsoft.com/en-us/library/office/documentformat.openxml.spreadsheet.columns.aspx
+   return result ? `<cols>${result}</cols>` : '';
+ };
+@@ -174,7 +179,9 @@ var templateSheet = `<?xml version="1.0" ?>
+ const generateXMLWorksheet = (rows, cols) => {
+   const XMLRows = generatorRows(rows);
+   const XMLCols = generatorCols(cols);
+-  return templateSheet.replace('{placeholder}', XMLRows).replace('{colsPlaceholder}', XMLCols);
++  return templateSheet
++    .replace('{placeholder}', XMLRows)
++    .replace('{colsPlaceholder}', XMLCols);
+ };
+ 
+ var zipcelx = (config, action) => {
+@@ -196,33 +203,12 @@ var zipcelx = (config, action) => {
+     '[Content_Types].xml': strToU8(contentTypes),
+   };
+   return new Promise((resolve, reject) => {
+-    zip(
+-      zipContent,
+-      (err, data) => {
+-        if (err) {
+-          return reject(err);
+-        }
+-
+-        return resolve(
+-          new Blob([ data.buffer ], {
+-            type:
+-              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+-          })
+-        );
+-      }
+-    );
+-  }).then((blob) => {
+-    if (action === 'export' && config.filename) {
+-      return FileSaver.saveAs(blob, `${config.filename}.xlsx`);
+-    }
+-
+-    if (action === 'blob') {
+-      return blob;
+-    }
+-
+-    return null;
++    const data = zipSync(zipContent);
++    return resolve(Buffer.from(data.buffer));
++  }).then(blob => {
++    return blob;
+   });
+ };
+ 
+ export default zipcelx;
+-export { generateXMLWorksheet };
++export {generateXMLWorksheet};
