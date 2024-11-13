@@ -154,6 +154,7 @@ const Lesson = ({navigation, route}: Props) => {
         flatListProps={{
           contentContainerStyle: {
             paddingBottom: 20,
+            paddingHorizontal: 12,
             maxWidth: 700,
             marginHorizontal: 'auto',
           },
