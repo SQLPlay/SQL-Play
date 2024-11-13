@@ -9,6 +9,7 @@ import {
   LayoutAnimation,
 } from 'react-native';
 import React, {
+  ComponentProps,
   ElementType,
   useEffect,
   useLayoutEffect,
@@ -19,6 +20,7 @@ import {exportCSV, exportDb, exportXlsx, getAllTablesName} from '~/utils/db';
 import PrimaryButton from '~/component/Button/PrimaryButton';
 
 import IonIcon from '@react-native-vector-icons/ionicons';
+import MIcon from '@react-native-vector-icons/material-icons';
 
 import {Theme, useTheme} from '@react-navigation/native';
 
@@ -31,23 +33,32 @@ import {useMMKVStorage} from 'react-native-mmkv-storage';
 import {secureStore} from '~/store/mmkv';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '~/types/nav';
+import {isIos} from '~/utils/platform';
 
-type Format = {title: string; description: string; icon: string};
+type Format = {
+  title: string;
+  description: string;
+  iosIcon: ComponentProps<typeof IonIcon>['name'];
+  androidIcon: ComponentProps<typeof MIcon>['name'];
+};
 const formats: Format[] = [
   {
     title: 'CSV',
-    icon: 'grid-outline',
-    description: 'Tabular data in a text file (Recommended).',
+    description: 'Tabular data in a text file, most compatible.',
+    iosIcon: 'grid-outline',
+    androidIcon: 'table-view',
   },
   {
     title: 'XLSX',
-    icon: 'duplicate-outline',
-    description: 'MS Excel file, works with Sheets, Numbers etc.',
+    description: 'Excel file, works with Sheets, Numbers etc.',
+    iosIcon: 'duplicate-outline',
+    androidIcon: 'description',
   },
   {
-    icon: 'server-outline',
     title: 'SQLite File',
     description: 'RAW database file (.sqlite) for advance users.',
+    iosIcon: 'server-outline',
+    androidIcon: 'storage',
   },
 ];
 
@@ -68,12 +79,21 @@ const SelectItem = ({
   return (
     <Pressable {...props} aria-checked={isSelected}>
       <View className="flex-row items-center pt-2 pl-3">
-        <IonIcon
-          name={format.icon}
-          style={{paddingHorizontal: 10}}
-          size={24}
-          color={colors.primary}
-        />
+        {isIos ? (
+          <IonIcon
+            name={format.iosIcon}
+            style={{paddingHorizontal: 10}}
+            size={24}
+            color={colors.primary}
+          />
+        ) : (
+          <MIcon
+            name={format.androidIcon}
+            style={{paddingHorizontal: 10}}
+            size={24}
+            color={colors.primary}
+          />
+        )}
         <View
           style={{borderBottomWidth: isLast ? 0 : 1}}
           className="ml-3 pb-2 flex-row items-center border-gray-600/30 flex-1">
@@ -81,14 +101,25 @@ const SelectItem = ({
             <Text className="text-black dark:text-gray-100 text-[16px]">
               {format.title}
             </Text>
-            <Text className="dark:text-gray-300">{format.description}</Text>
+            <Text className="text-gray-700 text-sm dark:text-gray-300">
+              {format.description}
+            </Text>
           </View>
-          <IonIcon
-            style={{marginRight: 12, opacity: isSelected ? 1 : 0}}
-            name="checkmark-sharp"
-            size={24}
-            color={colors.primary}
-          />
+          {isIos ? (
+            <IonIcon
+              style={{marginRight: 12, opacity: isSelected ? 1 : 0}}
+              name="checkmark-sharp"
+              size={24}
+              color={colors.primary}
+            />
+          ) : (
+            <MIcon
+              style={{marginRight: 12, opacity: isSelected ? 1 : 0}}
+              name="check"
+              size={24}
+              color={colors.primary}
+            />
+          )}
         </View>
       </View>
     </Pressable>
@@ -161,7 +192,7 @@ const Export = ({navigation}: Props) => {
   const hasSelectedSqlite = selectedFormatIdx === 2;
 
   return (
-    <View className="mx-auto flex-1 w-full m-4 max-w-xl">
+    <View className="mx-auto flex-1 w-full p-4 max-w-xl">
       <View collapsable={false}>
         <Text className="text-sm">Select format</Text>
       </View>
