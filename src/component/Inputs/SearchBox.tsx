@@ -85,10 +85,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingHorizontal: 16,
     marginHorizontal: 12,
-    marginVertical: 8,
+    marginTop: 6,
   },
   searchInput: {
-    // height: 42,
+    height: 42,
     paddingLeft: 5,
     paddingRight: 5,
     fontSize: 16,
