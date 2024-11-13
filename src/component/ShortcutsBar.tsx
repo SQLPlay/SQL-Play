@@ -28,8 +28,7 @@ import Animated, {
 
 import {KeyboardEvents} from 'react-native-keyboard-controller';
 import DeviceInfo from 'react-native-device-info';
-
-const isIos = Platform.OS === 'ios';
+import {isIos} from '~/utils/platform';
 
 const isTab = DeviceInfo.isTablet();
 
