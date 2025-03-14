@@ -1,0 +1,75 @@
+diff --git a/node_modules/zipcelx-on-steroids/lib/module.js b/node_modules/zipcelx-on-steroids/lib/module.js
+index 7c3e959..8eae84f 100644
+--- a/node_modules/zipcelx-on-steroids/lib/module.js
++++ b/node_modules/zipcelx-on-steroids/lib/module.js
+@@ -1,6 +1,7 @@
+ import escape from 'lodash.escape';
+ import { strToU8, zip } from 'fflate';
+-import FileSaver from 'file-saver';
++import { Buffer } from "@craftzdog/react-native-buffer";
++// import FileSaver from 'file-saver';
+ 
+ const CELL_TYPE_STRING = 'string';
+ const CELL_TYPE_NUMBER = 'number';
+@@ -72,8 +73,8 @@ var formatCell = (cell, index, rowIndex) => {
+ 
+   return (
+     cell.type === CELL_TYPE_STRING
+-    ? generatorStringCell(index, cell.value, rowIndex)
+-    : generatorNumberCell(index, cell.value, rowIndex)
++      ? generatorStringCell(index, cell.value, rowIndex)
++      : generatorNumberCell(index, cell.value, rowIndex)
+   );
+ };
+ 
+@@ -81,16 +82,16 @@ var formatRow = (row, index) => {
+   // To ensure the row number starts as in excel.
+   const rowIndex = index + 1;
+   const rowCells = row
+-  .map((cell, cellIndex) => formatCell(cell, cellIndex, rowIndex))
+-  .join('');
++    .map((cell, cellIndex) => formatCell(cell, cellIndex, rowIndex))
++    .join('');
+ 
+   return `<row r="${rowIndex}">${rowCells}</row>`;
+ };
+ 
+ var generatorRows = rows => (
+   rows
+-  .map((row, index) => formatRow(row, index))
+-  .join('')
++    .map((row, index) => formatRow(row, index))
++    .join('')
+ );
+ 
+ // Math.trunc is not supported by IE11
+@@ -202,25 +203,17 @@ var zipcelx = (config, action) => {
+         if (err) {
+           return reject(err);
+         }
+-
++        return resolve(Buffer.from(data.buffer))
+         return resolve(
+-          new Blob([ data.buffer ], {
++          new Blob([Buffer.from(data.buffer)], {
+             type:
+               'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+           })
+         );
+-      }
++      },
+     );
+   }).then((blob) => {
+-    if (action === 'export' && config.filename) {
+-      return FileSaver.saveAs(blob, `${config.filename}.xlsx`);
+-    }
+-
+-    if (action === 'blob') {
+-      return blob;
+-    }
+-
+-    return null;
++    return blob;
+   });
+ };
+ 

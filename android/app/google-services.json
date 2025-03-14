@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1015141812657",
+    "project_id": "sql-play-app",
+    "storage_bucket": "sql-play-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1015141812657:android:57003d931dfdbbf0551590",
+        "android_client_info": {
+          "package_name": "com.sql_playground"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDosxt9soE9qs91pf9A-6iAIMVsPLU4_uY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

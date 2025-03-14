@@ -15,7 +15,6 @@ import {
   ScrollView,
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {darkYellow} from '../data/colors.json';
 
 import RNIap, {
@@ -146,8 +145,7 @@ const GoPremium: FC<Props> = ({
       visible={modalState}
       animationType="slide"
       presentationStyle="fullScreen"
-      onRequestClose={() => setModalState(false)}
-    >
+      onRequestClose={() => setModalState(false)}>
       <ScrollView contentContainerStyle={{height: height}}>
         <SafeAreaView style={styles.container}>
           <View>
@@ -199,8 +197,7 @@ const GoPremium: FC<Props> = ({
             <TouchableOpacity
               style={styles.buyBtn}
               onPress={buyPremium}
-              disabled={isPremium}
-            >
+              disabled={isPremium}>
               {!purchaseProcessing ? (
                 <Text style={styles.buyBtnTxt}>
                   {isPremium

@@ -1,80 +1,134 @@
-import React, {FC, RefObject, memo} from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
-//@ts-ignore
-import {Table, Row, Rows} from 'react-native-table-component';
-
-import {
-  DynamicStyleSheet,
-  DynamicValue,
-  useDynamicValue,
-  ColorSchemeProvider,
-} from 'react-native-dynamic';
+import React, {
+  FC,
+  RefObject,
+  memo,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import {View, Text, ScrollView, StyleSheet, Dimensions} from 'react-native';
+import {FlashList} from '@shopify/flash-list';
+import {useTheme} from '@react-navigation/native';
+import colors from 'tailwindcss/colors';
 
 interface Props {
-  header: any[];
-  rows: any[];
-  tableWidths: RefObject<number[]>;
+  header: string[];
+  rows: string[][];
+  columnWidths: number[];
 }
 
-const DataTable: FC<Props> = ({header, rows, tableWidths}) => {
-  const styles = useDynamicValue(dynamicStyles);
-  return (
-    <>
-      <Text style={styles.outputText}>Output</Text>
+const DataTable: FC<Props> = ({header, rows, columnWidths}) => {
+  // const styles = useDynamicValue(dynamicStyles);
 
-      <ScrollView
-        testID="table"
-        accessibilityLabel="output table"
-        horizontal={true}
-        bounces={false}
-      >
-        <View style={styles.outPutContainer}>
-          <ScrollView bounces={false}>
-            <Table borderStyle={styles.tableBorder}>
-              <Row
-                data={header}
-                style={styles.head}
-                textStyle={styles.headerText}
-                widthArr={tableWidths.current}
-              />
-              <Rows
-                data={rows}
-                widthArr={tableWidths.current}
-                textStyle={styles.rowTxt}
-              />
-            </Table>
-          </ScrollView>
-        </View>
-      </ScrollView>
-    </>
+  const {colors} = useTheme();
+  const ref = useRef<FlashList<any>>(null);
+  const renderItem = ({item, index}: {item: string[]; index: number}) => {
+    return (
+      <View key={index} style={styles.row}>
+        {item.map((cell, cellIndex) => (
+          <View
+            key={cellIndex}
+            style={[styles.cell, {width: columnWidths[cellIndex]}]}>
+            <Text selectable={true} style={{color: colors.text}}>
+              {cell}
+            </Text>
+          </View>
+        ))}
+      </View>
+    );
+  };
+
+  const renderHeader = () => {
+    return (
+      <View style={styles.headerRow}>
+        {header.map((cell, index) => (
+          <View
+            key={index}
+            style={[styles.headerCell, {width: columnWidths[index]}]}>
+            <Text
+              selectable={true}
+              style={[styles.headerText, {color: colors.text}]}>
+              {cell}
+            </Text>
+          </View>
+        ))}
+      </View>
+    );
+  };
+
+  const totalColumnWidth = columnWidths.reduce((prv, cur) => prv + cur, 0);
+  return (
+    <ScrollView horizontal={true}>
+      <View
+        style={{
+          ...styles.container,
+          maxWidth: totalColumnWidth,
+        }}>
+        {renderHeader()}
+        <FlashList
+          ref={ref}
+          estimatedItemSize={35}
+          estimatedListSize={{
+            height: 35,
+            width: totalColumnWidth,
+          }}
+          showsVerticalScrollIndicator={true}
+          nestedScrollEnabled={true}
+          data={rows}
+          scrollEnabled={true}
+          renderItem={renderItem}
+          stickyHeaderHiddenOnScroll={false}
+        />
+      </View>
+    </ScrollView>
   );
 };
-export default memo(DataTable);
 
-const dynamicStyles = new DynamicStyleSheet({
-  outputText: {
-    color: new DynamicValue('black', 'white'),
+export default DataTable;
+
+const borderColor = colors.gray['300'];
+
+const styles = StyleSheet.create({
+  table: {
+    flexDirection: 'column',
+    flex: 1,
+    paddingHorizontal: 4,
   },
-  tableBorder: {
-    borderWidth: 2,
-    borderColor: '#fdd835',
+  headerRow: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderColor,
   },
-  head: {
-    height: 40,
-    backgroundColor: '#ffea00',
+  row: {
+    flexDirection: 'row',
+    borderTopWidth: 1,
+    borderColor: borderColor,
   },
+  headerCell: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  cell: {
+    fontSize: 16,
+    borderRightWidth: 0,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+
   headerText: {
-    margin: 6,
     textTransform: 'capitalize',
+    fontWeight: '500',
+    fontSize: 16,
   },
   rowTxt: {
     margin: 6,
-    color: new DynamicValue('black', 'white'),
   },
-  outPutContainer: {
-    // flex: 1,
-    // marginBottom: 235,
-    marginTop: 10,
-    width: '100%',
+  container: {
+    flex: 1,
+    flexGrow: 1,
+    marginHorizontal: 8,
+    minWidth: Dimensions.get('window').width,
+    minHeight: 200,
   },
 });

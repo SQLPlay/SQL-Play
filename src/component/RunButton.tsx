@@ -1,33 +1,31 @@
-import React, {FC} from 'react';
+import React, {useEffect} from 'react';
 import {
-  View,
   TouchableOpacity,
-  Text,
   StyleSheet,
-  GestureResponderEvent,
+  Keyboard,
+  KeyboardAvoidingView,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useReanimatedKeyboardAnimation} from 'react-native-keyboard-controller';
 import {ids} from '../../e2e/ids';
+import BaseIcon from './Icons/BaseIcon';
+import {runQuery} from '~/utils/run-query';
+import Animated from 'react-native-reanimated';
 
-interface Props {
-  runQuery: (event: GestureResponderEvent) => void;
-}
-const RunButton: FC<Props> = ({runQuery}) => {
+const RunButton = () => {
+  const {height, progress} = useReanimatedKeyboardAnimation();
+
   return (
-    <TouchableOpacity
-      testID={ids.runBtn}
-      accessibilityLabel="run button"
-      accessibilityHint="runs the command which is typed in input box"
-      onPress={runQuery}
-      style={styles.runBtn}
-    >
-      <Icon
-        name="send"
-        size={25}
-        style={{transform: [{translateX: 2}]}}
-        color="#Fff"
-      />
-    </TouchableOpacity>
+    <Animated.View
+      style={{transform: [{translateY: height}], position: 'relative'}}>
+      <TouchableOpacity
+        testID={ids.runBtn}
+        accessibilityLabel="run button"
+        accessibilityHint="runs the command which is typed in input box"
+        onPress={runQuery}
+        style={[styles.runBtn]}>
+        <BaseIcon name="PaperPlaneRight" fill="#ffffff" />
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 

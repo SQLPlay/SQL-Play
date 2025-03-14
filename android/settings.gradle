@@ -1,14 +1,4 @@
-rootProject.name = 'SQL_PlayGround'
-include ':detox'
-project(':detox').projectDir = new File(rootProject.projectDir, '../node_modules/detox/android/detox')
+rootProject.name = 'SqlPlay'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
-include ':react-native-sentry'
-project(':react-native-sentry').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sentry/android')
 include ':app'
-
-includeBuild('../node_modules/react-native-gradle-plugin')
-
-if (settings.hasProperty("newArchEnabled") && settings.newArchEnabled == "true") {
-    include(":ReactAndroid")
-    project(":ReactAndroid").projectDir = file('../node_modules/react-native/ReactAndroid')
-}
+includeBuild('../node_modules/@react-native/gradle-plugin')

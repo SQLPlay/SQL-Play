@@ -1,0 +1,22 @@
+context,question,answer,answer_start_index
+CREATE TABLE,What is the use of CREATE TABLE command in SQL?,The CREATE TABLE command is used to create a new table in a database.,4
+CREATE TABLE,What are the parameters used in CREATE TABLE command?,The parameters used in CREATE TABLE command are: Column name, Data type, and Size.,4
+INSERT INTO,What is the use of INSERT INTO command?,The INSERT INTO command is used to insert new rows into a table.,4
+INSERT INTO,What are the parameters used in INSERT INTO command?,The parameters used in INSERT INTO command are: Table name, Column names, and Values.,4
+ALTER TABLE,What is the use of ALTER TABLE command?,The ALTER TABLE command is used to modify the structure of an existing table in a database.,4
+ALTER TABLE,What are the parameters used in ALTER TABLE command?,The parameters used in ALTER TABLE command are: Table name, Action, and Column name.,4
+SELECT,What is the use of SELECT command in SQL?,The SELECT command is used to retrieve data from one or more tables in a database.,4
+SELECT,What are the parameters used in SELECT command?,The parameters used in SELECT command are: Column names and Table names.,4
+WHERE,What is the use of WHERE clause in SQL?,The WHERE clause is used to filter data based on a specified condition.,4
+AND,What is the use of AND operator in SQL?,The AND operator is used to combine two or more conditions in a WHERE clause. The resulting condition will only be true if all of the combined conditions are true.,4
+OR,What is the use of OR operator in SQL?,The OR operator is used to combine two or more conditions in a WHERE clause. The resulting condition will be true if any of the combined conditions are true.,4
+NOT,What is the use of NOT operator in SQL?,The NOT operator is used to negate a condition in a WHERE clause. The resulting condition will be true if the negated condition is false.,4
+AS (alias),What is the use of AS (alias) in SQL?,The AS keyword is used to assign a temporary name to a table or a column heading.,4
+BETWEEN..AND..,What is the use of BETWEEN..AND.. operator in SQL?,The BETWEEN..AND.. operator is used to select values within a range.,4
+GROUP BY,What is the use of GROUP BY clause in SQL?,The GROUP BY clause is used to group the results of a SELECT statement based on one or more columns.,4
+GROUP BY,What are the parameters used in GROUP BY clause?,The parameters used in GROUP BY clause are: Column names.,4
+HAVING,What is the use of HAVING clause in SQL?,The HAVING clause is used to filter data based on a specified condition after the GROUP BY clause has been applied.,4
+IN,What is the use of IN operator in SQL?,The IN operator is used to test whether a value is in a list of values provided in a WHERE clause.,4
+LIKE,What is the use of LIKE operator in SQL?,The LIKE operator is used to search for a specified pattern in a column in a WHERE clause.,4
+DISTINCT,What is the use of DISTINCT keyword in SQL?,The DISTINCT keyword is used to return only distinct (different) values in a column in a SELECT statement.,4
+ORDER BY,What is the use of ORDER BY clause in SQL?,The ORDER BY clause is used to sort the result set of a SELECT statement based on one or more columns.,

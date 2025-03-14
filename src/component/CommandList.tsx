@@ -1,4 +1,4 @@
-import React, {useState, FC, RefObject, memo} from 'react';
+import React, {useState, FC, RefObject, memo, Ref, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,26 +7,28 @@ import {
   LayoutAnimation,
   Pressable,
   Keyboard,
+  StyleSheet,
+  FlatList,
+  TextInput,
 } from 'react-native';
 
-import {
-  DynamicStyleSheet,
-  DynamicValue,
-  useDynamicValue,
-  useDarkMode,
-} from 'react-native-dynamic';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
 //@ts-ignore
 import SyntaxHighlighter from 'react-native-syntax-highlighter';
 import {
   vs2015,
   defaultStyle,
   //@ts-ignore
-} from 'react-syntax-highlighter/dist/styles/hljs';
+} from 'react-syntax-highlighter/dist/esm/highlight';
 
-import {BottomSheetFlatList, BottomSheetModal} from '@gorhom/bottom-sheet';
 import {ids} from '../../e2e/ids';
+import {$inputQuery} from '~/store/input';
+import {searchSheetRef} from './SearchSheet';
+
+import Icon from '@react-native-vector-icons/ionicons';
+import colors from 'tailwindcss/colors';
+import {useStore} from '@nanostores/react';
+import {$searchedCommandsResult} from '~/store';
+import SearchBox from '~/component/Inputs/SearchBox';
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -35,19 +37,13 @@ if (Platform.OS === 'android') {
 }
 interface LIProps extends CommandItem {
   index: number;
-  setInputValue: (val: string) => void;
-  bottomSheetRef: RefObject<BottomSheetModal>;
 }
 const ListItem: FC<LIProps> = props => {
-  // console.log('props', props);
-
-  const {title, description, syntax, index, setInputValue, bottomSheetRef} =
-    props;
+  const {title, description, syntax, index} = props;
 
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
-  const styles = useDynamicValue(dynamicStyles);
 
-  const isDark = useDarkMode();
+  const isDark = false;
 
   const onItemPress = (index: number | null) => {
     setCurrentIndex(index === currentIndex ? null : index);
@@ -62,26 +58,25 @@ const ListItem: FC<LIProps> = props => {
   };
 
   const onSyntaxPress = (syntax: string) => {
-    setInputValue(syntax);
-    bottomSheetRef.current?.close();
+    $inputQuery.set(syntax);
+    searchSheetRef.current?.dismiss();
   };
+
+  const isExpanded = index === currentIndex;
+
   return (
     <Pressable testID={ids.commandListItem} onPress={() => onItemPress(index)}>
       <View style={styles.item}>
-        <View style={styles.header}>
-          <Text style={styles.title}>{title}</Text>
-          <Icon
-            name="arrow-drop-down"
-            color={'gray'}
-            size={36}
-            style={styles.dropDownIcon}
-          />
-        </View>
+        <View style={styles.headerContainer}>
+          <View style={styles.header}>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.description}>{description}</Text>
+          </View>
 
-        <Text style={styles.description}>{description}</Text>
-        {index === currentIndex && (
-          <>
-            {/* <Text style={styles.syntaxHeader}>Syntax</Text> */}
+          <Icon name={isExpanded ? 'chevron-up' : 'chevron-down'} size={24} />
+        </View>
+        {isExpanded ? (
+          <View style={{marginTop: 8}}>
             {syntax.map((item, idx) => {
               return (
                 <Pressable
@@ -89,23 +84,21 @@ const ListItem: FC<LIProps> = props => {
                   style={styles.codeSyntaxContainer}
                   accessibilityLabel={item}
                   accessibilityHint="copy syntax to command input"
-                  onPress={() => onSyntaxPress(item)}
-                >
+                  onPress={() => onSyntaxPress(item)}>
                   <SyntaxHighlighter
                     PreTag={View}
                     fontSize={14}
                     language="sql"
                     wrapLines={true}
                     style={isDark ? vs2015 : defaultStyle}
-                    highlighter="hljs"
-                  >
+                    highlighter="hljs">
                     {syntax}
                   </SyntaxHighlighter>
                 </Pressable>
               );
             })}
             {props?.example && (
-              <Text style={styles.syntaxHeader}>Examples</Text>
+              <Text style={styles.syntaxHeader}>Examples:</Text>
             )}
             {props?.example &&
               props.example.map((eg, i) => (
@@ -115,29 +108,20 @@ const ListItem: FC<LIProps> = props => {
                   accessibilityLabel={eg}
                   style={styles.codeSyntaxContainer}
                   testID={ids.commandListExample}
-                  onPress={() => onSyntaxPress(eg)}
-                >
-                  {/* <ScrollView */}
-                  {/*   horizontal */}
-                  {/*   directionalLockEnabled */}
-                  {/*   automaticallyAdjustContentInsets={false} */}
-                  {/*   disableScrollViewPanResponder */}
-                  {/* > */}
+                  onPress={() => onSyntaxPress(eg)}>
                   <SyntaxHighlighter
                     fontSize={14}
                     language="sql"
                     wrapLines={true}
                     PreTag={View}
                     style={isDark ? vs2015 : defaultStyle}
-                    highlighter="hljs"
-                  >
+                    highlighter="hljs">
                     {eg}
                   </SyntaxHighlighter>
-                  {/* </ScrollView> */}
                 </Pressable>
               ))}
-          </>
-        )}
+          </View>
+        ) : null}
       </View>
     </Pressable>
   );
@@ -154,58 +138,63 @@ interface CommandItem {
 }
 
 interface Props {
-  listData: CommandItem[];
-  setInputValue: (val: string) => void;
-  bottomSheetRef: RefObject<BottomSheetModal>;
+  flatListRef: Ref<any>;
 }
-const CommandList: FC<Props> = ({listData, setInputValue, bottomSheetRef}) => {
+
+const CommandList = ({flatListRef}: Props) => {
+  const searchedCommandsResult = useStore($searchedCommandsResult);
+
   return (
-    <BottomSheetFlatList
+    <FlatList
+      ref={flatListRef}
+      nestedScrollEnabled={true}
       accessibilityHint="search examples and syntaxes"
       accessibilityLabel="Search Result"
       testID={ids.commandListSheet}
-      data={listData}
+      data={searchedCommandsResult}
+      ListHeaderComponent={<SearchBox />}
       bounces={false}
-      maxToRenderPerBatch={5}
+      stickyHeaderIndices={[0]}
+      // estimatedItemSize={40}
       // scrollEventThrottle={30}
-      contentContainerStyle={{paddingVertical: 5}}
+      contentContainerStyle={{paddingVertical: 15}}
+      style={{flex: 1}}
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
-      renderItem={({item, index}) => (
-        <MemoizedLI
-          {...item}
-          index={index}
-          setInputValue={setInputValue}
-          bottomSheetRef={bottomSheetRef}
-        />
-      )}
-      initialNumToRender={5}
-      windowSize={30}
+      renderItem={({item, index}) => <MemoizedLI {...item} index={index} />}
       keyExtractor={item => item.id}
     />
   );
 };
 export default CommandList;
 
-const dynamicStyles = new DynamicStyleSheet({
+const styles = StyleSheet.create({
   container: {
-    padding: 5,
-    height: '100%',
+    // padding: 5,
+    flex: 1,
+    // height: '100%',
   },
   item: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 5,
-    padding: 10,
-    marginVertical: 2,
+    // flex: 1,
+    borderBottomWidth: 1,
+    borderColor: colors.gray['200'],
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 8,
+    // marginBottom: 8,
   },
   syntaxHeader: {
-    marginTop: 5,
-    color: new DynamicValue('black', '#ffffffe7'),
+    marginTop: 8,
+    color: 'black',
   },
   header: {
-    position: 'relative',
+    flex: 1,
+    gap: 4,
   },
   dropDownIcon: {
     position: 'absolute',
@@ -214,11 +203,11 @@ const dynamicStyles = new DynamicStyleSheet({
   },
   title: {
     fontSize: 18,
-    color: new DynamicValue('black', '#ffffffe7'),
+    color: 'black',
   },
   description: {
     fontSize: 16,
-    color: new DynamicValue('black', '#ffffffe7'),
+    color: 'black',
   },
 
   codeSyntaxContainer: {
