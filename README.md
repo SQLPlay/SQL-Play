@@ -1,79 +1,30 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# SQL Play - Learn SQL hassle-free
 
-# Getting Started
+Go beyond `SELECT * from Employees`.\
+The pain of installing SQL on your PC is real. It needs to go.\
+Master writing SQL queries with 40+ SQL commands including SELECT, INSERT, DELETE, CREATE with click to paste examples and readymade tables! 
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+<img alt="SQLPlay Github banner" src="https://github.com/user-attachments/assets/ce53fe6c-44a4-4ed8-84d7-9749ca449883" height="400px" width="auto"/>
 
-## Step 1: Start the Metro Server
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Download SQL Play
 
-To start Metro, run the following command from the _root_ of your React Native project:
+<a href="https://apps.apple.com/us/app/sql-play/id1546888933?itsct=apps_box&amp;itscg=30200"><img height=50px src="http://sqlplay.net/images/app-store-badge.svg" alt="Download on the App Store"></a>
+<a href="https://play.google.com/store/apps/details?id=com.sql_playground&amp;hl=en_US&amp;gl=US&amp;pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img height=50px alt="Get it on Google Play" src="https://sqlplay.net/images/google_play_badge.svg"></a>
 
-```bash
-# using npm
-npm start
+## Sponsors
 
-# OR using Yarn
-yarn start
-```
+|<img src="https://user-images.githubusercontent.com/23727670/148730013-8dabb36c-9918-45dd-bd6b-10f5239a884f.png" width="100"/>|
+|:---:|
+|[Ishwar Rimal](https://www.linkedin.com/in/ishwar-rimal-319647b3/)|
+| Sponsored 50% of Apple fee (2022)|
 
-## Step 2: Start your Application
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
-### For Android
+## How to develop ?
 
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+1. Clone the repo `git clone`
+2. Install npm packages `bun i`
+3. Install pods in iOS `pod install`
+4. Start metro bundler with `bun start`
+5. Use CLI or Android Studio / Xcode to build & test the app
